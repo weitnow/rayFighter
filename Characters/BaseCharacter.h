@@ -5,8 +5,8 @@
 #ifndef GBFIGHTER_BASECHARACTER_H
 #define GBFIGHTER_BASECHARACTER_H
 
-
 #include "../GameObjects/BaseGameObject.h"
+
 
 class BaseCharacter : public BaseGameObject {
 public:
@@ -24,6 +24,9 @@ private:
     int height;
     int width;
 };
+
+
+
 
 
 #endif //GBFIGHTER_BASECHARACTER_H

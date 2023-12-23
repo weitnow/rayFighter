@@ -22,13 +22,7 @@ int main(void)
 
     AsepriteManager asepriteManager{"Assets/Graphics/"};
     asepriteManager.loadAnimation("gbFighter");
-    auto aseprite_ptr = asepriteManager.asepriteObjs["gbFighter"];
 
-    for(const auto &pair : aseprite_ptr->frameTags) {
-        std::cout << pair.first << std::endl;
-        std::cout << pair.second.first << std::endl;
-        std::cout << pair.second.second << std::endl;
-    }
 
     auto* player = new BaseCharacter(100, 100);
 
