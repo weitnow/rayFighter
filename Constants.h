@@ -5,6 +5,9 @@
 #ifndef GBFIGHTER_CONSTANTS_H
 #define GBFIGHTER_CONSTANTS_H
 
+// switch DEBUG-Mode on and enable debug-draw and log stuff on the terminal
+#define DEBUG
+
 namespace Constants {
     // Default values used for instantiate BaseGameObjects if default constructor is used
     const int Y = 300;

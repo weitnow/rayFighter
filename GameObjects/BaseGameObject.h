@@ -10,10 +10,10 @@ class BaseGameObject {
 public:
     BaseGameObject();
     BaseGameObject(int x, int y);
-    BaseGameObject(int x, int y, float with, float height);
+    BaseGameObject(int x, int y, float width, float height);
     ~BaseGameObject();
 
-    void update();
+    void update(float deltaTime);
     void draw();
 
     //position

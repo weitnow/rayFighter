@@ -18,43 +18,48 @@ BaseGameObject::BaseGameObject() {
     destRect = {pos.x, pos.y, scaley * width, scalex * width };
 }
 
-BaseGameObject::BaseGameObject(int x, int y) {
-
+BaseGameObject::BaseGameObject(int x, int y) : BaseGameObject() {
+    setPos(x, y);
 }
 
-BaseGameObject::BaseGameObject(int x, int y, float with, float height) : BaseGameObject(x, y) {
-
+BaseGameObject::BaseGameObject(int x, int y, float width, float height) : BaseGameObject(x, y) {
+    this->width = width;
+    this->height = height;
 }
 
 BaseGameObject::~BaseGameObject() {
 
 }
 
-void BaseGameObject::update() {
-    pos.x ++;
+void BaseGameObject::update(float deltaTime) {
+    if (scalex != 1 || scaley != 1)
+    {
+        // then we have to update the destRect which we use for the DrawTexturePro function in the draw method of this class
+        destRect.x = pos.x;
+        destRect.y = pos.y;
+    }
 }
 
 void BaseGameObject::draw() {
 
+#ifdef DEBUG
     //draw a rectangle
-    DrawRectangle(this->pos.x, this->pos.y, 50, 50, RED);
-
+    DrawRectangle(pos.x, pos.y, width, height, RED);
+#endif
 
     if(scalex == 1 && scaley == 1)
     {
         DrawTextureRec(myTexture, sourceRect, pos, WHITE);
-        std::cout << "normal draw mode"<< std::endl;
     } else
     {
         DrawTexturePro(myTexture, sourceRect, destRect, origin, rotation, WHITE);
-        std::cout << "scaled draw mode"<< std::endl;
     }
 
 }
 
 void BaseGameObject::setPos(int x, int y) {
-    this->pos.x = x;
-    this->pos.y = y;
+    pos.x = x;
+    pos.y = y;
 
 }
 
@@ -65,8 +70,14 @@ Vector2 BaseGameObject::getPos() {
 void BaseGameObject::setScale(int x, int y) {
     scalex = x;
     scaley = y;
-    this->scale.x = x;
-    this->scale.y = y;
+
+    scale.x = x;
+    scale.y = y;
+
+    // updating the width and height of the destRect which is used for DrawTexturePro function in the draw methode of this class
+    destRect.width = scalex * width;
+    destRect.height = scaley * height;
+
 }
 
 Vector2 BaseGameObject::getScale() {

@@ -16,7 +16,7 @@ public:
 
     ~BaseCharacter();
 
-    void update();
+    void update(float deltaTime);
 
     void draw();
 

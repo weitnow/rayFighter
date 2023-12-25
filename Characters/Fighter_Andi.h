@@ -12,6 +12,7 @@ class Fighter_Andi : public BaseCharacter {
 public:
     Fighter_Andi(int x, int y);
     ~Fighter_Andi();
+    void update(float deltaTime);
     void draw();
 
 

@@ -6,25 +6,20 @@
 
 
 BaseCharacter::BaseCharacter() {
-    this->pos.x = 0;
-    this->pos.y = 0;
-    this->height = 50;
-    this->width = 50;
+    BaseGameObject();
 }
 
 BaseCharacter::BaseCharacter(int x, int y) {
-    this->pos.x = x;
-    this->pos.y = y;
-    this->height = 50;
-    this->width = 50;
+    BaseGameObject(x, y);
 }
+
 
 BaseCharacter::~BaseCharacter() {
 
 }
 
-void BaseCharacter::update() {
-    BaseGameObject::update();
+void BaseCharacter::update(float deltaTime) {
+    BaseGameObject::update(deltaTime);
 }
 
 void BaseCharacter::draw() {

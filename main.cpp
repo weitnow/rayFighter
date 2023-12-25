@@ -23,19 +23,18 @@ int main(void)
     asepriteManager.loadAnimFile("gbFighter");
     asepriteManager.showLoadedAnimFiles();
 
-
-
-
-    //auto* player = new Fighter_Andi(100, 300);
-    auto* player = new BaseGameObject();
-    player->setScale(1, 1);
+    auto* player = new Fighter_Andi(100, 300);
+    player->setScale(4, 4);
 
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
+        float deltaTime = GetFrameTime();
         // Update
         //----------------------------------------------------------------------------------
-        player->update();
+        player->update(deltaTime);
+
+
         //----------------------------------------------------------------------------------
 
         // Draw
