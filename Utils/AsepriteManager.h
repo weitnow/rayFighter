@@ -2,8 +2,8 @@
 // Created by weitnow on 12/16/23.
 //
 
-#ifndef GBFIGHTER_ASEPRITE_H
-#define GBFIGHTER_ASEPRITE_H
+#ifndef GBFIGHTER_ASEPRITEMANAGER_H
+#define GBFIGHTER_ASEPRITEMANAGER_H
 
 #include <nlohmann/json.hpp>
 #include <string> // Added string include here
@@ -12,12 +12,15 @@
 #include <fstream>
 #include <iostream>
 
-class Aseprite {
+class AnimationObject {
 private:
     std::string filename;
     Image image;
 public:
-    explicit Aseprite(std::string filename);
+    // constructor
+    explicit AnimationObject(std::string filename);
+
+    // member variable
     std::map<std::string, std::pair<int, int>> frameTags;
 };
 
@@ -27,11 +30,12 @@ public:
     ~AsepriteManager();
 
     // methods
-    void loadAnimation(const std::string &filename);
-    void showAvailableAnimations();
+    void loadAnimFile(const std::string &filename);
+    void showLoadedAnimFiles();
+    auto getAnimFile(const std::string& filename);
 
-    // fields
-    std::map<std::string, Aseprite*> asepriteObjs;
+    // member variable
+    std::map<std::string, AnimationObject*> animFiles; // map<animationfilename><animationobject*>
 private:
     std::string foldername;
     nlohmann::json* loadJsonFile(const std::string& filename);
@@ -48,4 +52,4 @@ struct FrameTag{
 
 
 
-#endif //GBFIGHTER_ASEPRITE_H
+#endif //GBFIGHTER_ASEPRITEMANAGER_H

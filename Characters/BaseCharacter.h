@@ -20,9 +20,6 @@ public:
 
     void draw();
 
-private:
-    int height;
-    int width;
 };
 
 

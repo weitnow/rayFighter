@@ -1,7 +1,7 @@
 //
 // Created by weitnow on 12/16/23.
 //
-#include "Aseprite.h"
+#include "AsepriteManager.h"
 
 /**
  *
@@ -12,7 +12,8 @@ AsepriteManager::AsepriteManager(std::string foldername) {
 }
 
 AsepriteManager::~AsepriteManager() {
-    for(auto& pair : asepriteObjs) {
+    // delete all pointers and clear memory
+    for(auto& pair : animFiles) {
         delete pair.second;
         pair.second = nullptr;
     }
@@ -42,9 +43,15 @@ nlohmann::json* AsepriteManager::loadJsonFile(const std::string& filename) {
     return jsondata;
 }
 
-void AsepriteManager::loadAnimation(const std::string &filename) {
-    Aseprite* NewAsepritePtr = new Aseprite(filename);
-    asepriteObjs[filename] = NewAsepritePtr;
+/**
+ * After loadAnimFile is executed the AsepriteManager animFiles-Obj of type maps holds
+ * animFiles[gbFighter] = AnimationObject*
+ * AnimationObject has a frameTags of type maps which holds frameTags[idle] = pair<from, to>
+ * @param filename
+ */
+void AsepriteManager::loadAnimFile(const std::string &filename) {
+    AnimationObject* AnimObjPtr = new AnimationObject(filename);
+    animFiles[filename] = AnimObjPtr;
     nlohmann::json* jsonfile = loadJsonFile(filename);
     int frameTagSize = (*jsonfile)["meta"]["frameTags"].size();
     std::string name;
@@ -54,23 +61,25 @@ void AsepriteManager::loadAnimation(const std::string &filename) {
         name = (*jsonfile)["meta"]["frameTags"][i]["name"];
         from = (*jsonfile)["meta"]["frameTags"][i]["from"];
         to = (*jsonfile)["meta"]["frameTags"][i]["to"];
-        NewAsepritePtr->frameTags[name] = std::pair<int, int>(from, to);
+        AnimObjPtr->frameTags[name] = std::pair<int, int>(from, to);
     }
     delete jsonfile;
 }
 
-
-
-void AsepriteManager::showAvailableAnimations() {
-    for(auto& pair : asepriteObjs) {
+void AsepriteManager::showLoadedAnimFiles() {
+    for(auto& pair : animFiles) {
         std::cout << "Filename: " << pair.first << ", Animation object address: " << pair.second << std::endl;
     }
+}
 
+auto AsepriteManager::getAnimFile(const std::string& filename )
+{
+
+    return animFiles[filename];
 }
 
 
-
-Aseprite::Aseprite(std::string filename) {
+AnimationObject::AnimationObject(std::string filename) {
     this->filename = filename;
 
 

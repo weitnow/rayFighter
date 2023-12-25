@@ -1,0 +1,17 @@
+//
+// Created by weitnow on 12/25/23.
+//
+
+#ifndef GBFIGHTER_CONSTANTS_H
+#define GBFIGHTER_CONSTANTS_H
+
+namespace Constants {
+    // Default values used for instantiate BaseGameObjects if default constructor is used
+    const int Y = 300;
+    const int X = 100;
+    const float HEIGHT = 32.f;
+    const float WIDTH = 32.f;
+
+}
+
+#endif //GBFIGHTER_CONSTANTS_H

@@ -1,8 +1,7 @@
 #include <iostream>
 #include "raylib.h"
-#include "Characters/BaseCharacter.h"
-#include "Utils/Aseprite.h"
-#include <assert.h>
+#include "Characters/Fighter_Andi.h"
+#include "Utils/AsepriteManager.h"
 
 //------------------------------------------------------------------------------------
 // Program main entry point
@@ -21,12 +20,15 @@ int main(void)
     //--------------------------------------------------------------------------------------
 
     AsepriteManager asepriteManager{"Assets/Graphics/"};
-    asepriteManager.loadAnimation("gbFighter");
+    asepriteManager.loadAnimFile("gbFighter");
+    asepriteManager.showLoadedAnimFiles();
 
 
-    auto* player = new BaseCharacter(100, 100);
 
 
+    //auto* player = new Fighter_Andi(100, 300);
+    auto* player = new BaseGameObject();
+    player->setScale(1, 1);
 
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key

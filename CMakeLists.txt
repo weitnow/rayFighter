@@ -32,8 +32,11 @@ add_executable(${PROJECT_NAME} main.cpp
         GameObjects/BaseGameObject.h
         Characters/BaseCharacter.cpp
         Characters/BaseCharacter.h
-        Utils/Aseprite.cpp
-        Utils/Aseprite.h)
+        Utils/AsepriteManager.cpp
+        Utils/AsepriteManager.h
+        Characters/Fighter_Andi.cpp
+        Characters/Fighter_Andi.h
+        Constants.h)
 #set(raylib_VERBOSE 1)
 target_link_libraries(${PROJECT_NAME} raylib nlohmann_json::nlohmann_json)
 

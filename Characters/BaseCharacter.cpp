@@ -24,13 +24,10 @@ BaseCharacter::~BaseCharacter() {
 }
 
 void BaseCharacter::update() {
-    this->pos.x += 1;
     BaseGameObject::update();
 }
 
 void BaseCharacter::draw() {
-    //draw a rectangle
-    DrawRectangle(this->pos.x, this->pos.y, 50, 50, RED);
     BaseGameObject::draw();
 }
 
