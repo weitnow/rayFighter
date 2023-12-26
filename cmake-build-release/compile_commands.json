@@ -37,6 +37,12 @@
 },
 {
   "directory": "/home/weitnow/CLionProjects/gbFighter/cmake-build-release",
+  "command": "/usr/bin/c++ -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -isystem /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/include -O3 -DNDEBUG -fdiagnostics-color=always -o CMakeFiles/gbFighter.dir/Utils/Camera.cpp.o -c /home/weitnow/CLionProjects/gbFighter/Utils/Camera.cpp",
+  "file": "/home/weitnow/CLionProjects/gbFighter/Utils/Camera.cpp",
+  "output": "CMakeFiles/gbFighter.dir/Utils/Camera.cpp.o"
+},
+{
+  "directory": "/home/weitnow/CLionProjects/gbFighter/cmake-build-release",
   "command": "/usr/bin/cc -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src -isystem /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -fno-strict-aliasing -Werror=implicit-function-declaration -Werror=pointer-arith  -O3 -DNDEBUG -std=gnu99 -fdiagnostics-color=always -o _deps/raylib-build/raylib/CMakeFiles/raylib.dir/rcore.c.o -c /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/rcore.c",
   "file": "/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/rcore.c",
   "output": "_deps/raylib-build/raylib/CMakeFiles/raylib.dir/rcore.c.o"

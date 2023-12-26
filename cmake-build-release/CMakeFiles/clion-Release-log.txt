@@ -1,16 +1,4 @@
 /opt/clion/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_MAKE_PROGRAM=/opt/clion/bin/ninja/linux/x64/ninja -DCMAKE_TOOLCHAIN_FILE=/home/weitnow/.vcpkg-clion/vcpkg/scripts/buildsystems/vcpkg.cmake -G Ninja -S /home/weitnow/CLionProjects/gbFighter -B /home/weitnow/CLionProjects/gbFighter/cmake-build-release
--- The C compiler identification is GNU 13.2.0
--- The CXX compiler identification is GNU 13.2.0
--- Detecting C compiler ABI info
--- Detecting C compiler ABI info - done
--- Check for working C compiler: /usr/bin/cc - skipped
--- Detecting C compile features
--- Detecting C compile features - done
--- Detecting CXX compiler ABI info
--- Detecting CXX compiler ABI info - done
--- Check for working CXX compiler: /usr/bin/c++ - skipped
--- Detecting CXX compile features
--- Detecting CXX compile features - done
 -- Populating raylib
 -- Configuring done (0.0s)
 -- Generating done (0.0s)
@@ -24,34 +12,17 @@ CMake Deprecation Warning at cmake-build-release/_deps/raylib-src/CMakeLists.txt
   CMake that the project does not need compatibility with older versions.
 
 
--- Performing Test COMPILER_HAS_THOSE_TOGGLES
--- Performing Test COMPILER_HAS_THOSE_TOGGLES - Success
 -- Testing if -Werror=pointer-arith can be used -- compiles
 -- Testing if -Werror=implicit-function-declaration can be used -- compiles
 -- Testing if -fno-strict-aliasing can be used -- compiles
 -- Using raylib's GLFW
--- Performing Test CMAKE_HAVE_LIBC_PTHREAD
--- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
--- Found Threads: TRUE  
 -- Including X11 support
--- Found X11: /usr/include   
--- Looking for XOpenDisplay in /usr/lib/x86_64-linux-gnu/libX11.so;/usr/lib/x86_64-linux-gnu/libXext.so
--- Looking for XOpenDisplay in /usr/lib/x86_64-linux-gnu/libX11.so;/usr/lib/x86_64-linux-gnu/libXext.so - found
--- Looking for gethostbyname
--- Looking for gethostbyname - found
--- Looking for connect
--- Looking for connect - found
--- Looking for remove
--- Looking for remove - found
--- Looking for shmat
--- Looking for shmat - found
 -- Audio Backend: miniaudio
 -- Building raylib static library
 -- Generated build type: Release
 -- Compiling with the flags:
 --   PLATFORM=PLATFORM_DESKTOP
 --   GRAPHICS=GRAPHICS_API_OPENGL_33
--- Found nlohmann_json: /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/share/nlohmann_json/nlohmann_jsonConfig.cmake (found version "3.11.3") 
--- Configuring done (0.9s)
+-- Configuring done (0.2s)
 -- Generating done (0.0s)
 -- Build files have been written to: /home/weitnow/CLionProjects/gbFighter/cmake-build-release

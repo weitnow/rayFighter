@@ -56,8 +56,6 @@ build CMakeFiles/gbFighter.dir/main.cpp.o: CXX_COMPILER__gbFighter_unscanned_Rel
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -isystem /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/include
   OBJECT_DIR = CMakeFiles/gbFighter.dir
   OBJECT_FILE_DIR = CMakeFiles/gbFighter.dir
-  TARGET_COMPILE_PDB = CMakeFiles/gbFighter.dir/
-  TARGET_PDB = gbFighter.pdb
 
 build CMakeFiles/gbFighter.dir/GameObjects/BaseGameObject.cpp.o: CXX_COMPILER__gbFighter_unscanned_Release /home/weitnow/CLionProjects/gbFighter/GameObjects/BaseGameObject.cpp || cmake_object_order_depends_target_gbFighter
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
@@ -66,8 +64,6 @@ build CMakeFiles/gbFighter.dir/GameObjects/BaseGameObject.cpp.o: CXX_COMPILER__g
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -isystem /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/include
   OBJECT_DIR = CMakeFiles/gbFighter.dir
   OBJECT_FILE_DIR = CMakeFiles/gbFighter.dir/GameObjects
-  TARGET_COMPILE_PDB = CMakeFiles/gbFighter.dir/
-  TARGET_PDB = gbFighter.pdb
 
 build CMakeFiles/gbFighter.dir/Characters/BaseCharacter.cpp.o: CXX_COMPILER__gbFighter_unscanned_Release /home/weitnow/CLionProjects/gbFighter/Characters/BaseCharacter.cpp || cmake_object_order_depends_target_gbFighter
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
@@ -76,8 +72,6 @@ build CMakeFiles/gbFighter.dir/Characters/BaseCharacter.cpp.o: CXX_COMPILER__gbF
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -isystem /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/include
   OBJECT_DIR = CMakeFiles/gbFighter.dir
   OBJECT_FILE_DIR = CMakeFiles/gbFighter.dir/Characters
-  TARGET_COMPILE_PDB = CMakeFiles/gbFighter.dir/
-  TARGET_PDB = gbFighter.pdb
 
 build CMakeFiles/gbFighter.dir/Utils/AsepriteManager.cpp.o: CXX_COMPILER__gbFighter_unscanned_Release /home/weitnow/CLionProjects/gbFighter/Utils/AsepriteManager.cpp || cmake_object_order_depends_target_gbFighter
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
@@ -86,8 +80,6 @@ build CMakeFiles/gbFighter.dir/Utils/AsepriteManager.cpp.o: CXX_COMPILER__gbFigh
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -isystem /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/include
   OBJECT_DIR = CMakeFiles/gbFighter.dir
   OBJECT_FILE_DIR = CMakeFiles/gbFighter.dir/Utils
-  TARGET_COMPILE_PDB = CMakeFiles/gbFighter.dir/
-  TARGET_PDB = gbFighter.pdb
 
 build CMakeFiles/gbFighter.dir/Characters/Fighter_Andi.cpp.o: CXX_COMPILER__gbFighter_unscanned_Release /home/weitnow/CLionProjects/gbFighter/Characters/Fighter_Andi.cpp || cmake_object_order_depends_target_gbFighter
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
@@ -96,8 +88,6 @@ build CMakeFiles/gbFighter.dir/Characters/Fighter_Andi.cpp.o: CXX_COMPILER__gbFi
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -isystem /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/include
   OBJECT_DIR = CMakeFiles/gbFighter.dir
   OBJECT_FILE_DIR = CMakeFiles/gbFighter.dir/Characters
-  TARGET_COMPILE_PDB = CMakeFiles/gbFighter.dir/
-  TARGET_PDB = gbFighter.pdb
 
 build CMakeFiles/gbFighter.dir/Constants.cpp.o: CXX_COMPILER__gbFighter_unscanned_Release /home/weitnow/CLionProjects/gbFighter/Constants.cpp || cmake_object_order_depends_target_gbFighter
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
@@ -106,8 +96,14 @@ build CMakeFiles/gbFighter.dir/Constants.cpp.o: CXX_COMPILER__gbFighter_unscanne
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -isystem /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/include
   OBJECT_DIR = CMakeFiles/gbFighter.dir
   OBJECT_FILE_DIR = CMakeFiles/gbFighter.dir
-  TARGET_COMPILE_PDB = CMakeFiles/gbFighter.dir/
-  TARGET_PDB = gbFighter.pdb
+
+build CMakeFiles/gbFighter.dir/Utils/Camera.cpp.o: CXX_COMPILER__gbFighter_unscanned_Release /home/weitnow/CLionProjects/gbFighter/Utils/Camera.cpp || cmake_object_order_depends_target_gbFighter
+  DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
+  DEP_FILE = CMakeFiles/gbFighter.dir/Utils/Camera.cpp.o.d
+  FLAGS = -O3 -DNDEBUG -fdiagnostics-color=always
+  INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -isystem /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/include
+  OBJECT_DIR = CMakeFiles/gbFighter.dir
+  OBJECT_FILE_DIR = CMakeFiles/gbFighter.dir/Utils
 
 
 # =============================================================================
@@ -117,15 +113,14 @@ build CMakeFiles/gbFighter.dir/Constants.cpp.o: CXX_COMPILER__gbFighter_unscanne
 #############################################
 # Link the executable gbFighter
 
-build gbFighter: CXX_EXECUTABLE_LINKER__gbFighter_Release CMakeFiles/gbFighter.dir/main.cpp.o CMakeFiles/gbFighter.dir/GameObjects/BaseGameObject.cpp.o CMakeFiles/gbFighter.dir/Characters/BaseCharacter.cpp.o CMakeFiles/gbFighter.dir/Utils/AsepriteManager.cpp.o CMakeFiles/gbFighter.dir/Characters/Fighter_Andi.cpp.o CMakeFiles/gbFighter.dir/Constants.cpp.o | _deps/raylib-build/raylib/libraylib.a /usr/lib/x86_64-linux-gnu/libOpenGL.so /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libGLU.so _deps/raylib-build/raylib/external/glfw/src/libglfw3.a /usr/lib/x86_64-linux-gnu/librt.a /usr/lib/x86_64-linux-gnu/libm.so || _deps/raylib-build/raylib/external/glfw/src/libglfw3.a _deps/raylib-build/raylib/libraylib.a
+build gbFighter: CXX_EXECUTABLE_LINKER__gbFighter_Release CMakeFiles/gbFighter.dir/main.cpp.o CMakeFiles/gbFighter.dir/GameObjects/BaseGameObject.cpp.o CMakeFiles/gbFighter.dir/Characters/BaseCharacter.cpp.o CMakeFiles/gbFighter.dir/Utils/AsepriteManager.cpp.o CMakeFiles/gbFighter.dir/Characters/Fighter_Andi.cpp.o CMakeFiles/gbFighter.dir/Constants.cpp.o CMakeFiles/gbFighter.dir/Utils/Camera.cpp.o | _deps/raylib-build/raylib/libraylib.a /usr/lib/x86_64-linux-gnu/libOpenGL.so /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libGLU.so _deps/raylib-build/raylib/external/glfw/src/libglfw3.a /usr/lib/x86_64-linux-gnu/librt.a /usr/lib/x86_64-linux-gnu/libm.so || _deps/raylib-build/raylib/external/glfw/src/libglfw3.a _deps/raylib-build/raylib/libraylib.a
   FLAGS = -O3 -DNDEBUG
   LINK_LIBRARIES = _deps/raylib-build/raylib/libraylib.a  -lm  -latomic  -lpthread  /usr/lib/x86_64-linux-gnu/libOpenGL.so  /usr/lib/x86_64-linux-gnu/libGLX.so  /usr/lib/x86_64-linux-gnu/libGLU.so  _deps/raylib-build/raylib/external/glfw/src/libglfw3.a  /usr/lib/x86_64-linux-gnu/librt.a  -lm  -ldl
   OBJECT_DIR = CMakeFiles/gbFighter.dir
   POST_BUILD = :
   PRE_LINK = :
-  TARGET_COMPILE_PDB = CMakeFiles/gbFighter.dir/
   TARGET_FILE = gbFighter
-  TARGET_PDB = gbFighter.pdb
+  TARGET_PDB = gbFighter.dbg
 
 
 #############################################
@@ -331,8 +326,6 @@ build _deps/raylib-build/raylib/CMakeFiles/raylib.dir/rcore.c.o: C_COMPILER__ray
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src -isystem /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include
   OBJECT_DIR = _deps/raylib-build/raylib/CMakeFiles/raylib.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/CMakeFiles/raylib.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/CMakeFiles/raylib.dir/raylib.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/libraylib.pdb
 
 build _deps/raylib-build/raylib/CMakeFiles/raylib.dir/rmodels.c.o: C_COMPILER__raylib_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/rmodels.c || cmake_object_order_depends_target_raylib
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
@@ -341,8 +334,6 @@ build _deps/raylib-build/raylib/CMakeFiles/raylib.dir/rmodels.c.o: C_COMPILER__r
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src -isystem /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include
   OBJECT_DIR = _deps/raylib-build/raylib/CMakeFiles/raylib.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/CMakeFiles/raylib.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/CMakeFiles/raylib.dir/raylib.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/libraylib.pdb
 
 build _deps/raylib-build/raylib/CMakeFiles/raylib.dir/rshapes.c.o: C_COMPILER__raylib_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/rshapes.c || cmake_object_order_depends_target_raylib
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
@@ -351,8 +342,6 @@ build _deps/raylib-build/raylib/CMakeFiles/raylib.dir/rshapes.c.o: C_COMPILER__r
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src -isystem /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include
   OBJECT_DIR = _deps/raylib-build/raylib/CMakeFiles/raylib.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/CMakeFiles/raylib.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/CMakeFiles/raylib.dir/raylib.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/libraylib.pdb
 
 build _deps/raylib-build/raylib/CMakeFiles/raylib.dir/rtext.c.o: C_COMPILER__raylib_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/rtext.c || cmake_object_order_depends_target_raylib
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
@@ -361,8 +350,6 @@ build _deps/raylib-build/raylib/CMakeFiles/raylib.dir/rtext.c.o: C_COMPILER__ray
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src -isystem /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include
   OBJECT_DIR = _deps/raylib-build/raylib/CMakeFiles/raylib.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/CMakeFiles/raylib.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/CMakeFiles/raylib.dir/raylib.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/libraylib.pdb
 
 build _deps/raylib-build/raylib/CMakeFiles/raylib.dir/rtextures.c.o: C_COMPILER__raylib_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/rtextures.c || cmake_object_order_depends_target_raylib
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
@@ -371,8 +358,6 @@ build _deps/raylib-build/raylib/CMakeFiles/raylib.dir/rtextures.c.o: C_COMPILER_
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src -isystem /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include
   OBJECT_DIR = _deps/raylib-build/raylib/CMakeFiles/raylib.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/CMakeFiles/raylib.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/CMakeFiles/raylib.dir/raylib.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/libraylib.pdb
 
 build _deps/raylib-build/raylib/CMakeFiles/raylib.dir/utils.c.o: C_COMPILER__raylib_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/utils.c || cmake_object_order_depends_target_raylib
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
@@ -381,8 +366,6 @@ build _deps/raylib-build/raylib/CMakeFiles/raylib.dir/utils.c.o: C_COMPILER__ray
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src -isystem /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include
   OBJECT_DIR = _deps/raylib-build/raylib/CMakeFiles/raylib.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/CMakeFiles/raylib.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/CMakeFiles/raylib.dir/raylib.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/libraylib.pdb
 
 build _deps/raylib-build/raylib/CMakeFiles/raylib.dir/raudio.c.o: C_COMPILER__raylib_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/raudio.c || cmake_object_order_depends_target_raylib
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
@@ -391,8 +374,6 @@ build _deps/raylib-build/raylib/CMakeFiles/raylib.dir/raudio.c.o: C_COMPILER__ra
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src -isystem /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include
   OBJECT_DIR = _deps/raylib-build/raylib/CMakeFiles/raylib.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/CMakeFiles/raylib.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/CMakeFiles/raylib.dir/raylib.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/libraylib.pdb
 
 
 # =============================================================================
@@ -407,9 +388,8 @@ build _deps/raylib-build/raylib/libraylib.a: C_STATIC_LIBRARY_LINKER__raylib_Rel
   OBJECT_DIR = _deps/raylib-build/raylib/CMakeFiles/raylib.dir
   POST_BUILD = :
   PRE_LINK = :
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/CMakeFiles/raylib.dir/raylib.pdb
   TARGET_FILE = _deps/raylib-build/raylib/libraylib.a
-  TARGET_PDB = _deps/raylib-build/raylib/libraylib.pdb
+  TARGET_PDB = raylib.a.dbg
 
 
 #############################################
@@ -615,8 +595,6 @@ build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/context.c.
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-build/raylib/external/glfw/src
   OBJECT_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glfw.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/external/glfw/src/libglfw3.pdb
 
 build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/init.c.o: C_COMPILER__glfw_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src/init.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
@@ -625,8 +603,6 @@ build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/init.c.o: 
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-build/raylib/external/glfw/src
   OBJECT_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glfw.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/external/glfw/src/libglfw3.pdb
 
 build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/input.c.o: C_COMPILER__glfw_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src/input.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
@@ -635,8 +611,6 @@ build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/input.c.o:
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-build/raylib/external/glfw/src
   OBJECT_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glfw.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/external/glfw/src/libglfw3.pdb
 
 build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/monitor.c.o: C_COMPILER__glfw_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src/monitor.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
@@ -645,8 +619,6 @@ build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/monitor.c.
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-build/raylib/external/glfw/src
   OBJECT_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glfw.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/external/glfw/src/libglfw3.pdb
 
 build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/platform.c.o: C_COMPILER__glfw_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src/platform.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
@@ -655,8 +627,6 @@ build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/platform.c
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-build/raylib/external/glfw/src
   OBJECT_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glfw.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/external/glfw/src/libglfw3.pdb
 
 build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/vulkan.c.o: C_COMPILER__glfw_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src/vulkan.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
@@ -665,8 +635,6 @@ build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/vulkan.c.o
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-build/raylib/external/glfw/src
   OBJECT_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glfw.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/external/glfw/src/libglfw3.pdb
 
 build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/window.c.o: C_COMPILER__glfw_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src/window.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
@@ -675,8 +643,6 @@ build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/window.c.o
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-build/raylib/external/glfw/src
   OBJECT_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glfw.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/external/glfw/src/libglfw3.pdb
 
 build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/egl_context.c.o: C_COMPILER__glfw_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src/egl_context.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
@@ -685,8 +651,6 @@ build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/egl_contex
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-build/raylib/external/glfw/src
   OBJECT_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glfw.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/external/glfw/src/libglfw3.pdb
 
 build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/osmesa_context.c.o: C_COMPILER__glfw_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src/osmesa_context.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
@@ -695,8 +659,6 @@ build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/osmesa_con
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-build/raylib/external/glfw/src
   OBJECT_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glfw.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/external/glfw/src/libglfw3.pdb
 
 build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_init.c.o: C_COMPILER__glfw_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src/null_init.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
@@ -705,8 +667,6 @@ build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_init.
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-build/raylib/external/glfw/src
   OBJECT_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glfw.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/external/glfw/src/libglfw3.pdb
 
 build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_monitor.c.o: C_COMPILER__glfw_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src/null_monitor.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
@@ -715,8 +675,6 @@ build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_monit
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-build/raylib/external/glfw/src
   OBJECT_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glfw.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/external/glfw/src/libglfw3.pdb
 
 build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_window.c.o: C_COMPILER__glfw_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src/null_window.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
@@ -725,8 +683,6 @@ build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_windo
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-build/raylib/external/glfw/src
   OBJECT_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glfw.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/external/glfw/src/libglfw3.pdb
 
 build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_joystick.c.o: C_COMPILER__glfw_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src/null_joystick.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
@@ -735,8 +691,6 @@ build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/null_joyst
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-build/raylib/external/glfw/src
   OBJECT_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glfw.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/external/glfw/src/libglfw3.pdb
 
 build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_module.c.o: C_COMPILER__glfw_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src/posix_module.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
@@ -745,8 +699,6 @@ build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_modu
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-build/raylib/external/glfw/src
   OBJECT_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glfw.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/external/glfw/src/libglfw3.pdb
 
 build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_time.c.o: C_COMPILER__glfw_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src/posix_time.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
@@ -755,8 +707,6 @@ build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_time
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-build/raylib/external/glfw/src
   OBJECT_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glfw.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/external/glfw/src/libglfw3.pdb
 
 build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_thread.c.o: C_COMPILER__glfw_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src/posix_thread.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
@@ -765,8 +715,6 @@ build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_thre
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-build/raylib/external/glfw/src
   OBJECT_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glfw.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/external/glfw/src/libglfw3.pdb
 
 build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_init.c.o: C_COMPILER__glfw_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src/x11_init.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
@@ -775,8 +723,6 @@ build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_init.c
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-build/raylib/external/glfw/src
   OBJECT_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glfw.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/external/glfw/src/libglfw3.pdb
 
 build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_monitor.c.o: C_COMPILER__glfw_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src/x11_monitor.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
@@ -785,8 +731,6 @@ build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_monito
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-build/raylib/external/glfw/src
   OBJECT_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glfw.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/external/glfw/src/libglfw3.pdb
 
 build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_window.c.o: C_COMPILER__glfw_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src/x11_window.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
@@ -795,8 +739,6 @@ build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/x11_window
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-build/raylib/external/glfw/src
   OBJECT_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glfw.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/external/glfw/src/libglfw3.pdb
 
 build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/xkb_unicode.c.o: C_COMPILER__glfw_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src/xkb_unicode.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
@@ -805,8 +747,6 @@ build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/xkb_unicod
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-build/raylib/external/glfw/src
   OBJECT_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glfw.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/external/glfw/src/libglfw3.pdb
 
 build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glx_context.c.o: C_COMPILER__glfw_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src/glx_context.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
@@ -815,8 +755,6 @@ build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glx_contex
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-build/raylib/external/glfw/src
   OBJECT_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glfw.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/external/glfw/src/libglfw3.pdb
 
 build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/linux_joystick.c.o: C_COMPILER__glfw_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src/linux_joystick.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
@@ -825,8 +763,6 @@ build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/linux_joys
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-build/raylib/external/glfw/src
   OBJECT_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glfw.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/external/glfw/src/libglfw3.pdb
 
 build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_poll.c.o: C_COMPILER__glfw_unscanned_Release /home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src/posix_poll.c || cmake_object_order_depends_target_glfw
   DEFINES = -D_DEFAULT_SOURCE -D_GLFW_X11
@@ -835,8 +771,6 @@ build _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/posix_poll
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-build/raylib/external/glfw/src
   OBJECT_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
   OBJECT_FILE_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glfw.pdb
-  TARGET_PDB = _deps/raylib-build/raylib/external/glfw/src/libglfw3.pdb
 
 
 # =============================================================================
@@ -851,9 +785,8 @@ build _deps/raylib-build/raylib/external/glfw/src/libglfw3.a: C_STATIC_LIBRARY_L
   OBJECT_DIR = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir
   POST_BUILD = :
   PRE_LINK = :
-  TARGET_COMPILE_PDB = _deps/raylib-build/raylib/external/glfw/src/CMakeFiles/glfw.dir/glfw.pdb
   TARGET_FILE = _deps/raylib-build/raylib/external/glfw/src/libglfw3.a
-  TARGET_PDB = _deps/raylib-build/raylib/external/glfw/src/libglfw3.pdb
+  TARGET_PDB = glfw3.a.dbg
 
 
 #############################################
@@ -1016,14 +949,14 @@ build _deps/raylib-build/raylib/external/glfw/src/all: phony _deps/raylib-build/
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/share/nlohmann_json/nlohmann_jsonConfig.cmake /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/share/nlohmann_json/nlohmann_jsonConfigVersion.cmake /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/share/nlohmann_json/nlohmann_jsonTargets.cmake /home/weitnow/.vcpkg-clion/vcpkg/scripts/buildsystems/vcpkg.cmake /home/weitnow/CLionProjects/gbFighter/CMakeLists.txt /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/BasicConfigVersion-SameMajorVersion.cmake.in /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeCCompiler.cmake.in /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeCCompilerABI.c /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeCInformation.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeCXXCompiler.cmake.in /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeCXXCompilerABI.cpp /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeCXXInformation.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeCommonLanguageInclude.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeCompilerIdDetection.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeDependentOption.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeDetermineCCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeDetermineCXXCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeDetermineCompileFeatures.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeDetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeDetermineCompilerABI.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeDetermineCompilerId.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeDetermineSystem.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeFindBinUtils.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeGenericSystem.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeInitializeConfigs.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeLanguageInformation.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakePackageConfigHelpers.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeParseImplicitIncludeInfo.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeParseImplicitLinkInfo.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeParseLibraryArchitecture.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeSystem.cmake.in /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeSystemSpecificInformation.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeSystemSpecificInitialize.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeTestCCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeTestCXXCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeTestCompilerCommon.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CPack.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CPackComponent.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CheckCCompilerFlag.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CheckCSourceCompiles.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CheckFunctionExists.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CheckIncludeFile.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CheckLibraryExists.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/ADSP-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/ARMCC-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/ARMClang-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/AppleClang-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/Borland-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/Bruce-C-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/CMakeCommonCompilerMacros.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/Clang-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/Clang-DetermineCompilerInternal.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/Comeau-CXX-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/Compaq-C-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/Cray-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/Embarcadero-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/Fujitsu-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/GHS-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/GNU-C-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/GNU-C.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/GNU-CXX.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/GNU-FindBinUtils.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/GNU.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/HP-C-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/HP-CXX-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/IAR-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/IBMClang-C-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/Intel-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/LCC-C-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/MSVC-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/NVHPC-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/NVIDIA-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/PGI-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/PathScale-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/SCO-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/SDCC-C-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/SunPro-C-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/TI-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/Tasking-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/TinyCC-C-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/VisualAge-C-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/Watcom-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/XL-C-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/XL-CXX-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/XLClang-C-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/zOS-C-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/ExternalProject/shared_internal_commands.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FetchContent.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FetchContent/CMakeLists.cmake.in /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindOpenGL.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindPackageHandleStandardArgs.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindPackageMessage.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindThreads.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindX11.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/GNUInstallDirs.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Internal/CheckCompilerFlag.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Internal/CheckFlagCommonConfig.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Internal/CheckSourceCompiles.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Internal/FeatureTesting.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Platform/Linux-Determine-CXX.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Platform/Linux-GNU-C.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Platform/Linux-GNU-CXX.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Platform/Linux-GNU.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Platform/Linux-Initialize.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Platform/Linux.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Platform/UnixPaths.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/WriteBasicConfigVersionFile.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Templates/CPackConfig.cmake.in CMakeCache.txt CMakeFiles/3.27.8/CMakeCCompiler.cmake CMakeFiles/3.27.8/CMakeCXXCompiler.cmake CMakeFiles/3.27.8/CMakeSystem.cmake _deps/raylib-src/CMakeLists.txt _deps/raylib-src/CMakeOptions.txt _deps/raylib-src/cmake/AddIfFlagCompiles.cmake _deps/raylib-src/cmake/BuildOptions.cmake _deps/raylib-src/cmake/CompileDefinitions.cmake _deps/raylib-src/cmake/CompilerFlags.cmake _deps/raylib-src/cmake/EnumOption.cmake _deps/raylib-src/cmake/GlfwImport.cmake _deps/raylib-src/cmake/InstallConfigurations.cmake _deps/raylib-src/cmake/JoinPaths.cmake _deps/raylib-src/cmake/LibraryConfigurations.cmake _deps/raylib-src/cmake/LibraryPathToLinkerFlags.cmake _deps/raylib-src/cmake/PackConfigurations.cmake _deps/raylib-src/cmake/PopulateConfigVariablesLocally.cmake _deps/raylib-src/cmake/raylib-config-version.cmake _deps/raylib-src/raylib.pc.in _deps/raylib-src/src/CMakeLists.txt _deps/raylib-src/src/external/glfw/CMake/glfw3.pc.in _deps/raylib-src/src/external/glfw/CMake/glfw3Config.cmake.in _deps/raylib-src/src/external/glfw/CMakeLists.txt _deps/raylib-src/src/external/glfw/src/CMakeLists.txt
+build build.ninja: RERUN_CMAKE | /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/share/nlohmann_json/nlohmann_jsonConfig.cmake /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/share/nlohmann_json/nlohmann_jsonConfigVersion.cmake /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/share/nlohmann_json/nlohmann_jsonTargets.cmake /home/weitnow/.vcpkg-clion/vcpkg/scripts/buildsystems/vcpkg.cmake /home/weitnow/CLionProjects/gbFighter/CMakeLists.txt /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/BasicConfigVersion-SameMajorVersion.cmake.in /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeCInformation.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeCXXInformation.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeCommonLanguageInclude.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeDependentOption.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeGenericSystem.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeInitializeConfigs.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeLanguageInformation.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakePackageConfigHelpers.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeSystemSpecificInformation.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeSystemSpecificInitialize.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CPack.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CPackComponent.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CheckCCompilerFlag.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CheckCSourceCompiles.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CheckFunctionExists.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CheckIncludeFile.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CheckLibraryExists.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/CMakeCommonCompilerMacros.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/GNU-C.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/GNU-CXX.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/GNU.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/ExternalProject/shared_internal_commands.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FetchContent.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FetchContent/CMakeLists.cmake.in /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindOpenGL.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindPackageHandleStandardArgs.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindPackageMessage.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindThreads.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindX11.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/GNUInstallDirs.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Internal/CheckCompilerFlag.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Internal/CheckFlagCommonConfig.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Internal/CheckSourceCompiles.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Platform/Linux-GNU-C.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Platform/Linux-GNU-CXX.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Platform/Linux-GNU.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Platform/Linux-Initialize.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Platform/Linux.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Platform/UnixPaths.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/WriteBasicConfigVersionFile.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Templates/CPackConfig.cmake.in CMakeCache.txt CMakeFiles/3.27.8/CMakeCCompiler.cmake CMakeFiles/3.27.8/CMakeCXXCompiler.cmake CMakeFiles/3.27.8/CMakeSystem.cmake _deps/raylib-src/CMakeLists.txt _deps/raylib-src/CMakeOptions.txt _deps/raylib-src/cmake/AddIfFlagCompiles.cmake _deps/raylib-src/cmake/BuildOptions.cmake _deps/raylib-src/cmake/CompileDefinitions.cmake _deps/raylib-src/cmake/CompilerFlags.cmake _deps/raylib-src/cmake/EnumOption.cmake _deps/raylib-src/cmake/GlfwImport.cmake _deps/raylib-src/cmake/InstallConfigurations.cmake _deps/raylib-src/cmake/JoinPaths.cmake _deps/raylib-src/cmake/LibraryConfigurations.cmake _deps/raylib-src/cmake/LibraryPathToLinkerFlags.cmake _deps/raylib-src/cmake/PackConfigurations.cmake _deps/raylib-src/cmake/PopulateConfigVariablesLocally.cmake _deps/raylib-src/cmake/raylib-config-version.cmake _deps/raylib-src/raylib.pc.in _deps/raylib-src/src/CMakeLists.txt _deps/raylib-src/src/external/glfw/CMake/glfw3.pc.in _deps/raylib-src/src/external/glfw/CMake/glfw3Config.cmake.in _deps/raylib-src/src/external/glfw/CMakeLists.txt _deps/raylib-src/src/external/glfw/src/CMakeLists.txt
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/share/nlohmann_json/nlohmann_jsonConfig.cmake /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/share/nlohmann_json/nlohmann_jsonConfigVersion.cmake /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/share/nlohmann_json/nlohmann_jsonTargets.cmake /home/weitnow/.vcpkg-clion/vcpkg/scripts/buildsystems/vcpkg.cmake /home/weitnow/CLionProjects/gbFighter/CMakeLists.txt /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/BasicConfigVersion-SameMajorVersion.cmake.in /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeCCompiler.cmake.in /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeCCompilerABI.c /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeCInformation.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeCXXCompiler.cmake.in /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeCXXCompilerABI.cpp /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeCXXInformation.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeCommonLanguageInclude.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeCompilerIdDetection.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeDependentOption.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeDetermineCCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeDetermineCXXCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeDetermineCompileFeatures.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeDetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeDetermineCompilerABI.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeDetermineCompilerId.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeDetermineSystem.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeFindBinUtils.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeGenericSystem.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeInitializeConfigs.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeLanguageInformation.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakePackageConfigHelpers.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeParseImplicitIncludeInfo.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeParseImplicitLinkInfo.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeParseLibraryArchitecture.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeSystem.cmake.in /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeSystemSpecificInformation.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeSystemSpecificInitialize.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeTestCCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeTestCXXCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeTestCompilerCommon.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CPack.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CPackComponent.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CheckCCompilerFlag.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CheckCSourceCompiles.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CheckFunctionExists.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CheckIncludeFile.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CheckLibraryExists.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/ADSP-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/ARMCC-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/ARMClang-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/AppleClang-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/Borland-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/Bruce-C-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/CMakeCommonCompilerMacros.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/Clang-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/Clang-DetermineCompilerInternal.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/Comeau-CXX-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/Compaq-C-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/Cray-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/Embarcadero-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/Fujitsu-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/GHS-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/GNU-C-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/GNU-C.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/GNU-CXX.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/GNU-FindBinUtils.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/GNU.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/HP-C-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/HP-CXX-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/IAR-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/IBMClang-C-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/Intel-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/LCC-C-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/MSVC-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/NVHPC-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/NVIDIA-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/PGI-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/PathScale-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/SCO-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/SDCC-C-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/SunPro-C-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/TI-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/Tasking-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/TinyCC-C-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/VisualAge-C-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/Watcom-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/XL-C-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/XL-CXX-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/XLClang-C-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/zOS-C-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/ExternalProject/shared_internal_commands.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FetchContent.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FetchContent/CMakeLists.cmake.in /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindOpenGL.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindPackageHandleStandardArgs.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindPackageMessage.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindThreads.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindX11.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/GNUInstallDirs.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Internal/CheckCompilerFlag.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Internal/CheckFlagCommonConfig.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Internal/CheckSourceCompiles.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Internal/FeatureTesting.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Platform/Linux-Determine-CXX.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Platform/Linux-GNU-C.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Platform/Linux-GNU-CXX.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Platform/Linux-GNU.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Platform/Linux-Initialize.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Platform/Linux.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Platform/UnixPaths.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/WriteBasicConfigVersionFile.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Templates/CPackConfig.cmake.in CMakeCache.txt CMakeFiles/3.27.8/CMakeCCompiler.cmake CMakeFiles/3.27.8/CMakeCXXCompiler.cmake CMakeFiles/3.27.8/CMakeSystem.cmake _deps/raylib-src/CMakeLists.txt _deps/raylib-src/CMakeOptions.txt _deps/raylib-src/cmake/AddIfFlagCompiles.cmake _deps/raylib-src/cmake/BuildOptions.cmake _deps/raylib-src/cmake/CompileDefinitions.cmake _deps/raylib-src/cmake/CompilerFlags.cmake _deps/raylib-src/cmake/EnumOption.cmake _deps/raylib-src/cmake/GlfwImport.cmake _deps/raylib-src/cmake/InstallConfigurations.cmake _deps/raylib-src/cmake/JoinPaths.cmake _deps/raylib-src/cmake/LibraryConfigurations.cmake _deps/raylib-src/cmake/LibraryPathToLinkerFlags.cmake _deps/raylib-src/cmake/PackConfigurations.cmake _deps/raylib-src/cmake/PopulateConfigVariablesLocally.cmake _deps/raylib-src/cmake/raylib-config-version.cmake _deps/raylib-src/raylib.pc.in _deps/raylib-src/src/CMakeLists.txt _deps/raylib-src/src/external/glfw/CMake/glfw3.pc.in _deps/raylib-src/src/external/glfw/CMake/glfw3Config.cmake.in _deps/raylib-src/src/external/glfw/CMakeLists.txt _deps/raylib-src/src/external/glfw/src/CMakeLists.txt: phony
+build /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/share/nlohmann_json/nlohmann_jsonConfig.cmake /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/share/nlohmann_json/nlohmann_jsonConfigVersion.cmake /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/share/nlohmann_json/nlohmann_jsonTargets.cmake /home/weitnow/.vcpkg-clion/vcpkg/scripts/buildsystems/vcpkg.cmake /home/weitnow/CLionProjects/gbFighter/CMakeLists.txt /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/BasicConfigVersion-SameMajorVersion.cmake.in /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeCInformation.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeCXXInformation.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeCommonLanguageInclude.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeDependentOption.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeGenericSystem.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeInitializeConfigs.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeLanguageInformation.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakePackageConfigHelpers.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeSystemSpecificInformation.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeSystemSpecificInitialize.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CPack.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CPackComponent.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CheckCCompilerFlag.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CheckCSourceCompiles.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CheckFunctionExists.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CheckIncludeFile.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/CheckLibraryExists.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/CMakeCommonCompilerMacros.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/GNU-C.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/GNU-CXX.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Compiler/GNU.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/ExternalProject/shared_internal_commands.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FetchContent.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FetchContent/CMakeLists.cmake.in /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindOpenGL.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindPackageHandleStandardArgs.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindPackageMessage.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindThreads.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindX11.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/GNUInstallDirs.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Internal/CheckCompilerFlag.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Internal/CheckFlagCommonConfig.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Internal/CheckSourceCompiles.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Platform/Linux-GNU-C.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Platform/Linux-GNU-CXX.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Platform/Linux-GNU.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Platform/Linux-Initialize.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Platform/Linux.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/Platform/UnixPaths.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Modules/WriteBasicConfigVersionFile.cmake /opt/clion/bin/cmake/linux/x64/share/cmake-3.27/Templates/CPackConfig.cmake.in CMakeCache.txt CMakeFiles/3.27.8/CMakeCCompiler.cmake CMakeFiles/3.27.8/CMakeCXXCompiler.cmake CMakeFiles/3.27.8/CMakeSystem.cmake _deps/raylib-src/CMakeLists.txt _deps/raylib-src/CMakeOptions.txt _deps/raylib-src/cmake/AddIfFlagCompiles.cmake _deps/raylib-src/cmake/BuildOptions.cmake _deps/raylib-src/cmake/CompileDefinitions.cmake _deps/raylib-src/cmake/CompilerFlags.cmake _deps/raylib-src/cmake/EnumOption.cmake _deps/raylib-src/cmake/GlfwImport.cmake _deps/raylib-src/cmake/InstallConfigurations.cmake _deps/raylib-src/cmake/JoinPaths.cmake _deps/raylib-src/cmake/LibraryConfigurations.cmake _deps/raylib-src/cmake/LibraryPathToLinkerFlags.cmake _deps/raylib-src/cmake/PackConfigurations.cmake _deps/raylib-src/cmake/PopulateConfigVariablesLocally.cmake _deps/raylib-src/cmake/raylib-config-version.cmake _deps/raylib-src/raylib.pc.in _deps/raylib-src/src/CMakeLists.txt _deps/raylib-src/src/external/glfw/CMake/glfw3.pc.in _deps/raylib-src/src/external/glfw/CMake/glfw3Config.cmake.in _deps/raylib-src/src/external/glfw/CMakeLists.txt _deps/raylib-src/src/external/glfw/src/CMakeLists.txt: phony
 
 
 #############################################

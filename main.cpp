@@ -26,12 +26,14 @@ int main(void)
     // Setup the viewport rectangle properly scaled
     Rectangle scaledRec;
 
-    //SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
     AsepriteManager asepriteManager{"Assets/Graphics/"};
     asepriteManager.loadAnimFile("gbFighter");
     asepriteManager.showLoadedAnimFiles();
+
+
 
     auto* player = new BaseGameObject(200, 540-32*4);
     player->setScale(4, 4);
@@ -58,6 +60,8 @@ int main(void)
         ClearBackground(RAYWHITE);
 
         player->draw();
+
+
         DrawText("Amazing Graphics goes here :)", 190, 200, 20, LIGHTGRAY);
 
         EndTextureMode();
