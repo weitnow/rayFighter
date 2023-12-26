@@ -12,7 +12,7 @@ class BaseCharacter : public BaseGameObject {
 public:
     BaseCharacter();
 
-    BaseCharacter(int x, int y);
+    BaseCharacter(float x, float y);
 
     ~BaseCharacter();
 

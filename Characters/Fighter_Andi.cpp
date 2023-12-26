@@ -4,8 +4,9 @@
 
 #include "Fighter_Andi.h"
 
-Fighter_Andi::Fighter_Andi(int x, int y) : BaseCharacter(x, y)  {
+Fighter_Andi::Fighter_Andi(float x, float y) : BaseCharacter(x, y)  {
     myTexture = LoadTexture("Assets/Graphics/gbFighter.png");
+
 }
 
 Fighter_Andi::~Fighter_Andi() {
@@ -13,7 +14,7 @@ Fighter_Andi::~Fighter_Andi() {
 }
 
 void Fighter_Andi::update(float deltaTime) {
-    pos.x++;
+    //pos.x++;
     BaseCharacter::update(deltaTime);
 }
 

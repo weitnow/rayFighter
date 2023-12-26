@@ -5,12 +5,12 @@
 #include "BaseCharacter.h"
 
 
-BaseCharacter::BaseCharacter() {
-    BaseGameObject();
+BaseCharacter::BaseCharacter() : BaseGameObject() {
+
 }
 
-BaseCharacter::BaseCharacter(int x, int y) {
-    BaseGameObject(x, y);
+BaseCharacter::BaseCharacter(float x, float y) : BaseGameObject(x, y) {
+
 }
 
 

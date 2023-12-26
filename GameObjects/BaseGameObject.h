@@ -9,19 +9,21 @@
 class BaseGameObject {
 public:
     BaseGameObject();
-    BaseGameObject(int x, int y);
-    BaseGameObject(int x, int y, float width, float height);
+    BaseGameObject(float x, float y);
+    BaseGameObject(float x, float y, float width, float height);
     ~BaseGameObject();
 
     void update(float deltaTime);
     void draw();
 
     //position
-    void setPos(int x, int y);
+    void setPos(float x, float y);
+    void setPos(Vector2 pos);
     Vector2 getPos();
 
     //scale
-    void setScale(int x, int y);
+    void setScale(float x, float y);
+    void setScale(Vector2 scale);
     Vector2 getScale();
 
 protected:
@@ -37,6 +39,7 @@ protected:
     Vector2 pos;
     Vector2 scale;
     Texture2D myTexture;
+    Texture2D myDebug32x32Texture;
 
     // Define the source rectangle (which part of myTexture should be drawn)
     Rectangle sourceRect;

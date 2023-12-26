@@ -36,7 +36,8 @@ add_executable(${PROJECT_NAME} main.cpp
         Utils/AsepriteManager.h
         Characters/Fighter_Andi.cpp
         Characters/Fighter_Andi.h
-        Constants.h)
+        Constants.h
+        Constants.cpp)
 #set(raylib_VERBOSE 1)
 target_link_libraries(${PROJECT_NAME} raylib nlohmann_json::nlohmann_json)
 

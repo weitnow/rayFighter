@@ -12,17 +12,18 @@ BaseGameObject::BaseGameObject() {
     scalex = 1.f;
     scaley = 1.f;
     pos = {Constants::X, Constants::Y};
-    origin = { width/2, height/2};
+    origin = {0, 0};
     rotation = 0.0f;
     sourceRect = {0.0f, 0.0f, 32, 32};
     destRect = {pos.x, pos.y, scaley * width, scalex * width };
+    myDebug32x32Texture = LoadTexture("Assets/Graphics/debug32x32.png");
 }
 
-BaseGameObject::BaseGameObject(int x, int y) : BaseGameObject() {
+BaseGameObject::BaseGameObject(float x, float y) : BaseGameObject() {
     setPos(x, y);
 }
 
-BaseGameObject::BaseGameObject(int x, int y, float width, float height) : BaseGameObject(x, y) {
+BaseGameObject::BaseGameObject(float x, float y, float width, float height) : BaseGameObject(x, y) {
     this->width = width;
     this->height = height;
 }
@@ -43,9 +44,19 @@ void BaseGameObject::update(float deltaTime) {
 void BaseGameObject::draw() {
 
 #ifdef DEBUG
+    //draw debug.png 32x32 pixel
+    if(scalex == 1 && scaley == 1)
+    {
+        DrawTextureRec(myDebug32x32Texture, sourceRect, pos, WHITE);
+    } else
+    {
+        DrawTexturePro(myDebug32x32Texture, sourceRect, destRect, origin, rotation, WHITE);
+    }
+
     //draw a rectangle
-    DrawRectangle(pos.x, pos.y, width, height, RED);
+    DrawRectangle(pos.x, pos.y, width * scalex, height * scaley, Colors::getRedTransparent());
 #endif
+
 
     if(scalex == 1 && scaley == 1)
     {
@@ -53,21 +64,25 @@ void BaseGameObject::draw() {
     } else
     {
         DrawTexturePro(myTexture, sourceRect, destRect, origin, rotation, WHITE);
+
     }
 
 }
 
-void BaseGameObject::setPos(int x, int y) {
+void BaseGameObject::setPos(float x, float y) {
     pos.x = x;
     pos.y = y;
 
+}
+void BaseGameObject::setPos(Vector2 pos) {
+    BaseGameObject::setPos(pos.x, pos.y);
 }
 
 Vector2 BaseGameObject::getPos() {
     return pos;
 }
 
-void BaseGameObject::setScale(int x, int y) {
+void BaseGameObject::setScale(float x, float y) {
     scalex = x;
     scaley = y;
 
@@ -77,7 +92,9 @@ void BaseGameObject::setScale(int x, int y) {
     // updating the width and height of the destRect which is used for DrawTexturePro function in the draw methode of this class
     destRect.width = scalex * width;
     destRect.height = scaley * height;
-
+}
+void BaseGameObject::setScale(Vector2 scale) {
+    BaseGameObject::setScale(scale.x, scale.y);
 }
 
 Vector2 BaseGameObject::getScale() {
