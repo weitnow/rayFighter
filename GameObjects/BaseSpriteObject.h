@@ -13,7 +13,6 @@ class BaseSpriteObject {
 public:
     BaseSpriteObject();
     BaseSpriteObject(float x, float y);
-    BaseSpriteObject(float x, float y, float width, float height);
     ~BaseSpriteObject();
 
     void update(float deltaTime);
@@ -33,18 +32,14 @@ public:
     void addCollisionBox(std::string hitboxName);
 
 protected:
-    float height;
-    float width;
-    float scalex;
-    float scaley;
-
     // Define the origin point for rotation (the center of the rectangle)
     Vector2 origin;
-
     float rotation;
     Vector2 pos;
     Vector2 scale;
     Texture2D myTexture;
+
+    // a 32x32 Texture which will be drawn in debug-mode
     Texture2D myDebug32x32Texture;
 
     // Define the source rectangle (which part of myTexture should be drawn)
@@ -53,6 +48,7 @@ protected:
     // Define the destination rectangle (used for scaling the object)
     Rectangle destRect;
 
+    // a map which holds all the collisionbox-obj
     std::map<std::string, CollisionBox2D> collisionboxes;
 };
 

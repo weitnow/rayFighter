@@ -7,15 +7,13 @@
 #include "../Constants.h"
 
 BaseSpriteObject::BaseSpriteObject() {
-    height = Constants::HEIGHT;
-    width = Constants::WIDTH;
-    scalex = 1.f;
-    scaley = 1.f;
+    scale.x = 1.f;
+    scale.y = 1.f;
     pos = {Constants::X, Constants::Y};
     origin = {0, 0};
     rotation = 0.0f;
     sourceRect = {0.0f, 0.0f, 32, 32};
-    destRect = {pos.x, pos.y, scaley * width, scalex * width };
+    destRect = {pos.x, pos.y, scale.y * sourceRect.height, scale.x * sourceRect.width };
     myDebug32x32Texture = LoadTexture("Assets/Graphics/debug32x32.png");
 }
 
@@ -23,17 +21,12 @@ BaseSpriteObject::BaseSpriteObject(float x, float y) : BaseSpriteObject() {
     setPos(x, y);
 }
 
-BaseSpriteObject::BaseSpriteObject(float x, float y, float width, float height) : BaseSpriteObject(x, y) {
-    this->width = width;
-    this->height = height;
-}
-
 BaseSpriteObject::~BaseSpriteObject() {
 
 }
 
 void BaseSpriteObject::update(float deltaTime) {
-    if (scalex != 1 || scaley != 1)
+    if (scale.x != 1 || scale.y != 1)
     {
         // then we have to update the destRect which we use for the DrawTexturePro function in the draw method of this class
         destRect.x = pos.x;
@@ -51,7 +44,7 @@ void BaseSpriteObject::draw() {
 
 #ifdef DEBUG
     //draw debug.png 32x32 pixel
-    if(scalex == 1 && scaley == 1)
+    if(scale.x == 1 && scale.y == 1)
     {
         DrawTextureRec(myDebug32x32Texture, sourceRect, pos, WHITE);
     } else
@@ -72,7 +65,7 @@ void BaseSpriteObject::draw() {
 #endif
 
     // draw myTexture
-    if(scalex == 1 && scaley == 1)
+    if(scale.x == 1 && scale.y == 1)
     {
         DrawTextureRec(myTexture, sourceRect, pos, WHITE);
     } else
@@ -96,15 +89,12 @@ Vector2 BaseSpriteObject::getPos() {
 }
 
 void BaseSpriteObject::setScale(float x, float y) {
-    scalex = x;
-    scaley = y;
-
     scale.x = x;
     scale.y = y;
 
     // updating the width and height of the destRect which is used for DrawTexturePro function in the draw methode of this class
-    destRect.width = scalex * width;
-    destRect.height = scaley * height;
+    destRect.width = scale.x * sourceRect.width;
+    destRect.height = scale.y * sourceRect.height;
 }
 void BaseSpriteObject::setScale(Vector2 scale) {
     BaseSpriteObject::setScale(scale.x, scale.y);

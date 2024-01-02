@@ -16,10 +16,14 @@ namespace Constants {
     const float X = 100.0f;
     const float HEIGHT = 32.f;
     const float WIDTH = 32.f;
+    const Color GAMEOBJ_COLOR = BLUE;
+    const Vector2 GAMEOBJ_SIZE = {3, 3};
 }
 
 namespace Colors {
     Color getRedTransparent();
 }
+
+
 
 #endif //GBFIGHTER_CONSTANTS_H

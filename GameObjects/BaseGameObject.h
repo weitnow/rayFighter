@@ -8,6 +8,7 @@
 #include <raylib.h>
 #include "BaseSpriteObject.h"
 #include "CollisionBox2D.h"
+#include "BaseSpriteObject.h"
 
 class BaseGameObject {
 public:
@@ -28,31 +29,25 @@ public:
     void setScale(Vector2 scale);
     Vector2 getScale();
 
+    //sprites
+
+
     //hitboxes
     void addCollisionBox(std::string hitboxName);
+    void removeCollisionBox(std::string hitboxName);
+
+
 
 protected:
-    float height;
-    float width;
-    float scalex;
-    float scaley;
-
-    // Define the origin point for rotation (the center of the rectangle)
-    Vector2 origin;
-
-    float rotation;
     Vector2 pos;
     Vector2 scale;
-    Texture2D myTexture;
-    Texture2D myDebug32x32Texture;
 
-    // Define the source rectangle (which part of myTexture should be drawn)
-    Rectangle sourceRect;
+    // a map which holds all the sprite-objs
+    std::map<std::string, BaseSpriteObject> sprites;
 
-    // Define the destination rectangle (used for scaling the object)
-    Rectangle destRect;
+    // a map which holds all the collisionbox-objs
+    std::map<std::string, CollisionBox2D> collisionBoxes;
 
-    std::map<std::string, CollisionBox2D> collisionboxes;
 };
 
 
