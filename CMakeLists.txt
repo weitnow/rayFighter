@@ -28,8 +28,8 @@ find_package(nlohmann_json CONFIG REQUIRED)
 
 # Our Project
 add_executable(${PROJECT_NAME} main.cpp
-        GameObjects/BaseGameObject.cpp
-        GameObjects/BaseGameObject.h
+        GameObjects/BaseSpriteObject.cpp
+        GameObjects/BaseSpriteObject.h
         Characters/BaseCharacter.cpp
         Characters/BaseCharacter.h
         Utils/AsepriteManager.cpp
@@ -38,8 +38,12 @@ add_executable(${PROJECT_NAME} main.cpp
         Characters/Fighter_Andi.h
         Constants.h
         Constants.cpp
-        Utils/Camera.cpp
-        Utils/Camera.h
+        Utils/Screen2DManager.cpp
+        Utils/Screen2DManager.h
+        GameObjects/CollisionBox2D.cpp
+        GameObjects/CollisionBox2D.h
+        GameObjects/BaseGameObject.cpp
+        GameObjects/BaseGameObject.h
 )
 #set(raylib_VERBOSE 1)
 target_link_libraries(${PROJECT_NAME} raylib nlohmann_json::nlohmann_json)

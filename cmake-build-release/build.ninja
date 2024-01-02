@@ -57,9 +57,9 @@ build CMakeFiles/gbFighter.dir/main.cpp.o: CXX_COMPILER__gbFighter_unscanned_Rel
   OBJECT_DIR = CMakeFiles/gbFighter.dir
   OBJECT_FILE_DIR = CMakeFiles/gbFighter.dir
 
-build CMakeFiles/gbFighter.dir/GameObjects/BaseGameObject.cpp.o: CXX_COMPILER__gbFighter_unscanned_Release /home/weitnow/CLionProjects/gbFighter/GameObjects/BaseGameObject.cpp || cmake_object_order_depends_target_gbFighter
+build CMakeFiles/gbFighter.dir/GameObjects/BaseSpriteObject.cpp.o: CXX_COMPILER__gbFighter_unscanned_Release /home/weitnow/CLionProjects/gbFighter/GameObjects/BaseSpriteObject.cpp || cmake_object_order_depends_target_gbFighter
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
-  DEP_FILE = CMakeFiles/gbFighter.dir/GameObjects/BaseGameObject.cpp.o.d
+  DEP_FILE = CMakeFiles/gbFighter.dir/GameObjects/BaseSpriteObject.cpp.o.d
   FLAGS = -O3 -DNDEBUG -fdiagnostics-color=always
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -isystem /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/include
   OBJECT_DIR = CMakeFiles/gbFighter.dir
@@ -97,13 +97,29 @@ build CMakeFiles/gbFighter.dir/Constants.cpp.o: CXX_COMPILER__gbFighter_unscanne
   OBJECT_DIR = CMakeFiles/gbFighter.dir
   OBJECT_FILE_DIR = CMakeFiles/gbFighter.dir
 
-build CMakeFiles/gbFighter.dir/Utils/Camera.cpp.o: CXX_COMPILER__gbFighter_unscanned_Release /home/weitnow/CLionProjects/gbFighter/Utils/Camera.cpp || cmake_object_order_depends_target_gbFighter
+build CMakeFiles/gbFighter.dir/Utils/Screen2DManager.cpp.o: CXX_COMPILER__gbFighter_unscanned_Release /home/weitnow/CLionProjects/gbFighter/Utils/Screen2DManager.cpp || cmake_object_order_depends_target_gbFighter
   DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
-  DEP_FILE = CMakeFiles/gbFighter.dir/Utils/Camera.cpp.o.d
+  DEP_FILE = CMakeFiles/gbFighter.dir/Utils/Screen2DManager.cpp.o.d
   FLAGS = -O3 -DNDEBUG -fdiagnostics-color=always
   INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -isystem /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/include
   OBJECT_DIR = CMakeFiles/gbFighter.dir
   OBJECT_FILE_DIR = CMakeFiles/gbFighter.dir/Utils
+
+build CMakeFiles/gbFighter.dir/GameObjects/CollisionBox2D.cpp.o: CXX_COMPILER__gbFighter_unscanned_Release /home/weitnow/CLionProjects/gbFighter/GameObjects/CollisionBox2D.cpp || cmake_object_order_depends_target_gbFighter
+  DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
+  DEP_FILE = CMakeFiles/gbFighter.dir/GameObjects/CollisionBox2D.cpp.o.d
+  FLAGS = -O3 -DNDEBUG -fdiagnostics-color=always
+  INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -isystem /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/include
+  OBJECT_DIR = CMakeFiles/gbFighter.dir
+  OBJECT_FILE_DIR = CMakeFiles/gbFighter.dir/GameObjects
+
+build CMakeFiles/gbFighter.dir/GameObjects/BaseGameObject.cpp.o: CXX_COMPILER__gbFighter_unscanned_Release /home/weitnow/CLionProjects/gbFighter/GameObjects/BaseGameObject.cpp || cmake_object_order_depends_target_gbFighter
+  DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP
+  DEP_FILE = CMakeFiles/gbFighter.dir/GameObjects/BaseGameObject.cpp.o.d
+  FLAGS = -O3 -DNDEBUG -fdiagnostics-color=always
+  INCLUDES = -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -isystem /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/include
+  OBJECT_DIR = CMakeFiles/gbFighter.dir
+  OBJECT_FILE_DIR = CMakeFiles/gbFighter.dir/GameObjects
 
 
 # =============================================================================
@@ -113,7 +129,7 @@ build CMakeFiles/gbFighter.dir/Utils/Camera.cpp.o: CXX_COMPILER__gbFighter_unsca
 #############################################
 # Link the executable gbFighter
 
-build gbFighter: CXX_EXECUTABLE_LINKER__gbFighter_Release CMakeFiles/gbFighter.dir/main.cpp.o CMakeFiles/gbFighter.dir/GameObjects/BaseGameObject.cpp.o CMakeFiles/gbFighter.dir/Characters/BaseCharacter.cpp.o CMakeFiles/gbFighter.dir/Utils/AsepriteManager.cpp.o CMakeFiles/gbFighter.dir/Characters/Fighter_Andi.cpp.o CMakeFiles/gbFighter.dir/Constants.cpp.o CMakeFiles/gbFighter.dir/Utils/Camera.cpp.o | _deps/raylib-build/raylib/libraylib.a /usr/lib/x86_64-linux-gnu/libOpenGL.so /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libGLU.so _deps/raylib-build/raylib/external/glfw/src/libglfw3.a /usr/lib/x86_64-linux-gnu/librt.a /usr/lib/x86_64-linux-gnu/libm.so || _deps/raylib-build/raylib/external/glfw/src/libglfw3.a _deps/raylib-build/raylib/libraylib.a
+build gbFighter: CXX_EXECUTABLE_LINKER__gbFighter_Release CMakeFiles/gbFighter.dir/main.cpp.o CMakeFiles/gbFighter.dir/GameObjects/BaseSpriteObject.cpp.o CMakeFiles/gbFighter.dir/Characters/BaseCharacter.cpp.o CMakeFiles/gbFighter.dir/Utils/AsepriteManager.cpp.o CMakeFiles/gbFighter.dir/Characters/Fighter_Andi.cpp.o CMakeFiles/gbFighter.dir/Constants.cpp.o CMakeFiles/gbFighter.dir/Utils/Screen2DManager.cpp.o CMakeFiles/gbFighter.dir/GameObjects/CollisionBox2D.cpp.o CMakeFiles/gbFighter.dir/GameObjects/BaseGameObject.cpp.o | _deps/raylib-build/raylib/libraylib.a /usr/lib/x86_64-linux-gnu/libOpenGL.so /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libGLU.so _deps/raylib-build/raylib/external/glfw/src/libglfw3.a /usr/lib/x86_64-linux-gnu/librt.a /usr/lib/x86_64-linux-gnu/libm.so || _deps/raylib-build/raylib/external/glfw/src/libglfw3.a _deps/raylib-build/raylib/libraylib.a
   FLAGS = -O3 -DNDEBUG
   LINK_LIBRARIES = _deps/raylib-build/raylib/libraylib.a  -lm  -latomic  -lpthread  /usr/lib/x86_64-linux-gnu/libOpenGL.so  /usr/lib/x86_64-linux-gnu/libGLX.so  /usr/lib/x86_64-linux-gnu/libGLU.so  _deps/raylib-build/raylib/external/glfw/src/libglfw3.a  /usr/lib/x86_64-linux-gnu/librt.a  -lm  -ldl
   OBJECT_DIR = CMakeFiles/gbFighter.dir

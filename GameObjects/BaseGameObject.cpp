@@ -1,9 +1,9 @@
 //
-// Created by weitnow on 12/7/23.
+// Created by weitnow on 1/1/24.
 //
 
 #include "BaseGameObject.h"
-#include <iostream>
+
 #include "../Constants.h"
 
 BaseGameObject::BaseGameObject() {
@@ -23,10 +23,6 @@ BaseGameObject::BaseGameObject(float x, float y) : BaseGameObject() {
     setPos(x, y);
 }
 
-BaseGameObject::BaseGameObject(float x, float y, float width, float height) : BaseGameObject(x, y) {
-    this->width = width;
-    this->height = height;
-}
 
 BaseGameObject::~BaseGameObject() {
 
@@ -38,6 +34,12 @@ void BaseGameObject::update(float deltaTime) {
         // then we have to update the destRect which we use for the DrawTexturePro function in the draw method of this class
         destRect.x = pos.x;
         destRect.y = pos.y;
+    }
+
+    // update hitboxes
+    for(auto& pair : collisionboxes)
+    {
+        pair.second.update(deltaTime);
     }
 }
 
@@ -54,10 +56,18 @@ void BaseGameObject::draw() {
     }
 
     //draw a rectangle
-    DrawRectangle(pos.x, pos.y, width * scalex, height * scaley, Colors::getRedTransparent());
+    //DrawRectangle(pos.x, pos.y, width * scalex, height * scaley, Colors::getRedTransparent());
+
+    // draw collisionboxes
+    for(auto& pair : collisionboxes)
+    {
+        pair.second.draw();
+    }
+
+
 #endif
 
-
+    // draw myTexture
     if(scalex == 1 && scaley == 1)
     {
         DrawTextureRec(myTexture, sourceRect, pos, WHITE);
@@ -66,7 +76,6 @@ void BaseGameObject::draw() {
         DrawTexturePro(myTexture, sourceRect, destRect, origin, rotation, WHITE);
 
     }
-
 }
 
 void BaseGameObject::setPos(float x, float y) {
@@ -99,4 +108,9 @@ void BaseGameObject::setScale(Vector2 scale) {
 
 Vector2 BaseGameObject::getScale() {
     return scale;
+}
+
+void BaseGameObject::addCollisionBox(std::string hitboxName) {
+
+    collisionboxes[hitboxName] = CollisionBox2D{};
 }

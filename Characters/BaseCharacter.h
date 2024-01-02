@@ -5,10 +5,10 @@
 #ifndef GBFIGHTER_BASECHARACTER_H
 #define GBFIGHTER_BASECHARACTER_H
 
-#include "../GameObjects/BaseGameObject.h"
+#include "../GameObjects/BaseSpriteObject.h"
 
 
-class BaseCharacter : public BaseGameObject {
+class BaseCharacter : public BaseSpriteObject {
 public:
     BaseCharacter();
 

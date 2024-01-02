@@ -3,28 +3,20 @@
 #include "Characters/Fighter_Andi.h"
 #include "Utils/AsepriteManager.h"
 #include "Constants.h"
-
-Rectangle CalculateScaledRectangle(RenderTexture2D target, int gameScreenWidth, int gameScreenHeight);
-
+#include "Utils/Screen2DManager.h"
+#include "GameObjects/BaseGameObject.h"
 
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
 int main(void)
 {
-    // Initialize window
-    //--------------------------------------------------------------------------------------
-    const int screenWidth = 1920;
-    const int screenHeight = 1080;
-    InitWindow(screenWidth, screenHeight, "C++ gbFighter");
+    // Initialize screen2DManager and set window size and title
+    Screen2DManager screen2DManager(1920, 1080, "C++ gbFighter");
 
     // Create a RenderTexture2D to be used for render to texture
-    const int gameScreenWidth = 960;
-    const int gameScreenHeight = 540;
-    RenderTexture2D target = LoadRenderTexture(gameScreenWidth, gameScreenHeight);
+    screen2DManager.createRenderTarget("mainRenderTarget", 480, 270);
 
-    // Setup the viewport rectangle properly scaled
-    Rectangle scaledRec;
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -34,9 +26,9 @@ int main(void)
     asepriteManager.showLoadedAnimFiles();
 
 
+    auto* player1 = new BaseGameObject(200, 270 - 48);
+    player1->addCollisionBox("body");
 
-    auto* player = new BaseGameObject(200, 540-32*4);
-    player->setScale(4, 4);
 
 
     // Main game loop
@@ -44,46 +36,55 @@ int main(void)
     {
         float deltaTime = GetFrameTime();
 
-        // Assign calculated result from function to scaledRec
-        scaledRec = CalculateScaledRectangle(target, gameScreenWidth, gameScreenHeight);
-
         //----------------------------------------------------------------------------------
         // Update
         //----------------------------------------------------------------------------------
-        player->update(deltaTime);
+        player1->update(deltaTime);
+        screen2DManager.update(deltaTime);
 
         //----------------------------------------------------------------------------------
         // Draw to RenderTexture
         //----------------------------------------------------------------------------------
-        BeginTextureMode(target);
+
+        //BeginTextureMode(target);
+        screen2DManager.beginDrawToRenderTarget("mainRenderTarget");
 
         ClearBackground(RAYWHITE);
 
-        player->draw();
+        player1->draw();
 
+        /*
+        BeginMode2D(camera);
 
-        DrawText("Amazing Graphics goes here :)", 190, 200, 20, LIGHTGRAY);
+        player1->draw();
+        player2->draw();
 
-        EndTextureMode();
+        EndMode2D();
+        */
+
+        DrawText("This is the Rendertarget - mainRenderTarget", 190, 200, 20, LIGHTGRAY);
+
+        screen2DManager.endDrawToRenderTarget();
 
 
         //----------------------------------------------------------------------------------
-        // Draw
+        // Draw to Screen
         //----------------------------------------------------------------------------------
-        BeginDrawing();
+        screen2DManager.beginDrawToScreen();
 
         ClearBackground(RAYWHITE);
-
-        //player->draw();
-        //DrawText("Amazing Graphics goes here :)", 190, 200, 20, LIGHTGRAY);
 
         // Draw RenderTexture to Screen
-        DrawTexturePro(target.texture, (Rectangle){ 0.0f, 0.0f, (float)target.texture.width, (float)-target.texture.height }, scaledRec, (Vector2){ 0, 0 }, 0.0f, WHITE);
+        screen2DManager.drawRenderTarget("mainRenderTarget");
+
+        DrawText("Using [A]/[S] to change camera rotation", 10, 10+30, 20, BLACK);
+        DrawText("Using [Z]/[X] to change camera zoom", 10, 40+30, 20, BLACK);
+
         #ifdef DEBUG
             DrawFPS(10, 10);
         #endif
 
-        EndDrawing();
+        screen2DManager.endDrawToScreen();
         //----------------------------------------------------------------------------------
     }
 
@@ -95,21 +96,3 @@ int main(void)
     return 0;
 }
 
-
-// Function to calculate scaled rectangle dimensions
-Rectangle CalculateScaledRectangle(RenderTexture2D target, int gameScreenWidth, int gameScreenHeight) {
-    target.texture.height = GetScreenHeight();
-    target.texture.width = (float)target.texture.height*((float)gameScreenWidth/(float)gameScreenHeight);
-    int scaleHangover = 0;
-
-    if (target.texture.width > GetScreenWidth())
-    {
-        target.texture.width = GetScreenWidth();
-        target.texture.height = (float)target.texture.width*((float)gameScreenHeight/(float)gameScreenWidth);
-    }
-
-    scaleHangover = (GetScreenWidth() - (int)target.texture.width) % 2;
-    target.texture.width += scaleHangover;
-
-    return (Rectangle){ static_cast<float>((GetScreenWidth() - target.texture.width)/2), static_cast<float>((GetScreenHeight() - target.texture.height)/2), static_cast<float>(target.texture.width), static_cast<float>(target.texture.height) };
-}

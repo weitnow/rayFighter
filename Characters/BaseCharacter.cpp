@@ -5,11 +5,11 @@
 #include "BaseCharacter.h"
 
 
-BaseCharacter::BaseCharacter() : BaseGameObject() {
+BaseCharacter::BaseCharacter() : BaseSpriteObject() {
 
 }
 
-BaseCharacter::BaseCharacter(float x, float y) : BaseGameObject(x, y) {
+BaseCharacter::BaseCharacter(float x, float y) : BaseSpriteObject(x, y) {
 
 }
 
@@ -19,11 +19,11 @@ BaseCharacter::~BaseCharacter() {
 }
 
 void BaseCharacter::update(float deltaTime) {
-    BaseGameObject::update(deltaTime);
+    BaseSpriteObject::update(deltaTime);
 }
 
 void BaseCharacter::draw() {
-    BaseGameObject::draw();
+    BaseSpriteObject::draw();
 }
 
 

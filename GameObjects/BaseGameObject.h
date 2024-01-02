@@ -1,16 +1,18 @@
 //
-// Created by weitnow on 12/7/23.
+// Created by weitnow on 1/1/24.
 //
 
 #ifndef GBFIGHTER_BASEGAMEOBJECT_H
 #define GBFIGHTER_BASEGAMEOBJECT_H
-#include "raylib.h"
+
+#include <raylib.h>
+#include "BaseSpriteObject.h"
+#include "CollisionBox2D.h"
 
 class BaseGameObject {
 public:
     BaseGameObject();
     BaseGameObject(float x, float y);
-    BaseGameObject(float x, float y, float width, float height);
     ~BaseGameObject();
 
     void update(float deltaTime);
@@ -25,6 +27,9 @@ public:
     void setScale(float x, float y);
     void setScale(Vector2 scale);
     Vector2 getScale();
+
+    //hitboxes
+    void addCollisionBox(std::string hitboxName);
 
 protected:
     float height;
@@ -46,6 +51,8 @@ protected:
 
     // Define the destination rectangle (used for scaling the object)
     Rectangle destRect;
+
+    std::map<std::string, CollisionBox2D> collisionboxes;
 };
 
 

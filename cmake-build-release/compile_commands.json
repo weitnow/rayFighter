@@ -7,9 +7,9 @@
 },
 {
   "directory": "/home/weitnow/CLionProjects/gbFighter/cmake-build-release",
-  "command": "/usr/bin/c++ -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -isystem /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/include -O3 -DNDEBUG -fdiagnostics-color=always -o CMakeFiles/gbFighter.dir/GameObjects/BaseGameObject.cpp.o -c /home/weitnow/CLionProjects/gbFighter/GameObjects/BaseGameObject.cpp",
-  "file": "/home/weitnow/CLionProjects/gbFighter/GameObjects/BaseGameObject.cpp",
-  "output": "CMakeFiles/gbFighter.dir/GameObjects/BaseGameObject.cpp.o"
+  "command": "/usr/bin/c++ -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -isystem /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/include -O3 -DNDEBUG -fdiagnostics-color=always -o CMakeFiles/gbFighter.dir/GameObjects/BaseSpriteObject.cpp.o -c /home/weitnow/CLionProjects/gbFighter/GameObjects/BaseSpriteObject.cpp",
+  "file": "/home/weitnow/CLionProjects/gbFighter/GameObjects/BaseSpriteObject.cpp",
+  "output": "CMakeFiles/gbFighter.dir/GameObjects/BaseSpriteObject.cpp.o"
 },
 {
   "directory": "/home/weitnow/CLionProjects/gbFighter/cmake-build-release",
@@ -37,9 +37,21 @@
 },
 {
   "directory": "/home/weitnow/CLionProjects/gbFighter/cmake-build-release",
-  "command": "/usr/bin/c++ -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -isystem /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/include -O3 -DNDEBUG -fdiagnostics-color=always -o CMakeFiles/gbFighter.dir/Utils/Camera.cpp.o -c /home/weitnow/CLionProjects/gbFighter/Utils/Camera.cpp",
-  "file": "/home/weitnow/CLionProjects/gbFighter/Utils/Camera.cpp",
-  "output": "CMakeFiles/gbFighter.dir/Utils/Camera.cpp.o"
+  "command": "/usr/bin/c++ -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -isystem /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/include -O3 -DNDEBUG -fdiagnostics-color=always -o CMakeFiles/gbFighter.dir/Utils/Screen2DManager.cpp.o -c /home/weitnow/CLionProjects/gbFighter/Utils/Screen2DManager.cpp",
+  "file": "/home/weitnow/CLionProjects/gbFighter/Utils/Screen2DManager.cpp",
+  "output": "CMakeFiles/gbFighter.dir/Utils/Screen2DManager.cpp.o"
+},
+{
+  "directory": "/home/weitnow/CLionProjects/gbFighter/cmake-build-release",
+  "command": "/usr/bin/c++ -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -isystem /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/include -O3 -DNDEBUG -fdiagnostics-color=always -o CMakeFiles/gbFighter.dir/GameObjects/CollisionBox2D.cpp.o -c /home/weitnow/CLionProjects/gbFighter/GameObjects/CollisionBox2D.cpp",
+  "file": "/home/weitnow/CLionProjects/gbFighter/GameObjects/CollisionBox2D.cpp",
+  "output": "CMakeFiles/gbFighter.dir/GameObjects/CollisionBox2D.cpp.o"
+},
+{
+  "directory": "/home/weitnow/CLionProjects/gbFighter/cmake-build-release",
+  "command": "/usr/bin/c++ -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src -I/home/weitnow/CLionProjects/gbFighter/cmake-build-release/_deps/raylib-src/src/external/glfw/include -isystem /home/weitnow/.vcpkg-clion/vcpkg/installed/x64-linux/include -O3 -DNDEBUG -fdiagnostics-color=always -o CMakeFiles/gbFighter.dir/GameObjects/BaseGameObject.cpp.o -c /home/weitnow/CLionProjects/gbFighter/GameObjects/BaseGameObject.cpp",
+  "file": "/home/weitnow/CLionProjects/gbFighter/GameObjects/BaseGameObject.cpp",
+  "output": "CMakeFiles/gbFighter.dir/GameObjects/BaseGameObject.cpp.o"
 },
 {
   "directory": "/home/weitnow/CLionProjects/gbFighter/cmake-build-release",

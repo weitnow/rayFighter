@@ -23,6 +23,6 @@ CMake Deprecation Warning at cmake-build-release/_deps/raylib-src/CMakeLists.txt
 -- Compiling with the flags:
 --   PLATFORM=PLATFORM_DESKTOP
 --   GRAPHICS=GRAPHICS_API_OPENGL_33
--- Configuring done (0.2s)
+-- Configuring done (0.3s)
 -- Generating done (0.0s)
 -- Build files have been written to: /home/weitnow/CLionProjects/gbFighter/cmake-build-release
