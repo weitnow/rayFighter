@@ -29,6 +29,11 @@ int main(void)
     player1->getAnim()->setFrameTag("Walking");
     player1->addCollisionBox("body");
 
+    // Create Player 2
+    BaseGameObject *player2 = new BaseGameObject(150, 270 - 48);
+    player2->addAnim(asepriteManager.getAnimFile("gbFighter"));
+    player2->getAnim()->setFrameTag("Idle");
+
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
@@ -54,6 +59,9 @@ int main(void)
 
         player1->getAnim()->drawCurrentSelectedTag(player1->getPos().x, player1->getPos().y);
 
+        player2->draw();
+
+        player2->getAnim()->drawCurrentSelectedTag(player2->getPos().x, player2->getPos().y);
         /*
         BeginMode2D(camera);
 
@@ -72,14 +80,8 @@ int main(void)
         //----------------------------------------------------------------------------------
         screen2DManager.beginDrawToScreen();
 
-        ClearBackground(GREEN);
-
         // Draw RenderTexture to Screen
         screen2DManager.drawRenderTarget("mainRenderTarget");
-
-        DrawText("Using [A]/[S] to change camera rotation", 10, 10 + 30, 20, BLACK);
-        DrawText("Using [Z]/[X] to change camera zoom", 10, 40 + 30, 20, BLACK);
-        player1->getAnim()->drawCurrentSelectedTag(player1->getPos().x, player1->getPos().y);
 
 #ifdef DEBUG
         DrawFPS(10, 10);
