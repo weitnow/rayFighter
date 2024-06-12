@@ -3,9 +3,8 @@
 //
 #include "AsepriteManager.h"
 
-// --------------------------------- AsepriteManager class
-// --------------------------------- // foldername where the png and json-files
-// are located
+// --------------------------------- AsepriteManager class --------------------------------- //
+// foldername where the png and json-files are located
 AsepriteManager::AsepriteManager(std::string foldername)
 {
     this->foldername = foldername;
@@ -37,7 +36,7 @@ nlohmann::json* AsepriteManager::loadJsonFile(const std::string& filename)
             // load jsondata from file and put it into nLohmann::json jsondata
             i >> *jsondata;
         }
-        catch (nlohmann::json::parse_error& e)
+        catch (nlohmann::json::parse_error& e) //
         {
             std::cerr << "Failed to parse JSON: " << e.what() << "\n";
             delete jsondata;
@@ -89,8 +88,7 @@ void AsepriteManager::showLoadedAnimFiles()
     }
 }
 
-// --------------------------------- AsepriteAnimationFile class
-// --------------------------------- //
+// --------------------------------- AsepriteAnimationFile class --------------------------------- //
 /**
  * @brief This function returns a pointer to an AnimationObject
  * @param filename filename of a .json-object without .json at the end

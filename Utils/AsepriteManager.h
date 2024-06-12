@@ -6,11 +6,11 @@
 #define GBFIGHTER_ASEPRITEMANAGER_H
 
 #include "../nlohmann/json.hpp"
-#include <string>
 #include "raylib.h"
-#include <map>
 #include <fstream>
 #include <iostream>
+#include <map>
+#include <string>
 
 struct FrameTag; // forward declaration
 
@@ -42,12 +42,12 @@ public:
     ~AsepriteAnimationFile();
 
     // methods
-    FrameTag getFrameTag(const std::string &tagname);
-    void drawFrame(const std::string &tagname, int x, int y, float scale = 1.0f, Color tint = WHITE);
+    FrameTag getFrameTag(const std::string& tagname);
+    void drawFrame(const std::string& tagname, int x, int y, float scale = 1.0f, Color tint = WHITE);
     void drawCurrentSelectedTag(int x, int y);
     void update(float deltaTime);
     void nextFrame();
-    void setFrameTag(const std::string &tagname);
+    void setFrameTag(const std::string& tagname);
 
     // member variables
     std::map<std::string, FrameTag> frameTags;
@@ -72,7 +72,7 @@ public:
      *
      * @param filename the filename without extension of the png and json file of aseprite. For example "gbFighter"
      */
-    void loadAnimFile(const std::string &filename);
+    void loadAnimFile(const std::string& filename);
 
     void showLoadedAnimFiles();
 
@@ -82,14 +82,14 @@ public:
      * @param filename
      * @return AsepriteAnimationFile*
      */
-    AsepriteAnimationFile *getAnimFile(const std::string &filename);
+    AsepriteAnimationFile* getAnimFile(const std::string& filename);
     void UnloadRessources();
 
     // member variable
-    std::map<std::string, AsepriteAnimationFile *> animFiles; // map<animationfilename><animationobject*>
+    std::map<std::string, AsepriteAnimationFile*> animFiles; // map<animationfilename><animationobject*>
 private:
     std::string foldername;
-    nlohmann::json *loadJsonFile(const std::string &filename);
+    nlohmann::json* loadJsonFile(const std::string& filename);
 };
 
 // --------------------------------- FrameTag struct --------------------------------- //
