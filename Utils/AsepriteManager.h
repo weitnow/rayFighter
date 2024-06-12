@@ -6,7 +6,7 @@
 #define GBFIGHTER_ASEPRITEMANAGER_H
 
 #include "../nlohmann/json.hpp"
-#include <string> // Added string include here
+#include <string>
 #include "raylib.h"
 #include <map>
 #include <fstream>
@@ -14,6 +14,7 @@
 
 struct FrameTag; // forward declaration
 
+// --------------------------------- AsepriteAnimationFile class --------------------------------- //
 /**
  * @param filename filename of the aseprite file
  * @param frameTags map of frame tags e.g. idle, walk, jump, etc.
@@ -52,6 +53,8 @@ public:
     std::map<std::string, FrameTag> frameTags;
 };
 
+// --------------------------------- AsepriteManager class --------------------------------- //
+
 /**
  * @class AsepriteManager
  * @brief The object instantiated of this class controlls the loading of sprites
@@ -72,6 +75,13 @@ public:
     void loadAnimFile(const std::string &filename);
 
     void showLoadedAnimFiles();
+
+    /**
+     * @brief Get the Anim File object
+     *
+     * @param filename
+     * @return AsepriteAnimationFile*
+     */
     AsepriteAnimationFile *getAnimFile(const std::string &filename);
     void UnloadRessources();
 
@@ -81,6 +91,8 @@ private:
     std::string foldername;
     nlohmann::json *loadJsonFile(const std::string &filename);
 };
+
+// --------------------------------- FrameTag struct --------------------------------- //
 
 struct FrameTag
 {

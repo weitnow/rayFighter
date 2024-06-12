@@ -3,7 +3,9 @@
 //
 #include "AsepriteManager.h"
 
-// foldername where the png and json-files are located
+// --------------------------------- AsepriteManager class
+// --------------------------------- // foldername where the png and json-files
+// are located
 AsepriteManager::AsepriteManager(std::string foldername)
 {
     this->foldername = foldername;
@@ -18,11 +20,11 @@ AsepriteManager::~AsepriteManager()
  * @param filename filename of a .json-object without .json at the end
  * @return nlohmann::json* : A pointer to a json-object
  */
-nlohmann::json *AsepriteManager::loadJsonFile(const std::string &filename)
+nlohmann::json* AsepriteManager::loadJsonFile(const std::string& filename)
 {
     std::string path_with_filename = foldername + filename + ".json";
     std::ifstream i(path_with_filename);
-    nlohmann::json *jsondata = new nlohmann::json();
+    nlohmann::json* jsondata = new nlohmann::json();
     if (!i)
     {
         std::cerr << "Failed to open '" << path_with_filename << "'\n";
@@ -35,7 +37,7 @@ nlohmann::json *AsepriteManager::loadJsonFile(const std::string &filename)
             // load jsondata from file and put it into nLohmann::json jsondata
             i >> *jsondata;
         }
-        catch (nlohmann::json::parse_error &e)
+        catch (nlohmann::json::parse_error& e)
         {
             std::cerr << "Failed to parse JSON: " << e.what() << "\n";
             delete jsondata;
@@ -46,19 +48,19 @@ nlohmann::json *AsepriteManager::loadJsonFile(const std::string &filename)
 }
 
 /**
- * After loadAnimFile is executed the AsepriteManager animFiles-Obj of type maps holds
- * animFiles[gbFighter] = AnimationObject*
- * AnimationObject has a frameTags of type maps which holds frameTags[idle] = pair<from, to>
+ * After loadAnimFile is executed the AsepriteManager animFiles-Obj of type maps
+ * holds animFiles[gbFighter] = AnimationObject* AnimationObject has a frameTags
+ * of type maps which holds frameTags[idle] = pair<from, to>
  * @param filename
  */
-void AsepriteManager::loadAnimFile(const std::string &filename)
+void AsepriteManager::loadAnimFile(const std::string& filename)
 {
     // create a new AnimationObject and put it into the map
-    AsepriteAnimationFile *AnimObjPtr = new AsepriteAnimationFile(filename, this->foldername);
+    AsepriteAnimationFile* AnimObjPtr = new AsepriteAnimationFile(filename, this->foldername);
     animFiles[filename] = AnimObjPtr;
 
     // create a jsonfile-ptr and load the jsonfile
-    nlohmann::json *jsonfile = loadJsonFile(filename);
+    nlohmann::json* jsonfile = loadJsonFile(filename);
 
     // get how many frameTags are in the jsonfile and loop through them
     int frameTagSize = (*jsonfile)["meta"]["frameTags"].size();
@@ -80,29 +82,32 @@ void AsepriteManager::loadAnimFile(const std::string &filename)
 void AsepriteManager::showLoadedAnimFiles()
 {
     std::cout << "Loaded AsepriteAnimationFiles:\n";
-    for (auto &pair : animFiles)
+    for (auto& pair : animFiles)
     {
-        std::cout << "Filename: " << pair.first << ", AsepriteAnimationFile object address: " << pair.second << std::endl;
+        std::cout << "Filename: " << pair.first << ", AsepriteAnimationFile object address: " << pair.second
+                  << std::endl;
     }
 }
 
+// --------------------------------- AsepriteAnimationFile class
+// --------------------------------- //
 /**
  * @brief This function returns a pointer to an AnimationObject
  * @param filename filename of a .json-object without .json at the end
  * @return AnimationObject* : A pointer to an AnimationObject
  *
- * the AnimationObject has a frameTags of type maps which holds frameTags["Animation Name as String"] = pair<from, to>
+ * the AnimationObject has a frameTags of type maps which holds
+ * frameTags["Animation Name as String"] = pair<from, to>
  */
-AsepriteAnimationFile *AsepriteManager::getAnimFile(const std::string &filename)
+AsepriteAnimationFile* AsepriteManager::getAnimFile(const std::string& filename)
 {
-
     return animFiles[filename];
 }
 
 void AsepriteManager::UnloadRessources()
 {
     // delete all pointers and clear memory
-    for (auto &pair : animFiles)
+    for (auto& pair : animFiles)
     {
         delete pair.second;
         pair.second = nullptr;
@@ -128,9 +133,9 @@ AsepriteAnimationFile::~AsepriteAnimationFile()
     UnloadTexture(texture);
 }
 
-FrameTag AsepriteAnimationFile::getFrameTag(const std::string &tagname)
+FrameTag AsepriteAnimationFile::getFrameTag(const std::string& tagname)
 {
-    for (auto &pair : frameTags)
+    for (auto& pair : frameTags)
     {
         if (pair.first == tagname)
         {
@@ -147,7 +152,7 @@ FrameTag AsepriteAnimationFile::getFrameTag(const std::string &tagname)
     return NoframeTagFound;
 }
 
-void AsepriteAnimationFile::drawFrame(const std::string &tagname, int x, int y, float scale, Color tint)
+void AsepriteAnimationFile::drawFrame(const std::string& tagname, int x, int y, float scale, Color tint)
 {
     // todo: implement scale
     FrameTag frameTag = getFrameTag(tagname);
@@ -181,7 +186,7 @@ void AsepriteAnimationFile::nextFrame()
     }
 }
 
-void AsepriteAnimationFile::setFrameTag(const std::string &tagname)
+void AsepriteAnimationFile::setFrameTag(const std::string& tagname)
 {
     if (current_tag == tagname)
     {
