@@ -5,7 +5,7 @@
 DEBUG ?= 1
 ENABLE_WARNINGS ?= 1
 WARNINGS_AS_ERRORS ?= 0
-OS_WINDOWS ?= 0
+OS_WINDOWS ?= 1
 
 BUILD_DIR = build
 
@@ -24,9 +24,9 @@ CXX = g++
 CXXFLAGS = $(CXX_WARNINGS) -std=$(CXX_STANDARD)
 
 # Additional flags to specify the directories to search for header files
-CPPFLAGS = -I Assets -I Characters -I GameObjects -I Utils 
+CPPFLAGS = -I Assets -I Characters -I GameObjects -I Utils
 
-LDFLAGS = 
+LDFLAGS =
 
 ifeq ($(DEBUG), 1)
 CXXFLAGS += -g -O0
@@ -67,7 +67,14 @@ ifeq ($(OS_WINDOWS), 1)
 else
 	./$(BUILD_DIR)/$(EXECUTABLE_NAME)
 endif
-	
+
+start:
+ifeq ($(OS_WINDOWS), 1)
+	./$(BUILD_DIR)/$(EXECUTABLE_NAME).exe
+else
+	./$(BUILD_DIR)/$(EXECUTABLE_NAME)
+endif
+
 
 clean:
 	rm -f $(BUILD_DIR)/*.o
@@ -82,8 +89,8 @@ endif
 # PATTERNS #
 ############
 # Regel wie aus einer cpp-datei eine .o datei wird
-# $@: = %.ccp 	-> the file name of the target 
-# $<: = %.o 	-> the name of the first dependency 
+# $@: = %.ccp 	-> the file name of the target
+# $<: = %.o 	-> the name of the first dependency
 %.o: %.cpp
 	$(COMPILER_CALL) $(USED_LIBS) -c $< -o $@
 
