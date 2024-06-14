@@ -1,10 +1,10 @@
-#include <iostream>
-#include "raylib.h"
 #include "Characters/Fighter_Andi.h"
-#include "Utils/AsepriteManager.h"
 #include "Constants.h"
-#include "Utils/Screen2DManager.h"
 #include "GameObjects/BaseGameObject.h"
+#include "Utils/AsepriteManager.h"
+#include "Utils/Screen2DManager.h"
+#include "raylib.h"
+#include <iostream>
 
 //------------------------------------------------------------------------------------
 // Program main entry point
@@ -20,19 +20,16 @@ int main(void)
     SetTargetFPS(60);                                    // Set  game to run at 60 frames-per-second
 
     // Populate membervariables of the GlobalObjects
-    screen2DManager.createRenderTarget("mainRenderTarget", 480, 270); // Create a RenderTexture2D to be used for render to texture
+    screen2DManager.createRenderTarget("mainRenderTarget",
+                                       480,
+                                       270); // Create a RenderTexture2D to be used for render to texture
     asepriteManager.loadAnimFile("gbFighter");
 
     // Create Player 1
-    BaseGameObject *player1 = new BaseGameObject(50, 270 - 48);
+    BaseGameObject* player1 = new BaseGameObject(50, 270 - 48);
     player1->addAnim(asepriteManager.getAnimFile("gbFighter"));
     player1->getAnim()->setFrameTag("Walking");
     player1->addCollisionBox("body");
-
-    // Create Player 2
-    BaseGameObject *player2 = new BaseGameObject(150, 270 - 48);
-    player2->addAnim(asepriteManager.getAnimFile("gbFighter"));
-    player2->getAnim()->setFrameTag("Idle");
 
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
@@ -59,9 +56,6 @@ int main(void)
 
         player1->getAnim()->drawCurrentSelectedTag(player1->getPos().x, player1->getPos().y);
 
-        player2->draw();
-
-        player2->getAnim()->drawCurrentSelectedTag(player2->getPos().x, player2->getPos().y);
         /*
         BeginMode2D(camera);
 

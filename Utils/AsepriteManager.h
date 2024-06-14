@@ -5,6 +5,7 @@
 #ifndef GBFIGHTER_ASEPRITEMANAGER_H
 #define GBFIGHTER_ASEPRITEMANAGER_H
 
+#include "../Constants.h"
 #include "../nlohmann/json.hpp"
 #include "raylib.h"
 #include <fstream>
@@ -31,8 +32,11 @@ private:
     int max_frame;
     Color current_color;
     float current_scale;
-
     float update_counter;
+
+    // debug member variables
+    bool frameTagPrinted = false;
+
 
 public:
     // constructor
@@ -48,6 +52,9 @@ public:
     void update(float deltaTime);
     void nextFrame();
     void setFrameTag(const std::string& tagname);
+
+    // debug-methods
+    void printFrameTag(const std::string& tagname);
 
     // member variables
     std::map<std::string, FrameTag> frameTags;
@@ -103,5 +110,8 @@ struct FrameTag
     int from;
     int to;
 };
+
+//overrite the operator<< for FrameTag
+std::ostream& operator<<(std::ostream& os, const FrameTag& frameTag);
 
 #endif // GBFIGHTER_ASEPRITEMANAGER_H

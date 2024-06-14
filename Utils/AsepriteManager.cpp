@@ -2,7 +2,6 @@
 // Created by weitnow on 12/16/23.
 //
 #include "AsepriteManager.h"
-
 // --------------------------------- AsepriteManager class --------------------------------- //
 // foldername where the png and json-files are located
 AsepriteManager::AsepriteManager(std::string foldername)
@@ -122,7 +121,7 @@ AsepriteAnimationFile::AsepriteAnimationFile(std::string filename, std::string f
     max_frame = getFrameTag(current_tag).to;
     current_color = WHITE;
     current_scale = 1.0f;
-    float update_counter = 0.0f;
+    update_counter = 0.0f;
 }
 
 AsepriteAnimationFile::~AsepriteAnimationFile()
@@ -164,6 +163,10 @@ void AsepriteAnimationFile::drawCurrentSelectedTag(int x, int y)
 
 void AsepriteAnimationFile::update(float deltaTime)
 {
+#ifdef DEBUG
+    printFrameTag(current_tag);
+#endif
+
     update_counter += deltaTime;
     if (update_counter >= 1.0f)
     {
@@ -194,4 +197,26 @@ void AsepriteAnimationFile::setFrameTag(const std::string& tagname)
     min_frame = getFrameTag(current_tag).from;
     max_frame = getFrameTag(current_tag).to;
     current_frame = min_frame;
+}
+
+// debug-methods of AsepriteAnimationFile class
+void AsepriteAnimationFile::printFrameTag(const std::string& tagname)
+{
+    if (!frameTagPrinted)
+    {
+        std::cout << "current tag: " << current_tag << std::endl;
+        std::cout << frameTags[tagname] << std::endl;
+    }
+    frameTagPrinted = true;
+}
+
+// --------------------------------- FrameTag struct --------------------------------- //
+//overrite the operator<< for FrameTag - Implementation
+std::ostream& operator<<(std::ostream& os, const FrameTag& frameTag)
+{
+    os << "Tagname: " << frameTag.name << ", Direction: " << frameTag.direction;
+    os << ", Loop: " << (frameTag.loop ? "yes" : "no");
+    os << ", Duration: " << frameTag.duration << ", \nfrom: " << frameTag.from;
+    os << ", \nto: " << frameTag.to << std::endl;
+    return os;
 }
