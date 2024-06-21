@@ -1,7 +1,3 @@
-//
-// Created by weitnow on 12/16/23.
-//
-
 #ifndef GBFIGHTER_ASEPRITEMANAGER_H
 #define GBFIGHTER_ASEPRITEMANAGER_H
 
@@ -15,7 +11,6 @@
 
 struct FrameTag; // forward declaration
 
-
 /* #region ---AsepriteAnimationFile class--- */
 /**
  * @param filename filename of the aseprite file
@@ -25,6 +20,7 @@ struct FrameTag; // forward declaration
 class AsepriteAnimationFile
 {
 private:
+    // member variables
     std::string filename;
     Texture2D texture;
     std::string current_tag;

@@ -1,7 +1,3 @@
-//
-// Created by weitnow on 1/1/24.
-//
-
 #include "BaseGameObject.h"
 #include "../Constants.h"
 #include <assert.h>
@@ -31,7 +27,7 @@ void BaseGameObject::update(float deltaTime)
     }
 
     // update hitboxes
-    for (auto &pair : collisionBoxes)
+    for (auto& pair : collisionBoxes)
     {
         pair.second.update(deltaTime);
     }
@@ -78,12 +74,12 @@ Vector2 BaseGameObject::getScale()
     return scale;
 }
 
-void BaseGameObject::addAnim(AsepriteAnimationFile *animfileptr)
+void BaseGameObject::addAnim(AsepriteAnimationFile* animfileptr)
 {
     this->animfileptr = animfileptr;
 }
 
-AsepriteAnimationFile *BaseGameObject::getAnim()
+AsepriteAnimationFile* BaseGameObject::getAnim()
 {
 
     assert(animfileptr != nullptr); // ups, getAnim was called before addAnim was called

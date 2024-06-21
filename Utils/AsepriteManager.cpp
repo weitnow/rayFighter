@@ -1,8 +1,7 @@
-//
-// Created by weitnow on 12/16/23.
-//
 #include "AsepriteManager.h"
-// --------------------------------- AsepriteManager class --------------------------------- //
+
+/* #region ---AsepriteManager class--- */
+
 // foldername where the png and json-files are located
 AsepriteManager::AsepriteManager(std::string foldername)
 {
@@ -90,6 +89,8 @@ void AsepriteManager::showLoadedAnimFiles()
 
 AsepriteAnimationFile* AsepriteManager::getAnimFile(const std::string& filename)
 {
+    // this returns a AsepriteAnimationFile*,
+    // Todo: he problem is, that we to make a copy if and the return a pointer to the copy
     return animFiles[filename];
 }
 
@@ -102,9 +103,9 @@ void AsepriteManager::UnloadRessources()
         pair.second = nullptr;
     }
 }
+/* #endregion */
 
-// --------------------------------- AsepriteAnimationFile class --------------------------------- //
-
+/* #region ---AsepriteAnimationFile Class */
 AsepriteAnimationFile::AsepriteAnimationFile(std::string filename, std::string foldername)
 {
     this->filename = filename;
@@ -203,8 +204,9 @@ void AsepriteAnimationFile::printFrameTag(const std::string& tagname)
     }
     frameTagPrinted = true;
 }
+/* #endregion */
 
-// --------------------------------- FrameTag struct --------------------------------- //
+/* #region ---FrameTag struct--- */
 //overrite the operator<< for FrameTag - Implementation
 std::ostream& operator<<(std::ostream& os, const FrameTag& frameTag)
 {
@@ -214,3 +216,5 @@ std::ostream& operator<<(std::ostream& os, const FrameTag& frameTag)
     os << ", \nto: " << frameTag.to << std::endl;
     return os;
 }
+
+/* #endregion */
