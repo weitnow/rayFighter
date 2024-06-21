@@ -15,7 +15,8 @@
 
 struct FrameTag; // forward declaration
 
-// --------------------------------- AsepriteAnimationFile class --------------------------------- //
+
+/* #region ---AsepriteAnimationFile class--- */
 /**
  * @param filename filename of the aseprite file
  * @param frameTags map of frame tags e.g. idle, walk, jump, etc.
@@ -60,8 +61,9 @@ public:
     std::map<std::string, FrameTag> frameTags;
 };
 
-// --------------------------------- AsepriteManager class --------------------------------- //
+/* #endregion */
 
+/* #region ---AsepriteManager class--- */
 /**
  * @class AsepriteManager
  * @brief The object instantiated of this class controlls the loading of sprites
@@ -84,12 +86,15 @@ public:
     void showLoadedAnimFiles();
 
     /**
-     * @brief Get the Anim File object
+     * @brief This function returns a pointer to an AnimationObject
+     * @param filename filename of a .json-object without .json at the end
+     * @return AnimationObject* : A pointer to an AnimationObject
      *
-     * @param filename
-     * @return AsepriteAnimationFile*
+     * the AnimationObject has a frameTags of type maps which holds
+     * frameTags["Animation Name as String"] = pair<from, to>
      */
     AsepriteAnimationFile* getAnimFile(const std::string& filename);
+
     void UnloadRessources();
 
     // member variable
@@ -98,8 +103,9 @@ private:
     std::string foldername;
     nlohmann::json* loadJsonFile(const std::string& filename);
 };
+/* #endregion */
 
-// --------------------------------- FrameTag struct --------------------------------- //
+/* #region ---FrameTag struct--- */
 
 struct FrameTag
 {
@@ -113,5 +119,6 @@ struct FrameTag
 
 //overrite the operator<< for FrameTag
 std::ostream& operator<<(std::ostream& os, const FrameTag& frameTag);
+/* #endregion */
 
 #endif // GBFIGHTER_ASEPRITEMANAGER_H

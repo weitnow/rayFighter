@@ -87,15 +87,7 @@ void AsepriteManager::showLoadedAnimFiles()
     }
 }
 
-// --------------------------------- AsepriteAnimationFile class --------------------------------- //
-/**
- * @brief This function returns a pointer to an AnimationObject
- * @param filename filename of a .json-object without .json at the end
- * @return AnimationObject* : A pointer to an AnimationObject
- *
- * the AnimationObject has a frameTags of type maps which holds
- * frameTags["Animation Name as String"] = pair<from, to>
- */
+
 AsepriteAnimationFile* AsepriteManager::getAnimFile(const std::string& filename)
 {
     return animFiles[filename];
@@ -110,6 +102,8 @@ void AsepriteManager::UnloadRessources()
         pair.second = nullptr;
     }
 }
+
+// --------------------------------- AsepriteAnimationFile class --------------------------------- //
 
 AsepriteAnimationFile::AsepriteAnimationFile(std::string filename, std::string foldername)
 {
