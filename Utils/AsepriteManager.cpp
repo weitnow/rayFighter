@@ -114,15 +114,13 @@ AsepriteManager::~AsepriteManager()
 {
 }
 
-/**
- * @brief This function loads a JsonFile and return a pointer to a json-object
- * @param filename filename of a .json-object without .json at the end
- * @return nlohmann::json* : A pointer to a json-object
- */
 nlohmann::json* AsepriteManager::loadJsonFile(const std::string& filename)
 {
     std::string path_with_filename = foldername + filename + ".json";
     std::ifstream i(path_with_filename);
+
+    //allocate memory on the heap and store a new nlohmann::json-object and store a pointer to it
+    //in the jsondata variable
     nlohmann::json* jsondata = new nlohmann::json();
     if (!i)
     {
@@ -140,6 +138,7 @@ nlohmann::json* AsepriteManager::loadJsonFile(const std::string& filename)
         {
             std::cerr << "Failed to parse JSON: " << e.what() << "\n";
             delete jsondata;
+            jsondata = nullptr;
         }
     }
     i.close();
@@ -154,11 +153,12 @@ nlohmann::json* AsepriteManager::loadJsonFile(const std::string& filename)
  */
 void AsepriteManager::loadAnimFile(const std::string& filename)
 {
-    // create a new AnimationObject and put it into the map
+    // create a new AnimationObject on the heap and put a pointer to it into the map
     AsepriteAnimationFile* AnimObjPtr = new AsepriteAnimationFile(filename, this->foldername);
     animFiles[filename] = AnimObjPtr;
 
-    // create a jsonfile-ptr and load the jsonfile
+    // loadJsonFile(filename) reads the jsonfile and returns a pointer to a nlohmann::json-object which
+    // is on the heap. loadJsonFile will NOT be responsible for deleting memoy on the heap.
     nlohmann::json* jsonfile = loadJsonFile(filename);
 
     // get how many frameTags are in the jsonfile and loop through them
