@@ -90,7 +90,9 @@ void AsepriteManager::showLoadedAnimFiles()
 AsepriteAnimationFile* AsepriteManager::getAnimFile(const std::string& filename)
 {
     // this returns a AsepriteAnimationFile*,
-    // Todo: he problem is, that we to make a copy if and the return a pointer to the copy
+    // Todo: we have to make a copy and the return a pointer to the copy
+
+
     return animFiles[filename];
 }
 
