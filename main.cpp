@@ -23,6 +23,7 @@ int main(void)
     screen2DManager.createRenderTarget("mainRenderTarget",
                                        480,
                                        270); // Create a RenderTexture2D to be used for render to texture
+
     asepriteManager.loadAnimFile("gbFighter");
 
     // Create Player 1

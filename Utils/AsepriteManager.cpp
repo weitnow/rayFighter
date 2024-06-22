@@ -17,7 +17,7 @@ AsepriteAnimationFile::AsepriteAnimationFile(std::string filename, std::string f
 
 AsepriteAnimationFile::~AsepriteAnimationFile()
 {
-    std::cout << "Unloading AsepriteAnimationFile " << filename << " at adress " << this << std::endl;
+    std::cout << "Calling ~AsepriteAnimationFile() for " << filename << " and unloading its Texture." << std::endl;
     UnloadTexture(texture);
 }
 
@@ -42,7 +42,7 @@ FrameTag AsepriteAnimationFile::getFrameTag(const std::string& tagname)
 
 void AsepriteAnimationFile::drawFrame(const std::string& tagname, int x, int y, float scale, Color tint)
 {
-    // todo: implement scale
+    // todo: implement scaling
     FrameTag frameTag = getFrameTag(tagname);
     DrawTextureRec(texture, {(float)current_frame * 32, 0, 32, (float)texture.height}, {(float)x, (float)y}, tint);
 }
@@ -200,9 +200,12 @@ AsepriteAnimationFile* AsepriteManager::getAnimFile(const std::string& filename)
 
 void AsepriteManager::UnloadRessources()
 {
-    // delete all pointers and clear memory
+    std::cout
+        << "Calling AsepriteManager::UnloadRessources() and deleting all AsepriteAnimationFile-Objects on the heap."
+        << std::endl;
     for (auto& pair : animFiles)
     {
+        std::cout << "animFiles[" << pair.first << "] = nullptr " << std::endl;
         delete pair.second;
         pair.second = nullptr;
     }
