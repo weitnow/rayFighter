@@ -1,5 +1,107 @@
 #include "AsepriteManager.h"
 
+
+/* #region ---AsepriteAnimationFile Class */
+AsepriteAnimationFile::AsepriteAnimationFile(std::string filename, std::string foldername)
+{
+    this->filename = filename;
+    texture = LoadTexture((foldername + filename + ".png").c_str());
+    current_tag = "Idle";
+    current_frame = 0;
+    min_frame = getFrameTag(current_tag).from;
+    max_frame = getFrameTag(current_tag).to;
+    current_color = WHITE;
+    current_scale = 1.0f;
+    update_counter = 0.0f;
+}
+
+AsepriteAnimationFile::~AsepriteAnimationFile()
+{
+    std::cout << "Unloading AsepriteAnimationFile " << filename << " at adress " << this << std::endl;
+    UnloadTexture(texture);
+}
+
+FrameTag AsepriteAnimationFile::getFrameTag(const std::string& tagname)
+{
+    for (auto& pair : frameTags)
+    {
+        if (pair.first == tagname)
+        {
+            return pair.second;
+        }
+    }
+    // Return a default value if the tagname is not found
+    FrameTag NoframeTagFound;
+    NoframeTagFound.name = "noframetagfound";
+    NoframeTagFound.from = 0;
+    NoframeTagFound.to = 0;
+    NoframeTagFound.loop = false;
+    NoframeTagFound.duration = 0;
+    return NoframeTagFound;
+}
+
+void AsepriteAnimationFile::drawFrame(const std::string& tagname, int x, int y, float scale, Color tint)
+{
+    // todo: implement scale
+    FrameTag frameTag = getFrameTag(tagname);
+    DrawTextureRec(texture, {(float)current_frame * 32, 0, 32, (float)texture.height}, {(float)x, (float)y}, tint);
+}
+
+void AsepriteAnimationFile::drawCurrentSelectedTag(int x, int y)
+{
+    drawFrame(current_tag, x, y, this->current_scale, this->current_color);
+}
+
+void AsepriteAnimationFile::update(float deltaTime)
+{
+#ifdef DEBUG
+    printFrameTag(current_tag);
+#endif
+
+    update_counter += deltaTime;
+    if (update_counter >= 1.0f)
+    {
+        nextFrame();
+        update_counter = 0.0f;
+    }
+}
+
+void AsepriteAnimationFile::nextFrame()
+{
+    if (current_frame < max_frame)
+    {
+        current_frame++;
+    }
+    else
+    {
+        current_frame = min_frame;
+    }
+}
+
+void AsepriteAnimationFile::setFrameTag(const std::string& tagname)
+{
+    if (current_tag == tagname)
+    {
+        return;
+    }
+    current_tag = tagname;
+    min_frame = getFrameTag(current_tag).from;
+    max_frame = getFrameTag(current_tag).to;
+    current_frame = min_frame;
+}
+
+// debug-methods of AsepriteAnimationFile class
+void AsepriteAnimationFile::printFrameTag(const std::string& tagname)
+{
+    if (!frameTagPrinted)
+    {
+        std::cout << "current tag: " << current_tag << std::endl;
+        std::cout << frameTags[tagname] << std::endl;
+    }
+    frameTagPrinted = true;
+}
+/* #endregion */
+
 /* #region ---AsepriteManager class--- */
 
 // foldername where the png and json-files are located
@@ -104,107 +206,6 @@ void AsepriteManager::UnloadRessources()
         delete pair.second;
         pair.second = nullptr;
     }
-}
-/* #endregion */
-
-/* #region ---AsepriteAnimationFile Class */
-AsepriteAnimationFile::AsepriteAnimationFile(std::string filename, std::string foldername)
-{
-    this->filename = filename;
-    texture = LoadTexture((foldername + filename + ".png").c_str());
-    current_tag = "Idle";
-    current_frame = 0;
-    min_frame = getFrameTag(current_tag).from;
-    max_frame = getFrameTag(current_tag).to;
-    current_color = WHITE;
-    current_scale = 1.0f;
-    update_counter = 0.0f;
-}
-
-AsepriteAnimationFile::~AsepriteAnimationFile()
-{
-    std::cout << "Unloading AsepriteAnimationFile " << filename << " at adress " << this << std::endl;
-    UnloadTexture(texture);
-}
-
-FrameTag AsepriteAnimationFile::getFrameTag(const std::string& tagname)
-{
-    for (auto& pair : frameTags)
-    {
-        if (pair.first == tagname)
-        {
-            return pair.second;
-        }
-    }
-    // Return a default value if the tagname is not found
-    FrameTag NoframeTagFound;
-    NoframeTagFound.name = "noframetagfound";
-    NoframeTagFound.from = 0;
-    NoframeTagFound.to = 0;
-    NoframeTagFound.loop = false;
-    NoframeTagFound.duration = 0;
-    return NoframeTagFound;
-}
-
-void AsepriteAnimationFile::drawFrame(const std::string& tagname, int x, int y, float scale, Color tint)
-{
-    // todo: implement scale
-    FrameTag frameTag = getFrameTag(tagname);
-    DrawTextureRec(texture, {(float)current_frame * 32, 0, 32, (float)texture.height}, {(float)x, (float)y}, tint);
-}
-
-void AsepriteAnimationFile::drawCurrentSelectedTag(int x, int y)
-{
-    drawFrame(current_tag, x, y, this->current_scale, this->current_color);
-}
-
-void AsepriteAnimationFile::update(float deltaTime)
-{
-#ifdef DEBUG
-    printFrameTag(current_tag);
-#endif
-
-    update_counter += deltaTime;
-    if (update_counter >= 1.0f)
-    {
-        nextFrame();
-        update_counter = 0.0f;
-    }
-}
-
-void AsepriteAnimationFile::nextFrame()
-{
-    if (current_frame < max_frame)
-    {
-        current_frame++;
-    }
-    else
-    {
-        current_frame = min_frame;
-    }
-}
-
-void AsepriteAnimationFile::setFrameTag(const std::string& tagname)
-{
-    if (current_tag == tagname)
-    {
-        return;
-    }
-    current_tag = tagname;
-    min_frame = getFrameTag(current_tag).from;
-    max_frame = getFrameTag(current_tag).to;
-    current_frame = min_frame;
-}
-
-// debug-methods of AsepriteAnimationFile class
-void AsepriteAnimationFile::printFrameTag(const std::string& tagname)
-{
-    if (!frameTagPrinted)
-    {
-        std::cout << "current tag: " << current_tag << std::endl;
-        std::cout << frameTags[tagname] << std::endl;
-    }
-    frameTagPrinted = true;
 }
 /* #endregion */
 
