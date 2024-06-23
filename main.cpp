@@ -26,11 +26,22 @@ int main(void)
 
     asepriteManager.loadAnimFile("gbFighter");
 
+
+    asepriteManager.loadAnimFile2("gbFighter"); // asepriteManager.frameTags[gbFighter-Idle]
+                                                // asepriteManager.textures[gbFighter]
+
     // Create Player 1
     BaseGameObject* player1 = new BaseGameObject(50, 270 - 48);
     player1->addAnim(asepriteManager.getAnimFile("gbFighter"));
     player1->getAnim()->setFrameTag("Walking");
     player1->addCollisionBox("body");
+
+
+    // Create Player 2
+    BaseGameObject* player2 = new BaseGameObject(50, 270 - 48);
+    player1->addAnim(asepriteManager.getAnimFile("gbFighter"));
+    player1->getAnim()->setFrameTag("Walking");
+
 
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key

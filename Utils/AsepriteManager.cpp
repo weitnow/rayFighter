@@ -101,21 +101,93 @@ void AsepriteAnimationFile::printFrameTag(const std::string& tagname)
     }
     frameTagPrinted = true;
 }
-/* #endregion */
 
-AsepriteTextureAndJsonContainer::AsepriteTextureAndJsonContainer(std::string filename, std::string foldername)
+
+AsepriteAnimationFile2::AsepriteAnimationFile2(std::string filename, std::string foldername)
 {
     this->filename = filename;
-    texture = LoadTexture((foldername + filename + ".png").c_str());
+    current_tag = "Idle";
+    current_frame = 0;
+    min_frame = getFrameTag(current_tag).from;
+    max_frame = getFrameTag(current_tag).to;
+    current_color = WHITE;
+    current_scale = 1.0f;
+    update_counter = 0.0f;
 }
 
-AsepriteTextureAndJsonContainer::~AsepriteTextureAndJsonContainer()
+AsepriteAnimationFile2::~AsepriteAnimationFile2()
 {
-    std::cout << "Calling ~AsepriteTextureAndJsonContainer() for " << filename << " and unloading its Texture."
-              << std::endl;
-    UnloadTexture(texture);
 }
 
+FrameTag AsepriteAnimationFile2::getFrameTag(const std::string& tagname)
+{
+    //todo: getFrameTag is Methode of AsepriteManager
+}
+
+void AsepriteAnimationFile2::drawFrame(const std::string& tagname, int x, int y, float scale, Color tint)
+{
+    // todo: implement scaling
+    FrameTag frameTag = getFrameTag(tagname);
+    DrawTextureRec(texture, {(float)current_frame * 32, 0, 32, (float)texture.height}, {(float)x, (float)y}, tint);
+}
+
+void AsepriteAnimationFile2::drawCurrentSelectedTag(int x, int y)
+{
+    drawFrame(current_tag, x, y, this->current_scale, this->current_color);
+}
+
+void AsepriteAnimationFile2::update(float deltaTime)
+{
+#ifdef DEBUG
+    // prints all information about the current selected tag (tagname, direction, loop, from, to)
+    printFrameTag(current_tag);
+#endif
+
+    update_counter += deltaTime;
+    if (update_counter >= 1.0f)
+    {
+        nextFrame();
+        update_counter = 0.0f;
+    }
+}
+
+void AsepriteAnimationFile2::nextFrame()
+{
+    if (current_frame < max_frame)
+    {
+        current_frame++;
+    }
+    else
+    {
+        current_frame = min_frame;
+    }
+}
+
+void AsepriteAnimationFile2::setFrameTag(const std::string& tagname)
+{
+    if (current_tag == tagname)
+    {
+        return;
+    }
+    current_tag = tagname;
+    min_frame = getFrameTag(current_tag).from;
+    max_frame = getFrameTag(current_tag).to;
+    current_frame = min_frame;
+}
+
+// debug-methods of AsepriteAnimationFile class
+void AsepriteAnimationFile2::printFrameTag(const std::string& tagname)
+{
+    if (!frameTagPrinted)
+    {
+        std::cout << "current tag: " << current_tag << std::endl;
+        std::cout << frameTags[tagname] << std::endl;
+    }
+    frameTagPrinted = true;
+}
+
+
+/* #endregion */
 
 /* #region ---AsepriteManager class--- */
 
@@ -193,6 +265,46 @@ void AsepriteManager::loadAnimFile(const std::string& filename)
     delete jsonfile;
 }
 
+/**
+ * After loadAnimFile is executed the AsepriteManager animFiles-Obj of type maps
+ * holds animFiles[gbFighter] = AnimationObject* AnimationObject has a frameTags
+ * of type maps which holds frameTags[idle] = pair<from, to>
+ * @param filename
+ */
+void AsepriteManager::loadAnimFile2(const std::string& filename)
+{
+
+    // --ADD FRAMETAG TO FRAMETAGS MEMBER VARIABLE--
+
+    // loadJsonFile(filename) reads the jsonfile and returns a pointer to a nlohmann::json-object which
+    // is on the heap. loadJsonFile will NOT be responsible for deleting memoy on the heap. thats why
+    // we delete the jsonfile object on the heap at the end of this methode
+    nlohmann::json* jsonfile = loadJsonFile(filename);
+
+    // get how many frameTags are in the jsonfile and loop through them
+    int frameTagSize = (*jsonfile)["meta"]["frameTags"].size();
+    for (int i = 0; i < frameTagSize; ++i)
+    {
+        // create a FrameTag object and put it into the map
+        FrameTag frameTag;
+        frameTag.name = (*jsonfile)["meta"]["frameTags"][i]["name"];
+        frameTag.from = (*jsonfile)["meta"]["frameTags"][i]["from"];
+        frameTag.to = (*jsonfile)["meta"]["frameTags"][i]["to"];
+        frameTag.direction = (*jsonfile)["meta"]["frameTags"][i]["direction"];
+        frameTag.loop = false;
+        frameTag.duration = 0;
+        frameTag.texturename = filename;
+
+        // adding it to the frameTags-Map, so its accessible like frameTags["gbFighter-Idle"], which would return the frameTag Idle of gbFighter.png
+        frameTags[filename + "-" + frameTag.name] = frameTag;
+    }
+    delete jsonfile;
+
+    // --ADD TEXTURE TO TEXTURES MEMEBER VARIABLE--
+    textures[filename] = LoadTexture((foldername + filename + ".png").c_str());
+}
+
+
 void AsepriteManager::showLoadedAnimFiles()
 {
     std::cout << "Loaded AsepriteAnimationFiles:\n";
@@ -203,14 +315,38 @@ void AsepriteManager::showLoadedAnimFiles()
     }
 }
 
+FrameTag AsepriteManager::getFrameTag(const std::string& tagname)
+{
+    for (auto& pair : frameTags)
+    {
+        if (pair.first == tagname)
+        {
+            return pair.second;
+        }
+    }
+    // Return a default value if the tagname is not found
+    FrameTag NoframeTagFound;
+    NoframeTagFound.name = "noframetagfound";
+    NoframeTagFound.from = 0;
+    NoframeTagFound.to = 0;
+    NoframeTagFound.loop = false;
+    NoframeTagFound.duration = 0;
+    NoframeTagFound.texturename = "noframetagfound";
+    return NoframeTagFound;
+}
+
 
 AsepriteAnimationFile* AsepriteManager::getAnimFile(const std::string& filename)
 {
     // this returns a AsepriteAnimationFile*,
-    // Todo: we have to make a copy and the return a pointer to the copy
-
 
     return animFiles[filename];
+}
+
+AsepriteAnimationFile2* AsepriteManager::getAnimFile2(const std::string& filename)
+{
+    // this returns a AsepriteAnimationFile2*,
+    // Todo: generate a AsepriteAnimationFile2* and return it
 }
 
 void AsepriteManager::UnloadRessources()

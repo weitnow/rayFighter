@@ -79,6 +79,7 @@ void BaseGameObject::addAnim(AsepriteAnimationFile* animfileptr)
     this->animfileptr = animfileptr;
 }
 
+
 AsepriteAnimationFile* BaseGameObject::getAnim()
 {
 

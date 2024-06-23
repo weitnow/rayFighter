@@ -14,25 +14,6 @@ struct FrameTag; // forward declaration
 /* #region ---AsepriteAnimationFile class--- */
 
 /**
- * @brief the class holds a reference to the texture (png file) and will have a map called frameTags.
- * frameTags["gbFighter"] holds for example the FrameTag-Object (with direction, loop, duration and from and to, where from is the first anim-area of
- * in the texture and to is the last anim-area in the texture)
- * @param filename filename withouth extensions. the class will look for a json and a png file. both needs to be present.
- * @param foldername the folder in which the png and json file is located
- */
-class AsepriteTextureAndJsonContainer
-{
-private:
-    std::string filename;
-    Texture2D texture;
-    std::map<std::string, FrameTag> frameTags;
-
-public:
-    AsepriteTextureAndJsonContainer(std::string filename, std::string foldername);
-    ~AsepriteTextureAndJsonContainer();
-};
-
-/**
  * @brief currently holds filename "gbfighter", and its texture, as well as a frameTags<string, FrameTag>
  * @param filename Filename as a String without file-extension. The class will look for a [filename].png and [filename].json
  * @param foldername Foldername where the png and json is located
@@ -99,7 +80,79 @@ public:
     std::map<std::string, FrameTag> frameTags; // todo: Move this out in a new class
 };
 
+
+/**
+ * @brief currently holds filename "gbfighter", and its texture, as well as a frameTags<string, FrameTag>
+ * @param filename Filename as a String without file-extension. The class will look for a [filename].png and [filename].json
+ * @param foldername Foldername where the png and json is located
+ */
+class AsepriteAnimationFile2
+{
+private:
+    // member variables
+    std::string filename;
+    std::string current_tag;
+    int current_frame;
+    int min_frame;
+    int max_frame;
+    Color current_color;
+    float current_scale;
+    float update_counter;
+
+    // debug member variables
+    bool frameTagPrinted = false; // used by the printFrameTag-method.
+                                  //This method prints out debug informatin and changes frameTagPrinted to True
+
+public:
+    explicit AsepriteAnimationFile2(std::string filename, std::string foldername);
+
+    // destructor
+    ~AsepriteAnimationFile2();
+
+    // methods
+    /**
+     * @brief Get the Frame Tag object. The object hast a name (for example "Idle"), a from, a to, a loop and a duration property. The number in "from"
+     * is the position of the starting picture, the number in "to" is the last picture of the animation. After the last picture, the first picture (from)
+     * hast to be played again.
+     * @param tagname
+     * @return FrameTag
+     */
+    FrameTag getFrameTag(const std::string& tagname);
+    void drawFrame(const std::string& tagname, int x, int y, float scale = 1.0f, Color tint = WHITE);
+    void drawCurrentSelectedTag(int x, int y);
+
+    /**
+     * @brief the update methode calls frequently the nextFrame() which switches to the next picture of the animation
+     *
+     * @param deltaTime
+     */
+    void update(float deltaTime);
+
+    /**
+     * @brief checks if the current_frame < max_frame and if so, switches to the next frame otherwise it goes back to the first frame of the animation
+     *
+     */
+    void nextFrame();
+    void setFrameTag(const std::string& tagname);
+
+    // debug-methods
+    /**
+     * @brief prints the tagname (for example Idle), the direction (for example forward), Loop (for example no), Duration, from and to
+     *
+     * @param tagname the name of the tag (for example "Idle") of the given AsepriteAnimationFile (for example "GbFighter")
+     */
+    void printFrameTag(const std::string& tagname);
+};
+
 /* #endregion */
+
+/**
+ * @brief the class holds a reference to the texture (png file) and will have a map called frameTags.
+ * frameTags["gbFighter"] holds for example the FrameTag-Object (with direction, loop, duration and from and to, where from is the first anim-area of
+ * in the texture and to is the last anim-area in the texture)
+ * @param filename filename withouth extensions. the class will look for a json and a png file. both needs to be present.
+ * @param foldername the folder in which the png and json file is located
+ */
 
 /* #region ---AsepriteManager class--- */
 /**
@@ -125,6 +178,9 @@ public:
      * @param filename the filename without extension of the png and json file of aseprite. For example "gbFighter"
      */
     void loadAnimFile(const std::string& filename);
+    void loadAnimFile2(const std::string& filename);
+
+    FrameTag getFrameTag(const std::string& tagname);
 
     void showLoadedAnimFiles();
 
@@ -137,6 +193,7 @@ public:
      * frameTags["Animation Name as String"] = pair<from, to>
      */
     AsepriteAnimationFile* getAnimFile(const std::string& filename);
+    AsepriteAnimationFile2* getAnimFile2(const std::string& filename);
 
     /**
      * @brief This Methodes loops through all objects in the member variable animFiles and calls the destructor of the AsepriteAnimationFile*,
@@ -145,11 +202,17 @@ public:
     void UnloadRessources();
 
     // public member variable
-    std::map<std::string, AsepriteAnimationFile*> animFiles;
+    std::map<std::string, AsepriteAnimationFile*> animFiles; // Todo: old, get rid of it
 
 private:
     // private member variable
     std::string foldername;
+
+    std::map<std::string, FrameTag> frameTags;
+
+    std::map<std::string, Texture> textures;
+
+    std::map<std::string, AsepriteAnimationFile2> animFiles2;
 
     // private methods
     /**
@@ -173,6 +236,7 @@ struct FrameTag
     int duration;
     int from;
     int to;
+    std::string texturename;
 };
 
 //overrite the operator<< for FrameTag
