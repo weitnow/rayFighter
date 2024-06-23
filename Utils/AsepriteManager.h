@@ -14,7 +14,7 @@ struct FrameTag; // forward declaration
 /* #region ---AsepriteAnimationFile class--- */
 
 /**
- * @brief
+ * @brief currently holds filename "gbfighter", and its texture, as well as a frameTags<string, FrameTag>
  * @param filename Filename as a String without file-extension. The class will look for a [filename].png and [filename].json
  * @param foldername Foldername where the png and json is located
  */
@@ -42,14 +42,35 @@ public:
     ~AsepriteAnimationFile();
 
     // methods
+    /**
+     * @brief Get the Frame Tag object. The object hast a name (for example "Idle"), a from, a to, a loop and a duration property. The number in "from"
+     * is the position of the starting picture, the number in "to" is the last picture of the animation. After the last picture, the first picture (from)
+     * hast to be played again.
+     * @param tagname
+     * @return FrameTag
+     */
     FrameTag getFrameTag(const std::string& tagname);
     void drawFrame(const std::string& tagname, int x, int y, float scale = 1.0f, Color tint = WHITE);
     void drawCurrentSelectedTag(int x, int y);
+
+    /**
+     * @brief the update methode calls frequently the nextFrame() which switches to the next picture of the animation
+     *
+     * @param deltaTime
+     */
     void update(float deltaTime);
+
+
     void nextFrame();
     void setFrameTag(const std::string& tagname);
 
     // debug-methods
+
+    /**
+     * @brief prints the tagname (for example Idle), the direction (for example forward), Loop (for example no), Duration, from and to
+     *
+     * @param tagname the name of the tag (for example "Idle") of the given AsepriteAnimationFile (for example "GbFighter")
+     */
     void printFrameTag(const std::string& tagname);
 
     // member variables
@@ -77,7 +98,7 @@ public:
      *
      * The methode UnloadRessources deletes all AsepriteAnimationFile-Objects on the heap.
      *
-     * The AsepriteAnimationFile currently holds
+     * The AsepriteAnimationFile currently holds not only the texture
      *
      * @param filename the filename without extension of the png and json file of aseprite. For example "gbFighter"
      */

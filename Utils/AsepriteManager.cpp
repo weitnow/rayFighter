@@ -55,6 +55,7 @@ void AsepriteAnimationFile::drawCurrentSelectedTag(int x, int y)
 void AsepriteAnimationFile::update(float deltaTime)
 {
 #ifdef DEBUG
+    // prints all information about the current selected tag (tagname, direction, loop, from, to)
     printFrameTag(current_tag);
 #endif
 
