@@ -103,6 +103,20 @@ void AsepriteAnimationFile::printFrameTag(const std::string& tagname)
 }
 /* #endregion */
 
+AsepriteTextureAndJsonContainer::AsepriteTextureAndJsonContainer(std::string filename, std::string foldername)
+{
+    this->filename = filename;
+    texture = LoadTexture((foldername + filename + ".png").c_str());
+}
+
+AsepriteTextureAndJsonContainer::~AsepriteTextureAndJsonContainer()
+{
+    std::cout << "Calling ~AsepriteTextureAndJsonContainer() for " << filename << " and unloading its Texture."
+              << std::endl;
+    UnloadTexture(texture);
+}
+
+
 /* #region ---AsepriteManager class--- */
 
 // foldername where the png and json-files are located

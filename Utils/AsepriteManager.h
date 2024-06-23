@@ -14,6 +14,25 @@ struct FrameTag; // forward declaration
 /* #region ---AsepriteAnimationFile class--- */
 
 /**
+ * @brief the class holds a reference to the texture (png file) and will have a map called frameTags.
+ * frameTags["gbFighter"] holds for example the FrameTag-Object (with direction, loop, duration and from and to, where from is the first anim-area of
+ * in the texture and to is the last anim-area in the texture)
+ * @param filename filename withouth extensions. the class will look for a json and a png file. both needs to be present.
+ * @param foldername the folder in which the png and json file is located
+ */
+class AsepriteTextureAndJsonContainer
+{
+private:
+    std::string filename;
+    Texture2D texture;
+    std::map<std::string, FrameTag> frameTags;
+
+public:
+    AsepriteTextureAndJsonContainer(std::string filename, std::string foldername);
+    ~AsepriteTextureAndJsonContainer();
+};
+
+/**
  * @brief currently holds filename "gbfighter", and its texture, as well as a frameTags<string, FrameTag>
  * @param filename Filename as a String without file-extension. The class will look for a [filename].png and [filename].json
  * @param foldername Foldername where the png and json is located
@@ -23,7 +42,7 @@ class AsepriteAnimationFile
 private:
     // member variables
     std::string filename;
-    Texture2D texture;
+    Texture2D texture; // todo: Move this out in a new class
     std::string current_tag;
     int current_frame;
     int min_frame;
@@ -33,7 +52,8 @@ private:
     float update_counter;
 
     // debug member variables
-    bool frameTagPrinted = false;
+    bool frameTagPrinted = false; // used by the printFrameTag-method.
+                                  //This method prints out debug informatin and changes frameTagPrinted to True
 
 public:
     explicit AsepriteAnimationFile(std::string filename, std::string foldername);
@@ -60,12 +80,14 @@ public:
      */
     void update(float deltaTime);
 
-
+    /**
+     * @brief checks if the current_frame < max_frame and if so, switches to the next frame otherwise it goes back to the first frame of the animation
+     *
+     */
     void nextFrame();
     void setFrameTag(const std::string& tagname);
 
     // debug-methods
-
     /**
      * @brief prints the tagname (for example Idle), the direction (for example forward), Loop (for example no), Duration, from and to
      *
@@ -74,7 +96,7 @@ public:
     void printFrameTag(const std::string& tagname);
 
     // member variables
-    std::map<std::string, FrameTag> frameTags;
+    std::map<std::string, FrameTag> frameTags; // todo: Move this out in a new class
 };
 
 /* #endregion */
