@@ -91,6 +91,7 @@ class AsepriteAnimationFile2
 private:
     // member variables
     std::string filename;
+    Texture texture;
     std::string current_tag;
     int current_frame;
     int min_frame;
@@ -99,12 +100,8 @@ private:
     float current_scale;
     float update_counter;
 
-    // debug member variables
-    bool frameTagPrinted = false; // used by the printFrameTag-method.
-                                  //This method prints out debug informatin and changes frameTagPrinted to True
-
 public:
-    explicit AsepriteAnimationFile2(std::string filename, std::string foldername);
+    explicit AsepriteAnimationFile2(std::string filename, std::string foldername, Texture& texture);
 
     // destructor
     ~AsepriteAnimationFile2();
@@ -134,14 +131,6 @@ public:
      */
     void nextFrame();
     void setFrameTag(const std::string& tagname);
-
-    // debug-methods
-    /**
-     * @brief prints the tagname (for example Idle), the direction (for example forward), Loop (for example no), Duration, from and to
-     *
-     * @param tagname the name of the tag (for example "Idle") of the given AsepriteAnimationFile (for example "GbFighter")
-     */
-    void printFrameTag(const std::string& tagname);
 };
 
 /* #endregion */

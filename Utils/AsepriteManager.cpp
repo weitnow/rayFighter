@@ -103,9 +103,10 @@ void AsepriteAnimationFile::printFrameTag(const std::string& tagname)
 }
 
 
-AsepriteAnimationFile2::AsepriteAnimationFile2(std::string filename, std::string foldername)
+AsepriteAnimationFile2::AsepriteAnimationFile2(std::string filename, std::string foldername, Texture& texture)
 {
     this->filename = filename;
+    this->texture = texture;
     current_tag = "Idle";
     current_frame = 0;
     min_frame = getFrameTag(current_tag).from;
@@ -138,10 +139,6 @@ void AsepriteAnimationFile2::drawCurrentSelectedTag(int x, int y)
 
 void AsepriteAnimationFile2::update(float deltaTime)
 {
-#ifdef DEBUG
-    // prints all information about the current selected tag (tagname, direction, loop, from, to)
-    printFrameTag(current_tag);
-#endif
 
     update_counter += deltaTime;
     if (update_counter >= 1.0f)
@@ -173,17 +170,6 @@ void AsepriteAnimationFile2::setFrameTag(const std::string& tagname)
     min_frame = getFrameTag(current_tag).from;
     max_frame = getFrameTag(current_tag).to;
     current_frame = min_frame;
-}
-
-// debug-methods of AsepriteAnimationFile class
-void AsepriteAnimationFile2::printFrameTag(const std::string& tagname)
-{
-    if (!frameTagPrinted)
-    {
-        std::cout << "current tag: " << current_tag << std::endl;
-        std::cout << frameTags[tagname] << std::endl;
-    }
-    frameTagPrinted = true;
 }
 
 
@@ -281,7 +267,9 @@ void AsepriteManager::loadAnimFile2(const std::string& filename)
     // we delete the jsonfile object on the heap at the end of this methode
     nlohmann::json* jsonfile = loadJsonFile(filename);
 
-    // get how many frameTags are in the jsonfile and loop through them
+    // get how many frameTags are in the jsonf#ifdef DEBUG
+    // prints all information about the current selected tag (tagname, direction, loop, from, to)
+
     int frameTagSize = (*jsonfile)["meta"]["frameTags"].size();
     for (int i = 0; i < frameTagSize; ++i)
     {
