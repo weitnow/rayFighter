@@ -5,11 +5,10 @@
 #ifndef GBFIGHTER_BASEGAMEOBJECT_H
 #define GBFIGHTER_BASEGAMEOBJECT_H
 
-#include <raylib.h>
+#include "../Utils/AsepriteManager.h"
 #include "BaseSpriteObject.h"
 #include "CollisionBox2D.h"
-#include "BaseSpriteObject.h"
-#include "../Utils/AsepriteManager.h"
+#include <raylib.h>
 
 class BaseGameObject
 {
@@ -32,8 +31,11 @@ public:
     Vector2 getScale();
 
     // sprites
-    void addAnim(AsepriteAnimationFile *animfileptr);
-    AsepriteAnimationFile *getAnim();
+    void addAnim(AsepriteAnimationFile* animfileptr);
+    void addAnim2(AsepriteAnimationFile2* animfileptr2);
+
+    AsepriteAnimationFile* getAnim();
+    AsepriteAnimationFile2* getAnim2();
 
     // hitboxes
     void addCollisionBox(std::string hitboxName);
@@ -47,7 +49,9 @@ protected:
     std::map<std::string, BaseSpriteObject> sprites;
 
     // a variable which holds a animfileptr
-    AsepriteAnimationFile *animfileptr;
+    AsepriteAnimationFile* animfileptr;
+
+    AsepriteAnimationFile2* animfileptr2;
 
     // a map which holds all the collisionbox-objs
     std::map<std::string, CollisionBox2D> collisionBoxes;

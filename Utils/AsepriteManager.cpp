@@ -103,14 +103,18 @@ void AsepriteAnimationFile::printFrameTag(const std::string& tagname)
 }
 
 
-AsepriteAnimationFile2::AsepriteAnimationFile2(std::string filename, std::string foldername, Texture& texture)
+AsepriteAnimationFile2::AsepriteAnimationFile2(std::string filename,
+                                               std::string foldername,
+                                               Texture& texture,
+                                               AsepriteManager& theManager)
 {
+    this->theManager = &theManager;
     this->filename = filename;
     this->texture = texture;
     current_tag = "Idle";
     current_frame = 0;
-    min_frame = getFrameTag(current_tag).from;
-    max_frame = getFrameTag(current_tag).to;
+    min_frame = theManager.getFrameTag2("bla").from;
+    max_frame = theManager.getFrameTag2("bla").to;
     current_color = WHITE;
     current_scale = 1.0f;
     update_counter = 0.0f;
@@ -122,13 +126,14 @@ AsepriteAnimationFile2::~AsepriteAnimationFile2()
 
 FrameTag AsepriteAnimationFile2::getFrameTag(const std::string& tagname)
 {
-    //todo: getFrameTag is Methode of AsepriteManager
+    AsepriteManager* Manager = this->theManager;
+    theManager->getAnimFile2("bla");
 }
 
 void AsepriteAnimationFile2::drawFrame(const std::string& tagname, int x, int y, float scale, Color tint)
 {
     // todo: implement scaling
-    FrameTag frameTag = getFrameTag(tagname);
+    FrameTag frameTag = this->theManager->getFrameTag2(tagname);
     DrawTextureRec(texture, {(float)current_frame * 32, 0, 32, (float)texture.height}, {(float)x, (float)y}, tint);
 }
 
@@ -167,8 +172,8 @@ void AsepriteAnimationFile2::setFrameTag(const std::string& tagname)
         return;
     }
     current_tag = tagname;
-    min_frame = getFrameTag(current_tag).from;
-    max_frame = getFrameTag(current_tag).to;
+    min_frame = this->theManager->getFrameTag2(current_tag).from;
+    max_frame = this->theManager->getFrameTag2(current_tag).to;
     current_frame = min_frame;
 }
 
@@ -323,11 +328,16 @@ FrameTag AsepriteManager::getFrameTag(const std::string& tagname)
     return NoframeTagFound;
 }
 
+FrameTag AsepriteManager::getFrameTag2(const std::string& tagname)
+{
+    return frameTags["gbFighter-Idle"]; // todo: get rid of the hardcoded tagname
+}
+
 
 AsepriteAnimationFile* AsepriteManager::getAnimFile(const std::string& filename)
 {
     // this returns a AsepriteAnimationFile*,
-
+    assert(animFiles[filename] != nullptr);
     return animFiles[filename];
 }
 
@@ -335,6 +345,11 @@ AsepriteAnimationFile2* AsepriteManager::getAnimFile2(const std::string& filenam
 {
     // this returns a AsepriteAnimationFile2*,
     // Todo: generate a AsepriteAnimationFile2* and return it
+
+    AsepriteAnimationFile2* newAsepriteAnimationFile2;
+    newAsepriteAnimationFile2 = new AsepriteAnimationFile2(filename, this->foldername, this->textures[filename], *this);
+    return newAsepriteAnimationFile2;
+    //return new AsepriteAnimationFile2(filename, this->foldername, this->textures[filename], *this);
 }
 
 void AsepriteManager::UnloadRessources()

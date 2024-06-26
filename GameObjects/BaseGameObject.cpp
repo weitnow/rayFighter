@@ -79,6 +79,11 @@ void BaseGameObject::addAnim(AsepriteAnimationFile* animfileptr)
     this->animfileptr = animfileptr;
 }
 
+void BaseGameObject::addAnim2(AsepriteAnimationFile2* animfileptr2)
+{
+    this->animfileptr2 = animfileptr2;
+}
+
 
 AsepriteAnimationFile* BaseGameObject::getAnim()
 {
@@ -86,6 +91,13 @@ AsepriteAnimationFile* BaseGameObject::getAnim()
     assert(animfileptr != nullptr); // ups, getAnim was called before addAnim was called
 
     return animfileptr;
+}
+
+AsepriteAnimationFile2* BaseGameObject::getAnim2()
+{
+    assert(animfileptr2 != nullptr); // ups, getAnim was called before addAnim was called
+
+    return animfileptr2;
 }
 
 void BaseGameObject::addCollisionBox(std::string hitboxName)

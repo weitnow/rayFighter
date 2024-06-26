@@ -9,7 +9,8 @@
 #include <map>
 #include <string>
 
-struct FrameTag; // forward declaration
+struct FrameTag;       // forward declaration
+class AsepriteManager; //forward declaration
 
 /* #region ---AsepriteAnimationFile class--- */
 
@@ -91,6 +92,7 @@ class AsepriteAnimationFile2
 private:
     // member variables
     std::string filename;
+    AsepriteManager* theManager; //todo: Muss das nicht ein Pointer sein?
     Texture texture;
     std::string current_tag;
     int current_frame;
@@ -101,7 +103,10 @@ private:
     float update_counter;
 
 public:
-    explicit AsepriteAnimationFile2(std::string filename, std::string foldername, Texture& texture);
+    explicit AsepriteAnimationFile2(std::string filename,
+                                    std::string foldername,
+                                    Texture& texture,
+                                    AsepriteManager& theManager);
 
     // destructor
     ~AsepriteAnimationFile2();
@@ -170,6 +175,7 @@ public:
     void loadAnimFile2(const std::string& filename);
 
     FrameTag getFrameTag(const std::string& tagname);
+    FrameTag getFrameTag2(const std::string& tagname);
 
     void showLoadedAnimFiles();
 
