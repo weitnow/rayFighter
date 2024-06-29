@@ -7,7 +7,7 @@ BaseGameObject::BaseGameObject()
     scale.x = 1.f;
     scale.y = 1.f;
     pos = {Constants::X, Constants::Y};
-    animfileptr = nullptr;
+    animfileptr2 = nullptr;
 }
 
 BaseGameObject::BaseGameObject(float x, float y) : BaseGameObject()
@@ -74,26 +74,12 @@ Vector2 BaseGameObject::getScale()
     return scale;
 }
 
-void BaseGameObject::addAnim(AsepriteAnimationFile* animfileptr)
-{
-    this->animfileptr = animfileptr;
-}
-
-void BaseGameObject::addAnim2(AsepriteAnimationFile2* animfileptr2)
+void BaseGameObject::addAnim(AsepriteAnimationFile2* animfileptr2)
 {
     this->animfileptr2 = animfileptr2;
 }
 
-
-AsepriteAnimationFile* BaseGameObject::getAnim()
-{
-
-    assert(animfileptr != nullptr); // ups, getAnim was called before addAnim was called
-
-    return animfileptr;
-}
-
-AsepriteAnimationFile2* BaseGameObject::getAnim2()
+AsepriteAnimationFile2* BaseGameObject::getAnim()
 {
     assert(animfileptr2 != nullptr); // ups, getAnim was called before addAnim was called
 

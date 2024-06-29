@@ -24,23 +24,14 @@ int main(void)
                                        480,
                                        270); // Create a RenderTexture2D to be used for render to texture
 
-    asepriteManager.loadAnimFile("gbFighter");
 
-
-    asepriteManager.loadAnimFile2("gbFighter"); // asepriteManager.frameTags[gbFighter-Idle]
-                                                // asepriteManager.textures[gbFighter]
+    asepriteManager.loadAnimFile("gbFighter"); // asepriteManager.frameTags[gbFighter-Idle]
+                                               // asepriteManager.textures[gbFighter]
 
     // Create Player 1
-    BaseGameObject* player1 = new BaseGameObject(50, 270 - 48);
+    BaseGameObject* player1 = new BaseGameObject(80, 270 - 48);
     player1->addAnim(asepriteManager.getAnimFile("gbFighter"));
     player1->getAnim()->setFrameTag("Walking");
-    player1->addCollisionBox("body");
-
-
-    // Create Player 2
-    BaseGameObject* player2 = new BaseGameObject(80, 270 - 48);
-    player2->addAnim2(asepriteManager.getAnimFile2("gbFighter"));
-    player2->getAnim2()->setFrameTag("Walking"); // not working yet, because its hardcoded
 
 
     // Main game loop
@@ -51,12 +42,11 @@ int main(void)
         //----------------------------------------------------------------------------------
         // Update
         //----------------------------------------------------------------------------------
-        player1->update(deltaTime);
+
         screen2DManager.update(deltaTime);
+        player1->update(deltaTime);
         player1->getAnim()->update(deltaTime);
 
-        player2->update(deltaTime);
-        player2->getAnim2()->update(deltaTime);
 
         //----------------------------------------------------------------------------------
         // Draw to RenderTexture
@@ -68,12 +58,8 @@ int main(void)
         ClearBackground(RAYWHITE);
 
         player1->draw();
-
         player1->getAnim()->drawCurrentSelectedTag(player1->getPos().x, player1->getPos().y);
 
-        player2->draw();
-
-        player2->getAnim2()->drawCurrentSelectedTag(player2->getPos().x, player2->getPos().y);
         /*
         BeginMode2D(camera);
 

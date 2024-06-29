@@ -1,6 +1,3 @@
-//
-// Created by weitnow on 1/1/24.
-//
 
 #ifndef GBFIGHTER_BASEGAMEOBJECT_H
 #define GBFIGHTER_BASEGAMEOBJECT_H
@@ -31,11 +28,8 @@ public:
     Vector2 getScale();
 
     // sprites
-    void addAnim(AsepriteAnimationFile* animfileptr);
-    void addAnim2(AsepriteAnimationFile2* animfileptr2);
-
-    AsepriteAnimationFile* getAnim();
-    AsepriteAnimationFile2* getAnim2();
+    void addAnim(AsepriteAnimationFile2* animfileptr2);
+    AsepriteAnimationFile2* getAnim();
 
     // hitboxes
     void addCollisionBox(std::string hitboxName);
@@ -47,9 +41,6 @@ protected:
 
     // a map which holds all the sprite-objs
     std::map<std::string, BaseSpriteObject> sprites;
-
-    // a variable which holds a animfileptr
-    AsepriteAnimationFile* animfileptr;
 
     AsepriteAnimationFile2* animfileptr2;
 
