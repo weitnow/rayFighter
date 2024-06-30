@@ -74,12 +74,12 @@ Vector2 BaseGameObject::getScale()
     return scale;
 }
 
-void BaseGameObject::addAnim(AsepriteAnimationFile2* animfileptr2)
+void BaseGameObject::addAnim(AsepriteAnimationFile* animfileptr2)
 {
     this->animfileptr2 = animfileptr2;
 }
 
-AsepriteAnimationFile2* BaseGameObject::getAnim()
+AsepriteAnimationFile* BaseGameObject::getAnim()
 {
     assert(animfileptr2 != nullptr); // ups, getAnim was called before addAnim was called
 

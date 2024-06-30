@@ -19,12 +19,12 @@ class AsepriteManager; //forward declaration
  * @param filename Filename as a String without file-extension. The class will look for a [filename].png and [filename].json
  * @param foldername Foldername where the png and json is located
  */
-class AsepriteAnimationFile2
+class AsepriteAnimationFile
 {
 private:
     // member variables
     std::string filename;
-    AsepriteManager* theManager; //todo: Muss das nicht ein Pointer sein?
+    AsepriteManager* asepriteManager; //
     Texture texture;
     std::string current_tag;
     int current_frame;
@@ -35,13 +35,13 @@ private:
     float update_counter;
 
 public:
-    explicit AsepriteAnimationFile2(std::string filename,
-                                    std::string foldername,
-                                    Texture& texture,
-                                    AsepriteManager& theManager);
+    explicit AsepriteAnimationFile(std::string filename,
+                                   std::string foldername,
+                                   Texture& texture,
+                                   AsepriteManager& theManager);
 
     // destructor
-    ~AsepriteAnimationFile2();
+    ~AsepriteAnimationFile();
 
     // methods
     /**
@@ -105,7 +105,7 @@ public:
      */
     void loadAnimFile(const std::string& filename);
 
-    FrameTag getFrameTag2(const std::string& tagname);
+    FrameTag getFrameTag(const std::string& tagname);
 
 
     /**
@@ -116,7 +116,7 @@ public:
      * the AnimationObject has a frameTags of type maps which holds
      * frameTags["Animation Name as String"] = pair<from, to>
      */
-    AsepriteAnimationFile2* getAnimFile(const std::string& filename);
+    AsepriteAnimationFile* getAnimFile(const std::string& filename);
 
     /**
      * @brief This Methodes loops through all objects in the member variable animFiles and calls the destructor of the AsepriteAnimationFile*,
@@ -132,7 +132,7 @@ private:
 
     std::map<std::string, Texture> textures;
 
-    std::map<std::string, AsepriteAnimationFile2> animFiles2;
+    std::map<std::string, AsepriteAnimationFile> animFiles2;
 
     // private methods
     /**

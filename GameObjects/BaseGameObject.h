@@ -28,8 +28,8 @@ public:
     Vector2 getScale();
 
     // sprites
-    void addAnim(AsepriteAnimationFile2* animfileptr2);
-    AsepriteAnimationFile2* getAnim();
+    void addAnim(AsepriteAnimationFile* animfileptr2);
+    AsepriteAnimationFile* getAnim();
 
     // hitboxes
     void addCollisionBox(std::string hitboxName);
@@ -42,7 +42,7 @@ protected:
     // a map which holds all the sprite-objs
     std::map<std::string, BaseSpriteObject> sprites;
 
-    AsepriteAnimationFile2* animfileptr2;
+    AsepriteAnimationFile* animfileptr2;
 
     // a map which holds all the collisionbox-objs
     std::map<std::string, CollisionBox2D> collisionBoxes;

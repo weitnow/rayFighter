@@ -2,46 +2,46 @@
 
 
 /* #region ---AsepriteAnimationFile Class */
-AsepriteAnimationFile2::AsepriteAnimationFile2(std::string filename,
-                                               std::string foldername,
-                                               Texture& texture,
-                                               AsepriteManager& theManager)
+AsepriteAnimationFile::AsepriteAnimationFile(std::string filename,
+                                             std::string foldername,
+                                             Texture& texture,
+                                             AsepriteManager& asepriteManager)
 {
-    this->theManager = &theManager;
+    this->asepriteManager = &asepriteManager;
     this->filename = filename;
     this->texture = texture;
     current_tag = "Idle";
     current_frame = 0;
-    min_frame = theManager.getFrameTag2("bla").from;
-    max_frame = theManager.getFrameTag2("bla").to;
+    min_frame = asepriteManager.getFrameTag("bla").from;
+    max_frame = asepriteManager.getFrameTag("bla").to;
     current_color = WHITE;
     current_scale = 1.0f;
     update_counter = 0.0f;
 }
 
-AsepriteAnimationFile2::~AsepriteAnimationFile2()
+AsepriteAnimationFile::~AsepriteAnimationFile()
 {
 }
 
-FrameTag AsepriteAnimationFile2::getFrameTag(const std::string& tagname)
+FrameTag AsepriteAnimationFile::getFrameTag(const std::string& tagname)
 {
-    AsepriteManager* Manager = this->theManager;
-    theManager->getAnimFile("bla");
+    AsepriteManager* Manager = this->asepriteManager;
+    asepriteManager->getAnimFile("bla");
 }
 
-void AsepriteAnimationFile2::drawFrame(const std::string& tagname, int x, int y, float scale, Color tint)
+void AsepriteAnimationFile::drawFrame(const std::string& tagname, int x, int y, float scale, Color tint)
 {
     // todo: implement scaling
-    FrameTag frameTag = this->theManager->getFrameTag2(tagname);
+    FrameTag frameTag = this->asepriteManager->getFrameTag(tagname);
     DrawTextureRec(texture, {(float)current_frame * 32, 0, 32, (float)texture.height}, {(float)x, (float)y}, tint);
 }
 
-void AsepriteAnimationFile2::drawCurrentSelectedTag(int x, int y)
+void AsepriteAnimationFile::drawCurrentSelectedTag(int x, int y)
 {
     drawFrame(current_tag, x, y, this->current_scale, this->current_color);
 }
 
-void AsepriteAnimationFile2::update(float deltaTime)
+void AsepriteAnimationFile::update(float deltaTime)
 {
 
     update_counter += deltaTime;
@@ -52,7 +52,7 @@ void AsepriteAnimationFile2::update(float deltaTime)
     }
 }
 
-void AsepriteAnimationFile2::nextFrame()
+void AsepriteAnimationFile::nextFrame()
 {
     if (current_frame < max_frame)
     {
@@ -64,15 +64,15 @@ void AsepriteAnimationFile2::nextFrame()
     }
 }
 
-void AsepriteAnimationFile2::setFrameTag(const std::string& tagname)
+void AsepriteAnimationFile::setFrameTag(const std::string& tagname)
 {
     if (current_tag == tagname)
     {
         return;
     }
     current_tag = tagname;
-    min_frame = this->theManager->getFrameTag2(current_tag).from;
-    max_frame = this->theManager->getFrameTag2(current_tag).to;
+    min_frame = this->asepriteManager->getFrameTag(current_tag).from;
+    max_frame = this->asepriteManager->getFrameTag(current_tag).to;
     current_frame = min_frame;
 }
 
@@ -90,7 +90,6 @@ AsepriteManager::AsepriteManager(std::string foldername)
 AsepriteManager::~AsepriteManager()
 {
 }
-
 nlohmann::json* AsepriteManager::loadJsonFile(const std::string& filename)
 {
     std::string path_with_filename = foldername + filename + ".json";
@@ -164,21 +163,22 @@ void AsepriteManager::loadAnimFile(const std::string& filename)
 }
 
 
-FrameTag AsepriteManager::getFrameTag2(const std::string& tagname)
+FrameTag AsepriteManager::getFrameTag(const std::string& tagname)
 {
     return frameTags["gbFighter-Idle"]; // todo: get rid of the hardcoded tagname
 }
 
 
-AsepriteAnimationFile2* AsepriteManager::getAnimFile(const std::string& filename)
+AsepriteAnimationFile* AsepriteManager::getAnimFile(const std::string& filename)
 {
-    // this returns a AsepriteAnimationFile2*,
-    // Todo: generate a AsepriteAnimationFile2* and return it
 
-    AsepriteAnimationFile2* newAsepriteAnimationFile2;
-    newAsepriteAnimationFile2 = new AsepriteAnimationFile2(filename, this->foldername, this->textures[filename], *this);
-    return newAsepriteAnimationFile2;
-    //return new AsepriteAnimationFile2(filename, this->foldername, this->textures[filename], *this);
+    /*
+    AsepriteAnimationFile* newAsepriteAnimationFile;
+    newAsepriteAnimationFile = new AsepriteAnimationFile(filename, this->foldername, this->textures[filename], *this);
+    return newAsepriteAnimationFile;
+    */
+
+    return new AsepriteAnimationFile(filename, this->foldername, this->textures[filename], (*this));
 }
 
 void AsepriteManager::UnloadRessources()
