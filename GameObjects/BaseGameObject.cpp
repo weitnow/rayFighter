@@ -7,7 +7,7 @@ BaseGameObject::BaseGameObject()
     scale.x = 1.f;
     scale.y = 1.f;
     pos = {Constants::X, Constants::Y};
-    animfileptr2 = nullptr;
+    animfileptr = nullptr;
 }
 
 BaseGameObject::BaseGameObject(float x, float y) : BaseGameObject()
@@ -74,16 +74,16 @@ Vector2 BaseGameObject::getScale()
     return scale;
 }
 
-void BaseGameObject::addAnim(AsepriteAnimationFile* animfileptr2)
+void BaseGameObject::addAnim(AsepriteAnimationFile* animfileptr)
 {
-    this->animfileptr2 = animfileptr2;
+    this->animfileptr = animfileptr;
 }
 
 AsepriteAnimationFile* BaseGameObject::getAnim()
 {
-    assert(animfileptr2 != nullptr); // ups, getAnim was called before addAnim was called
+    assert(animfileptr != nullptr); // ups, getAnim was called before addAnim was called
 
-    return animfileptr2;
+    return animfileptr;
 }
 
 void BaseGameObject::addCollisionBox(std::string hitboxName)

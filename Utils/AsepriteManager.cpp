@@ -12,8 +12,8 @@ AsepriteAnimationFile::AsepriteAnimationFile(std::string filename,
     this->texture = texture;
     current_tag = "Idle";
     current_frame = 0;
-    min_frame = asepriteManager.getFrameTag("bla").from;
-    max_frame = asepriteManager.getFrameTag("bla").to;
+    min_frame = 0;
+    max_frame = 0;
     current_color = WHITE;
     current_scale = 1.0f;
     update_counter = 0.0f;
@@ -23,10 +23,9 @@ AsepriteAnimationFile::~AsepriteAnimationFile()
 {
 }
 
-FrameTag AsepriteAnimationFile::getFrameTag(const std::string& tagname)
+FrameTag AsepriteAnimationFile::getFrameTag(const std::string& filenameTagname) // for example "gbFighter-Idle"
 {
-    AsepriteManager* Manager = this->asepriteManager;
-    asepriteManager->getAnimFile("bla");
+    return this->asepriteManager->getFrameTag(filenameTagname);
 }
 
 void AsepriteAnimationFile::drawFrame(const std::string& tagname, int x, int y, float scale, Color tint)
@@ -121,12 +120,6 @@ nlohmann::json* AsepriteManager::loadJsonFile(const std::string& filename)
     return jsondata;
 }
 
-/**
- * After loadAnimFile is executed the AsepriteManager animFiles-Obj of type maps
- * holds animFiles[gbFighter] = AnimationObject* AnimationObject has a frameTags
- * of type maps which holds frameTags[idle] = pair<from, to>
- * @param filename
- */
 void AsepriteManager::loadAnimFile(const std::string& filename)
 {
 
@@ -137,8 +130,7 @@ void AsepriteManager::loadAnimFile(const std::string& filename)
     // we delete the jsonfile object on the heap at the end of this methode
     nlohmann::json* jsonfile = loadJsonFile(filename);
 
-    // get how many frameTags are in the jsonf#ifdef DEBUG
-    // prints all information about the current selected tag (tagname, direction, loop, from, to)
+    // get how many frameTags are in the json
 
     int frameTagSize = (*jsonfile)["meta"]["frameTags"].size();
     for (int i = 0; i < frameTagSize; ++i)
@@ -163,21 +155,14 @@ void AsepriteManager::loadAnimFile(const std::string& filename)
 }
 
 
-FrameTag AsepriteManager::getFrameTag(const std::string& tagname)
+FrameTag AsepriteManager::getFrameTag(const std::string& filenameTagname)
 {
-    return frameTags["gbFighter-Idle"]; // todo: get rid of the hardcoded tagname
+    return frameTags[filenameTagname]; // for example frameTags["gbFighter-Idle"]
 }
 
 
 AsepriteAnimationFile* AsepriteManager::getAnimFile(const std::string& filename)
 {
-
-    /*
-    AsepriteAnimationFile* newAsepriteAnimationFile;
-    newAsepriteAnimationFile = new AsepriteAnimationFile(filename, this->foldername, this->textures[filename], *this);
-    return newAsepriteAnimationFile;
-    */
-
     return new AsepriteAnimationFile(filename, this->foldername, this->textures[filename], (*this));
 }
 

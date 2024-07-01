@@ -31,7 +31,7 @@ int main(void)
     // Create Player 1
     BaseGameObject* player1 = new BaseGameObject(80, 270 - 48);
     player1->addAnim(asepriteManager->getAnimFile("gbFighter"));
-    player1->getAnim()->setFrameTag("Walking");
+    player1->getAnim()->setFrameTag("gbFighter-Walking");
 
 
     // Main game loop

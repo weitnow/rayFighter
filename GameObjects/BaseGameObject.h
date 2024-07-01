@@ -42,7 +42,7 @@ protected:
     // a map which holds all the sprite-objs
     std::map<std::string, BaseSpriteObject> sprites;
 
-    AsepriteAnimationFile* animfileptr2;
+    AsepriteAnimationFile* animfileptr;
 
     // a map which holds all the collisionbox-objs
     std::map<std::string, CollisionBox2D> collisionBoxes;
