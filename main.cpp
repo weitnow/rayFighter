@@ -28,10 +28,18 @@ int main(void)
     asepriteManager->loadAnimFile("gbFighter"); // asepriteManager.frameTags[gbFighter-Idle]
                                                 // asepriteManager.textures[gbFighter]
 
+
+    asepriteManager->loadAnimFile("nesFighter");
+
     // Create Player 1
     BaseGameObject* player1 = new BaseGameObject(80, 270 - 48);
     player1->addAnim(asepriteManager->getAnimFile("gbFighter"));
     player1->getAnim()->setFrameTag("gbFighter-Walking");
+
+    // Create Player 2
+    BaseGameObject* player2 = new BaseGameObject(120, 270 - 48);
+    player2->addAnim(asepriteManager->getAnimFile("nesFighter"));
+    player2->getAnim()->setFrameTag("nesFighter-Idle");
 
 
     // Main game loop
@@ -44,8 +52,12 @@ int main(void)
         //----------------------------------------------------------------------------------
 
         screen2DManager->update(deltaTime);
+
         player1->update(deltaTime);
         player1->getAnim()->update(deltaTime);
+
+        player2->update(deltaTime);
+        player2->getAnim()->update(deltaTime);
 
 
         //----------------------------------------------------------------------------------
@@ -59,6 +71,9 @@ int main(void)
 
         player1->draw();
         player1->getAnim()->drawCurrentSelectedTag(player1->getPos().x, player1->getPos().y);
+
+        player2->draw();
+        player2->getAnim()->drawCurrentSelectedTag(player2->getPos().x, player2->getPos().y);
 
         /*
         BeginMode2D(camera);
@@ -91,6 +106,9 @@ int main(void)
     //----------------------------------------------------------------------------------
     // De-Initialization
     //--------------------------------------------------------------------------------------
+
+    delete player1;
+    delete player2;
 
     screen2DManager->unloadAllRenderTextures();
     asepriteManager->UnloadRessources();

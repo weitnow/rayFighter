@@ -157,12 +157,24 @@ void AsepriteManager::loadAnimFile(const std::string& filename)
 
 FrameTag AsepriteManager::getFrameTag(const std::string& filenameTagname)
 {
-    return frameTags[filenameTagname]; // for example frameTags["gbFighter-Idle"]
+    try
+    {
+        return frameTags.at(filenameTagname); // for example frameTags["gbFighter-Idle"]
+    }
+    catch (const std::out_of_range& e)
+    {
+        std::cerr << "Error: FrameTag " << filenameTagname << " does not exist" << std::endl;
+    }
 }
 
 
 AsepriteAnimationFile* AsepriteManager::getAnimFile(const std::string& filename)
 {
+    auto it = this->textures.find(filename);
+    if (it == this->textures.end())
+    {
+        throw std::runtime_error("Texture not found: " + filename);
+    }
     return new AsepriteAnimationFile(filename, this->foldername, this->textures[filename], (*this));
 }
 

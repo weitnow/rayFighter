@@ -34,6 +34,7 @@ private:
     float current_scale;
     float update_counter;
 
+
 public:
     explicit AsepriteAnimationFile(std::string filename,
                                    std::string foldername,
@@ -71,13 +72,6 @@ public:
 
 /* #endregion */
 
-/**
- * @brief the class holds a reference to the texture (png file) and will have a map called frameTags.
- * frameTags["gbFighter"] holds for example the FrameTag-Object (with direction, loop, duration and from and to, where from is the first anim-area of
- * in the texture and to is the last anim-area in the texture)
- * @param filename filename withouth extensions. the class will look for a json and a png file. both needs to be present.
- * @param foldername the folder in which the png and json file is located
- */
 
 /* #region ---AsepriteManager class--- */
 /**
