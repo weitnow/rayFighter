@@ -32,6 +32,9 @@ int main(void)
     asepriteManager->loadAnimFile("nesFighter"); // asepriteManager.frameTags[nesFighter-Idle]
                                                  // asepriteManager.textures[nesFighter]
 
+    asepriteManager->loadAnimFile("bgAnimation"); // asepriteManager.frameTags[bgAnimation]
+                                                  // asepriteManager.textures[bgAnimation]
+
     // Create Player 1
     BaseGameObject* player1 = new BaseGameObject(80, 270 - 48);
     player1->addAnim(asepriteManager->getAnimFile("gbFighter"));
@@ -42,7 +45,10 @@ int main(void)
     player2->addAnim(asepriteManager->getAnimFile("nesFighter"));
     player2->getAnim()->setFrameTag("nesFighter-Idle");
 
-    std::cout << asepriteManager->getFrameTag("gbFighter-Idle") << std::endl;
+    // Create Background
+    BaseGameObject* bg = new BaseGameObject(120, 0);
+    bg->addAnim(asepriteManager->getAnimFile("bgAnimation"));
+    bg->getAnim()->setFrameTag("bgAnimation");
 
 
     // Main game loop
@@ -62,6 +68,9 @@ int main(void)
         player2->update(deltaTime);
         player2->getAnim()->update(deltaTime);
 
+        bg->update(deltaTime);
+        bg->getAnim()->update(deltaTime);
+
 
         //----------------------------------------------------------------------------------
         // Draw to RenderTexture
@@ -77,6 +86,9 @@ int main(void)
 
         player2->draw();
         player2->getAnim()->drawCurrentSelectedTag(player2->getPos().x, player2->getPos().y);
+
+        bg->draw();
+        bg->getAnim()->drawCurrentSelectedTag(bg->getPos().x, bg->getPos().y);
 
         /*
         BeginMode2D(camera);

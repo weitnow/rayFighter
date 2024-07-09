@@ -28,6 +28,13 @@ FrameTag AsepriteAnimationFile::getFrameTag(const std::string& filenameTagname) 
     return this->asepriteManager->getFrameTag(filenameTagname);
 }
 
+float AsepriteAnimationFile::getDurationCurrentFrame(int frameNumber)
+{
+    int duration = this->asepriteManager->getFrameTag(current_filenameTagname).frameNumberDuration[this->current_frame];
+    // 100 = 0.1 seconds
+    return duration / 1000.0f;
+}
+
 void AsepriteAnimationFile::drawFrame(const std::string& filenameTagname, int x, int y, float scale, Color tint)
 {
     // todo: implement scaling
@@ -42,9 +49,12 @@ void AsepriteAnimationFile::drawCurrentSelectedTag(int x, int y)
 
 void AsepriteAnimationFile::update(float deltaTime)
 {
+    // get the duration of the current frame
+    current_duration = getDurationCurrentFrame(current_frame);
 
+    // update the counter with the deltaTime
     update_counter += deltaTime;
-    if (update_counter >= 1.0f)
+    if (update_counter >= current_duration)
     {
         nextFrame();
         update_counter = 0.0f;
@@ -79,8 +89,7 @@ void AsepriteAnimationFile::setFrameTag(const std::string& filenameTagname)
     if (this->filename != current_FrameTag.texturename)
     {
         this->texture = this->asepriteManager->getTexture(current_FrameTag.texturename);
-        //todo: implement automatic load of correct texture
-        std::cout << filename << " != " << current_FrameTag.texturename << std::endl;
+        //std::cout << filename << " != " << current_FrameTag.texturename << std::endl;
     }
 
     current_frame = min_frame;
@@ -142,18 +151,57 @@ void AsepriteManager::loadAnimFile(const std::string& filename)
     nlohmann::json* jsonfile = loadJsonFile(filename);
 
     // get how many frameTags are in the json
-
     int frameTagSize = (*jsonfile)["meta"]["frameTags"].size();
-    for (int i = 0; i < frameTagSize; ++i)
+
+    // get how many frames are in the json
+    int frameSize = (*jsonfile)["frames"].size();
+
+    // check if the file has frames
+    if (frameSize == 0)
     {
-        // create a FrameTag object and put it into the map
-        FrameTag frameTag;
-        frameTag.tagname = (*jsonfile)["meta"]["frameTags"][i]["name"];
+        std::cerr << "Error: File " << filename << " has no frames" << std::endl;
+        return;
+    }
+
+    // if there are at least one frame, generate the FrameTag Obj
+    FrameTag frameTag;
+
+    // check if file has frameTags
+    if (frameTagSize > 0)
+    {
+        // file has frametags
+
+        for (int i = 0; i < frameTagSize; ++i)
+        {
+            frameTag.tagname = (*jsonfile)["meta"]["frameTags"][i]["name"];
+            frameTag.texturename = filename;
+            frameTag.filenameTagname = filename + "-" + frameTag.tagname;
+            frameTag.from = (*jsonfile)["meta"]["frameTags"][i]["from"];
+            frameTag.to = (*jsonfile)["meta"]["frameTags"][i]["to"];
+            frameTag.direction = (*jsonfile)["meta"]["frameTags"][i]["direction"];
+            frameTag.loop = false;
+
+            // add the frameNumber and the duration of the frame to the frameNumberDuration map
+            for (int j = frameTag.from; j <= frameTag.to; ++j)
+            {
+                frameTag.frameNumberDuration[j] =
+                    (*jsonfile)["frames"][filename + " " + std::to_string(j) + ".aseprite"]["duration"];
+            }
+
+            // adding it to the frameTags-Map, so its accessible like frameTags["gbFighter-Idle"], which would return the frameTag Idle of gbFighter.png
+            frameTags[filename + "-" + frameTag.tagname] = frameTag;
+        }
+    }
+    else
+    {
+        // file has NO frametags
+
+        frameTag.tagname = filename;
         frameTag.texturename = filename;
-        frameTag.filenameTagname = filename + "-" + frameTag.tagname;
-        frameTag.from = (*jsonfile)["meta"]["frameTags"][i]["from"];
-        frameTag.to = (*jsonfile)["meta"]["frameTags"][i]["to"];
-        frameTag.direction = (*jsonfile)["meta"]["frameTags"][i]["direction"];
+        frameTag.filenameTagname = filename;
+        frameTag.from = 0;
+        frameTag.to = frameSize - 1;
+        frameTag.direction = "forward";
         frameTag.loop = false;
 
         // add the frameNumber and the duration of the frame to the frameNumberDuration map
@@ -164,8 +212,9 @@ void AsepriteManager::loadAnimFile(const std::string& filename)
         }
 
         // adding it to the frameTags-Map, so its accessible like frameTags["gbFighter-Idle"], which would return the frameTag Idle of gbFighter.png
-        frameTags[filename + "-" + frameTag.tagname] = frameTag;
+        frameTags[filename] = frameTag;
     }
+
     delete jsonfile;
 
     // --ADD TEXTURE TO TEXTURES MEMEBER VARIABLE--

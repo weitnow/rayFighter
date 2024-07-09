@@ -33,6 +33,7 @@ private:
     Color current_color;
     float current_scale;
     float update_counter;
+    float current_duration;
 
 
 public:
@@ -52,6 +53,7 @@ public:
      * @return FrameTag
      */
     FrameTag getFrameTag(const std::string& filenameTagname);
+    float getDurationCurrentFrame(int frameNumber);
     void drawFrame(const std::string& filenameTagname, int x, int y, float scale = 1.0f, Color tint = WHITE);
     void drawCurrentSelectedTag(int x, int y);
 
