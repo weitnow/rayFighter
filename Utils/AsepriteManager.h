@@ -23,10 +23,10 @@ class AsepriteAnimationFile
 {
 private:
     // member variables
-    std::string filename;             // filename, ex. "gbFighter"
+    std::string filename;             // filename, ex. "gbFighter", is also the name of the texture
     AsepriteManager* asepriteManager; // reference to the asepriteManager
     Texture texture;
-    std::string current_tag;
+    std::string current_filenameTagname;
     int current_frame;
     int min_frame;
     int max_frame;
@@ -51,8 +51,8 @@ public:
      * @param tagname
      * @return FrameTag
      */
-    FrameTag getFrameTag(const std::string& tagname);
-    void drawFrame(const std::string& tagname, int x, int y, float scale = 1.0f, Color tint = WHITE);
+    FrameTag getFrameTag(const std::string& filenameTagname);
+    void drawFrame(const std::string& filenameTagname, int x, int y, float scale = 1.0f, Color tint = WHITE);
     void drawCurrentSelectedTag(int x, int y);
 
     /**
@@ -110,12 +110,6 @@ public:
      *
      */
     AsepriteAnimationFile* getAnimFile(const std::string& filename);
-
-    /**
-     * @brief This Methodes loops through all objects in the member variable animFiles and calls the destructor of the AsepriteAnimationFile*,
-     * then frees the Memory on the heap and set the string (pair first of the map) = nullptr.
-     */
-    void UnloadRessources();
 
 private:
     // private member variable

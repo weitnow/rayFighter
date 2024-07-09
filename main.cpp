@@ -29,7 +29,8 @@ int main(void)
                                                 // asepriteManager.textures[gbFighter]
 
 
-    asepriteManager->loadAnimFile("nesFighter");
+    asepriteManager->loadAnimFile("nesFighter"); // asepriteManager.frameTags[nesFighter-Idle]
+                                                 // asepriteManager.textures[nesFighter]
 
     // Create Player 1
     BaseGameObject* player1 = new BaseGameObject(80, 270 - 48);
@@ -40,6 +41,7 @@ int main(void)
     BaseGameObject* player2 = new BaseGameObject(120, 270 - 48);
     player2->addAnim(asepriteManager->getAnimFile("nesFighter"));
     player2->getAnim()->setFrameTag("nesFighter-Idle");
+    player2->getAnim()->setFrameTag("gbFighter-Idle");
 
 
     // Main game loop
@@ -111,7 +113,6 @@ int main(void)
     delete player2;
 
     screen2DManager->unloadAllRenderTextures();
-    asepriteManager->UnloadRessources();
 
     delete screen2DManager; //deallocate memory on the heap
     delete asepriteManager; //deallocate memory on the heap

@@ -28,7 +28,7 @@ public:
     Vector2 getScale();
 
     // sprites
-    void addAnim(AsepriteAnimationFile* animfileptr2);
+    void addAnim(AsepriteAnimationFile* animfileptr);
     AsepriteAnimationFile* getAnim();
 
     // hitboxes

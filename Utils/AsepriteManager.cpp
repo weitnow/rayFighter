@@ -10,7 +10,7 @@ AsepriteAnimationFile::AsepriteAnimationFile(std::string filename,
     this->asepriteManager = &asepriteManager;
     this->filename = filename;
     this->texture = texture;
-    current_tag = "Idle";
+    current_filenameTagname = "Idle";
     current_frame = 0;
     min_frame = 0;
     max_frame = 0;
@@ -28,16 +28,16 @@ FrameTag AsepriteAnimationFile::getFrameTag(const std::string& filenameTagname) 
     return this->asepriteManager->getFrameTag(filenameTagname);
 }
 
-void AsepriteAnimationFile::drawFrame(const std::string& tagname, int x, int y, float scale, Color tint)
+void AsepriteAnimationFile::drawFrame(const std::string& filenameTagname, int x, int y, float scale, Color tint)
 {
     // todo: implement scaling
-    FrameTag frameTag = this->asepriteManager->getFrameTag(tagname);
+    // FrameTag frameTag = this->asepriteManager->getFrameTag(tagname);
     DrawTextureRec(texture, {(float)current_frame * 32, 0, 32, (float)texture.height}, {(float)x, (float)y}, tint);
 }
 
 void AsepriteAnimationFile::drawCurrentSelectedTag(int x, int y)
 {
-    drawFrame(current_tag, x, y, this->current_scale, this->current_color);
+    drawFrame(current_filenameTagname, x, y, this->current_scale, this->current_color);
 }
 
 void AsepriteAnimationFile::update(float deltaTime)
@@ -63,15 +63,25 @@ void AsepriteAnimationFile::nextFrame()
     }
 }
 
-void AsepriteAnimationFile::setFrameTag(const std::string& tagname)
+void AsepriteAnimationFile::setFrameTag(const std::string& filenameTagname)
 {
-    if (current_tag == tagname)
+    if (current_filenameTagname == filenameTagname)
     {
         return;
     }
-    current_tag = tagname;
-    min_frame = this->asepriteManager->getFrameTag(current_tag).from;
-    max_frame = this->asepriteManager->getFrameTag(current_tag).to;
+    current_filenameTagname = filenameTagname;
+
+    FrameTag current_FrameTag = this->asepriteManager->getFrameTag(current_filenameTagname);
+
+    min_frame = current_FrameTag.from;
+    max_frame = current_FrameTag.to;
+
+    if (this->filename != current_FrameTag.texturename)
+    {
+        //todo: implement automatic load of correct texture
+        std::cout << filename << " != " << current_FrameTag.texturename << std::endl;
+    }
+
     current_frame = min_frame;
 }
 
@@ -176,22 +186,6 @@ AsepriteAnimationFile* AsepriteManager::getAnimFile(const std::string& filename)
         throw std::runtime_error("Texture not found: " + filename);
     }
     return new AsepriteAnimationFile(filename, this->foldername, this->textures[filename], (*this));
-}
-
-void AsepriteManager::UnloadRessources()
-{
-    //Todo: Implement Unloading Ressources
-    /*
-    std::cout
-        << "Calling AsepriteManager::UnloadRessources() and deleting all AsepriteAnimationFile-Objects on the heap."
-        << std::endl;
-    for (auto& pair : animFiles)
-    {
-        std::cout << "animFiles[" << pair.first << "] = nullptr " << std::endl;
-        delete pair.second;
-        pair.second = nullptr;
-    }
-    */
 }
 /* #endregion */
 
