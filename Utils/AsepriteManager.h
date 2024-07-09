@@ -72,7 +72,6 @@ public:
 
 /* #endregion */
 
-
 /* #region ---AsepriteManager class--- */
 /**
  * @class AsepriteManager
@@ -102,7 +101,6 @@ public:
      */
     FrameTag getFrameTag(const std::string& filenameTagname);
 
-
     /**
      * @brief This function returns a pointer to an AsepriteAnimationFile
      * @param filename filename of a .json-object without .json at the end
@@ -110,6 +108,8 @@ public:
      *
      */
     AsepriteAnimationFile* getAnimFile(const std::string& filename);
+
+    Texture getTexture(const std::string& textureName);
 
 private:
     // private member variable
@@ -135,13 +135,14 @@ private:
 
 struct FrameTag
 {
-    std::string name;
+    std::string tagname;
+    std::string texturename;
+    std::string filenameTagname;
     std::string direction;
     bool loop;
-    int duration;
     int from;
     int to;
-    std::string texturename;
+    std::map<int, int> frameNumberDuration;
 };
 
 //overrite the operator<< for FrameTag

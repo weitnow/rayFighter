@@ -35,13 +35,14 @@ int main(void)
     // Create Player 1
     BaseGameObject* player1 = new BaseGameObject(80, 270 - 48);
     player1->addAnim(asepriteManager->getAnimFile("gbFighter"));
-    player1->getAnim()->setFrameTag("gbFighter-Walking");
+    player1->getAnim()->setFrameTag("gbFighter-Idle");
 
     // Create Player 2
     BaseGameObject* player2 = new BaseGameObject(120, 270 - 48);
     player2->addAnim(asepriteManager->getAnimFile("nesFighter"));
     player2->getAnim()->setFrameTag("nesFighter-Idle");
-    player2->getAnim()->setFrameTag("gbFighter-Idle");
+
+    std::cout << asepriteManager->getFrameTag("gbFighter-Idle") << std::endl;
 
 
     // Main game loop
