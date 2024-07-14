@@ -5,10 +5,22 @@
 #ifndef GBFIGHTER_BASECHARACTER_H
 #define GBFIGHTER_BASECHARACTER_H
 
-#include "../GameObjects/BaseSpriteObject.h"
+#include "../GameObjects/BaseGameObject.h"
 
 
-class BaseCharacter : public BaseSpriteObject {
+class BaseCharacter : public BaseGameObject
+{
+
+private:
+    // member variables
+    bool isJumping;
+    float jumpHeight;
+    float jumpSpeed;
+    float gravity;
+    float jumpTime;
+    float jumpTimeCounter;
+    float walkingSpeed = 1.f;
+
 public:
     BaseCharacter();
 
@@ -20,10 +32,10 @@ public:
 
     void draw();
 
+    void moveLeft();
+    void moveRight();
+    void jump();
 };
-
-
-
 
 
 #endif //GBFIGHTER_BASECHARACTER_H

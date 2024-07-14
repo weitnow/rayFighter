@@ -31,6 +31,12 @@ void BaseGameObject::update(float deltaTime)
     {
         pair.second.update(deltaTime);
     }
+
+    // check if this->animfileptr is not nullptr - if its not, then update the animation
+    if (animfileptr != nullptr)
+    {
+        animfileptr->update(deltaTime);
+    }
 }
 
 void BaseGameObject::draw()
@@ -40,6 +46,12 @@ void BaseGameObject::draw()
     DrawRectangleLines(pos.x, pos.y, Constants::GAMEOBJ_SIZE.x, Constants::GAMEOBJ_SIZE.y, Constants::GAMEOBJ_COLOR);
 #endif
     // Todo: Implement draw function
+
+    // draw this->animfileptr
+    if (animfileptr != nullptr)
+    {
+        animfileptr->drawCurrentSelectedTag(getPos().x, getPos().y);
+    }
 }
 
 void BaseGameObject::setPos(float x, float y)

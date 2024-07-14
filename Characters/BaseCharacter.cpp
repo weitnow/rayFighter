@@ -5,25 +5,39 @@
 #include "BaseCharacter.h"
 
 
-BaseCharacter::BaseCharacter() : BaseSpriteObject() {
-
+BaseCharacter::BaseCharacter() : BaseGameObject()
+{
 }
 
-BaseCharacter::BaseCharacter(float x, float y) : BaseSpriteObject(x, y) {
-
-}
-
-
-BaseCharacter::~BaseCharacter() {
-
-}
-
-void BaseCharacter::update(float deltaTime) {
-    BaseSpriteObject::update(deltaTime);
-}
-
-void BaseCharacter::draw() {
-    BaseSpriteObject::draw();
+BaseCharacter::BaseCharacter(float x, float y) : BaseGameObject(x, y)
+{
 }
 
 
+BaseCharacter::~BaseCharacter()
+{
+}
+
+void BaseCharacter::update(float deltaTime)
+{
+    BaseGameObject::update(deltaTime);
+}
+
+void BaseCharacter::draw()
+{
+    BaseGameObject::draw();
+}
+
+void BaseCharacter::moveLeft()
+{
+    this->setPos(this->getPos().x - walkingSpeed, this->getPos().y);
+}
+
+void BaseCharacter::moveRight()
+{
+    this->setPos(this->getPos().x + walkingSpeed, this->getPos().y);
+}
+
+void BaseCharacter::jump()
+{
+}

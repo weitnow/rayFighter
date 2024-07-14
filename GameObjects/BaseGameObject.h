@@ -14,7 +14,7 @@ public:
     BaseGameObject(float x, float y);
     ~BaseGameObject();
 
-    void update(float deltaTime);
+    virtual void update(float deltaTime);
     void draw();
 
     // position

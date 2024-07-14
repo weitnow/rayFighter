@@ -1,3 +1,4 @@
+#include "Characters/BaseCharacter.h"
 #include "Characters/Fighter_Andi.h"
 #include "Constants.h"
 #include "GameObjects/BaseGameObject.h"
@@ -36,7 +37,7 @@ int main(void)
                                                   // asepriteManager.textures[bgAnimation]
 
     // Create Player 1
-    BaseGameObject* player1 = new BaseGameObject(80, 190 - 48);
+    BaseCharacter* player1 = new BaseCharacter(80, 190 - 48);
     player1->addAnim(asepriteManager->getAnimFile("gbFighter"));
     player1->getAnim()->setFrameTag("gbFighter-Idle");
 
@@ -63,16 +64,21 @@ int main(void)
         // Update
         //----------------------------------------------------------------------------------
 
+        // check keyboard input
+        if (IsKeyDown(KEY_LEFT))
+        {
+            player1->moveLeft();
+        }
+        else if (IsKeyDown(KEY_RIGHT))
+        {
+            player1->moveRight();
+        }
+
         screen2DManager->update(deltaTime);
 
         player1->update(deltaTime);
-        player1->getAnim()->update(deltaTime);
-
         player2->update(deltaTime);
-        player2->getAnim()->update(deltaTime);
-
         bg->update(deltaTime);
-        bg->getAnim()->update(deltaTime);
 
 
         //----------------------------------------------------------------------------------
@@ -89,13 +95,9 @@ int main(void)
         DrawTextureEx(stage, {0, 80}, 0, stage_scale, WHITE);
 
         player1->draw();
-        player1->getAnim()->drawCurrentSelectedTag(player1->getPos().x, player1->getPos().y);
-
         player2->draw();
-        player2->getAnim()->drawCurrentSelectedTag(player2->getPos().x, player2->getPos().y);
-
         bg->draw();
-        bg->getAnim()->drawCurrentSelectedTag(bg->getPos().x, bg->getPos().y);
+
 
         /*
         BeginMode2D(camera);
