@@ -141,6 +141,8 @@ struct FrameTag
     std::string texturename;
     std::string filenameTagname;
     std::string direction;
+    int sourceSizeX;
+    int sourceSizeY;
     bool loop;
     int from;
     int to;

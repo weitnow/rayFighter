@@ -21,8 +21,8 @@ int main(void)
 
     // Populate membervariables of the GlobalObjects
     screen2DManager->createRenderTarget("mainRenderTarget",
-                                        480,
-                                        270); // Create a RenderTexture2D to be used for render to texture
+                                        320,
+                                        180); // Create a RenderTexture2D to be used for render to texture
 
 
     asepriteManager->loadAnimFile("gbFighter"); // asepriteManager.frameTags[gbFighter-Idle]
@@ -36,19 +36,22 @@ int main(void)
                                                   // asepriteManager.textures[bgAnimation]
 
     // Create Player 1
-    BaseGameObject* player1 = new BaseGameObject(80, 270 - 48);
+    BaseGameObject* player1 = new BaseGameObject(80, 190 - 48);
     player1->addAnim(asepriteManager->getAnimFile("gbFighter"));
     player1->getAnim()->setFrameTag("gbFighter-Idle");
 
     // Create Player 2
-    BaseGameObject* player2 = new BaseGameObject(120, 270 - 48);
+    BaseGameObject* player2 = new BaseGameObject(120, 190 - 48);
     player2->addAnim(asepriteManager->getAnimFile("nesFighter"));
     player2->getAnim()->setFrameTag("nesFighter-Idle");
 
-    // Create Background
+    // Create Animated-Background
     BaseGameObject* bg = new BaseGameObject(120, 0);
     bg->addAnim(asepriteManager->getAnimFile("bgAnimation"));
     bg->getAnim()->setFrameTag("bgAnimation");
+
+    // Create Static Background
+    Texture2D stage = LoadTexture("Assets/Graphics/stage.png");
 
 
     // Main game loop
@@ -80,6 +83,10 @@ int main(void)
         screen2DManager->beginDrawToRenderTarget("mainRenderTarget");
 
         ClearBackground(RAYWHITE);
+
+        // draw stage
+        float stage_scale = 1.f;
+        DrawTextureEx(stage, {0, 80}, 0, stage_scale, WHITE);
 
         player1->draw();
         player1->getAnim()->drawCurrentSelectedTag(player1->getPos().x, player1->getPos().y);
@@ -126,7 +133,7 @@ int main(void)
     delete player2;
 
     screen2DManager->unloadAllRenderTextures();
-
+    UnloadTexture(stage);
     delete screen2DManager; //deallocate memory on the heap
     delete asepriteManager; //deallocate memory on the heap
 

@@ -38,8 +38,12 @@ float AsepriteAnimationFile::getDurationCurrentFrame(int frameNumber)
 void AsepriteAnimationFile::drawFrame(const std::string& filenameTagname, int x, int y, float scale, Color tint)
 {
     // todo: implement scaling
-    // FrameTag frameTag = this->asepriteManager->getFrameTag(tagname);
-    DrawTextureRec(texture, {(float)current_frame * 32, 0, 32, (float)texture.height}, {(float)x, (float)y}, tint);
+    int sizeX = this->asepriteManager->getFrameTag(filenameTagname).sourceSizeX;
+    int sizeY = this->asepriteManager->getFrameTag(filenameTagname).sourceSizeY;
+    DrawTextureRec(texture,
+                   {(float)current_frame * sizeX, 0, float(sizeY), (float)texture.height},
+                   {(float)x, (float)y},
+                   tint);
 }
 
 void AsepriteAnimationFile::drawCurrentSelectedTag(int x, int y)
@@ -176,10 +180,12 @@ void AsepriteManager::loadAnimFile(const std::string& filename)
             frameTag.tagname = (*jsonfile)["meta"]["frameTags"][i]["name"];
             frameTag.texturename = filename;
             frameTag.filenameTagname = filename + "-" + frameTag.tagname;
+            frameTag.direction = (*jsonfile)["meta"]["frameTags"][i]["direction"];
+            frameTag.sourceSizeX = (*jsonfile)["frames"][filename + " 0.aseprite"]["spriteSourceSize"]["w"];
+            frameTag.sourceSizeY = (*jsonfile)["frames"][filename + " 0.aseprite"]["spriteSourceSize"]["h"];
+            frameTag.loop = false;
             frameTag.from = (*jsonfile)["meta"]["frameTags"][i]["from"];
             frameTag.to = (*jsonfile)["meta"]["frameTags"][i]["to"];
-            frameTag.direction = (*jsonfile)["meta"]["frameTags"][i]["direction"];
-            frameTag.loop = false;
 
             // add the frameNumber and the duration of the frame to the frameNumberDuration map
             for (int j = frameTag.from; j <= frameTag.to; ++j)
@@ -203,6 +209,8 @@ void AsepriteManager::loadAnimFile(const std::string& filename)
         frameTag.to = frameSize - 1;
         frameTag.direction = "forward";
         frameTag.loop = false;
+        frameTag.sourceSizeX = (*jsonfile)["frames"][filename + " 0.aseprite"]["spriteSourceSize"]["w"];
+        frameTag.sourceSizeY = (*jsonfile)["frames"][filename + " 0.aseprite"]["spriteSourceSize"]["h"];
 
         // add the frameNumber and the duration of the frame to the frameNumberDuration map
         for (int j = frameTag.from; j <= frameTag.to; ++j)
