@@ -20,6 +20,7 @@ private:
     float jumpTime;
     float jumpTimeCounter;
     float walkingSpeed = 1.f;
+    Vector2 moveDirection; // (x,y)
 
 public:
     BaseCharacter();
@@ -34,7 +35,9 @@ public:
 
     void moveLeft();
     void moveRight();
+    void stop();
     void jump();
+    void duck();
 };
 
 

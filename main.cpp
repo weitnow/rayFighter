@@ -3,9 +3,39 @@
 #include "Constants.h"
 #include "GameObjects/BaseGameObject.h"
 #include "Utils/AsepriteManager.h"
+#include "Utils/InputHandler.h"
 #include "Utils/Screen2DManager.h"
 #include "raylib.h"
 #include <iostream>
+
+
+//------------------------------------------------------------------------------------
+// Temporary function to handle input, will be replaced by InputHandler later
+//------------------------------------------------------------------------------------
+void handleInput(BaseCharacter* player1)
+{
+    if (IsKeyDown(KEY_A))
+    {
+        player1->moveLeft();
+    }
+    else if (IsKeyDown(KEY_D))
+    {
+        player1->moveRight();
+    }
+    else
+    {
+        player1->stop();
+    }
+
+    if (IsKeyPressed(KEY_W))
+    {
+        player1->jump();
+    }
+    else if (IsKeyPressed(KEY_S))
+    {
+        player1->duck();
+    }
+}
 
 //------------------------------------------------------------------------------------
 // Program main entry point
@@ -14,6 +44,9 @@ int main(void)
 {
     // Initialize screen2DManager and set window size and title, this has to be done first before everything else
     Screen2DManager* screen2DManager = new Screen2DManager(1920, 1080, "C++ gbFighter");
+
+    // Initialize InputHandler
+    InputHandler* inputHandler = new InputHandler();
 
     // Initialize global Variables and GlobalObjects
     float deltaTime;                                                            // will be updated in the main game loop
@@ -64,15 +97,10 @@ int main(void)
         // Update
         //----------------------------------------------------------------------------------
 
+
         // check keyboard input
-        if (IsKeyDown(KEY_LEFT))
-        {
-            player1->moveLeft();
-        }
-        else if (IsKeyDown(KEY_RIGHT))
-        {
-            player1->moveRight();
-        }
+        // todo: replace with inputHandler and remove handleInput function
+        handleInput(player1);
 
         screen2DManager->update(deltaTime);
 
@@ -137,6 +165,7 @@ int main(void)
     screen2DManager->unloadAllRenderTextures();
     UnloadTexture(stage);
     delete screen2DManager; //deallocate memory on the heap
+    delete inputHandler;    //deallocate memory on the heap
     delete asepriteManager; //deallocate memory on the heap
 
     CloseWindow(); // Close window and OpenGL context
