@@ -42,8 +42,10 @@ void handleInput(BaseCharacter* player1)
 //------------------------------------------------------------------------------------
 int main(void)
 {
+
     // Initialize screen2DManager and set window size and title, this has to be done first before everything else
-    Screen2DManager* screen2DManager = new Screen2DManager(1920, 1080, "C++ gbFighter");
+    Screen2DManager* screen2DManager =
+        new Screen2DManager(Constants::SCREEN_WIDTH, Constants::SCREEN_HEIGHT, "C++ gbFighter");
 
     // Initialize InputHandler
     InputHandler* inputHandler = new InputHandler();
@@ -54,9 +56,10 @@ int main(void)
     SetTargetFPS(60); // Set  game to run at 60 frames-per-second
 
     // Populate membervariables of the GlobalObjects
-    screen2DManager->createRenderTarget("mainRenderTarget",
-                                        320,
-                                        180); // Create a RenderTexture2D to be used for render to texture
+    screen2DManager->createRenderTarget(
+        "mainRenderTarget",
+        Constants::RENDERTARGET_WIDTH,
+        Constants::RENDERTARGET_HEIGHT); // Create a RenderTexture2D to be used for render to texture
 
 
     asepriteManager->loadAnimFile("gbFighter"); // asepriteManager.frameTags[gbFighter-Idle]
@@ -70,12 +73,12 @@ int main(void)
                                                   // asepriteManager.textures[bgAnimation]
 
     // Create Player 1
-    BaseCharacter* player1 = new BaseCharacter(80, 190 - 48);
+    BaseCharacter* player1 = new BaseCharacter(Constants::PLAYER1_X, Constants::BASELINE);
     player1->addAnim(asepriteManager->getAnimFile("gbFighter"));
     player1->getAnim()->setFrameTag("gbFighter-Idle");
 
     // Create Player 2
-    BaseGameObject* player2 = new BaseGameObject(120, 190 - 48);
+    BaseGameObject* player2 = new BaseGameObject(Constants::PLAYER2_X, Constants::BASELINE);
     player2->addAnim(asepriteManager->getAnimFile("nesFighter"));
     player2->getAnim()->setFrameTag("nesFighter-Idle");
 

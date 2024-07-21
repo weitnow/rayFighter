@@ -3,6 +3,7 @@
 //
 
 #include "BaseCharacter.h"
+#include "../Constants.h"
 
 
 BaseCharacter::BaseCharacter() : BaseGameObject()
@@ -11,6 +12,10 @@ BaseCharacter::BaseCharacter() : BaseGameObject()
 
 BaseCharacter::BaseCharacter(float x, float y) : BaseGameObject(x, y)
 {
+    this->moveDirection = {0, 0};
+    this->jumpForce = 4.4f;
+    this->walkingSpeed = 1.f;
+    this->isOnGround = false;
 }
 
 
@@ -31,6 +36,22 @@ void BaseCharacter::update(float deltaTime)
     else if (this->getPos().x > 320 - 32) // todo: get rid of hardcoded values
     {
         this->setPos(320 - 32, this->getPos().y); // todo: get rid of hardcoded values
+    }
+
+    this->setPos(this->getPos().x, this->getPos().y + moveDirection.y);
+
+    //apply gravity
+    //if character is on the ground, stop falling
+    if (this->getPos().y > Constants::BASELINE)
+    {
+        this->isOnGround = true;
+        this->setPos(this->getPos().x, Constants::BASELINE);
+        this->moveDirection.y = 0;
+    }
+    else
+    //if character is not on the ground, fall
+    {
+        this->moveDirection.y += Global::gravity * deltaTime;
     }
 }
 
@@ -56,6 +77,11 @@ void BaseCharacter::stop()
 
 void BaseCharacter::jump()
 {
+    if (this->isOnGround)
+    {
+        this->moveDirection.y = -jumpForce;
+        this->isOnGround = false;
+    }
 }
 
 void BaseCharacter::duck()

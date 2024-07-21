@@ -13,12 +13,8 @@ class BaseCharacter : public BaseGameObject
 
 private:
     // member variables
-    bool isJumping;
-    float jumpHeight;
-    float jumpSpeed;
-    float gravity;
-    float jumpTime;
-    float jumpTimeCounter;
+    bool isOnGround;
+    float jumpForce;
     float walkingSpeed = 1.f;
     Vector2 moveDirection; // (x,y)
 
