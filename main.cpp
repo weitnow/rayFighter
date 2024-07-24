@@ -27,11 +27,11 @@ void handleInput(BaseCharacter* player1)
         player1->stop();
     }
 
-    if (IsKeyPressed(KEY_W))
+    if (IsKeyDown(KEY_W))
     {
         player1->jump();
     }
-    else if (IsKeyPressed(KEY_S))
+    else if (IsKeyDown(KEY_S))
     {
         player1->duck();
     }
@@ -73,19 +73,12 @@ int main(void)
                                                   // asepriteManager.textures[bgAnimation]
 
     // Create Player 1
-    BaseCharacter* player1 = new BaseCharacter(Constants::PLAYER1_X, Constants::BASELINE);
-    player1->addAnim(asepriteManager->getAnimFile("gbFighter"));
-    player1->getAnim()->setFrameTag("gbFighter-Idle");
+    BaseCharacter* player1 = new BaseCharacter(asepriteManager, Constants::PLAYER1_X, Constants::BASELINE);
+    player1->setCurrentFrameTag("gbFighter-Walking");
 
     // Create Player 2
-    BaseGameObject* player2 = new BaseGameObject(Constants::PLAYER2_X, Constants::BASELINE);
-    player2->addAnim(asepriteManager->getAnimFile("nesFighter"));
-    player2->getAnim()->setFrameTag("nesFighter-Idle");
-
-    // Create Animated-Background
-    BaseGameObject* bg = new BaseGameObject(120, 0);
-    bg->addAnim(asepriteManager->getAnimFile("bgAnimation"));
-    bg->getAnim()->setFrameTag("bgAnimation");
+    BaseGameObject* player2 = new BaseGameObject(asepriteManager, Constants::PLAYER2_X, Constants::BASELINE);
+    player2->setCurrentFrameTag("nesFighter-Idle");
 
     // Create Static Background
     Texture2D stage = LoadTexture("Assets/Graphics/stage.png");
@@ -109,7 +102,6 @@ int main(void)
 
         player1->update(deltaTime);
         player2->update(deltaTime);
-        bg->update(deltaTime);
 
 
         //----------------------------------------------------------------------------------
@@ -127,7 +119,6 @@ int main(void)
 
         player1->draw();
         player2->draw();
-        bg->draw();
 
 
         /*
@@ -163,7 +154,7 @@ int main(void)
     //--------------------------------------------------------------------------------------
 
     delete player1;
-    delete player2;
+    //delete player2;
 
     screen2DManager->unloadAllRenderTextures();
     UnloadTexture(stage);

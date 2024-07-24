@@ -11,7 +11,7 @@
 class BaseCharacter : public BaseGameObject
 {
 
-private:
+protected:
     // member variables
     bool isOnGround;
     float jumpForce;
@@ -19,11 +19,11 @@ private:
     Vector2 moveDirection; // (x,y)
 
 public:
-    BaseCharacter();
+    BaseCharacter(AsepriteManager* asepriteManager);
 
-    BaseCharacter(float x, float y);
+    BaseCharacter(AsepriteManager* asepriteManager, float x, float y);
 
-    ~BaseCharacter();
+    virtual ~BaseCharacter();
 
     void update(float deltaTime);
 

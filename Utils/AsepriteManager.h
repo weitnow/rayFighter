@@ -69,7 +69,15 @@ public:
      *
      */
     void nextFrame();
-    void setFrameTag(const std::string& tagname);
+
+    /**
+     * @brief Set the Frame Tag object. If a invalid tagname is given, a runtime-error will be thrown. If the tagname is valid, the animation will be set to the first picture of the animation.
+     * if the animation with the provided tag is already playing  the function returns false, otherwise it returns true.
+     *
+     * @param tagname
+     * @return
+     */
+    bool setFrameTag(const std::string& tagname);
 };
 
 /* #endregion */
@@ -113,11 +121,13 @@ public:
 
     Texture getTexture(const std::string& textureName);
 
+    // public member variables
+    std::map<std::string, FrameTag> frameTags;
+
 private:
     // private member variable
     std::string foldername; // keeps the foldername, where all the json and png-files are located
 
-    std::map<std::string, FrameTag> frameTags;
 
     std::map<std::string, Texture> textures;
 

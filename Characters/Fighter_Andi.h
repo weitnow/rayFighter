@@ -8,14 +8,13 @@
 #include "BaseCharacter.h"
 
 
-class Fighter_Andi : public BaseCharacter {
+class Fighter_Andi : public BaseCharacter
+{
 public:
-    Fighter_Andi(float x, float y);
+    Fighter_Andi(AsepriteManager* asepriteManager, float x, float y);
     ~Fighter_Andi();
     void update(float deltaTime);
     void draw();
-
-
 };
 
 

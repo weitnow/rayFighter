@@ -77,12 +77,19 @@ void AsepriteAnimationFile::nextFrame()
     }
 }
 
-void AsepriteAnimationFile::setFrameTag(const std::string& filenameTagname)
+bool AsepriteAnimationFile::setFrameTag(const std::string& filenameTagname)
 {
     if (current_filenameTagname == filenameTagname)
     {
-        return;
+        return false;
     }
+
+
+    if (this->asepriteManager->frameTags.find(filenameTagname) == this->asepriteManager->frameTags.end())
+    {
+        throw std::runtime_error("AsepriteAnimationFile::setFrameTag -> Error: asepriteManager is nullptr");
+    }
+
     current_filenameTagname = filenameTagname;
 
     FrameTag current_FrameTag = this->asepriteManager->getFrameTag(current_filenameTagname);
@@ -97,6 +104,8 @@ void AsepriteAnimationFile::setFrameTag(const std::string& filenameTagname)
     }
 
     current_frame = min_frame;
+
+    return true;
 }
 
 
@@ -238,7 +247,8 @@ FrameTag AsepriteManager::getFrameTag(const std::string& filenameTagname)
     }
     catch (const std::out_of_range& e)
     {
-        std::cerr << "Error: FrameTag " << filenameTagname << " does not exist" << std::endl;
+        std::cerr << "AsepriteManager::getFrameTag -> Error: FrameTag " << filenameTagname << " does not exist"
+                  << std::endl;
     }
 }
 

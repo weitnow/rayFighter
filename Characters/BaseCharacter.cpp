@@ -6,11 +6,11 @@
 #include "../Constants.h"
 
 
-BaseCharacter::BaseCharacter() : BaseGameObject()
+BaseCharacter::BaseCharacter(AsepriteManager* asepriteManager) : BaseGameObject(asepriteManager)
 {
 }
 
-BaseCharacter::BaseCharacter(float x, float y) : BaseGameObject(x, y)
+BaseCharacter::BaseCharacter(AsepriteManager* asepriteManager, float x, float y) : BaseGameObject(asepriteManager, x, y)
 {
     this->moveDirection = {0, 0};
     this->jumpForce = 4.4f;

@@ -2,15 +2,18 @@
 #include "../Constants.h"
 #include <assert.h>
 
-BaseGameObject::BaseGameObject()
+BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager)
 {
     scale.x = 1.f;
     scale.y = 1.f;
     pos = {Constants::X, Constants::Y};
-    animfileptr = nullptr;
+    this->asepriteManagerPtr = asepriteManager;
+    this->animfilePtr = this->asepriteManagerPtr->getAnimFile("gbFighter");
+    this->currentFrameTag = "gbFighter-Idle";
+    this->animfilePtr->setFrameTag(this->currentFrameTag);
 }
 
-BaseGameObject::BaseGameObject(float x, float y) : BaseGameObject()
+BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager, float x, float y) : BaseGameObject(asepriteManager)
 {
     setPos(x, y);
 }
@@ -33,9 +36,9 @@ void BaseGameObject::update(float deltaTime)
     }
 
     // check if this->animfileptr is not nullptr - if its not, then update the animation
-    if (animfileptr != nullptr)
+    if (animfilePtr != nullptr)
     {
-        animfileptr->update(deltaTime);
+        animfilePtr->update(deltaTime);
     }
 }
 
@@ -48,9 +51,9 @@ void BaseGameObject::draw()
     // Todo: Implement draw function
 
     // draw this->animfileptr
-    if (animfileptr != nullptr)
+    if (animfilePtr != nullptr)
     {
-        animfileptr->drawCurrentSelectedTag(getPos().x, getPos().y);
+        animfilePtr->drawCurrentSelectedTag(getPos().x, getPos().y);
     }
 }
 
@@ -88,14 +91,21 @@ Vector2 BaseGameObject::getScale()
 
 void BaseGameObject::addAnim(AsepriteAnimationFile* animfileptr)
 {
-    this->animfileptr = animfileptr;
+    this->animfilePtr = animfileptr;
 }
 
 AsepriteAnimationFile* BaseGameObject::getAnim()
 {
-    assert(animfileptr != nullptr); // ups, getAnim was called before addAnim was called
+    assert(animfilePtr != nullptr); // ups, getAnim was called before addAnim was called
 
-    return animfileptr;
+    return animfilePtr;
+}
+
+bool BaseGameObject::setCurrentFrameTag(std::string tag)
+{
+    // if the animation is already playing, return false, otherwise return true
+    // if the tag doesnt exist a runtime-error will be thrown
+    return animfilePtr->setFrameTag(tag);
 }
 
 void BaseGameObject::addCollisionBox(std::string hitboxName)

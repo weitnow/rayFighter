@@ -10,8 +10,8 @@
 class BaseGameObject
 {
 public:
-    BaseGameObject();
-    BaseGameObject(float x, float y);
+    BaseGameObject(AsepriteManager* asepriteManager);
+    BaseGameObject(AsepriteManager* asepriteManager, float x, float y);
     ~BaseGameObject();
 
     virtual void update(float deltaTime);
@@ -30,6 +30,7 @@ public:
     // sprites
     void addAnim(AsepriteAnimationFile* animfileptr);
     AsepriteAnimationFile* getAnim();
+    bool setCurrentFrameTag(std::string tag);
 
     // hitboxes
     void addCollisionBox(std::string hitboxName);
@@ -38,11 +39,14 @@ public:
 protected:
     Vector2 pos;
     Vector2 scale;
+    std::string currentFrameTag;
 
     // a map which holds all the sprite-objs
     std::map<std::string, BaseSpriteObject> sprites;
 
-    AsepriteAnimationFile* animfileptr;
+    AsepriteAnimationFile* animfilePtr;
+    AsepriteManager* asepriteManagerPtr;
+
 
     // a map which holds all the collisionbox-objs
     std::map<std::string, CollisionBox2D> collisionBoxes;

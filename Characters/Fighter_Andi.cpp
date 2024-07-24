@@ -4,7 +4,7 @@
 
 #include "Fighter_Andi.h"
 
-Fighter_Andi::Fighter_Andi(float x, float y) : BaseCharacter(x, y)
+Fighter_Andi::Fighter_Andi(AsepriteManager* asepriteManager, float x, float y) : BaseCharacter(asepriteManager, x, y)
 {
 }
 
