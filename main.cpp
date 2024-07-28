@@ -3,6 +3,7 @@
 #include "Constants.h"
 #include "GameObjects/BaseGameObject.h"
 #include "Utils/AsepriteManager.h"
+#include "Utils/DebugInfo.h"
 #include "Utils/InputHandler.h"
 #include "Utils/Screen2DManager.h"
 #include "raylib.h"
@@ -37,6 +38,14 @@ void handleInput(BaseCharacter* player1)
     }
 }
 
+void handleInput(DebugInfo* debugInfo)
+{
+    if (IsKeyPressed(KEY_SPACE))
+    {
+        debugInfo->showNextGameObject();
+    }
+}
+
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
@@ -53,7 +62,8 @@ int main(void)
     // Initialize global Variables and GlobalObjects
     float deltaTime;                                                            // will be updated in the main game loop
     AsepriteManager* asepriteManager = new AsepriteManager{"Assets/Graphics/"}; // instance of AsepriteManager
-    SetTargetFPS(60); // Set  game to run at 60 frames-per-second
+    SetTargetFPS(60);                       // Set  game to run at 60 frames-per-second
+    DebugInfo* debugInfo = new DebugInfo(); // instance of DebugInfo
 
     // Populate membervariables of the GlobalObjects
     screen2DManager->createRenderTarget(
@@ -73,7 +83,7 @@ int main(void)
                                                   // asepriteManager.textures[bgAnimation]
 
     // Create Player 1
-    BaseCharacter* player1 = new BaseCharacter(asepriteManager, Constants::PLAYER1_X, Constants::BASELINE);
+    Fighter_Andi* player1 = new Fighter_Andi(asepriteManager, Constants::PLAYER1_X, Constants::BASELINE);
     player1->setCurrentFrameTag("gbFighter-Walking");
 
     // Create Player 2
@@ -82,6 +92,12 @@ int main(void)
 
     // Create Static Background
     Texture2D stage = LoadTexture("Assets/Graphics/stage.png");
+
+
+#ifdef DEBUG
+    debugInfo->addGameObject("Player1", player1);
+    debugInfo->addGameObject("Player2", player2);
+#endif
 
 
     // Main game loop
@@ -97,6 +113,7 @@ int main(void)
         // check keyboard input
         // todo: replace with inputHandler and remove handleInput function
         handleInput(player1);
+        handleInput(debugInfo);
 
         screen2DManager->update(deltaTime);
 
@@ -130,7 +147,6 @@ int main(void)
         EndMode2D();
         */
 
-        DrawText("This is the Rendertarget - mainRenderTarget", 190, 200, 20, LIGHTGRAY);
 
         screen2DManager->endDrawToRenderTarget();
 
@@ -143,7 +159,7 @@ int main(void)
         screen2DManager->drawRenderTarget("mainRenderTarget");
 
 #ifdef DEBUG
-        DrawFPS(10, 10);
+        debugInfo->draw();
 #endif
 
         screen2DManager->endDrawToScreen();
@@ -154,13 +170,14 @@ int main(void)
     //--------------------------------------------------------------------------------------
 
     delete player1;
-    //delete player2;
+    delete player2;
 
     screen2DManager->unloadAllRenderTextures();
     UnloadTexture(stage);
     delete screen2DManager; //deallocate memory on the heap
     delete inputHandler;    //deallocate memory on the heap
     delete asepriteManager; //deallocate memory on the heap
+    delete debugInfo;       //deallocate memory on the heap
 
     CloseWindow(); // Close window and OpenGL context
     //--------------------------------------------------------------------------------------

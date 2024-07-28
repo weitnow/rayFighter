@@ -108,6 +108,11 @@ bool BaseGameObject::setCurrentFrameTag(std::string tag)
     return animfilePtr->setFrameTag(tag);
 }
 
+std::string BaseGameObject::getCurrentFrameTag()
+{
+    return currentFrameTag;
+}
+
 void BaseGameObject::addCollisionBox(std::string hitboxName)
 {
     collisionBoxes[hitboxName] = CollisionBox2D{};

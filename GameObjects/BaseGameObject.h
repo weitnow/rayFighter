@@ -31,6 +31,7 @@ public:
     void addAnim(AsepriteAnimationFile* animfileptr);
     AsepriteAnimationFile* getAnim();
     bool setCurrentFrameTag(std::string tag);
+    std::string getCurrentFrameTag();
 
     // hitboxes
     void addCollisionBox(std::string hitboxName);
