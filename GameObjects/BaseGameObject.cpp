@@ -105,7 +105,9 @@ bool BaseGameObject::setCurrentFrameTag(std::string tag)
 {
     // if the animation is already playing, return false, otherwise return true
     // if the tag doesnt exist a runtime-error will be thrown
-    return animfilePtr->setFrameTag(tag);
+    bool animAlreadyPlaying = animfilePtr->setFrameTag(tag);
+    currentFrameTag = tag;
+    return animAlreadyPlaying;
 }
 
 std::string BaseGameObject::getCurrentFrameTag()

@@ -1,6 +1,7 @@
 #ifndef DEBUG_INFO_H
 #define DEBUG_INFO_H
 
+#include "../Characters/BaseCharacter.h"
 #include "../GameObjects/BaseGameObject.h"
 #include <string>
 #include <unordered_map>

@@ -7,6 +7,19 @@
 
 #include "../GameObjects/BaseGameObject.h"
 
+enum class CharacterState
+{
+    Idle,
+    Walk,
+    Jump,
+    Duck,
+    Punch,
+    Kick,
+    Block,
+    Hit,
+    Hurt,
+};
+
 
 class BaseCharacter : public BaseGameObject
 {
@@ -17,6 +30,11 @@ protected:
     float jumpForce;
     float walkingSpeed = 1.f;
     Vector2 moveDirection; // (x,y)
+    CharacterState currentState;
+
+    // member functions
+    void changeState(CharacterState newState);
+    void updateState();
 
 public:
     BaseCharacter(AsepriteManager* asepriteManager);
@@ -34,6 +52,11 @@ public:
     void stop();
     void jump();
     void duck();
+
+    // states
+    std::string getCurrentState();
+    bool getIsOnGround();
+    Vector2 getMoveDirection();
 };
 
 

@@ -81,6 +81,31 @@ void DebugInfo::draw()
 
         DrawText(name_pl1.c_str(), rectX + 10, rectY + 50, 20, BLACK);
         DrawText(position_pl1.c_str(), rectX + 10, rectY + 70, 20, BLACK);
+        DrawText(("FrameTag: " + gameObjects["Player1"]->getCurrentFrameTag()).c_str(),
+                 rectX + 10,
+                 rectY + 90,
+                 20,
+                 BLACK);
+        DrawText(("CurrentState: " + static_cast<BaseCharacter*>(gameObjects["Player1"])->getCurrentState()).c_str(),
+                 rectX + 10,
+                 rectY + 110,
+                 20,
+                 BLACK);
+        DrawText(("IsOnGround: " + std::to_string(static_cast<BaseCharacter*>(gameObjects["Player1"])->getIsOnGround()))
+                     .c_str(),
+                 rectX + 10,
+                 rectY + 130,
+                 20,
+                 BLACK);
+        int moveDirectionX =
+            static_cast<int>(static_cast<BaseCharacter*>(gameObjects["Player1"])->getMoveDirection().x);
+        int moveDirectionY =
+            static_cast<int>(static_cast<BaseCharacter*>(gameObjects["Player1"])->getMoveDirection().y);
+        DrawText(("MoveDirection: " + std::to_string(moveDirectionX) + ", " + std::to_string(moveDirectionY)).c_str(),
+                 rectX + 10,
+                 rectY + 150,
+                 20,
+                 BLACK);
     }
     else
     {
@@ -95,4 +120,9 @@ void DebugInfo::draw()
 
     DrawText(name.c_str(), rectX + 700, rectY + 50, 20, BLACK);
     DrawText(position.c_str(), rectX + 700, rectY + 70, 20, BLACK);
+    DrawText(("FrameTag: " + gameObjects[currentGameObjectName]->getCurrentFrameTag()).c_str(),
+             rectX + 700,
+             rectY + 90,
+             20,
+             BLACK);
 }

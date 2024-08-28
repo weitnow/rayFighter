@@ -83,7 +83,7 @@ int main(void)
                                                   // asepriteManager.textures[bgAnimation]
 
     // Create Player 1
-    Fighter_Andi* player1 = new Fighter_Andi(asepriteManager, Constants::PLAYER1_X, Constants::BASELINE);
+    BaseCharacter* player1 = new BaseCharacter(asepriteManager, Constants::PLAYER1_X, Constants::BASELINE);
     player1->setCurrentFrameTag("gbFighter-Walking");
 
     // Create Player 2
@@ -112,12 +112,13 @@ int main(void)
 
         // check keyboard input
         // todo: replace with inputHandler and remove handleInput function
-        handleInput(player1);
+
         handleInput(debugInfo);
 
         screen2DManager->update(deltaTime);
 
         player1->update(deltaTime);
+        handleInput(player1);
         player2->update(deltaTime);
 
 
