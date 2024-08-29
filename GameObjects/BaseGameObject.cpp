@@ -20,6 +20,9 @@ BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager, float x, float 
 
 BaseGameObject::~BaseGameObject()
 {
+    // free the memory of the animfilePtr
+    delete animfilePtr;
+    animfilePtr = nullptr;
 }
 
 void BaseGameObject::update(float deltaTime)

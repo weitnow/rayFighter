@@ -12,7 +12,7 @@ class BaseGameObject
 public:
     BaseGameObject(AsepriteManager* asepriteManager);
     BaseGameObject(AsepriteManager* asepriteManager, float x, float y);
-    ~BaseGameObject();
+    virtual ~BaseGameObject();
 
     virtual void update(float deltaTime);
     void draw();
