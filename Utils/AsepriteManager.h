@@ -30,8 +30,6 @@ private:
     int current_frame;
     int min_frame;
     int max_frame;
-    Color current_color;
-    float current_scale;
     float update_counter;
     float current_duration;
 
@@ -54,8 +52,16 @@ public:
      */
     FrameTag getFrameTag(const std::string& filenameTagname);
     float getDurationCurrentFrame(int frameNumber);
-    void drawFrame(const std::string& filenameTagname, int x, int y, float scale = 1.0f, Color tint = WHITE);
-    void drawCurrentSelectedTag(int x, int y);
+    float getDurationCurrentFrame();
+    void drawFrame(const std::string& filenameTagname,
+                   int x,
+                   int y,
+                   float scale = 1.0f,
+                   Color tint = WHITE,
+                   bool flipX = false,
+                   bool flipY = false);
+    void drawCurrentSelectedTag(int x, int y, float scale = 1.0f, Color tint = WHITE);
+    void drawCurrentSelectedTag(int x, int y, float scale, Color tint, bool flipX, bool flipY);
 
     /**
      * @brief the update methode calls frequently the nextFrame() which switches to the next picture of the animation

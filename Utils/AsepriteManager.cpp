@@ -14,8 +14,6 @@ AsepriteAnimationFile::AsepriteAnimationFile(std::string filename,
     current_frame = 0;
     min_frame = 0;
     max_frame = 0;
-    current_color = WHITE;
-    current_scale = 1.0f;
     update_counter = 0.0f;
 }
 
@@ -35,20 +33,51 @@ float AsepriteAnimationFile::getDurationCurrentFrame(int frameNumber)
     return duration / 1000.0f;
 }
 
-void AsepriteAnimationFile::drawFrame(const std::string& filenameTagname, int x, int y, float scale, Color tint)
+float AsepriteAnimationFile::getDurationCurrentFrame()
 {
-    // todo: implement scaling
-    int sizeX = this->asepriteManager->getFrameTag(filenameTagname).sourceSizeX;
-    int sizeY = this->asepriteManager->getFrameTag(filenameTagname).sourceSizeY;
-    DrawTextureRec(texture,
-                   {(float)current_frame * sizeX, 0, float(sizeY), (float)texture.height},
-                   {(float)x, (float)y},
-                   tint);
+    return getDurationCurrentFrame(current_frame);
 }
 
-void AsepriteAnimationFile::drawCurrentSelectedTag(int x, int y)
+void AsepriteAnimationFile::drawFrame(const std::string& filenameTagname,
+                                      int x,
+                                      int y,
+                                      float scale,
+                                      Color tint,
+                                      bool flipX,
+                                      bool flipY)
 {
-    drawFrame(current_filenameTagname, x, y, this->current_scale, this->current_color);
+    int sizeX = this->asepriteManager->getFrameTag(filenameTagname).sourceSizeX;
+    int sizeY = this->asepriteManager->getFrameTag(filenameTagname).sourceSizeY;
+
+    // Determine source rectangle (which part of the texture to draw)
+    Rectangle sourceRec = {
+        (float)current_frame * sizeX,   // X position of the frame
+        0,                              // Y position (top of the texture)
+        (flipY ? -1.0f : 1.0f) * sizeX, // Flip horizontally if flipY is true
+        (float)texture.height           // Height of the texture (unchanged)
+    };
+
+    // Determine destination rectangle (where to draw the texture on screen)
+    Rectangle destRec = {
+        (float)x,      // X position to draw
+        (float)y,      // Y position to draw
+        sizeX * scale, // Scaled width
+        sizeY * scale  // Scaled height
+    };
+
+    // Draw the texture with the specified scaling and tint
+    DrawTexturePro(texture, sourceRec, destRec, Vector2{0, 0}, 0.0f, tint);
+}
+
+
+void AsepriteAnimationFile::drawCurrentSelectedTag(int x, int y, float scale, Color tint)
+{
+    drawFrame(current_filenameTagname, x, y, scale, tint, false, false);
+}
+
+void AsepriteAnimationFile::drawCurrentSelectedTag(int x, int y, float scale, Color tint, bool flipX, bool flipY)
+{
+    drawFrame(current_filenameTagname, x, y, scale, tint, flipX, flipY);
 }
 
 void AsepriteAnimationFile::update(float deltaTime)

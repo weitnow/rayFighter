@@ -23,9 +23,8 @@ public:
     Vector2 getPos();
 
     // scale
-    void setScale(float x, float y);
-    void setScale(Vector2 scale);
-    Vector2 getScale();
+    void setScale(float scale);
+    float getScale();
 
     // sprites
     void addAnim(AsepriteAnimationFile* animfileptr);
@@ -39,7 +38,10 @@ public:
 
 protected:
     Vector2 pos;
-    Vector2 scale;
+    float scale;
+    Color color;
+    bool isFlippedX;
+    bool isFlippedY;
     std::string currentFrameTag;
 
     // a map which holds all the sprite-objs

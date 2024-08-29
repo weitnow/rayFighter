@@ -106,6 +106,9 @@ void DebugInfo::draw()
                  rectY + 150,
                  20,
                  BLACK);
+        float duration = gameObjects["Player1"]->getAnim()->getDurationCurrentFrame();
+        int milliseconds = static_cast<int>(duration * 1000);
+        DrawText(("Frameduration: " + std::to_string(milliseconds)).c_str(), rectX + 10, rectY + 170, 20, BLACK);
     }
     else
     {

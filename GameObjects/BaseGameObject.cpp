@@ -4,9 +4,11 @@
 
 BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager)
 {
-    scale.x = 1.f;
-    scale.y = 1.f;
+    scale = 1.f;
     pos = {Constants::X, Constants::Y};
+    color = WHITE;
+    isFlippedX = false;
+    isFlippedY = false;
     this->asepriteManagerPtr = asepriteManager;
     this->animfilePtr = this->asepriteManagerPtr->getAnimFile("gbFighter");
     this->currentFrameTag = "gbFighter-Idle";
@@ -27,7 +29,7 @@ BaseGameObject::~BaseGameObject()
 
 void BaseGameObject::update(float deltaTime)
 {
-    if (scale.x != 1 || scale.y != 1)
+    if (scale != 1)
     {
         // Todo: Implement scale function
     }
@@ -51,12 +53,10 @@ void BaseGameObject::draw()
     // Draw a small rectangle at the position of the gameobj.
     DrawRectangleLines(pos.x, pos.y, Constants::GAMEOBJ_SIZE.x, Constants::GAMEOBJ_SIZE.y, Constants::GAMEOBJ_COLOR);
 #endif
-    // Todo: Implement draw function
 
-    // draw this->animfileptr
     if (animfilePtr != nullptr)
     {
-        animfilePtr->drawCurrentSelectedTag(getPos().x, getPos().y);
+        animfilePtr->drawCurrentSelectedTag(getPos().x, getPos().y, scale, color, isFlippedX, isFlippedY);
     }
 }
 
@@ -76,18 +76,12 @@ Vector2 BaseGameObject::getPos()
     return pos;
 }
 
-void BaseGameObject::setScale(float x, float y)
+void BaseGameObject::setScale(float scale)
 {
-    scale.x = x;
-    scale.y = y;
+    this->scale = scale;
 }
 
-void BaseGameObject::setScale(Vector2 scale)
-{
-    BaseGameObject::setScale(scale.x, scale.y);
-}
-
-Vector2 BaseGameObject::getScale()
+float BaseGameObject::getScale()
 {
     return scale;
 }

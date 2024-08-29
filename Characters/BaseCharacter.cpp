@@ -121,6 +121,16 @@ void BaseCharacter::update(float deltaTime)
         this->moveDirection.y += Global::gravity * deltaTime;
     }
 
+    // todo: get rid of hardcoded values
+    if (getPos().x > 114)
+    {
+        isFlippedY = true;
+    }
+    else
+    {
+        isFlippedY = false;
+    }
+
     updateState();
 }
 
