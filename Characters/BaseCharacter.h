@@ -31,8 +31,10 @@ protected:
     float walkingSpeed = 1.f;
     Vector2 moveDirection; // (x,y)
     CharacterState currentState;
+    std::string animFileName;
 
-    // member functions
+
+    // member methodes
     void changeState(CharacterState newState);
     void updateState();
 
@@ -52,6 +54,14 @@ public:
     void stop();
     void jump();
     void duck();
+
+    /**
+     * @brief Set the Current Frame Tag object
+     *
+     * @param tag
+     * @return false if the animation is already playing, otherwise true
+     */
+    bool setCurrentFrameTag(std::string tag) override;
 
     // states
     std::string getCurrentState();

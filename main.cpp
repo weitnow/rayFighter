@@ -4,6 +4,7 @@
 #include "GameObjects/BaseGameObject.h"
 #include "Utils/AsepriteManager.h"
 #include "Utils/DebugInfo.h"
+#include "Utils/GameObjectsManager.h"
 #include "Utils/InputHandler.h"
 #include "Utils/Screen2DManager.h"
 #include "raylib.h"
@@ -46,6 +47,19 @@ void handleInput(DebugInfo* debugInfo)
     }
 }
 
+void handleInput(GameObjectsManager& gameObjectsManager, BaseCharacter* player1, BaseCharacter* player2)
+{
+    if (IsKeyPressed(KEY_ONE))
+    {
+        gameObjectsManager.removeBaseCharacter(player1);
+    }
+    if (IsKeyPressed(KEY_TWO))
+    {
+        gameObjectsManager.removeBaseCharacter(player2);
+    }
+}
+
+
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
@@ -62,8 +76,10 @@ int main(void)
     // Initialize global Variables and GlobalObjects
     float deltaTime;                                                            // will be updated in the main game loop
     AsepriteManager* asepriteManager = new AsepriteManager{"Assets/Graphics/"}; // instance of AsepriteManager
-    SetTargetFPS(60);                       // Set  game to run at 60 frames-per-second
-    DebugInfo* debugInfo = new DebugInfo(); // instance of DebugInfo
+    DebugInfo* debugInfo = new DebugInfo();                                     // instance of DebugInfo
+    GameObjectsManager& gameObjectsManager = GameObjectsManager::getInstance(); // instance of GameObjectsManager
+
+    SetTargetFPS(60); // Set  game to run at 60 frames-per-second
 
     // Populate membervariables of the GlobalObjects
     screen2DManager->createRenderTarget(
@@ -84,11 +100,14 @@ int main(void)
 
     // Create Player 1
     BaseCharacter* player1 = new BaseCharacter(asepriteManager, Constants::PLAYER1_X, Constants::BASELINE);
-    player1->setCurrentFrameTag("gbFighter-Walking");
+    player1->setCurrentFrameTag("gbFighter-Idle");
 
     // Create Player 2
-    BaseGameObject* player2 = new BaseGameObject(asepriteManager, Constants::PLAYER2_X, Constants::BASELINE);
+    BaseCharacter* player2 = new BaseCharacter(asepriteManager, Constants::PLAYER2_X, Constants::BASELINE);
     player2->setCurrentFrameTag("nesFighter-Idle");
+
+    gameObjectsManager.addBaseCharacter(player1);
+    gameObjectsManager.addBaseCharacter(player2);
 
     // Create Static Background
     Texture2D stage = LoadTexture("Assets/Graphics/stage.png");
@@ -114,12 +133,14 @@ int main(void)
         // todo: replace with inputHandler and remove handleInput function
 
         handleInput(debugInfo);
+        handleInput(gameObjectsManager, player1, player2);
 
         screen2DManager->update(deltaTime);
 
-        player1->update(deltaTime);
+        gameObjectsManager.update(deltaTime);
+        //player1->update(deltaTime);
         handleInput(player1);
-        player2->update(deltaTime);
+        //player2->update(deltaTime);
 
 
         //----------------------------------------------------------------------------------
@@ -135,9 +156,9 @@ int main(void)
         float stage_scale = 1.f;
         DrawTextureEx(stage, {0, 80}, 0, stage_scale, WHITE);
 
-        player1->draw();
-        player2->draw();
-
+        //player1->draw();
+        //player2->draw();
+        gameObjectsManager.draw();
 
         /*
         BeginMode2D(camera);

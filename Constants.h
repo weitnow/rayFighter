@@ -9,6 +9,7 @@
 
 // switch DEBUG-Mode on and enable debug-draw and log stuff on the terminal
 #define DEBUG
+//#define DEBUG_CHANGE_STATE    // uncomment to enable debug messages for state changes
 
 namespace Constants
 {

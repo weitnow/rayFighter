@@ -29,7 +29,7 @@ public:
     // sprites
     void addAnim(AsepriteAnimationFile* animfileptr);
     AsepriteAnimationFile* getAnim();
-    bool setCurrentFrameTag(std::string tag);
+    virtual bool setCurrentFrameTag(std::string tag);
     std::string getCurrentFrameTag();
 
     // hitboxes

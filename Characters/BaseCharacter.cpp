@@ -38,20 +38,23 @@ void BaseCharacter::changeState(CharacterState newState)
 {
     if (currentState != newState) // if the new state is different from the current state
     {
+#ifdef DEBUG_CHANGE_STATE
         std::cout << "Changing state from " << getCurrentState() << " to " << CharacterStateToString(newState)
                   << std::endl;
+#endif
+
         currentState = newState;
         if (currentState == CharacterState::Idle)
         {
-            setCurrentFrameTag("gbFighter-Idle");
+            setCurrentFrameTag(animFileName + "-Idle");
         }
         else if (currentState == CharacterState::Walk)
         {
-            setCurrentFrameTag("gbFighter-Walking");
+            setCurrentFrameTag(animFileName + "-Walking");
         }
         else if (currentState == CharacterState::Jump)
         {
-            setCurrentFrameTag("gbFighter-Jump");
+            setCurrentFrameTag(animFileName + "-Jump");
         }
     }
 }
@@ -82,7 +85,7 @@ BaseCharacter::BaseCharacter(AsepriteManager* asepriteManager) : BaseGameObject(
 
 BaseCharacter::BaseCharacter(AsepriteManager* asepriteManager, float x, float y)
     : BaseGameObject(asepriteManager, x, y), currentState(CharacterState::Idle), moveDirection({0, 0}), jumpForce(4.4f),
-      walkingSpeed(1.f), isOnGround(false)
+      walkingSpeed(1.f), isOnGround(false), animFileName("gbFighter")
 {
 }
 
@@ -169,6 +172,17 @@ void BaseCharacter::jump()
 void BaseCharacter::duck()
 {
 }
+
+bool BaseCharacter::setCurrentFrameTag(std::string tag)
+{
+    // set animFilename to the first part of the tag for example "gbFighter-Idle" -> "gbFighter"
+    animFileName = tag.substr(0, tag.find("-"));
+    // this is needed to set the correct animation when changing states by calling changeState()
+
+    // if the animation is already playing, return false, otherwise return true
+    return BaseGameObject::setCurrentFrameTag(tag);
+}
+
 
 std::string BaseCharacter::getCurrentState()
 {

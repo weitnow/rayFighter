@@ -26,6 +26,11 @@ FrameTag AsepriteAnimationFile::getFrameTag(const std::string& filenameTagname) 
     return this->asepriteManager->getFrameTag(filenameTagname);
 }
 
+std::string AsepriteAnimationFile::getAnimFilename()
+{
+    return this->filename;
+}
+
 float AsepriteAnimationFile::getDurationCurrentFrame(int frameNumber)
 {
     int duration = this->asepriteManager->getFrameTag(current_filenameTagname).frameNumberDuration[this->current_frame];

@@ -51,6 +51,7 @@ public:
      * @return FrameTag
      */
     FrameTag getFrameTag(const std::string& filenameTagname);
+    std::string getAnimFilename();
     float getDurationCurrentFrame(int frameNumber);
     float getDurationCurrentFrame();
     void drawFrame(const std::string& filenameTagname,
