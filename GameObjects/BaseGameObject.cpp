@@ -38,7 +38,7 @@ void BaseGameObject::update(float deltaTime)
     for (auto& pair : collisionBoxes)
     {
         pair.second.update(deltaTime);
-        pair.second.setPos(pos.x, pos.y);
+        pair.second.setObjPos(pos.x, pos.y);
     }
 
     // check if this->animfileptr is not nullptr - if its not, then update the animation
@@ -52,7 +52,11 @@ void BaseGameObject::draw()
 {
 #ifdef DEBUG
     // Draw a small rectangle at the position of the gameobj.
-    DrawRectangleLines(pos.x, pos.y, Constants::GAMEOBJ_SIZE.x, Constants::GAMEOBJ_SIZE.y, Constants::GAMEOBJ_COLOR);
+    DrawRectangleLines(getPos().x,
+                       getPos().y,
+                       Constants::GAMEOBJ_SIZE.x,
+                       Constants::GAMEOBJ_SIZE.y,
+                       Constants::GAMEOBJ_COLOR);
 
     // Draw collision boxes
     for (auto& pair : collisionBoxes)

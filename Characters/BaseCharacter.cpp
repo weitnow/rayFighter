@@ -93,7 +93,10 @@ BaseCharacter::~BaseCharacter()
 
 void BaseCharacter::update(float deltaTime)
 {
-    BaseGameObject::update(deltaTime);
+    if (scale != 1)
+    {
+        // Todo: Implement scale function
+    }
 
     this->setPos(this->getPos().x + moveDirection.x, this->getPos().y);
 
@@ -119,6 +122,19 @@ void BaseCharacter::update(float deltaTime)
     else if (this->getPos().y < Constants::BASELINE || !isOnGround)
     {
         this->moveDirection.y += Global::gravity * deltaTime;
+    }
+
+    // update hitboxes
+    for (auto& pair : collisionBoxes)
+    {
+        pair.second.update(deltaTime);
+        pair.second.setObjPos(getPos().x, getPos().y);
+    }
+
+    // check if this->animfileptr is not nullptr - if its not, then update the animation
+    if (animfilePtr != nullptr)
+    {
+        animfilePtr->update(deltaTime);
     }
 
     updateState();

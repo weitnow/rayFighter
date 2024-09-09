@@ -79,7 +79,7 @@ int main(void)
     DebugInfo* debugInfo = new DebugInfo();                                     // instance of DebugInfo
     GameObjectsManager& gameObjectsManager = GameObjectsManager::getInstance(); // instance of GameObjectsManager
 
-    SetTargetFPS(60); // Set  game to run at 60 frames-per-second
+    SetTargetFPS(Constants::FPS); // Set  game to run at 60 frames-per-second
 
     // Populate membervariables of the GlobalObjects
     screen2DManager->createRenderTarget(
@@ -103,7 +103,7 @@ int main(void)
     player1->setCurrentFrameTag("gbFighter-Idle");
     player1->setObjName("Andy");
     player1->setPlayerNumber(1);
-    player1->addCollisionBox("Collisionbox", 26, 142, 28, 30);
+    player1->addCollisionBox("Collisionbox", 10, 0, 10, 30);
 
 
     // Create Player 2
@@ -111,6 +111,7 @@ int main(void)
     player2->setCurrentFrameTag("nesFighter-Idle");
     player2->setObjName("Ken");
     player2->setPlayerNumber(2);
+    player2->addCollisionBox("Collisionbox", 16, 0, 10, 30);
 
     gameObjectsManager.addBaseCharacter("player1", player1);
     gameObjectsManager.addBaseCharacter("player2", player2);

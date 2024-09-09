@@ -13,15 +13,17 @@ class CollisionBox2D
 {
 public:
     CollisionBox2D();
-    CollisionBox2D(std::string name, float x, float y, float width, float height, Color color = BLUE);
+    CollisionBox2D(std::string name, float offsetx, float offsety, float width, float height, Color color = BLUE);
     ~CollisionBox2D();
     void update(float deltaTime);
     void draw();
-    void setPos(float x, float y);
+    void setObjPos(float x, float y);
 
 protected:
     Rectangle myRectangle;
-    Vector2 pos;
+    Vector2 objPos; // position of the obj which the collision box is attached to
+    Vector2 offset; // offset from the objPos
+    Vector2 pos;    // position of the collision box
     float width;
     float height;
     Color color;

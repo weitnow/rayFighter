@@ -10,12 +10,12 @@ CollisionBox2D::CollisionBox2D()
 {
 }
 
-CollisionBox2D::CollisionBox2D(std::string name, float x, float y, float width, float height, Color color)
+CollisionBox2D::CollisionBox2D(std::string name, float offsetx, float offsety, float width, float height, Color color)
     : name(name), width(width), height(height), color(color)
 {
-    pos.x = x;
-    pos.y = y;
-    myRectangle = {pos.x, pos.y, width, height};
+    offset.x = offsetx;
+    offset.y = offsety;
+    myRectangle = {0, 0, width, height};
 }
 
 CollisionBox2D::~CollisionBox2D()
@@ -24,6 +24,8 @@ CollisionBox2D::~CollisionBox2D()
 
 void CollisionBox2D::update(float deltaTime)
 {
+    pos = {objPos.x + offset.x, objPos.y + offset.y};
+
     myRectangle.x = pos.x;
     myRectangle.y = pos.y;
 }
@@ -32,14 +34,14 @@ void CollisionBox2D::draw()
 {
 #ifdef DEBUG_COLLISION_BOXES_NAMES
     // show name of the collision box
-    DrawText(name.c_str(), pos.x, pos.y - 10, 10, color);
+    DrawText(name.c_str(), objPos.x, objPos.y - 10, 10, color);
 #endif
 
     DrawRectangleLinesEx(myRectangle, 1, color);
 }
 
-void CollisionBox2D::setPos(float x, float y)
+void CollisionBox2D::setObjPos(float x, float y)
 {
-    pos.x = x;
-    pos.y = y;
+    objPos.x = x;
+    objPos.y = y;
 }

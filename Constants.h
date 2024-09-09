@@ -22,6 +22,8 @@ const int RENDERTARGET_WIDTH = 320;
 const int RENDERTARGET_HEIGHT = 180;
 const int BASELINE = 142;
 
+const int FPS = 60;
+
 const int PLAYER1_X = 80;
 const int PLAYER2_X = 120;
 
