@@ -58,8 +58,8 @@ void AsepriteAnimationFile::drawFrame(const std::string& filenameTagname,
     Rectangle sourceRec = {
         (float)current_frame * sizeX,   // X position of the frame
         0,                              // Y position (top of the texture)
-        (flipY ? -1.0f : 1.0f) * sizeX, // Flip horizontally if flipY is true
-        (float)texture.height           // Height of the texture (unchanged)
+        (flipX ? -1.0f : 1.0f) * sizeX, // Flip horizontally if flipX is true
+        (flipY ? -1.0f : 1.0f) * sizeY  // Flip vertically if flipY is true
     };
 
     // Determine destination rectangle (where to draw the texture on screen)

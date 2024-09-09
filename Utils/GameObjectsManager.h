@@ -4,6 +4,7 @@
 #include "../Characters/BaseCharacter.h"
 #include "../GameObjects/BaseGameObject.h"
 #include <algorithm> // for std::remove and std::find
+#include <unordered_map>
 
 class GameObjectsManager
 {
@@ -16,11 +17,12 @@ public:
     static GameObjectsManager& getInstance();
 
     // Public methods for managing game objects
-    void addBaseCharacter(BaseCharacter* character);
-    void removeBaseCharacter(BaseCharacter* character);
+    void addBaseCharacter(const std::string& CharName, BaseCharacter* character);
+    void removeBaseCharacter(const std::string& CharName);
     void addObject();
     void removeObject();
     void update(float deltaTime);
+    BaseCharacter* getBaseCharacter(const std::string& CharName);
     void draw();
 
 private:
@@ -31,7 +33,7 @@ private:
     ~GameObjectsManager();
 
     // Private member variables to manage game objects
-    std::vector<BaseCharacter*> baseCharacters;
+    std::unordered_map<std::string, BaseCharacter*> baseCharacters;
 };
 
 #endif //GAMEOBJECTSMANAGER_H

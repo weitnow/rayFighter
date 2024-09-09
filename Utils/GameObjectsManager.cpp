@@ -19,18 +19,24 @@ GameObjectsManager::~GameObjectsManager()
     // Clean up resources if necessary
 }
 
-void GameObjectsManager::addBaseCharacter(BaseCharacter* character)
+void GameObjectsManager::addBaseCharacter(const std::string& CharName, BaseCharacter* character)
 {
-    baseCharacters.push_back(character);
+    // check if the character already exists and if so, raise an error
+    if (baseCharacters.find(CharName) != baseCharacters.end())
+    {
+        throw std::runtime_error("baseCharacter with CharName " + CharName +
+                                 " already exists"
+                                 "\n Cannot add it again. GameObjectsManager::addBaseCharacter");
+        return;
+    }
+
+
+    baseCharacters[CharName] = character;
 }
 
-void GameObjectsManager::removeBaseCharacter(BaseCharacter* character)
+void GameObjectsManager::removeBaseCharacter(const std::string& CharName)
 {
-    // Use std::remove to shift all elements not equal to 'character' to the front
-    auto newEnd = std::remove(baseCharacters.begin(), baseCharacters.end(), character);
-
-    // Erase the "removed" elements from the vector
-    baseCharacters.erase(newEnd, baseCharacters.end());
+    baseCharacters.erase(CharName);
 }
 
 // Define the methods to manage game objects
@@ -47,20 +53,29 @@ void GameObjectsManager::removeObject()
 void GameObjectsManager::update(float deltaTime)
 {
     // Update all baseCharacters
-    for (auto character : baseCharacters)
+    for (auto& pair : baseCharacters)
     {
-        character->update(deltaTime);
+        pair.second->update(deltaTime);
     }
 
     // Update other game objects
 }
 
+BaseCharacter* GameObjectsManager::getBaseCharacter(const std::string& CharName)
+{
+    if (baseCharacters.find(CharName) != baseCharacters.end())
+    {
+        return baseCharacters[CharName];
+    }
+    return nullptr;
+}
+
 void GameObjectsManager::draw()
 {
     // Draw all baseCharacters
-    for (auto character : baseCharacters)
+    for (auto& pair : baseCharacters)
     {
-        character->draw();
+        pair.second->draw();
     }
 
     // Draw other game objects

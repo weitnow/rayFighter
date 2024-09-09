@@ -26,6 +26,8 @@ public:
     void setScale(float scale);
     float getScale();
 
+    void flipX();
+
     // sprites
     void addAnim(AsepriteAnimationFile* animfileptr);
     AsepriteAnimationFile* getAnim();

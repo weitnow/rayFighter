@@ -51,11 +51,11 @@ void handleInput(GameObjectsManager& gameObjectsManager, BaseCharacter* player1,
 {
     if (IsKeyPressed(KEY_ONE))
     {
-        gameObjectsManager.removeBaseCharacter(player1);
+        gameObjectsManager.removeBaseCharacter("player1");
     }
     if (IsKeyPressed(KEY_TWO))
     {
-        gameObjectsManager.removeBaseCharacter(player2);
+        gameObjectsManager.removeBaseCharacter("player3");
     }
 }
 
@@ -106,8 +106,8 @@ int main(void)
     BaseCharacter* player2 = new BaseCharacter(asepriteManager, Constants::PLAYER2_X, Constants::BASELINE);
     player2->setCurrentFrameTag("nesFighter-Idle");
 
-    gameObjectsManager.addBaseCharacter(player1);
-    gameObjectsManager.addBaseCharacter(player2);
+    gameObjectsManager.addBaseCharacter("player1", player1);
+    gameObjectsManager.addBaseCharacter("player2", player2);
 
     // Create Static Background
     Texture2D stage = LoadTexture("Assets/Graphics/stage.png");

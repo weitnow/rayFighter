@@ -86,6 +86,11 @@ float BaseGameObject::getScale()
     return scale;
 }
 
+void BaseGameObject::flipX()
+{
+    isFlippedX = !isFlippedX;
+}
+
 void BaseGameObject::addAnim(AsepriteAnimationFile* animfileptr)
 {
     this->animfilePtr = animfileptr;
