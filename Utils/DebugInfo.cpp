@@ -1,7 +1,16 @@
 #include "DebugInfo.h"
 
+constexpr int RECT_WIDTH = 1520;
+constexpr int RECT_HEIGHT = 400;
+constexpr int RECT_X = 10;
+constexpr int RECT_Y = 10;
+constexpr Color RECT_COLOR = GREEN;
+constexpr int TEXT_SIZE = 20;
+constexpr Color TEXT_COLOR = BLACK;
+
 DebugInfo::DebugInfo()
-    : rectWidth(1500), rectHeight(400), rectX(10), rectY(10), rectColor(GREEN), player1InGameObjects(false)
+    : rectWidth(RECT_WIDTH), rectHeight(RECT_HEIGHT), rectX(RECT_X), rectY(RECT_Y), rectColor(RECT_COLOR),
+      player1InGameObjects(false)
 {
 }
 
@@ -16,6 +25,7 @@ void DebugInfo::addGameObject(const std::string& name, BaseGameObject* gameObjec
         currentGameObjectName = name;
     }
     gameObjects[name] = gameObject;
+
     if (name == "Player1")
     {
         player1InGameObjects = true;
@@ -25,45 +35,77 @@ void DebugInfo::addGameObject(const std::string& name, BaseGameObject* gameObjec
 void DebugInfo::removeGameObject(std::string& name)
 {
     gameObjects.erase(name);
-    if (currentGameObjectName == name)
+
+    if (currentGameObjectName == name && !gameObjects.empty())
     {
-        if (!gameObjects.empty())
-        {
-            currentGameObjectName = gameObjects.begin()->first;
-        }
-        std::cout << "currentGameObjectName: " << currentGameObjectName << std::endl;
+        currentGameObjectName = gameObjects.begin()->first;
     }
+
+    std::cout << "currentGameObjectName: " << currentGameObjectName << std::endl;
 }
 
 bool DebugInfo::showNextGameObject()
 {
-    if (gameObjects.empty())
+    if (gameObjects.size() <= 1)
     {
-        return false;
+        return false; // No switching possible if we have 0 or 1 object
     }
-    else if (gameObjects.size() == 1)
+
+    // Move to the next game object in the map
+    auto it = gameObjects.find(currentGameObjectName);
+    if (it != gameObjects.end())
     {
-        return false;
-    }
-    else
-    {
-        // go to next game object
-        auto it = gameObjects.find(currentGameObjectName);
-        if (it != gameObjects.end())
+        ++it;
+        if (it == gameObjects.end())
         {
-            it++;
-            if (it == gameObjects.end())
-            {
-                it = gameObjects.begin();
-            }
-            currentGameObjectName = it->first;
+            it = gameObjects.begin(); // Wrap around to the beginning
         }
+        currentGameObjectName = it->first;
         return true;
     }
+
+    return false;
 }
 
 void DebugInfo::update(float deltaTime)
 {
+    // Placeholder for future updates
+}
+
+// Function to draw data for any game object
+void DebugInfo::drawGameObjectData(BaseGameObject* gameObject, const std::string& objectName, int x, int y)
+{
+    BaseCharacter* character = static_cast<BaseCharacter*>(gameObject);
+
+    DrawText(("DebugName: " + objectName).c_str(), x, y, TEXT_SIZE, TEXT_COLOR);
+    DrawText(("Pos: " + std::to_string(static_cast<int>(gameObject->getPos().x)) + ", " +
+              std::to_string(static_cast<int>(gameObject->getPos().y)))
+                 .c_str(),
+             x,
+             y + 20,
+             TEXT_SIZE,
+             TEXT_COLOR);
+    DrawText(("FrameTag: " + gameObject->getCurrentFrameTag()).c_str(), x, y + 40, TEXT_SIZE, TEXT_COLOR);
+    DrawText(("CurrentState: " + character->getCurrentState()).c_str(), x, y + 60, TEXT_SIZE, TEXT_COLOR);
+    DrawText(("IsOnGround: " + std::to_string(character->getIsOnGround())).c_str(), x, y + 80, TEXT_SIZE, TEXT_COLOR);
+
+    int moveDirectionX = static_cast<int>(character->getMoveDirection().x);
+    int moveDirectionY = static_cast<int>(character->getMoveDirection().y);
+    DrawText(("MoveDirection: " + std::to_string(moveDirectionX) + ", " + std::to_string(moveDirectionY)).c_str(),
+             x,
+             y + 100,
+             TEXT_SIZE,
+             TEXT_COLOR);
+
+    int milliseconds = static_cast<int>(gameObject->getAnim()->getDurationCurrentFrame() * 1000);
+    DrawText(("Frameduration: " + std::to_string(milliseconds)).c_str(), x, y + 120, TEXT_SIZE, TEXT_COLOR);
+    DrawText(("isLeft: " + std::to_string(character->getIsLeft())).c_str(), x, y + 140, TEXT_SIZE, TEXT_COLOR);
+    DrawText(("PlayerNumber: " + std::to_string(character->getPlayerNumber())).c_str(),
+             x,
+             y + 160,
+             TEXT_SIZE,
+             TEXT_COLOR);
+    DrawText(("ObjName: " + gameObject->getObjName()).c_str(), x, y + 180, TEXT_SIZE, TEXT_COLOR);
 }
 
 void DebugInfo::draw()
@@ -72,60 +114,19 @@ void DebugInfo::draw()
     DrawRectangle(rectX, rectY, rectWidth, rectHeight, rectColor);
     DrawFPS(rectX + 10, rectY + 10);
 
-    // Draw Player1. Is there is not "Player1" in gameObjects draw a message, that player1 is not found
-    if (player1InGameObjects)
+    // Draw Player1 data if available
+    if (player1InGameObjects && gameObjects.find("Player1") != gameObjects.end())
     {
-        std::string name_pl1 = "GameObjName: Player1";
-        std::string position_pl1 = "Pos: " + std::to_string(static_cast<int>(gameObjects["Player1"]->getPos().x)) +
-                                   ", " + std::to_string(static_cast<int>(gameObjects["Player1"]->getPos().y));
-
-        DrawText(name_pl1.c_str(), rectX + 10, rectY + 50, 20, BLACK);
-        DrawText(position_pl1.c_str(), rectX + 10, rectY + 70, 20, BLACK);
-        DrawText(("FrameTag: " + gameObjects["Player1"]->getCurrentFrameTag()).c_str(),
-                 rectX + 10,
-                 rectY + 90,
-                 20,
-                 BLACK);
-        DrawText(("CurrentState: " + static_cast<BaseCharacter*>(gameObjects["Player1"])->getCurrentState()).c_str(),
-                 rectX + 10,
-                 rectY + 110,
-                 20,
-                 BLACK);
-        DrawText(("IsOnGround: " + std::to_string(static_cast<BaseCharacter*>(gameObjects["Player1"])->getIsOnGround()))
-                     .c_str(),
-                 rectX + 10,
-                 rectY + 130,
-                 20,
-                 BLACK);
-        int moveDirectionX =
-            static_cast<int>(static_cast<BaseCharacter*>(gameObjects["Player1"])->getMoveDirection().x);
-        int moveDirectionY =
-            static_cast<int>(static_cast<BaseCharacter*>(gameObjects["Player1"])->getMoveDirection().y);
-        DrawText(("MoveDirection: " + std::to_string(moveDirectionX) + ", " + std::to_string(moveDirectionY)).c_str(),
-                 rectX + 10,
-                 rectY + 150,
-                 20,
-                 BLACK);
-        float duration = gameObjects["Player1"]->getAnim()->getDurationCurrentFrame();
-        int milliseconds = static_cast<int>(duration * 1000);
-        DrawText(("Frameduration: " + std::to_string(milliseconds)).c_str(), rectX + 10, rectY + 170, 20, BLACK);
+        drawGameObjectData(gameObjects["Player1"], "Player1", rectX + 10, rectY + 50);
     }
     else
     {
-
-        DrawText("No Obj named \"Player1\" found", rectX + 800, rectY + 50, 20, BLACK);
+        DrawText("No Obj named \"Player1\" found", rectX + 800, rectY + 50, TEXT_SIZE, TEXT_COLOR);
     }
 
     // Draw other game objects
-    std::string name = "GameObjName: " + currentGameObjectName;
-    std::string position = "Pos: " + std::to_string(static_cast<int>(gameObjects[currentGameObjectName]->getPos().x)) +
-                           ", " + std::to_string(static_cast<int>(gameObjects[currentGameObjectName]->getPos().y));
-
-    DrawText(name.c_str(), rectX + 700, rectY + 50, 20, BLACK);
-    DrawText(position.c_str(), rectX + 700, rectY + 70, 20, BLACK);
-    DrawText(("FrameTag: " + gameObjects[currentGameObjectName]->getCurrentFrameTag()).c_str(),
-             rectX + 700,
-             rectY + 90,
-             20,
-             BLACK);
+    if (gameObjects.find(currentGameObjectName) != gameObjects.end())
+    {
+        drawGameObjectData(gameObjects[currentGameObjectName], currentGameObjectName, rectX + 700, rectY + 50);
+    }
 }

@@ -6,11 +6,14 @@
 #define GBFIGHTER_COLLISIONBOX2D_H
 
 #include "raylib.h"
+#include <string>
 
 
-class CollisionBox2D {
+class CollisionBox2D
+{
 public:
     CollisionBox2D();
+    CollisionBox2D(std::string name, float x, float y, float width, float height, Color color = BLUE);
     ~CollisionBox2D();
     void update(float deltaTime);
     void draw();
@@ -22,6 +25,7 @@ protected:
     float width;
     float height;
     Color color;
+    std::string name;
 };
 
 

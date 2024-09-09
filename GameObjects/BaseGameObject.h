@@ -17,6 +17,9 @@ public:
     virtual void update(float deltaTime);
     void draw();
 
+    void setObjName(std::string name);
+    std::string getObjName();
+
     // position
     void setPos(float x, float y);
     void setPos(Vector2 pos);
@@ -26,8 +29,6 @@ public:
     void setScale(float scale);
     float getScale();
 
-    void flipX();
-
     // sprites
     void addAnim(AsepriteAnimationFile* animfileptr);
     AsepriteAnimationFile* getAnim();
@@ -36,6 +37,7 @@ public:
 
     // hitboxes
     void addCollisionBox(std::string hitboxName);
+    void addCollisionBox(std::string hitboxName, float x, float y, float width, float height, Color color = BLUE);
     void removeCollisionBox(std::string hitboxName);
 
 protected:
@@ -45,6 +47,7 @@ protected:
     bool isFlippedX;
     bool isFlippedY;
     std::string currentFrameTag;
+    std::string ObjName;
 
     // a map which holds all the sprite-objs
     std::map<std::string, BaseSpriteObject> sprites;

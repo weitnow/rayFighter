@@ -101,10 +101,16 @@ int main(void)
     // Create Player 1
     BaseCharacter* player1 = new BaseCharacter(asepriteManager, Constants::PLAYER1_X, Constants::BASELINE);
     player1->setCurrentFrameTag("gbFighter-Idle");
+    player1->setObjName("Andy");
+    player1->setPlayerNumber(1);
+    player1->addCollisionBox("Collisionbox", 26, 142, 28, 30);
+
 
     // Create Player 2
     BaseCharacter* player2 = new BaseCharacter(asepriteManager, Constants::PLAYER2_X, Constants::BASELINE);
     player2->setCurrentFrameTag("nesFighter-Idle");
+    player2->setObjName("Ken");
+    player2->setPlayerNumber(2);
 
     gameObjectsManager.addBaseCharacter("player1", player1);
     gameObjectsManager.addBaseCharacter("player2", player2);
@@ -142,7 +148,6 @@ int main(void)
         handleInput(player1);
         //player2->update(deltaTime);
 
-
         //----------------------------------------------------------------------------------
         // Draw to RenderTexture
         //----------------------------------------------------------------------------------
@@ -169,7 +174,6 @@ int main(void)
         EndMode2D();
         */
 
-
         screen2DManager->endDrawToRenderTarget();
 
         //----------------------------------------------------------------------------------
@@ -179,6 +183,11 @@ int main(void)
 
         // Draw RenderTexture to Screen
         screen2DManager->drawRenderTarget("mainRenderTarget");
+
+        //todo get rid of this
+        // Draw a violet outlined rectangle
+        DrawRectangleLinesEx(Rectangle{0, 0, 1540, 1070}, 6, BLACK);
+
 
 #ifdef DEBUG
         debugInfo->draw();

@@ -32,15 +32,14 @@ protected:
     Vector2 moveDirection; // (x,y)
     CharacterState currentState;
     std::string animFileName;
-
+    bool isLeft;      // true if the character is left of the other character, only vallid for player1 or player2
+    int playerNumber; // 1 or 2
 
     // member methodes
     void changeState(CharacterState newState);
     void updateState();
 
 public:
-    BaseCharacter(AsepriteManager* asepriteManager);
-
     BaseCharacter(AsepriteManager* asepriteManager, float x, float y);
 
     virtual ~BaseCharacter();
@@ -54,6 +53,13 @@ public:
     void stop();
     void jump();
     void duck();
+
+    void setIsLeft(bool isLeft);
+    bool getIsLeft();
+
+    void setPlayerNumber(int playerNumber);
+    int getPlayerNumber();
+
 
     /**
      * @brief Set the Current Frame Tag object

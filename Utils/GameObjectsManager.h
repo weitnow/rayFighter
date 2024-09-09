@@ -3,8 +3,8 @@
 
 #include "../Characters/BaseCharacter.h"
 #include "../GameObjects/BaseGameObject.h"
+#include "Core.h"
 #include <algorithm> // for std::remove and std::find
-#include <unordered_map>
 
 class GameObjectsManager
 {
@@ -33,7 +33,17 @@ private:
     ~GameObjectsManager();
 
     // Private member variables to manage game objects
-    std::unordered_map<std::string, BaseCharacter*> baseCharacters;
+    Dictionary<std::string, BaseCharacter*> baseCharacters;
+    List<BaseGameObject*> gameObjects;
+
+    bool player1and2set;
+    // player 1 and player 2
+    BaseCharacter* player1;
+    BaseCharacter* player2;
+
+    // member methodes
+    void _setPlayer1and2();
+    void _updateIsLeftPlayer1and2();
 };
 
 #endif //GAMEOBJECTSMANAGER_H

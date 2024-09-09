@@ -17,6 +17,7 @@ public:
     bool showNextGameObject();
     void update(float deltaTime);
     void draw();
+    void drawGameObjectData(BaseGameObject* gameObject, const std::string& objectName, int x, int y);
 
 protected:
     std::unordered_map<std::string, BaseGameObject*> gameObjects;

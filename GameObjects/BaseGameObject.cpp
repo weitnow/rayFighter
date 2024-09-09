@@ -2,7 +2,7 @@
 #include "../Constants.h"
 #include <assert.h>
 
-BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager)
+BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager) : ObjName("")
 {
     scale = 1.f;
     pos = {Constants::X, Constants::Y};
@@ -38,6 +38,7 @@ void BaseGameObject::update(float deltaTime)
     for (auto& pair : collisionBoxes)
     {
         pair.second.update(deltaTime);
+        pair.second.setPos(pos.x, pos.y);
     }
 
     // check if this->animfileptr is not nullptr - if its not, then update the animation
@@ -52,12 +53,28 @@ void BaseGameObject::draw()
 #ifdef DEBUG
     // Draw a small rectangle at the position of the gameobj.
     DrawRectangleLines(pos.x, pos.y, Constants::GAMEOBJ_SIZE.x, Constants::GAMEOBJ_SIZE.y, Constants::GAMEOBJ_COLOR);
+
+    // Draw collision boxes
+    for (auto& pair : collisionBoxes)
+    {
+        pair.second.draw();
+    }
 #endif
 
     if (animfilePtr != nullptr)
     {
         animfilePtr->drawCurrentSelectedTag(getPos().x, getPos().y, scale, color, isFlippedX, isFlippedY);
     }
+}
+
+void BaseGameObject::setObjName(std::string name)
+{
+    ObjName = name;
+}
+
+std::string BaseGameObject::getObjName()
+{
+    return ObjName;
 }
 
 void BaseGameObject::setPos(float x, float y)
@@ -84,11 +101,6 @@ void BaseGameObject::setScale(float scale)
 float BaseGameObject::getScale()
 {
     return scale;
-}
-
-void BaseGameObject::flipX()
-{
-    isFlippedX = !isFlippedX;
 }
 
 void BaseGameObject::addAnim(AsepriteAnimationFile* animfileptr)
@@ -120,6 +132,11 @@ std::string BaseGameObject::getCurrentFrameTag()
 void BaseGameObject::addCollisionBox(std::string hitboxName)
 {
     collisionBoxes[hitboxName] = CollisionBox2D{};
+}
+
+void BaseGameObject::addCollisionBox(std::string hitboxName, float x, float y, float width, float height, Color color)
+{
+    collisionBoxes[hitboxName] = CollisionBox2D{hitboxName, x, y, width, height, color};
 }
 
 void BaseGameObject::removeCollisionBox(std::string hitboxName)

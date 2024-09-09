@@ -79,13 +79,10 @@ void BaseCharacter::updateState()
     }
 }
 
-BaseCharacter::BaseCharacter(AsepriteManager* asepriteManager) : BaseGameObject(asepriteManager)
-{
-}
 
 BaseCharacter::BaseCharacter(AsepriteManager* asepriteManager, float x, float y)
     : BaseGameObject(asepriteManager, x, y), currentState(CharacterState::Idle), moveDirection({0, 0}), jumpForce(4.4f),
-      walkingSpeed(1.f), isOnGround(false), animFileName("gbFighter")
+      walkingSpeed(1.f), isOnGround(false), animFileName("gbFighter"), isLeft(true)
 {
 }
 
@@ -104,9 +101,9 @@ void BaseCharacter::update(float deltaTime)
     {
         this->setPos(0, this->getPos().y);
     }
-    else if (this->getPos().x > 320 - 32) // todo: get rid of hardcoded values
+    else if (this->getPos().x > 258 - 32) // todo: get rid of hardcoded values
     {
-        this->setPos(320 - 32, this->getPos().y); // todo: get rid of hardcoded values
+        this->setPos(258 - 32, this->getPos().y); // todo: get rid of hardcoded values
     }
 
     this->setPos(this->getPos().x, this->getPos().y + moveDirection.y);
@@ -126,6 +123,7 @@ void BaseCharacter::update(float deltaTime)
 
     updateState();
 }
+
 
 void BaseCharacter::draw()
 {
@@ -162,6 +160,47 @@ void BaseCharacter::jump()
 void BaseCharacter::duck()
 {
 }
+
+void BaseCharacter::setIsLeft(bool isLeft)
+{
+    this->isLeft = isLeft;
+    // if the character is left, flip the sprite
+    // todo: refactor this methode
+    if (isLeft)
+    {
+        this->isFlippedX = false;
+    }
+    else
+    {
+        this->isFlippedX = true;
+    }
+}
+
+bool BaseCharacter::getIsLeft()
+{
+    return isLeft;
+}
+
+void BaseCharacter::setPlayerNumber(int playerNumber)
+{
+    if (playerNumber != 1 && playerNumber != 2)
+    {
+        throw std::invalid_argument("Player number must be 1 or 2");
+    }
+
+    // check if the player has a ObjName
+    if (this->getObjName().empty())
+    {
+        this->setObjName("Player" + std::to_string(playerNumber));
+    }
+    this->playerNumber = playerNumber;
+}
+
+int BaseCharacter::getPlayerNumber()
+{
+    return playerNumber;
+}
+
 
 bool BaseCharacter::setCurrentFrameTag(std::string tag)
 {
