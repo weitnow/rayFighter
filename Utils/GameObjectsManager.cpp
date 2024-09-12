@@ -34,6 +34,30 @@ void GameObjectsManager::_updateIsLeftPlayer1and2()
     }
 }
 
+void GameObjectsManager::_checkCollisionsBetweenPlayers()
+{
+    // Check if player1 and player2 are set
+    if (!player1and2set)
+    {
+        return;
+    }
+
+    // Check if player1 and player2 are colliding
+    auto& player1CollisionBoxes = player1->getCollisionBoxes();
+    auto& player2CollisionBoxes = player2->getCollisionBoxes();
+
+    CollisionBox2D& player1CollisionBox = player1CollisionBoxes["Collisionbox"];
+    CollisionBox2D& player2CollisionBox = player2CollisionBoxes["Collisionbox"];
+
+    Rectangle& player1Rect = player1CollisionBox.getRectangle();
+    Rectangle& player2Rect = player2CollisionBox.getRectangle();
+
+    if (CheckCollisionRecs(player1Rect, player2Rect))
+    {
+        player1->setPos(player1->getPos().x - 1, player1->getPos().y);
+    }
+}
+
 void GameObjectsManager::_setPlayer1and2()
 {
     // Check if player1 and player2 are set
@@ -118,6 +142,8 @@ void GameObjectsManager::update(float deltaTime)
     {
         pair.second->update(deltaTime);
     }
+
+    _checkCollisionsBetweenPlayers();
 
     // Update other game objects
 }

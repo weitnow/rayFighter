@@ -45,3 +45,8 @@ void CollisionBox2D::setObjPos(float x, float y)
     objPos.x = x;
     objPos.y = y;
 }
+
+Rectangle& CollisionBox2D::getRectangle()
+{
+    return myRectangle;
+}

@@ -125,7 +125,6 @@ int main(void)
     debugInfo->addGameObject("Player2", player2);
 #endif
 
-
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {

@@ -18,6 +18,7 @@ public:
     void update(float deltaTime);
     void draw();
     void setObjPos(float x, float y);
+    Rectangle& getRectangle();
 
 protected:
     Rectangle myRectangle;

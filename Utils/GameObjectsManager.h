@@ -44,6 +44,7 @@ private:
     // member methodes
     void _setPlayer1and2();
     void _updateIsLeftPlayer1and2();
+    void _checkCollisionsBetweenPlayers();
 };
 
 #endif //GAMEOBJECTSMANAGER_H

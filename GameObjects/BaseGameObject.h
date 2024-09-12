@@ -40,6 +40,9 @@ public:
     void addCollisionBox(std::string hitboxName, float x, float y, float width, float height, Color color = BLUE);
     void removeCollisionBox(std::string hitboxName);
 
+    // collision boxes
+    std::map<std::string, CollisionBox2D>& getCollisionBoxes();
+
 protected:
     Vector2 pos;
     float scale;

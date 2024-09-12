@@ -147,3 +147,8 @@ void BaseGameObject::removeCollisionBox(std::string hitboxName)
 {
     collisionBoxes.erase(hitboxName);
 }
+
+std::map<std::string, CollisionBox2D>& BaseGameObject::getCollisionBoxes()
+{
+    return collisionBoxes;
+}
