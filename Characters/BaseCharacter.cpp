@@ -1,10 +1,10 @@
-//
-// Created by weitnow on 12/7/23.
-//
-
 #include "BaseCharacter.h"
 #include "../Constants.h"
+#include "Statemachine/Statemachine.h" // Include Statemachine.h
 
+shared<State> idleState = std::make_shared<IdleState>();
+shared<State> walkState = std::make_shared<WalkState>();
+shared<State> jumpState = std::make_shared<JumpState>();
 
 std::string CharacterStateToString(CharacterState state)
 {
@@ -56,6 +56,10 @@ void BaseCharacter::changeState(CharacterState newState)
         {
             setCurrentFrameTag(animFileName + "-Jump");
         }
+        else if (currentState == CharacterState::Punch)
+        {
+            setCurrentFrameTag(animFileName + "-A Move");
+        }
     }
 }
 
@@ -64,38 +68,39 @@ void BaseCharacter::updateState()
     if (std::abs(moveDirection.x) > 0 && isOnGround)
     {
         changeState(CharacterState::Walk);
+        statemachine->ChangeState(walkState);
     }
-    else if (std::abs(moveDirection.x) < 0.1 && isOnGround)
+    if (std::abs(moveDirection.x) < 0.1f && isOnGround)
     {
         changeState(CharacterState::Idle);
+        statemachine->ChangeState(idleState);
     }
-    else if (!isOnGround)
+    if (!isOnGround)
     {
         changeState(CharacterState::Jump);
-    }
-    else
-    {
-        /* code */
+        statemachine->ChangeState(jumpState);
     }
 }
 
 
 BaseCharacter::BaseCharacter(AsepriteManager* asepriteManager, float x, float y)
     : BaseGameObject(asepriteManager, x, y), currentState(CharacterState::Idle), moveDirection({0, 0}), jumpForce(4.4f),
-      walkingSpeed(1.f), isOnGround(false), animFileName("gbFighter"), isLeft(true)
+      walkingSpeed(1.f), isOnGround(false), animFileName("gbFighter"), isLeft(true),
+      statemachine(new Statemachine(*this))
 {
 }
 
 
 BaseCharacter::~BaseCharacter()
 {
+    delete statemachine; // Clean up dynamically allocated Statemachine
 }
 
 void BaseCharacter::update(float deltaTime)
 {
     if (scale != 1)
     {
-        // Todo: Implement scale function
+        // TODO: Implement scale function
     }
 
     this->setPos(this->getPos().x + moveDirection.x, this->getPos().y);
@@ -104,9 +109,9 @@ void BaseCharacter::update(float deltaTime)
     {
         this->setPos(0, this->getPos().y);
     }
-    else if (this->getPos().x > 258 - 32) // todo: get rid of hardcoded values
+    else if (this->getPos().x > 258 - 32) // TODO: get rid of hardcoded values
     {
-        this->setPos(258 - 32, this->getPos().y); // todo: get rid of hardcoded values
+        this->setPos(258 - 32, this->getPos().y); // TODO: get rid of hardcoded values
     }
 
     this->setPos(this->getPos().x, this->getPos().y + moveDirection.y);
@@ -136,6 +141,9 @@ void BaseCharacter::update(float deltaTime)
     {
         animfilePtr->update(deltaTime);
     }
+
+    // update the state
+    statemachine->Update(deltaTime);
 
     updateState();
 }
@@ -177,11 +185,15 @@ void BaseCharacter::duck()
 {
 }
 
+void BaseCharacter::punch()
+{
+}
+
 void BaseCharacter::setIsLeft(bool isLeft)
 {
     this->isLeft = isLeft;
     // if the character is left, flip the sprite
-    // todo: refactor this methode
+    // TODO: refactor this methode
     if (isLeft)
     {
         this->isFlippedX = false;
@@ -216,7 +228,6 @@ int BaseCharacter::getPlayerNumber()
 {
     return playerNumber;
 }
-
 
 bool BaseCharacter::setCurrentFrameTag(std::string tag)
 {

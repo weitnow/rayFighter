@@ -42,21 +42,20 @@ else
 USED_LIBS = -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
 endif
 
-COMPILER_CALL = $(CXX) $(CXXFLAGS)
+COMPILER_CALL = $(CXX) $(CPPFLAGS) $(CXXFLAGS)
 
 # Recursively find all .cpp files in subdirectories
-CXX_SOURCES := $(wildcard */*.cpp)
-# Include .cpp files in the root directory
-CXX_SOURCES += $(wildcard *.cpp)
+CXX_SOURCES := $(shell find . -name '*.cpp')
 
-CXX_OBJECTS = $(patsubst %.cc, $(BUILD_DIR)%.o, $(CXX_SOURCES))
+# Create object file names based on source file names and directory structure
+CXX_OBJECTS = $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(CXX_SOURCES))
 
 ###########
 # TARGETS #
 ###########
 
 build: create_dir $(CXX_OBJECTS)
-	$(COMPILER_CALL) $(CXX_OBJECTS) $(USED_LIBS) -o $(BUILD_DIR)/$(EXECUTABLE_NAME)
+	$(COMPILER_CALL) $(CXX_OBJECTS) $(LDFLAGS) $(USED_LIBS) -o $(BUILD_DIR)/$(EXECUTABLE_NAME)
 
 create_dir:
 	mkdir -p build
@@ -75,30 +74,28 @@ else
 	/usr/bin/time -v ./$(BUILD_DIR)/$(EXECUTABLE_NAME)
 endif
 
-
 clean:
-	rm -f $(BUILD_DIR)/*.o
+	find $(BUILD_DIR) -name "*.o" -delete
+	rm -f $(BUILD_DIR)/*.d
 ifeq ($(OS_WINDOWS), 1)
 	rm -f $(BUILD_DIR)/$(EXECUTABLE_NAME).exe
 else
 	rm -f $(BUILD_DIR)/$(EXECUTABLE_NAME)
 endif
 
+
 valgrind: build
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./$(BUILD_DIR)/$(EXECUTABLE_NAME)
-
 
 ############
 # PATTERNS #
 ############
-# Regel wie aus einer cpp-datei eine .o datei wird
-# $@: = %.ccp 	-> the file name of the target
-# $<: = %.o 	-> the name of the first dependency
-%.o: %.cpp
-	$(COMPILER_CALL) $(USED_LIBS) -c $< -o $@
-
+# Rule to create object files, preserving directory structure
+$(BUILD_DIR)/%.o: %.cpp
+	@mkdir -p $(dir $@)
+	$(COMPILER_CALL) -c $< -o $@
 
 #########
 # PHONY #
 #########
-.PHONY: create_dir build run clean
+.PHONY: create_dir build run clean valgrind

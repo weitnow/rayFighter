@@ -31,7 +31,7 @@ void BaseGameObject::update(float deltaTime)
 {
     if (scale != 1)
     {
-        // Todo: Implement scale function
+        // TODO: Implement scale function
     }
 
     // update hitboxes
@@ -133,14 +133,14 @@ std::string BaseGameObject::getCurrentFrameTag()
     return currentFrameTag;
 }
 
-void BaseGameObject::addCollisionBox(std::string hitboxName)
+void BaseGameObject::addCollisionBox(std::string hitboxName,
+                                     float offsetX,
+                                     float offsetY,
+                                     float width,
+                                     float height,
+                                     Color color)
 {
-    collisionBoxes[hitboxName] = CollisionBox2D{};
-}
-
-void BaseGameObject::addCollisionBox(std::string hitboxName, float x, float y, float width, float height, Color color)
-{
-    collisionBoxes[hitboxName] = CollisionBox2D{hitboxName, x, y, width, height, color};
+    collisionBoxes[hitboxName] = CollisionBox2D{hitboxName, offsetX, offsetY, width, height, color};
 }
 
 void BaseGameObject::removeCollisionBox(std::string hitboxName)

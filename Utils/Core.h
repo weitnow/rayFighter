@@ -3,8 +3,10 @@
 
 #include <iostream>
 #include <map>
+#include <memory>
 #include <stdio.h>
 #include <unordered_map>
+#include <vector>
 
 template <typename T>
 using unique = std::unique_ptr<T>;

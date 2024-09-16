@@ -1,7 +1,3 @@
-//
-// Created by weitnow on 12/25/23.
-//
-
 #ifndef GBFIGHTER_CONSTANTS_H
 #define GBFIGHTER_CONSTANTS_H
 

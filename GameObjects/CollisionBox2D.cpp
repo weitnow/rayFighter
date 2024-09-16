@@ -11,12 +11,11 @@ CollisionBox2D::CollisionBox2D()
 }
 
 CollisionBox2D::CollisionBox2D(std::string name, float offsetx, float offsety, float width, float height, Color color)
-    : name(name), width(width), height(height), color(color)
+    : name(name), width(width), height(height), color(color), offset{offsetx, offsety},
+      myRectangle{0, 0, width, height}, objPos{0, 0}, pos{0, 0}
 {
-    offset.x = offsetx;
-    offset.y = offsety;
-    myRectangle = {0, 0, width, height};
 }
+
 
 CollisionBox2D::~CollisionBox2D()
 {

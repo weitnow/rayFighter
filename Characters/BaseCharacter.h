@@ -1,11 +1,11 @@
-//
-// Created by weitnow on 12/7/23.
-//
-
 #ifndef GBFIGHTER_BASECHARACTER_H
 #define GBFIGHTER_BASECHARACTER_H
 
 #include "../GameObjects/BaseGameObject.h"
+#include "../Utils/Core.h"
+
+// Forward declaration of Statemachine
+class Statemachine;
 
 enum class CharacterState
 {
@@ -31,6 +31,7 @@ protected:
     float walkingSpeed = 1.f;
     Vector2 moveDirection; // (x,y)
     CharacterState currentState;
+    Statemachine* statemachine;
     std::string animFileName;
     bool isLeft;      // true if the character is left of the other character, only vallid for player1 or player2
     int playerNumber; // 1 or 2
@@ -38,6 +39,9 @@ protected:
     // member methodes
     void changeState(CharacterState newState);
     void updateState();
+
+    //states
+
 
 public:
     BaseCharacter(AsepriteManager* asepriteManager, float x, float y);
@@ -53,13 +57,13 @@ public:
     void stop();
     void jump();
     void duck();
+    void punch();
 
     void setIsLeft(bool isLeft);
     bool getIsLeft();
 
     void setPlayerNumber(int playerNumber);
     int getPlayerNumber();
-
 
     /**
      * @brief Set the Current Frame Tag object

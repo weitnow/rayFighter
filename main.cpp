@@ -37,7 +37,13 @@ void handleInput(BaseCharacter* player1)
     {
         player1->duck();
     }
+
+    if (IsKeyPressed(KEY_J))
+    {
+        player1->punch();
+    }
 }
+
 
 void handleInput(DebugInfo* debugInfo)
 {
@@ -103,15 +109,18 @@ int main(void)
     player1->setCurrentFrameTag("gbFighter-Idle");
     player1->setObjName("Andy");
     player1->setPlayerNumber(1);
-    player1->addCollisionBox("Collisionbox", 10, 0, 10, 30);
+    player1->addCollisionBox("Collisionbox", 10, 0, 10, 30, BLUE);
 
 
     // Create Player 2
+
+
     BaseCharacter* player2 = new BaseCharacter(asepriteManager, Constants::PLAYER2_X, Constants::BASELINE);
     player2->setCurrentFrameTag("nesFighter-Idle");
     player2->setObjName("Ken");
     player2->setPlayerNumber(2);
-    player2->addCollisionBox("Collisionbox", 16, 0, 10, 30);
+    player2->addCollisionBox("Collisionbox", 16, 0, 10, 30, BLUE);
+
 
     gameObjectsManager.addBaseCharacter("player1", player1);
     gameObjectsManager.addBaseCharacter("player2", player2);
@@ -136,17 +145,17 @@ int main(void)
 
 
         // check keyboard input
-        // todo: replace with inputHandler and remove handleInput function
+        // TODO: replace with inputHandler and remove handleInput function
 
         handleInput(debugInfo);
-        handleInput(gameObjectsManager, player1, player2);
+        //handleInput(gameObjectsManager, player1, player2);
 
         screen2DManager->update(deltaTime);
 
         gameObjectsManager.update(deltaTime);
-        //player1->update(deltaTime);
+
         handleInput(player1);
-        //player2->update(deltaTime);
+
 
         //----------------------------------------------------------------------------------
         // Draw to RenderTexture
@@ -161,8 +170,7 @@ int main(void)
         float stage_scale = 1.f;
         DrawTextureEx(stage, {0, 80}, 0, stage_scale, WHITE);
 
-        //player1->draw();
-        //player2->draw();
+
         gameObjectsManager.draw();
 
         /*
@@ -184,7 +192,7 @@ int main(void)
         // Draw RenderTexture to Screen
         screen2DManager->drawRenderTarget("mainRenderTarget");
 
-        //todo get rid of this
+        //TODO get rid of this
         // Draw a violet outlined rectangle
         DrawRectangleLinesEx(Rectangle{0, 0, 1540, 1070}, 6, BLACK);
 
