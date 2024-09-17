@@ -44,6 +44,14 @@ public:
         {
             newState = std::make_shared<PunchState>();
         }
+        else if (stateName == "Block")
+        {
+            newState = std::make_shared<BlockState>();
+        }
+        else if (stateName == "Hurt")
+        {
+            newState = std::make_shared<HurtState>();
+        }
         else
         {
             throw std::invalid_argument("Unknown state name");

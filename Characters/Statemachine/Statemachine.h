@@ -16,9 +16,9 @@ private:
     shared<State> currentState;
     shared<State> nextState;
     BaseCharacter& character;  // Reference to the owning Character
-    StateFactory stateFactory; // Factory to create states-objects from State.h and State.cpp
+    StateFactory stateFactory; // Factory to create states-objects - it uses the states defined in State.h
 
-    void _changeState(shared<State> newState); // called by changeState(std::string newState)
+    void _changeStateInternal(shared<State> newState); // called by changeState(std::string newState)
 
 public:
     Statemachine(BaseCharacter& characterRef);

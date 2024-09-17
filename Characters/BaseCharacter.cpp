@@ -2,51 +2,6 @@
 #include "../Constants.h"
 #include "Statemachine/Statemachine.h"
 
-/*
-void BaseCharacter::changeState(CharacterStateTR newState)
-{
-    if (currentState != newState) // if the new state is different from the current state
-    {
-        currentState = newState;
-        if (currentState == CharacterStateTR::Idle)
-        {
-            setCurrentFrameTag(animFileName + "-Idle");
-        }
-        else if (currentState == CharacterStateTR::Walk)
-        {
-            setCurrentFrameTag(animFileName + "-Walk");
-        }
-        else if (currentState == CharacterStateTR::Jump)
-        {
-            setCurrentFrameTag(animFileName + "-Jump");
-        }
-        else if (currentState == CharacterStateTR::Punch)
-        {
-            setCurrentFrameTag(animFileName + "-A Move");
-        }
-    }
-}
-
-void BaseCharacter::updateState()
-{
-    if (std::abs(moveDirection.x) > 0 && isOnGround)
-    {
-        changeState(CharacterStateTR::Walk);
-        statemachine->changeState("Walk");
-    }
-    if (std::abs(moveDirection.x) < 0.1f && isOnGround)
-    {
-        changeState(CharacterStateTR::Idle);
-        statemachine->changeState("Idle");
-    }
-    if (!isOnGround)
-    {
-        changeState(CharacterStateTR::Jump);
-        statemachine->changeState("Jump");
-    }
-}
-*/
-
 BaseCharacter::BaseCharacter(AsepriteManager* asepriteManager, float x, float y)
     : BaseGameObject(asepriteManager, x, y), moveDirection({0, 0}), jumpForce(4.4f), walkingSpeed(1.f),
       isOnGround(false), animFileName("gbFighter"), isLeft(true), playerNumber(-1),
@@ -100,6 +55,21 @@ void BaseCharacter::update(float deltaTime)
         pair.second.update(deltaTime);
         pair.second.setObjPos(getPos().x, getPos().y);
     }
+
+    //TODO: get rid of the follow code - just testing
+    if (std::abs(moveDirection.x) > 0 && isOnGround)
+    {
+        statemachine->changeState("Walk");
+    }
+    if (std::abs(moveDirection.x) < 0.1f && isOnGround)
+    {
+        statemachine->changeState("Idle");
+    }
+    if (!isOnGround)
+    {
+        statemachine->changeState("Jump");
+    }
+
 
     // update the state
     statemachine->update(deltaTime);

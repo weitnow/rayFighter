@@ -7,7 +7,7 @@ Statemachine::Statemachine(BaseCharacter& characterRef)
 {
 }
 
-void Statemachine::_changeState(shared<State> newState)
+void Statemachine::_changeStateInternal(shared<State> newState)
 {
     // check if the new state is the same as the current state
     if (currentState == newState)
@@ -38,7 +38,7 @@ void Statemachine::_changeState(shared<State> newState)
 
 void Statemachine::changeState(std::string newState)
 {
-    _changeState(stateFactory.getState(newState));
+    _changeStateInternal(stateFactory.getState(newState));
 }
 
 void Statemachine::update(float deltaTime)
