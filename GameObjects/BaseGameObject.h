@@ -15,7 +15,7 @@ public:
     virtual ~BaseGameObject();
 
     virtual void update(float deltaTime);
-    void draw();
+    virtual void draw();
 
     void setObjName(std::string name);
     std::string getObjName();

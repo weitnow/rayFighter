@@ -214,7 +214,7 @@ bool BaseCharacter::setCurrentFrameTag(std::string tag)
 
 std::string BaseCharacter::getCurrentState()
 {
-    return statemachine->getCurrentStateAsString();
+    return currentState;
 }
 
 bool BaseCharacter::getIsOnGround()
