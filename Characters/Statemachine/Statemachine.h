@@ -15,8 +15,9 @@ private:
     shared<State> previousState;
     shared<State> currentState;
     shared<State> nextState;
-    BaseCharacter& character;  // Reference to the owning Character
-    StateFactory stateFactory; // Factory to create states-objects - it uses the states defined in State.h
+    BaseCharacter& character;       // Reference to the owning Character
+    StateFactory stateFactory;      // Factory to create states-objects - it uses the states defined in State.h
+    BaseCharacter* owner = nullptr; // Pointer to the BaseCharacter owning this Statemachine
 
     void _changeStateInternal(shared<State> newState); // called by changeState(std::string newState)
 
@@ -26,6 +27,11 @@ public:
     void update(float deltaTime);
     State& getCurrentState();
     std::string getCurrentStateAsString();
+    void setOwner(BaseCharacter* owner)
+    {
+        this->owner = owner;
+        stateFactory.setOwner(owner);
+    }
 };
 
 

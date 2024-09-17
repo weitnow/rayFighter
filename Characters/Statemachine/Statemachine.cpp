@@ -65,7 +65,7 @@ std::string Statemachine::getCurrentStateAsString()
 {
     if (currentState)
     {
-        return currentState->name;
+        return currentState->stateName;
     }
     else
     {

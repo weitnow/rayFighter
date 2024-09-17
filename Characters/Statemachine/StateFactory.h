@@ -12,9 +12,17 @@ private:
     // Key: State name, Value: State instance
     Dictionary<std::string, shared<State>> stateMap;
 
+    BaseCharacter* owner = nullptr; // Pointer to the BaseCharacter owning this StateFactory
+
 public:
     shared<State> getState(const std::string& stateName)
     {
+        // Check if the StateFactory has an owner
+        if (!owner)
+        {
+            throw std::runtime_error("StateFactory::getState() -> Owner is not set.");
+        }
+
         // Check if the state already exists
         auto it = stateMap.find(stateName);
         if (it != stateMap.end())
@@ -57,9 +65,17 @@ public:
             throw std::invalid_argument("Unknown state name");
         }
 
+        // Set the owner of the new state
+        newState->setOwner(owner);
+
         // Store the newly created state in the map and return it
         stateMap[stateName] = newState;
         return newState;
+    }
+
+    void setOwner(BaseCharacter* owner)
+    {
+        this->owner = owner;
     }
 };
 

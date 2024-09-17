@@ -1,17 +1,34 @@
 #include "State.h"
+#include "../../Utils/GameManager.h"
 
+GameManager& gameManager = GameManager::getInstance();
+BaseCharacter* player1 = nullptr; // initialized by first time calling IdleState::Init()
+BaseCharacter* player2 = nullptr; // initialized by first time calling IdleState::Init()
+// each State class has a pointer to the owner BaseCharacter -> owner->getPos() or if(owner->isLeft()) etc.
+// or if(ownwer->getPlayernumber() == 1) etc.
 
 /* #region IdleState */
 void IdleState::Init()
 {
-    std::cout << "IdleState Init" << std::endl;
+    /* #region Init local player1 and player2 ptr for easy access */
+    // this code needs to run only once
+    if (player1 == nullptr)
+    {
+        player1 = gameManager.getBaseCharacter("player1");
+    }
+    if (player2 == nullptr)
+    {
+        player2 = gameManager.getBaseCharacter("player2");
+    }
+    /* #endregion */
 
-    name = "Idle";
+
+    std::cout << "IdleState Init" << std::endl;
+    stateName = "Idle";
 }
 
 void IdleState::Update(float deltaTime)
 {
-    std::cout << "IdleState Update" << std::endl;
 }
 
 void IdleState::Finalize()
@@ -25,12 +42,21 @@ void WalkState::Init()
 {
     std::cout << "WalkState Init" << std::endl;
 
-    name = "Walk";
+    stateName = "Walk";
 }
 
 void WalkState::Update(float deltaTime)
 {
-    std::cout << "WalkState Update" << std::endl;
+    if (owner->getPlayerNumber() == 1)
+    {
+        std::cout << "Player1 is walking" << std::endl;
+        std::cout << "Player1 position: " << player1->getPos().x << ", " << player1->getPos().y << std::endl;
+    }
+    else
+    {
+        std::cout << "Player2 is walking" << std::endl;
+        std::cout << "Player2 position: " << player2->getPos().x << ", " << player2->getPos().y << std::endl;
+    }
 }
 
 void WalkState::Finalize()
@@ -44,12 +70,11 @@ void JumpState::Init()
 {
     std::cout << "JumpState Init" << std::endl;
 
-    name = "Jump";
+    stateName = "Jump";
 }
 
 void JumpState::Update(float deltaTime)
 {
-    std::cout << "JumpState Update" << std::endl;
 }
 
 void JumpState::Finalize()
@@ -60,7 +85,7 @@ void JumpState::Finalize()
 
 void DuckState::Init()
 {
-    name = "Duck";
+    stateName = "Duck";
 }
 
 /* #region DuckState */
@@ -76,7 +101,7 @@ void DuckState::Finalize()
 /* #region PunchState */
 void PunchState::Init()
 {
-    name = "Punch";
+    stateName = "Punch";
 }
 
 void PunchState::Update(float deltaTime)
@@ -91,7 +116,7 @@ void PunchState::Finalize()
 /* #region KickState */
 void KickState::Init()
 {
-    name = "Kick";
+    stateName = "Kick";
 }
 
 void KickState::Update(float deltaTime)
@@ -106,7 +131,7 @@ void KickState::Finalize()
 /* #region BlockState */
 void BlockState::Init()
 {
-    name = "Block";
+    stateName = "Block";
 }
 
 void BlockState::Update(float deltaTime)
@@ -121,7 +146,7 @@ void BlockState::Finalize()
 /* #region HitState */
 void HitState::Init()
 {
-    name = "Hit";
+    stateName = "Hit";
 }
 
 void HitState::Update(float deltaTime)
@@ -136,7 +161,7 @@ void HitState::Finalize()
 /* #region HurtState */
 void HurtState::Init()
 {
-    name = "Hurt";
+    stateName = "Hurt";
 }
 
 void HurtState::Update(float deltaTime)

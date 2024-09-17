@@ -1,25 +1,25 @@
-#include "GameObjectsManager.h"
+#include "GameManager.h"
 
 // Define the static method to get the single instance of the class
-GameObjectsManager& GameObjectsManager::getInstance()
+GameManager& GameManager::getInstance()
 {
-    static GameObjectsManager instance; // This instance will be created the first time this method is called
+    static GameManager instance; // This instance will be created the first time this method is called
     return instance;
 }
 
 // Private constructor definition
-GameObjectsManager::GameObjectsManager() : player1(nullptr), player2(nullptr), player1and2set(false)
+GameManager::GameManager() : player1(nullptr), player2(nullptr), player1and2set(false)
 {
     // Initialize your game objects management here
 }
 
 // Optionally, define the destructor
-GameObjectsManager::~GameObjectsManager()
+GameManager::~GameManager()
 {
     // Clean up resources if necessary
 }
 
-void GameObjectsManager::_updateIsLeftPlayer1and2()
+void GameManager::_updateIsLeftPlayer1and2()
 {
     // check wheter player 1 is left of player 2
     if (player1->getPos().x < player2->getPos().x)
@@ -34,7 +34,7 @@ void GameObjectsManager::_updateIsLeftPlayer1and2()
     }
 }
 
-void GameObjectsManager::_checkCollisionsBetweenPlayers()
+void GameManager::_checkCollisionsBetweenPlayers()
 {
     // Check if player1 and player2 are set
     if (!player1and2set)
@@ -58,7 +58,7 @@ void GameObjectsManager::_checkCollisionsBetweenPlayers()
     }
 }
 
-void GameObjectsManager::_setPlayer1and2()
+void GameManager::_setPlayer1and2()
 {
     // Check if player1 and player2 are set
     if (player1and2set)
@@ -97,7 +97,7 @@ void GameObjectsManager::_setPlayer1and2()
     player1and2set = true;
 }
 
-void GameObjectsManager::addBaseCharacter(const std::string& CharName, BaseCharacter* character)
+void GameManager::addBaseCharacter(const std::string& CharName, BaseCharacter* character)
 {
     // check if the character already exists and if so, raise an error
     if (baseCharacters.find(CharName) != baseCharacters.end())
@@ -112,23 +112,23 @@ void GameObjectsManager::addBaseCharacter(const std::string& CharName, BaseChara
     baseCharacters[CharName] = character;
 }
 
-void GameObjectsManager::removeBaseCharacter(const std::string& CharName)
+void GameManager::removeBaseCharacter(const std::string& CharName)
 {
     baseCharacters.erase(CharName);
 }
 
 // Define the methods to manage game objects
-void GameObjectsManager::addObject()
+void GameManager::addObject()
 {
     // Implementation of adding an object
 }
 
-void GameObjectsManager::removeObject()
+void GameManager::removeObject()
 {
     // Implementation of removing an object
 }
 
-void GameObjectsManager::update(float deltaTime)
+void GameManager::update(float deltaTime)
 {
     // Set player1 and player2 if not already set
     _setPlayer1and2();
@@ -146,16 +146,18 @@ void GameObjectsManager::update(float deltaTime)
     _checkCollisionsBetweenPlayers();
 }
 
-BaseCharacter* GameObjectsManager::getBaseCharacter(const std::string& CharName)
+BaseCharacter* GameManager::getBaseCharacter(const std::string& CharName)
 {
     if (baseCharacters.find(CharName) != baseCharacters.end())
     {
         return baseCharacters[CharName];
     }
+    std::cerr << "GameManager::getBaseCharacter -> BaseCharacter with name " << CharName
+              << " not found in baseCharacters map." << std::endl;
     return nullptr;
 }
 
-void GameObjectsManager::draw()
+void GameManager::draw()
 {
     // Draw all baseCharacters
     for (auto& pair : baseCharacters)

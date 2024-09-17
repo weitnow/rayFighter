@@ -1,20 +1,20 @@
-#ifndef GAMEOBJECTSMANAGER_H
-#define GAMEOBJECTSMANAGER_H
+#ifndef GAMEMANAGER_H
+#define GAMEMANAGER_H
 
 #include "../Characters/BaseCharacter.h"
 #include "../GameObjects/BaseGameObject.h"
 #include "Core.h"
 #include <algorithm> // for std::remove and std::find
 
-class GameObjectsManager
+class GameManager
 {
 public:
     // Delete copy constructor and assignment operator to prevent copies of the singleton
-    GameObjectsManager(const GameObjectsManager&) = delete;
-    GameObjectsManager& operator=(const GameObjectsManager&) = delete;
+    GameManager(const GameManager&) = delete;
+    GameManager& operator=(const GameManager&) = delete;
 
     // Method to access the single instance of the class
-    static GameObjectsManager& getInstance();
+    static GameManager& getInstance();
 
     // Public methods for managing game objects
     void addBaseCharacter(const std::string& CharName, BaseCharacter* character);
@@ -27,10 +27,10 @@ public:
 
 private:
     // Private constructor to prevent direct instantiation
-    GameObjectsManager();
+    GameManager();
 
     // You can add a destructor and any private members or methods here if needed
-    ~GameObjectsManager();
+    ~GameManager();
 
     // Private member variables to manage game objects
     Dictionary<std::string, BaseCharacter*> baseCharacters;
@@ -47,4 +47,4 @@ private:
     void _checkCollisionsBetweenPlayers();
 };
 
-#endif //GAMEOBJECTSMANAGER_H
+#endif //GAMEMANAGER_H

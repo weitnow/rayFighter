@@ -4,7 +4,7 @@
 #include "GameObjects/BaseGameObject.h"
 #include "Utils/AsepriteManager.h"
 #include "Utils/DebugInfo.h"
-#include "Utils/GameObjectsManager.h"
+#include "Utils/GameManager.h"
 #include "Utils/InputHandler.h"
 #include "Utils/Screen2DManager.h"
 #include "raylib.h"
@@ -53,7 +53,7 @@ void handleInput(DebugInfo* debugInfo)
     }
 }
 
-void handleInput(GameObjectsManager& gameObjectsManager, BaseCharacter* player1, BaseCharacter* player2)
+void handleInput(GameManager& gameObjectsManager, BaseCharacter* player1, BaseCharacter* player2)
 {
     if (IsKeyPressed(KEY_ONE))
     {
@@ -83,7 +83,7 @@ int main(void)
     float deltaTime;                                                            // will be updated in the main game loop
     AsepriteManager* asepriteManager = new AsepriteManager{"Assets/Graphics/"}; // instance of AsepriteManager
     DebugInfo* debugInfo = new DebugInfo();                                     // instance of DebugInfo
-    GameObjectsManager& gameObjectsManager = GameObjectsManager::getInstance(); // instance of GameObjectsManager
+    GameManager& gameManager = GameManager::getInstance();                      // instance of GameObjectsManager
 
     SetTargetFPS(Constants::FPS); // Set  game to run at 60 frames-per-second
 
@@ -122,8 +122,8 @@ int main(void)
     player2->addCollisionBox("Collisionbox", 16, 0, 10, 30, BLUE);
 
 
-    gameObjectsManager.addBaseCharacter("player1", player1);
-    gameObjectsManager.addBaseCharacter("player2", player2);
+    gameManager.addBaseCharacter("player1", player1);
+    gameManager.addBaseCharacter("player2", player2);
 
     // Create Static Background
     Texture2D stage = LoadTexture("Assets/Graphics/stage.png");
@@ -152,7 +152,7 @@ int main(void)
 
         screen2DManager->update(deltaTime);
 
-        gameObjectsManager.update(deltaTime);
+        gameManager.update(deltaTime);
 
         handleInput(player1);
 
@@ -171,7 +171,7 @@ int main(void)
         DrawTextureEx(stage, {0, 80}, 0, stage_scale, WHITE);
 
 
-        gameObjectsManager.draw();
+        gameManager.draw();
 
         /*
         BeginMode2D(camera);

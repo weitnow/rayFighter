@@ -14,7 +14,15 @@ public:
     virtual void Update(float deltaTime) = 0;
     virtual void Finalize() = 0;
 
-    std::string name = "default";
+    std::string stateName = "default";
+
+    virtual void setOwner(BaseCharacter* owner)
+    {
+        this->owner = owner;
+    }
+
+protected:
+    BaseCharacter* owner = nullptr; // Pointer to the BaseCharacter owning this state
 };
 
 // Macro to declare State class methods

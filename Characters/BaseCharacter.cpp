@@ -7,8 +7,7 @@ BaseCharacter::BaseCharacter(AsepriteManager* asepriteManager, float x, float y)
       isOnGround(false), animFileName("gbFighter"), isLeft(true), playerNumber(-1),
       statemachine(std::make_unique<Statemachine>(*this)), currentState("Idle")
 {
-    // set the default state
-    statemachine->changeState("Idle");
+    statemachine->setOwner(this);
 }
 
 
