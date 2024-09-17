@@ -7,20 +7,6 @@
 // Forward declaration of Statemachine
 class Statemachine;
 
-enum class CharacterState
-{
-    Idle,
-    Walk,
-    Jump,
-    Duck,
-    Punch,
-    Kick,
-    Block,
-    Hit,
-    Hurt,
-};
-
-
 class BaseCharacter : public BaseGameObject
 {
 
@@ -30,18 +16,11 @@ protected:
     float jumpForce;
     float walkingSpeed = 1.f;
     Vector2 moveDirection; // (x,y)
-    CharacterState currentState;
-    Statemachine* statemachine;
+    unique<Statemachine> statemachine;
     std::string animFileName;
     bool isLeft;      // true if the character is left of the other character, only vallid for player1 or player2
     int playerNumber; // 1 or 2
-
-    // member methodes
-    void changeState(CharacterState newState);
-    void updateState();
-
-    //states
-
+    std::string currentState;
 
 public:
     BaseCharacter(AsepriteManager* asepriteManager, float x, float y);
@@ -51,7 +30,6 @@ public:
     void update(float deltaTime);
 
     void draw();
-
     void moveLeft();
     void moveRight();
     void stop();
@@ -72,6 +50,7 @@ public:
      * @return false if the animation is already playing, otherwise true
      */
     bool setCurrentFrameTag(std::string tag) override;
+
 
     // states
     std::string getCurrentState();

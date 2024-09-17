@@ -192,7 +192,6 @@ int main(void)
         // Draw RenderTexture to Screen
         screen2DManager->drawRenderTarget("mainRenderTarget");
 
-        //TODO get rid of this
         // Draw a violet outlined rectangle
         DrawRectangleLinesEx(Rectangle{0, 0, 1540, 1070}, 6, BLACK);
 

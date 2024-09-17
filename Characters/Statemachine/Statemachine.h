@@ -3,6 +3,7 @@
 
 #include "../../Utils/Core.h"
 #include "State.h"
+#include "StateFactory.h"
 
 // forward declaration of BaseCharacter to avoid circular dependency
 class BaseCharacter;
@@ -14,14 +15,18 @@ private:
     shared<State> previousState;
     shared<State> currentState;
     shared<State> nextState;
-    BaseCharacter& character; // Reference to the owning Character
+    BaseCharacter& character;  // Reference to the owning Character
+    StateFactory stateFactory; // Factory to create states-objects from State.h and State.cpp
 
+    void _changeState(shared<State> newState); // called by changeState(std::string newState)
 
 public:
     Statemachine(BaseCharacter& characterRef);
-    void ChangeState(shared<State> newState);
-    void Update(float deltaTime);
+    void changeState(std::string newState);
+    void update(float deltaTime);
     State& getCurrentState();
+    std::string getCurrentStateAsString();
 };
+
 
 #endif //GBFIGHTER_STATEMACHINE_H

@@ -134,7 +134,7 @@ void GameObjectsManager::update(float deltaTime)
     _setPlayer1and2();
 
     // Update isLeft for player1 and player2
-    //_updateIsLeftPlayer1and2();
+    _updateIsLeftPlayer1and2();
 
 
     // Update all baseCharacters
@@ -143,9 +143,7 @@ void GameObjectsManager::update(float deltaTime)
         pair.second->update(deltaTime);
     }
 
-    //_checkCollisionsBetweenPlayers();
-
-    // Update other game objects
+    _checkCollisionsBetweenPlayers();
 }
 
 BaseCharacter* GameObjectsManager::getBaseCharacter(const std::string& CharName)

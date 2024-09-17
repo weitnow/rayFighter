@@ -44,6 +44,24 @@ class PunchState : public State
 {
     STATE_METHODS
 };
+class KickState : public State
+{
+    STATE_METHODS
+};
+class BlockState : public State
+{
+    STATE_METHODS
+};
+
+class HitState : public State
+{
+    STATE_METHODS
+};
+
+class HurtState : public State
+{
+    STATE_METHODS
+};
 
 #undef STATE_METHODS
 

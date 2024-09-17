@@ -121,7 +121,9 @@ bool AsepriteAnimationFile::setFrameTag(const std::string& filenameTagname)
 
     if (this->asepriteManager->frameTags.find(filenameTagname) == this->asepriteManager->frameTags.end())
     {
-        throw std::runtime_error("AsepriteAnimationFile::setFrameTag -> Error: asepriteManager is nullptr");
+        throw std::runtime_error(
+            "AsepriteAnimationFile::setFrameTag -> Error: asepriteManager is nullptr or the filenameTagname " +
+            filenameTagname + " does not exist");
     }
 
     current_filenameTagname = filenameTagname;

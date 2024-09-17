@@ -1,62 +1,26 @@
 #include "BaseCharacter.h"
 #include "../Constants.h"
-#include "Statemachine/Statemachine.h" // Include Statemachine.h
+#include "Statemachine/Statemachine.h"
 
-shared<State> idleState = std::make_shared<IdleState>();
-shared<State> walkState = std::make_shared<WalkState>();
-shared<State> jumpState = std::make_shared<JumpState>();
-
-std::string CharacterStateToString(CharacterState state)
-{
-    switch (state)
-    {
-    case CharacterState::Idle:
-        return "Idle";
-    case CharacterState::Walk:
-        return "Walk";
-    case CharacterState::Jump:
-        return "Jump";
-    case CharacterState::Duck:
-        return "Duck";
-    case CharacterState::Punch:
-        return "Punch";
-    case CharacterState::Kick:
-        return "Kick";
-    case CharacterState::Block:
-        return "Block";
-    case CharacterState::Hit:
-        return "Hit";
-    case CharacterState::Hurt:
-        return "Hurt";
-    default:
-        return "Unknown State";
-    }
-}
-
-
-void BaseCharacter::changeState(CharacterState newState)
+/*
+void BaseCharacter::changeState(CharacterStateTR newState)
 {
     if (currentState != newState) // if the new state is different from the current state
     {
-#ifdef DEBUG_CHANGE_STATE
-        std::cout << "Changing state from " << getCurrentState() << " to " << CharacterStateToString(newState)
-                  << std::endl;
-#endif
-
         currentState = newState;
-        if (currentState == CharacterState::Idle)
+        if (currentState == CharacterStateTR::Idle)
         {
             setCurrentFrameTag(animFileName + "-Idle");
         }
-        else if (currentState == CharacterState::Walk)
+        else if (currentState == CharacterStateTR::Walk)
         {
-            setCurrentFrameTag(animFileName + "-Walking");
+            setCurrentFrameTag(animFileName + "-Walk");
         }
-        else if (currentState == CharacterState::Jump)
+        else if (currentState == CharacterStateTR::Jump)
         {
             setCurrentFrameTag(animFileName + "-Jump");
         }
-        else if (currentState == CharacterState::Punch)
+        else if (currentState == CharacterStateTR::Punch)
         {
             setCurrentFrameTag(animFileName + "-A Move");
         }
@@ -67,33 +31,34 @@ void BaseCharacter::updateState()
 {
     if (std::abs(moveDirection.x) > 0 && isOnGround)
     {
-        changeState(CharacterState::Walk);
-        statemachine->ChangeState(walkState);
+        changeState(CharacterStateTR::Walk);
+        statemachine->changeState("Walk");
     }
     if (std::abs(moveDirection.x) < 0.1f && isOnGround)
     {
-        changeState(CharacterState::Idle);
-        statemachine->ChangeState(idleState);
+        changeState(CharacterStateTR::Idle);
+        statemachine->changeState("Idle");
     }
     if (!isOnGround)
     {
-        changeState(CharacterState::Jump);
-        statemachine->ChangeState(jumpState);
+        changeState(CharacterStateTR::Jump);
+        statemachine->changeState("Jump");
     }
 }
-
+*/
 
 BaseCharacter::BaseCharacter(AsepriteManager* asepriteManager, float x, float y)
-    : BaseGameObject(asepriteManager, x, y), currentState(CharacterState::Idle), moveDirection({0, 0}), jumpForce(4.4f),
-      walkingSpeed(1.f), isOnGround(false), animFileName("gbFighter"), isLeft(true),
-      statemachine(new Statemachine(*this))
+    : BaseGameObject(asepriteManager, x, y), moveDirection({0, 0}), jumpForce(4.4f), walkingSpeed(1.f),
+      isOnGround(false), animFileName("gbFighter"), isLeft(true), playerNumber(-1),
+      statemachine(std::make_unique<Statemachine>(*this)), currentState("Idle")
 {
+    // set the default state
+    statemachine->changeState("Idle");
 }
 
 
 BaseCharacter::~BaseCharacter()
 {
-    delete statemachine; // Clean up dynamically allocated Statemachine
 }
 
 void BaseCharacter::update(float deltaTime)
@@ -136,16 +101,23 @@ void BaseCharacter::update(float deltaTime)
         pair.second.setObjPos(getPos().x, getPos().y);
     }
 
+    // update the state
+    statemachine->update(deltaTime);
+
+
+    // update the sprite
+    if (currentState != statemachine->getCurrentStateAsString())
+    {
+        currentState = statemachine->getCurrentStateAsString();
+        setCurrentFrameTag(animFileName + "-" + statemachine->getCurrentStateAsString());
+    }
+
+
     // check if this->animfileptr is not nullptr - if its not, then update the animation
     if (animfilePtr != nullptr)
     {
         animfilePtr->update(deltaTime);
     }
-
-    // update the state
-    statemachine->Update(deltaTime);
-
-    updateState();
 }
 
 
@@ -242,9 +214,7 @@ bool BaseCharacter::setCurrentFrameTag(std::string tag)
 
 std::string BaseCharacter::getCurrentState()
 {
-    std::string stateName;
-    stateName = CharacterStateToString(currentState);
-    return stateName;
+    return statemachine->getCurrentStateAsString();
 }
 
 bool BaseCharacter::getIsOnGround()

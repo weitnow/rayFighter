@@ -60,6 +60,7 @@ void JumpState::Finalize()
 
 void DuckState::Init()
 {
+    name = "Duck";
 }
 
 /* #region DuckState */
@@ -75,6 +76,7 @@ void DuckState::Finalize()
 /* #region PunchState */
 void PunchState::Init()
 {
+    name = "Punch";
 }
 
 void PunchState::Update(float deltaTime)
@@ -82,6 +84,66 @@ void PunchState::Update(float deltaTime)
 }
 
 void PunchState::Finalize()
+{
+}
+/* #endregion */
+
+/* #region KickState */
+void KickState::Init()
+{
+    name = "Kick";
+}
+
+void KickState::Update(float deltaTime)
+{
+}
+
+void KickState::Finalize()
+{
+}
+/* #endregion */
+
+/* #region BlockState */
+void BlockState::Init()
+{
+    name = "Block";
+}
+
+void BlockState::Update(float deltaTime)
+{
+}
+
+void BlockState::Finalize()
+{
+}
+/* #endregion */
+
+/* #region HitState */
+void HitState::Init()
+{
+    name = "Hit";
+}
+
+void HitState::Update(float deltaTime)
+{
+}
+
+void HitState::Finalize()
+{
+}
+/* #endregion */
+
+/* #region HurtState */
+void HurtState::Init()
+{
+    name = "Hurt";
+}
+
+void HurtState::Update(float deltaTime)
+{
+}
+
+void HurtState::Finalize()
 {
 }
 /* #endregion */

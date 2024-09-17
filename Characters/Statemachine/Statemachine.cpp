@@ -7,7 +7,7 @@ Statemachine::Statemachine(BaseCharacter& characterRef)
 {
 }
 
-void Statemachine::ChangeState(shared<State> newState)
+void Statemachine::_changeState(shared<State> newState)
 {
     // check if the new state is the same as the current state
     if (currentState == newState)
@@ -36,11 +36,15 @@ void Statemachine::ChangeState(shared<State> newState)
     }
 }
 
-void Statemachine::Update(float deltaTime)
+void Statemachine::changeState(std::string newState)
+{
+    _changeState(stateFactory.getState(newState));
+}
+
+void Statemachine::update(float deltaTime)
 {
     if (currentState)
     {
-        std::cout << "Player " << character.getPlayerNumber() << std::endl;
         currentState->Update(deltaTime);
     }
 }
@@ -54,5 +58,17 @@ State& Statemachine::getCurrentState()
     else
     {
         throw std::runtime_error("Statemachine::getCurrentState() -> Current state is not set.");
+    }
+}
+
+std::string Statemachine::getCurrentStateAsString()
+{
+    if (currentState)
+    {
+        return currentState->name;
+    }
+    else
+    {
+        return "No state";
     }
 }

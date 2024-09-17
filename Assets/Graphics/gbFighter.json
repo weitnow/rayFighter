@@ -601,7 +601,7 @@
   "scale": "1",
   "frameTags": [
    { "name": "Idle", "from": 0, "to": 2, "direction": "forward", "color": "#000000ff" },
-   { "name": "Walking", "from": 3, "to": 6, "direction": "forward", "color": "#000000ff" },
+   { "name": "Walk", "from": 3, "to": 6, "direction": "forward", "color": "#000000ff" },
    { "name": "Dash", "from": 7, "to": 7, "direction": "forward", "color": "#000000ff" },
    { "name": "Dash back", "from": 8, "to": 8, "direction": "forward", "color": "#000000ff" },
    { "name": "Crouch", "from": 9, "to": 9, "direction": "forward", "color": "#000000ff" },
