@@ -167,3 +167,17 @@ void GameManager::draw()
 
     // Draw other game objects
 }
+
+void GameManager::addInputHandler(InputHandler* inputHandler)
+{
+    this->inputHandler = inputHandler;
+}
+
+InputHandler* GameManager::getInputHandler()
+{
+    if (inputHandler == nullptr)
+    {
+        std::cerr << "GameManager::getInputHandler -> InputHandler not set." << std::endl;
+    }
+    return inputHandler;
+}

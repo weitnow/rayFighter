@@ -6,6 +6,9 @@
 #include "Core.h"
 #include <algorithm> // for std::remove and std::find
 
+// Forward declaration of InputHandler
+class InputHandler;
+
 class GameManager
 {
 public:
@@ -25,6 +28,10 @@ public:
     BaseCharacter* getBaseCharacter(const std::string& CharName);
     void draw();
 
+    // InputHandler
+    void addInputHandler(InputHandler* inputHandler);
+    InputHandler* getInputHandler();
+
 private:
     // Private constructor to prevent direct instantiation
     GameManager();
@@ -35,6 +42,9 @@ private:
     // Private member variables to manage game objects
     Dictionary<std::string, BaseCharacter*> baseCharacters;
     List<BaseGameObject*> gameObjects;
+
+    // InputHandler
+    InputHandler* inputHandler;
 
     bool player1and2set;
     // player 1 and player 2

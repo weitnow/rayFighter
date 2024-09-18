@@ -6,6 +6,8 @@ BaseCharacter* player1 = nullptr; // initialized by first time calling IdleState
 BaseCharacter* player2 = nullptr; // initialized by first time calling IdleState::Init()
 // each State class has a pointer to the owner BaseCharacter -> owner->getPos() or if(owner->isLeft()) etc.
 // or if(ownwer->getPlayernumber() == 1) etc.
+//InputHandler& inputHandler = gameManager.getInputHandler();
+InputHandler* inputHandler = nullptr;
 
 
 /* #region IdleState */
@@ -21,6 +23,10 @@ void IdleState::Init()
     {
         player2 = gameManager.getBaseCharacter("player2");
     }
+    if (inputHandler == nullptr)
+    {
+        inputHandler = gameManager.getInputHandler();
+    }
     /* #endregion */
 
 
@@ -30,12 +36,20 @@ void IdleState::Init()
 
 void IdleState::Update(float deltaTime)
 {
+    // allowed transitions
+    // walk, jump, duck, punch, kick, block, hit, hurt
 }
 
 void IdleState::Finalize()
 {
     std::cout << "IdleState Finalize" << std::endl;
 }
+
+void State::setOwner(BaseCharacter* owner)
+{
+    this->owner = owner;
+}
+
 /* #endregion */
 
 /* #region WalkState */

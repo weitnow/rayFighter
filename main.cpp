@@ -15,7 +15,6 @@
 //------------------------------------------------------------------------------------
 int main(void)
 {
-
     // Initialize screen2DManager and set window size and title, this has to be done first before everything else
     Screen2DManager* screen2DManager =
         new Screen2DManager(Constants::SCREEN_WIDTH, Constants::SCREEN_HEIGHT, "C++ gbFighter");
@@ -30,6 +29,7 @@ int main(void)
     inputHandler->addDebugInfo(*debugInfo);                // add debugInfo to inputHandler
                                                            // instance of DebugInfo
     GameManager& gameManager = GameManager::getInstance(); // instance of GameObjectsManager
+    gameManager.addInputHandler(inputHandler);             // add inputHandler to gameManager
     inputHandler->addGameManager(gameManager);             // add gameManager to inputHandler
 
     SetTargetFPS(Constants::FPS); // Set  game to run at 60 frames-per-second
