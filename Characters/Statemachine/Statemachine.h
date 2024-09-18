@@ -24,10 +24,12 @@ private:
 public:
     Statemachine(BaseCharacter& characterRef);
     void changeState(std::string newState);
-    void update(float deltaTime);
+    void update(float deltaTime); // Update the current state (calls State::Update)
     State& getCurrentState();
     std::string getCurrentStateAsString();
-    void setOwner(BaseCharacter* owner)
+    std::string getPreviousStateAsString();
+
+    void setOwner(BaseCharacter* owner) // Set the owner of this Statemachine (BaseCharacter, for example Player 1)
     {
         this->owner = owner;
         stateFactory.setOwner(owner);

@@ -7,6 +7,7 @@ BaseCharacter* player2 = nullptr; // initialized by first time calling IdleState
 // each State class has a pointer to the owner BaseCharacter -> owner->getPos() or if(owner->isLeft()) etc.
 // or if(ownwer->getPlayernumber() == 1) etc.
 
+
 /* #region IdleState */
 void IdleState::Init()
 {
@@ -47,16 +48,6 @@ void WalkState::Init()
 
 void WalkState::Update(float deltaTime)
 {
-    if (owner->getPlayerNumber() == 1)
-    {
-        std::cout << "Player1 is walking" << std::endl;
-        std::cout << "Player1 position: " << player1->getPos().x << ", " << player1->getPos().y << std::endl;
-    }
-    else
-    {
-        std::cout << "Player2 is walking" << std::endl;
-        std::cout << "Player2 position: " << player2->getPos().x << ", " << player2->getPos().y << std::endl;
-    }
 }
 
 void WalkState::Finalize()

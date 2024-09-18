@@ -1,6 +1,7 @@
 #ifndef GBFIGHTER_CORE_H
 #define GBFIGHTER_CORE_H
 
+#include "HelperFunctions.h"
 #include <iostream>
 #include <map>
 #include <memory>

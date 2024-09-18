@@ -23,7 +23,7 @@ public:
     // position
     void setPos(float x, float y);
     void setPos(Vector2 pos);
-    Vector2 getPos();
+    virtual Vector2 getPos() const;
 
     // scale
     void setScale(float scale);

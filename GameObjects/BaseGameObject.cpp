@@ -92,7 +92,7 @@ void BaseGameObject::setPos(Vector2 pos)
     BaseGameObject::setPos(pos.x, pos.y);
 }
 
-Vector2 BaseGameObject::getPos()
+Vector2 BaseGameObject::getPos() const
 {
     return pos;
 }

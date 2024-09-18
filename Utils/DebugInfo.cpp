@@ -89,8 +89,8 @@ void DebugInfo::drawGameObjectData(BaseGameObject* gameObject, const std::string
     DrawText(("CurrentState: " + character->getCurrentState()).c_str(), x, y + 60, TEXT_SIZE, TEXT_COLOR);
     DrawText(("IsOnGround: " + std::to_string(character->getIsOnGround())).c_str(), x, y + 80, TEXT_SIZE, TEXT_COLOR);
 
-    int moveDirectionX = static_cast<int>(character->getMoveDirection().x);
-    int moveDirectionY = static_cast<int>(character->getMoveDirection().y);
+    int moveDirectionX = static_cast<int>(character->getMoveVector().x);
+    int moveDirectionY = static_cast<int>(character->getMoveVector().y);
     DrawText(("MoveDirection: " + std::to_string(moveDirectionX) + ", " + std::to_string(moveDirectionY)).c_str(),
              x,
              y + 100,
@@ -110,6 +110,7 @@ void DebugInfo::drawGameObjectData(BaseGameObject* gameObject, const std::string
 
 void DebugInfo::draw()
 {
+    /* #region DRAW UPPER DEBUG WINDOW*/
     // Draw rectangle and FPS
     DrawRectangle(rectX, rectY, rectWidth, rectHeight, rectColor);
     DrawFPS(rectX + 10, rectY + 10);
@@ -129,4 +130,44 @@ void DebugInfo::draw()
     {
         drawGameObjectData(gameObjects[currentGameObjectName], currentGameObjectName, rectX + 700, rectY + 50);
     }
+    /* #endregion*/
+
+    /* #region DRAW RIGHT DEBUG WINDOW*/
+    int windowX = 1545;
+    int windowY = 0;
+    int windowWidth = 374;
+    int windowHeight = 1070;
+
+    // get reference to statemachine of player1
+    GameManager& gameManager = GameManager::getInstance();
+    BaseCharacter* player1 = gameManager.getBaseCharacter("player1");
+    BaseCharacter* player2 = gameManager.getBaseCharacter("player2");
+    if (player1 != nullptr && player2 != nullptr)
+    {
+        Statemachine& statemachine = player1->getStatemachine();
+        DrawText("Statemachine of Player 1", windowX + 10, windowY + 10, TEXT_SIZE, TEXT_COLOR);
+        DrawText(("Current State: " + statemachine.getCurrentStateAsString()).c_str(),
+                 windowX + 10,
+                 windowY + 30,
+                 TEXT_SIZE,
+                 TEXT_COLOR);
+        DrawText(("Previous State: " + statemachine.getPreviousStateAsString()).c_str(),
+                 windowX + 10,
+                 windowY + 50,
+                 TEXT_SIZE,
+                 TEXT_COLOR);
+
+        // Calculate distance
+        float distanceBetweenPlayers = calculateDistance(*player1, *player2);
+
+        // Use ostringstream to format the distance
+        std::ostringstream oss;
+        oss << std::fixed << std::setprecision(2) << distanceBetweenPlayers; // Set precision to 2 decimal places
+        std::string distanceText = "Distance betw Players: " + oss.str();
+
+        DrawText(distanceText.c_str(), windowX + 10, windowY + 70, TEXT_SIZE, TEXT_COLOR);
+    }
+
+
+    /* #endregion*/
 }

@@ -61,6 +61,18 @@ State& Statemachine::getCurrentState()
     }
 }
 
+std::string Statemachine::getPreviousStateAsString()
+{
+    if (previousState)
+    {
+        return previousState->stateName;
+    }
+    else
+    {
+        return "No previous state";
+    }
+}
+
 std::string Statemachine::getCurrentStateAsString()
 {
     if (currentState)
@@ -69,6 +81,6 @@ std::string Statemachine::getCurrentStateAsString()
     }
     else
     {
-        return "No state";
+        return "No current state";
     }
 }

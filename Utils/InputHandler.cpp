@@ -11,46 +11,90 @@ InputHandler::~InputHandler()
 
 void InputHandler::Update()
 {
+    /* #region Player 1 and 2 Input */
+
+    // check if player 1 exists
+    if (gameManager->getBaseCharacter("player1") != nullptr)
+        _handlePlayer1Input();
+
+    // check if player 2 exists
+    if (gameManager->getBaseCharacter("player2") != nullptr)
+        _handlePlayer2Input();
+
+    /* #endregion */
+
+    /* #region Debug Input */
+    if (IsKeyPressed(KEY_SPACE))
+    {
+        debugInfo->showNextGameObject();
+    }
+    /* #endregion */
+
+    /* #region Game Input */
+    if (IsKeyPressed(KEY_ONE))
+    {
+        gameManager->removeBaseCharacter("player1");
+    }
+    if (IsKeyPressed(KEY_TWO))
+    {
+        gameManager->removeBaseCharacter("player2");
+    }
+    /* #endregion */
 }
 
-// Keyboard input
-bool InputHandler::IsKeyPressed(int key) const
+
+void InputHandler::addGameManager(GameManager& gameManager)
 {
-    return ::IsKeyPressed(key); // Use :: to refer to the global scope function
+    this->gameManager = &gameManager;
 }
 
-bool InputHandler::IsKeyDown(int key) const
+void InputHandler::addDebugInfo(DebugInfo& debugInfo)
 {
-    return ::IsKeyDown(key);
+    this->debugInfo = &debugInfo;
 }
 
-bool InputHandler::IsKeyReleased(int key) const
+void InputHandler::_handlePlayer1Input()
 {
-    return ::IsKeyReleased(key);
+    if (IsKeyDown(KEY_A))
+    {
+        gameManager->getBaseCharacter("player1")->moveLeft();
+    }
+    else if (IsKeyDown(KEY_D))
+    {
+        gameManager->getBaseCharacter("player1")->moveRight();
+    }
+    else
+    {
+        gameManager->getBaseCharacter("player1")->stop();
+    }
+
+    if (IsKeyDown(KEY_W))
+    {
+        gameManager->getBaseCharacter("player1")->jump();
+    }
+    else if (IsKeyDown(KEY_S))
+    {
+        gameManager->getBaseCharacter("player1")->duck();
+    }
+
+    if (IsKeyPressed(KEY_J))
+    {
+        gameManager->getBaseCharacter("player1")->punch();
+    }
 }
 
-bool InputHandler::IsKeyUp(int key) const
+void InputHandler::_handlePlayer2Input()
 {
-    return ::IsKeyUp(key);
-}
-
-// Gamepad input
-bool InputHandler::IsGamepadButtonPressed(int gamepad, int button) const
-{
-    return ::IsGamepadButtonPressed(gamepad, button);
-}
-
-bool InputHandler::IsGamepadButtonDown(int gamepad, int button) const
-{
-    return ::IsGamepadButtonDown(gamepad, button);
-}
-
-bool InputHandler::IsGamepadButtonReleased(int gamepad, int button) const
-{
-    return ::IsGamepadButtonReleased(gamepad, button);
-}
-
-bool InputHandler::IsGamepadButtonUp(int gamepad, int button) const
-{
-    return ::IsGamepadButtonUp(gamepad, button);
+    if (IsKeyDown(KEY_LEFT))
+    {
+        gameManager->getBaseCharacter("player2")->moveLeft();
+    }
+    else if (IsKeyDown(KEY_RIGHT))
+    {
+        gameManager->getBaseCharacter("player2")->moveRight();
+    }
+    else
+    {
+        gameManager->getBaseCharacter("player2")->stop();
+    }
 }

@@ -9,19 +9,6 @@ class Statemachine;
 
 class BaseCharacter : public BaseGameObject
 {
-
-protected:
-    // member variables
-    bool isOnGround;
-    float jumpForce;
-    float walkingSpeed = 1.f;
-    Vector2 moveDirection; // (x,y)
-    unique<Statemachine> statemachine;
-    std::string animFileName;
-    bool isLeft;      // true if the character is left of the other character, only vallid for player1 or player2
-    int playerNumber; // 1 or 2
-    std::string currentState;
-
 public:
     BaseCharacter(AsepriteManager* asepriteManager, float x, float y);
 
@@ -55,7 +42,21 @@ public:
     // states
     std::string getCurrentState();
     bool getIsOnGround();
-    Vector2 getMoveDirection();
+    Vector2 getMoveVector();
+    Statemachine& getStatemachine();
+
+
+protected:
+    // member variables
+    bool isOnGround;
+    float jumpForce;
+    float walkingSpeed = 1.f;
+    Vector2 moveVector; // (x,y)
+    unique<Statemachine> statemachine;
+    std::string animFileName;
+    bool isLeft;      // true if the character is left of the other character, only vallid for player1 or player2
+    int playerNumber; // 1 or 2
+    std::string currentState;
 };
 
 

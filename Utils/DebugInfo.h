@@ -2,9 +2,11 @@
 #define DEBUG_INFO_H
 
 #include "../Characters/BaseCharacter.h"
+#include "../Characters/Statemachine/Statemachine.h"
 #include "../GameObjects/BaseGameObject.h"
+#include "Core.h"
+#include "GameManager.h"
 #include <string>
-#include <unordered_map>
 
 class DebugInfo
 {
@@ -20,7 +22,7 @@ public:
     void drawGameObjectData(BaseGameObject* gameObject, const std::string& objectName, int x, int y);
 
 protected:
-    std::unordered_map<std::string, BaseGameObject*> gameObjects;
+    Dictionary<std::string, BaseGameObject*> gameObjects;
     std::string currentGameObjectName;
     int rectWidth;
     int rectHeight;

@@ -1,6 +1,8 @@
 #ifndef INPUT_HANDLER_H
 #define INPUT_HANDLER_H
 
+#include "DebugInfo.h"
+#include "GameManager.h"
 #include "raylib.h"
 
 class InputHandler
@@ -11,17 +13,14 @@ public:
 
     void Update();
 
-    // Keyboard input
-    bool IsKeyPressed(int key) const;
-    bool IsKeyDown(int key) const;
-    bool IsKeyReleased(int key) const;
-    bool IsKeyUp(int key) const;
+    void addGameManager(GameManager& gameManager);
+    void addDebugInfo(DebugInfo& debugInfo);
 
-    // Gamepad input
-    bool IsGamepadButtonPressed(int gamepad, int button) const;
-    bool IsGamepadButtonDown(int gamepad, int button) const;
-    bool IsGamepadButtonReleased(int gamepad, int button) const;
-    bool IsGamepadButtonUp(int gamepad, int button) const;
+private:
+    void _handlePlayer1Input();
+    void _handlePlayer2Input();
+    GameManager* gameManager;
+    DebugInfo* debugInfo;
 };
 
 #endif // INPUT_HANDLER_H

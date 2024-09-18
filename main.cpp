@@ -10,62 +10,6 @@
 #include "raylib.h"
 #include <iostream>
 
-
-//------------------------------------------------------------------------------------
-// Temporary function to handle input, will be replaced by InputHandler later
-//------------------------------------------------------------------------------------
-void handleInput(BaseCharacter* player1)
-{
-    if (IsKeyDown(KEY_A))
-    {
-        player1->moveLeft();
-    }
-    else if (IsKeyDown(KEY_D))
-    {
-        player1->moveRight();
-    }
-    else
-    {
-        player1->stop();
-    }
-
-    if (IsKeyDown(KEY_W))
-    {
-        player1->jump();
-    }
-    else if (IsKeyDown(KEY_S))
-    {
-        player1->duck();
-    }
-
-    if (IsKeyPressed(KEY_J))
-    {
-        player1->punch();
-    }
-}
-
-
-void handleInput(DebugInfo* debugInfo)
-{
-    if (IsKeyPressed(KEY_SPACE))
-    {
-        debugInfo->showNextGameObject();
-    }
-}
-
-void handleInput(GameManager& gameObjectsManager, BaseCharacter* player1, BaseCharacter* player2)
-{
-    if (IsKeyPressed(KEY_ONE))
-    {
-        gameObjectsManager.removeBaseCharacter("player1");
-    }
-    if (IsKeyPressed(KEY_TWO))
-    {
-        gameObjectsManager.removeBaseCharacter("player3");
-    }
-}
-
-
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
@@ -82,8 +26,11 @@ int main(void)
     // Initialize global Variables and GlobalObjects
     float deltaTime;                                                            // will be updated in the main game loop
     AsepriteManager* asepriteManager = new AsepriteManager{"Assets/Graphics/"}; // instance of AsepriteManager
-    DebugInfo* debugInfo = new DebugInfo();                                     // instance of DebugInfo
-    GameManager& gameManager = GameManager::getInstance();                      // instance of GameObjectsManager
+    DebugInfo* debugInfo = new DebugInfo();
+    inputHandler->addDebugInfo(*debugInfo);                // add debugInfo to inputHandler
+                                                           // instance of DebugInfo
+    GameManager& gameManager = GameManager::getInstance(); // instance of GameObjectsManager
+    inputHandler->addGameManager(gameManager);             // add gameManager to inputHandler
 
     SetTargetFPS(Constants::FPS); // Set  game to run at 60 frames-per-second
 
@@ -113,8 +60,6 @@ int main(void)
 
 
     // Create Player 2
-
-
     BaseCharacter* player2 = new BaseCharacter(asepriteManager, Constants::PLAYER2_X, Constants::BASELINE);
     player2->setCurrentFrameTag("nesFighter-Idle");
     player2->setObjName("Ken");
@@ -143,19 +88,14 @@ int main(void)
         // Update
         //----------------------------------------------------------------------------------
 
+        // TODO: uncoment and refactor update of screen2DManager
+        //screen2DManager->update(deltaTime);
 
-        // check keyboard input
-        // TODO: replace with inputHandler and remove handleInput function
+        // Handle Input (by calling the update method of the inputHandler)
+        inputHandler->Update();
 
-        handleInput(debugInfo);
-        //handleInput(gameObjectsManager, player1, player2);
-
-        screen2DManager->update(deltaTime);
-
+        // Update gameObjects (player1 and player2 included)
         gameManager.update(deltaTime);
-
-        handleInput(player1);
-
 
         //----------------------------------------------------------------------------------
         // Draw to RenderTexture
@@ -170,7 +110,7 @@ int main(void)
         float stage_scale = 1.f;
         DrawTextureEx(stage, {0, 80}, 0, stage_scale, WHITE);
 
-
+        // draw gameObjects (player1 and player2 included)
         gameManager.draw();
 
         /*
@@ -192,14 +132,15 @@ int main(void)
         // Draw RenderTexture to Screen
         screen2DManager->drawRenderTarget("mainRenderTarget");
 
-        // Draw a violet outlined rectangle
+        // Draw a black outlined rectangle around the mainView
         DrawRectangleLinesEx(Rectangle{0, 0, 1540, 1070}, 6, BLACK);
+        // Draw a second black outlined rectangle on the right side of the screen
+        DrawRectangleLinesEx(Rectangle{1545, 0, 374, 1070}, 6, BLACK);
 
 
 #ifdef DEBUG
         debugInfo->draw();
 #endif
-
         screen2DManager->endDrawToScreen();
     }
 

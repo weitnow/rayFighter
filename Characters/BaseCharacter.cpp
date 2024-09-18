@@ -3,9 +3,9 @@
 #include "Statemachine/Statemachine.h"
 
 BaseCharacter::BaseCharacter(AsepriteManager* asepriteManager, float x, float y)
-    : BaseGameObject(asepriteManager, x, y), moveDirection({0, 0}), jumpForce(4.4f), walkingSpeed(1.f),
-      isOnGround(false), animFileName("gbFighter"), isLeft(true), playerNumber(-1),
-      statemachine(std::make_unique<Statemachine>(*this)), currentState("Idle")
+    : BaseGameObject(asepriteManager, x, y), moveVector({0, 0}), jumpForce(4.4f), walkingSpeed(1.f), isOnGround(false),
+      animFileName("gbFighter"), isLeft(true), playerNumber(-1), statemachine(std::make_unique<Statemachine>(*this)),
+      currentState("Idle")
 {
     statemachine->setOwner(this);
 }
@@ -22,7 +22,7 @@ void BaseCharacter::update(float deltaTime)
         // TODO: Implement scale function
     }
 
-    this->setPos(this->getPos().x + moveDirection.x, this->getPos().y);
+    this->setPos(this->getPos().x + moveVector.x, this->getPos().y);
 
     if (this->getPos().x < 0)
     {
@@ -33,7 +33,7 @@ void BaseCharacter::update(float deltaTime)
         this->setPos(258 - 32, this->getPos().y); // TODO: get rid of hardcoded values
     }
 
-    this->setPos(this->getPos().x, this->getPos().y + moveDirection.y);
+    this->setPos(this->getPos().x, this->getPos().y + moveVector.y);
 
     //apply gravity
     //if character is on the ground, stop falling
@@ -41,11 +41,11 @@ void BaseCharacter::update(float deltaTime)
     {
         this->isOnGround = true;
         this->setPos(this->getPos().x, Constants::BASELINE);
-        this->moveDirection.y = 0;
+        this->moveVector.y = 0;
     }
     else if (this->getPos().y < Constants::BASELINE || !isOnGround)
     {
-        this->moveDirection.y += Global::gravity * deltaTime;
+        this->moveVector.y += Global::gravity * deltaTime;
     }
 
     // update hitboxes
@@ -56,11 +56,11 @@ void BaseCharacter::update(float deltaTime)
     }
 
     //TODO: get rid of the follow code - just testing
-    if (std::abs(moveDirection.x) > 0 && isOnGround)
+    if (std::abs(moveVector.x) > 0 && isOnGround)
     {
         statemachine->changeState("Walk");
     }
-    if (std::abs(moveDirection.x) < 0.1f && isOnGround)
+    if (std::abs(moveVector.x) < 0.1f && isOnGround)
     {
         statemachine->changeState("Idle");
     }
@@ -99,25 +99,25 @@ void BaseCharacter::draw()
 void BaseCharacter::moveLeft()
 {
 
-    this->moveDirection.x = -walkingSpeed;
+    this->moveVector.x = -walkingSpeed;
 }
 
 void BaseCharacter::moveRight()
 {
 
-    this->moveDirection.x = +walkingSpeed;
+    this->moveVector.x = +walkingSpeed;
 }
 
 void BaseCharacter::stop()
 {
-    this->moveDirection.x = 0;
+    this->moveVector.x = 0;
 }
 
 void BaseCharacter::jump()
 {
     if (this->isOnGround)
     {
-        this->moveDirection.y = -jumpForce;
+        this->moveVector.y = -jumpForce;
         this->isOnGround = false;
     }
 }
@@ -191,7 +191,19 @@ bool BaseCharacter::getIsOnGround()
     return isOnGround;
 }
 
-Vector2 BaseCharacter::getMoveDirection()
+Vector2 BaseCharacter::getMoveVector()
 {
-    return moveDirection;
+    return moveVector;
+}
+
+Statemachine& BaseCharacter::getStatemachine()
+{
+    if (statemachine)
+    {
+        return *statemachine;
+    }
+    else
+    {
+        throw std::runtime_error("Statemachine is nullptr");
+    }
 }
