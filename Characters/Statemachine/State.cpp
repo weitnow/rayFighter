@@ -1,14 +1,23 @@
 #include "State.h"
 #include "../../Utils/GameManager.h"
+#include "../../Utils/InputHandler.h"
 
 GameManager& gameManager = GameManager::getInstance();
 BaseCharacter* player1 = nullptr; // initialized by first time calling IdleState::Init()
 BaseCharacter* player2 = nullptr; // initialized by first time calling IdleState::Init()
 // each State class has a pointer to the owner BaseCharacter -> owner->getPos() or if(owner->isLeft()) etc.
 // or if(ownwer->getPlayernumber() == 1) etc.
-//InputHandler& inputHandler = gameManager.getInputHandler();
-InputHandler* inputHandler = nullptr;
+// each State class has a pointer to the controller -> controller->moveLeft = true; etc.
+// each State class has a pointer to the statemachine -> statemachine->changeState("Walk"); etc.
+InputHandler* inputHandler = nullptr; // initialized by first time calling IdleState::Init()
 
+
+void State::setOwner(BaseCharacter* owner)
+{
+    this->owner = owner;
+    controller = owner->getController();
+    statemachine = &(owner->getStatemachine());
+}
 
 /* #region IdleState */
 void IdleState::Init()
@@ -27,9 +36,9 @@ void IdleState::Init()
     {
         inputHandler = gameManager.getInputHandler();
     }
-    /* #endregion */
 
-
+    owner->stop(); // set moveVector.x = 0
+    statemachine->changeState("Idle");
     std::cout << "IdleState Init" << std::endl;
     stateName = "Idle";
 }
@@ -38,16 +47,16 @@ void IdleState::Update(float deltaTime)
 {
     // allowed transitions
     // walk, jump, duck, punch, kick, block, hit, hurt
+
+    if (controller->moveLeft || controller->moveRight)
+    {
+        statemachine->changeState("Walk");
+    }
 }
 
 void IdleState::Finalize()
 {
     std::cout << "IdleState Finalize" << std::endl;
-}
-
-void State::setOwner(BaseCharacter* owner)
-{
-    this->owner = owner;
 }
 
 /* #endregion */
@@ -58,10 +67,24 @@ void WalkState::Init()
     std::cout << "WalkState Init" << std::endl;
 
     stateName = "Walk";
+
+    statemachine->changeState("Walk");
 }
 
 void WalkState::Update(float deltaTime)
 {
+    if (controller->moveLeft)
+    {
+        owner->moveLeft();
+    }
+    else if (controller->moveRight)
+    {
+        owner->moveRight();
+    }
+    else
+    {
+        statemachine->changeState("Idle");
+    }
 }
 
 void WalkState::Finalize()

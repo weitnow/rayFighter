@@ -3,10 +3,14 @@
 
 InputHandler::InputHandler()
 {
+    player1Controller = new CharacterController();
+    player2Controller = new CharacterController();
 }
 
 InputHandler::~InputHandler()
 {
+    delete player1Controller;
+    delete player2Controller;
 }
 
 void InputHandler::Update()
@@ -15,11 +19,19 @@ void InputHandler::Update()
 
     // check if player 1 exists
     if (gameManager->getBaseCharacter("player1") != nullptr)
+    {
+        _resetBoolsToFalse(player1Controller);
         _handlePlayer1Input();
+    }
+
 
     // check if player 2 exists
     if (gameManager->getBaseCharacter("player2") != nullptr)
+    {
+        _resetBoolsToFalse(player2Controller);
         _handlePlayer2Input();
+    }
+
 
     /* #endregion */
 
@@ -53,33 +65,61 @@ void InputHandler::addDebugInfo(DebugInfo& debugInfo)
     this->debugInfo = &debugInfo;
 }
 
+CharacterController* const InputHandler::getPlayer2Controller()
+{
+    return player2Controller;
+}
+
+CharacterController* const InputHandler::getPlayer1Controller()
+{
+    return player1Controller;
+}
+
+void InputHandler::_resetBoolsToFalse(CharacterController* controller)
+{
+    controller->moveLeft = false;
+    controller->moveRight = false;
+    controller->stop = false;
+    controller->jump = false;
+    controller->duck = false;
+    controller->punch = false;
+    controller->kick = false;
+    controller->block = false;
+}
+
 void InputHandler::_handlePlayer1Input()
 {
     if (IsKeyDown(KEY_A))
     {
-        gameManager->getBaseCharacter("player1")->moveLeft();
+        //gameManager->getBaseCharacter("player1")->moveLeft();
+        player1Controller->moveLeft = true;
     }
     else if (IsKeyDown(KEY_D))
     {
-        gameManager->getBaseCharacter("player1")->moveRight();
+        //gameManager->getBaseCharacter("player1")->moveRight();
+        player1Controller->moveRight = true;
     }
     else
     {
-        gameManager->getBaseCharacter("player1")->stop();
+        //gameManager->getBaseCharacter("player1")->stop();
+        player1Controller->stop = true;
     }
 
     if (IsKeyDown(KEY_W))
     {
-        gameManager->getBaseCharacter("player1")->jump();
+        //gameManager->getBaseCharacter("player1")->jump();
+        player1Controller->jump = true;
     }
     else if (IsKeyDown(KEY_S))
     {
-        gameManager->getBaseCharacter("player1")->duck();
+        //gameManager->getBaseCharacter("player1")->duck();
+        player1Controller->duck = true;
     }
 
     if (IsKeyPressed(KEY_J))
     {
-        gameManager->getBaseCharacter("player1")->punch();
+        //gameManager->getBaseCharacter("player1")->punch();
+        player1Controller->punch = true;
     }
 }
 
@@ -87,14 +127,17 @@ void InputHandler::_handlePlayer2Input()
 {
     if (IsKeyDown(KEY_LEFT))
     {
-        gameManager->getBaseCharacter("player2")->moveLeft();
+        //gameManager->getBaseCharacter("player2")->moveLeft();
+        player2Controller->moveLeft = true;
     }
     else if (IsKeyDown(KEY_RIGHT))
     {
-        gameManager->getBaseCharacter("player2")->moveRight();
+        //gameManager->getBaseCharacter("player2")->moveRight();
+        player2Controller->moveRight = true;
     }
     else
     {
-        gameManager->getBaseCharacter("player2")->stop();
+        //gameManager->getBaseCharacter("player2")->stop();
+        player2Controller->stop = true;
     }
 }

@@ -1,8 +1,12 @@
 #ifndef GBFIGHTER_STATE_H
 #define GBFIGHTER_STATE_H
 
+
 #include "../BaseCharacter.h"
 #include <iostream>
+
+// Forward declaration of InputHandler (CharacterController)
+class CharacterController;
 
 class State
 {
@@ -18,7 +22,9 @@ public:
     std::string stateName = "default";
 
 protected:
-    BaseCharacter* owner = nullptr; // Pointer to the BaseCharacter owning this state
+    BaseCharacter* owner = nullptr;            // Pointer to the BaseCharacter owning this state
+    CharacterController* controller = nullptr; // Pointer to the CharacterController
+    Statemachine* statemachine = nullptr;      // Pointer to the Statemachine
 };
 
 // Macro to declare State class methods

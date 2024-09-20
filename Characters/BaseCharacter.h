@@ -3,7 +3,9 @@
 
 #include "../GameObjects/BaseGameObject.h"
 #include "../Utils/Core.h"
-
+//#include "../Utils/InputHandler.h"
+// Forward declaration of CharacterController
+class CharacterController;
 // Forward declaration of Statemachine
 class Statemachine;
 
@@ -29,6 +31,9 @@ public:
 
     void setPlayerNumber(int playerNumber);
     int getPlayerNumber();
+
+    void addController(CharacterController* controller);
+    CharacterController* getController();
 
     /**
      * @brief Set the Current Frame Tag object
@@ -57,6 +62,8 @@ protected:
     bool isLeft;      // true if the character is left of the other character, only vallid for player1 or player2
     int playerNumber; // 1 or 2
     std::string currentState;
+
+    CharacterController* controller;
 };
 
 

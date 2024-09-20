@@ -55,6 +55,7 @@ void BaseCharacter::update(float deltaTime)
         pair.second.setObjPos(getPos().x, getPos().y);
     }
 
+    /*
     //TODO: get rid of the follow code - just testing
     if (std::abs(moveVector.x) > 0 && isOnGround)
     {
@@ -68,6 +69,7 @@ void BaseCharacter::update(float deltaTime)
     {
         statemachine->changeState("Jump");
     }
+    */
 
 
     // update the state
@@ -75,7 +77,11 @@ void BaseCharacter::update(float deltaTime)
 
 
     // update the sprite
-    if (currentState != statemachine->getCurrentStateAsString())
+    if (statemachine->getCurrentStateAsString() == "No current state")
+    {
+        setCurrentFrameTag(animFileName + "-Idle");
+    }
+    else if (currentState != statemachine->getCurrentStateAsString())
     {
         currentState = statemachine->getCurrentStateAsString();
         setCurrentFrameTag(animFileName + "-" + statemachine->getCurrentStateAsString());
@@ -169,6 +175,25 @@ int BaseCharacter::getPlayerNumber()
 {
     return playerNumber;
 }
+
+
+void BaseCharacter::addController(CharacterController* controller)
+{
+    if (controller)
+    {
+        this->controller = controller;
+    }
+    else
+    {
+        throw std::runtime_error("Controller is nullptr");
+    }
+}
+
+CharacterController* BaseCharacter::getController()
+{
+    return controller;
+}
+
 
 bool BaseCharacter::setCurrentFrameTag(std::string tag)
 {
