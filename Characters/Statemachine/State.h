@@ -11,8 +11,19 @@ class CharacterController;
 class State
 {
 public:
-    virtual ~State() = default;
+    explicit State(const std::string& name) : stateName(name)
+    {
+#ifdef DEBUG
+        std::cout << "State '" << stateName << "' created" << std::endl;
+#endif
+    }
 
+    virtual ~State()
+    {
+#ifdef DEBUG
+        std::cout << "State '" << stateName << "' destroyed" << std::endl;
+#endif
+    }
     // Pure virtual methods to be implemented by derived classes
     virtual void Init() = 0;
     virtual void Update(float deltaTime) = 0;
@@ -36,40 +47,62 @@ protected:
 // Derived state classes using the macro
 class IdleState : public State
 {
+public:
+    IdleState() : State("Idle") {};
     STATE_METHODS
 };
 class WalkState : public State
 {
+public:
+    WalkState() : State("Walk") {};
     STATE_METHODS
 };
 class JumpState : public State
 {
+public:
+    JumpState() : State("Jump") {};
     STATE_METHODS
+private:
+    bool alreadyJumped = false;
+    bool goRight = false;
+    bool goLeft = false;
 };
 class DuckState : public State
 {
+public:
+    DuckState() : State("Duck") {};
     STATE_METHODS
 };
 class PunchState : public State
 {
+public:
+    PunchState() : State("Punch") {};
     STATE_METHODS
 };
 class KickState : public State
 {
+public:
+    KickState() : State("Kick") {};
     STATE_METHODS
 };
 class BlockState : public State
 {
+public:
+    BlockState() : State("Block") {};
     STATE_METHODS
 };
 
 class HitState : public State
 {
+public:
+    HitState() : State("Hit") {};
     STATE_METHODS
 };
 
 class HurtState : public State
 {
+public:
+    HurtState() : State("Hurt") {};
     STATE_METHODS
 };
 

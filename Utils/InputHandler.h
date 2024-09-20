@@ -9,7 +9,6 @@ struct CharacterController
 {
     bool moveLeft;
     bool moveRight;
-    bool stop;
     bool jump;
     bool duck;
     bool punch;

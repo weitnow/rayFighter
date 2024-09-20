@@ -10,6 +10,8 @@
 namespace Constants
 {
 
+const int BACKGROUND_WIDTH = 258;
+const int PLAYER_WIDTH = 32;
 
 const int SCREEN_WIDTH = 1920;
 const int SCREEN_HEIGHT = 1080;

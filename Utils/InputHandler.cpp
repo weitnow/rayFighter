@@ -79,7 +79,6 @@ void InputHandler::_resetBoolsToFalse(CharacterController* controller)
 {
     controller->moveLeft = false;
     controller->moveRight = false;
-    controller->stop = false;
     controller->jump = false;
     controller->duck = false;
     controller->punch = false;
@@ -99,11 +98,6 @@ void InputHandler::_handlePlayer1Input()
         //gameManager->getBaseCharacter("player1")->moveRight();
         player1Controller->moveRight = true;
     }
-    else
-    {
-        //gameManager->getBaseCharacter("player1")->stop();
-        player1Controller->stop = true;
-    }
 
     if (IsKeyDown(KEY_W))
     {
@@ -121,6 +115,16 @@ void InputHandler::_handlePlayer1Input()
         //gameManager->getBaseCharacter("player1")->punch();
         player1Controller->punch = true;
     }
+    if (IsKeyPressed(KEY_K))
+    {
+        //gameManager->getBaseCharacter("player1")->kick();
+        player1Controller->kick = true;
+    }
+    if (IsKeyPressed(KEY_L))
+    {
+        //gameManager->getBaseCharacter("player1")->block();
+        player1Controller->block = true;
+    }
 }
 
 void InputHandler::_handlePlayer2Input()
@@ -135,9 +139,15 @@ void InputHandler::_handlePlayer2Input()
         //gameManager->getBaseCharacter("player2")->moveRight();
         player2Controller->moveRight = true;
     }
-    else
+
+    if (IsKeyDown(KEY_UP))
     {
-        //gameManager->getBaseCharacter("player2")->stop();
-        player2Controller->stop = true;
+        //gameManager->getBaseCharacter("player2")->jump();
+        player2Controller->jump = true;
+    }
+    else if (IsKeyDown(KEY_DOWN))
+    {
+        //gameManager->getBaseCharacter("player2")->duck();
+        player2Controller->duck = true;
     }
 }

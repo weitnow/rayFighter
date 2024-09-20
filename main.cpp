@@ -60,7 +60,6 @@ int main(void)
     player1->addCollisionBox("Collisionbox", 10, 0, 10, 30, BLUE);
     player1->getStatemachine().changeState("Idle");
 
-
     // Create Player 2
     BaseCharacter* player2 = new BaseCharacter(asepriteManager, Constants::PLAYER2_X, Constants::BASELINE);
     player2->setCurrentFrameTag("nesFighter-Idle"); // using nesFighter-Graphics

@@ -8,11 +8,18 @@ BaseCharacter::BaseCharacter(AsepriteManager* asepriteManager, float x, float y)
       currentState("Idle")
 {
     statemachine->setOwner(this);
+
+#ifdef DEBUG
+    std::cout << "BaseCharacter created" << std::endl;
+#endif
 }
 
 
 BaseCharacter::~BaseCharacter()
 {
+#ifdef DEBUG
+    std::cout << "BaseCharacter destroyed" << std::endl;
+#endif
 }
 
 void BaseCharacter::update(float deltaTime)
@@ -22,18 +29,7 @@ void BaseCharacter::update(float deltaTime)
         // TODO: Implement scale function
     }
 
-    this->setPos(this->getPos().x + moveVector.x, this->getPos().y);
-
-    if (this->getPos().x < 0)
-    {
-        this->setPos(0, this->getPos().y);
-    }
-    else if (this->getPos().x > 258 - 32) // TODO: get rid of hardcoded values
-    {
-        this->setPos(258 - 32, this->getPos().y); // TODO: get rid of hardcoded values
-    }
-
-    this->setPos(this->getPos().x, this->getPos().y + moveVector.y);
+    this->setPos(this->getPos().x + moveVector.x, this->getPos().y + moveVector.y);
 
     //apply gravity
     //if character is on the ground, stop falling
@@ -45,7 +41,21 @@ void BaseCharacter::update(float deltaTime)
     }
     else if (this->getPos().y < Constants::BASELINE || !isOnGround)
     {
+        this->isOnGround = false;
         this->moveVector.y += Global::gravity * deltaTime;
+    }
+
+    // update the state
+    statemachine->update(deltaTime);
+
+    // check if the character is out of bounds
+    if (this->getPos().x < 0)
+    {
+        this->setPos(0, this->getPos().y);
+    }
+    else if (this->getPos().x > Constants::BACKGROUND_WIDTH - Constants::PLAYER_WIDTH)
+    {
+        this->setPos(Constants::BACKGROUND_WIDTH - Constants::PLAYER_WIDTH, this->getPos().y);
     }
 
     // update hitboxes
@@ -54,27 +64,6 @@ void BaseCharacter::update(float deltaTime)
         pair.second.update(deltaTime);
         pair.second.setObjPos(getPos().x, getPos().y);
     }
-
-    /*
-    //TODO: get rid of the follow code - just testing
-    if (std::abs(moveVector.x) > 0 && isOnGround)
-    {
-        statemachine->changeState("Walk");
-    }
-    if (std::abs(moveVector.x) < 0.1f && isOnGround)
-    {
-        statemachine->changeState("Idle");
-    }
-    if (!isOnGround)
-    {
-        statemachine->changeState("Jump");
-    }
-    */
-
-
-    // update the state
-    statemachine->update(deltaTime);
-
 
     // update the sprite
     if (statemachine->getCurrentStateAsString() == "No current state")
@@ -140,7 +129,7 @@ void BaseCharacter::setIsLeft(bool isLeft)
 {
     this->isLeft = isLeft;
     // if the character is left, flip the sprite
-    // TODO: refactor this methode
+    // TODO: refactor this methode and calculate the sprite position
     if (isLeft)
     {
         this->isFlippedX = false;

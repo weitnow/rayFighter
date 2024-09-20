@@ -17,7 +17,6 @@ public:
     virtual ~BaseCharacter();
 
     virtual void update(float deltaTime) override;
-
     void draw();
     void moveLeft();
     void moveRight();

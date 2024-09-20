@@ -1,4 +1,5 @@
 #include "State.h"
+#include "../../Constants.h"
 #include "../../Utils/GameManager.h"
 #include "../../Utils/InputHandler.h"
 
@@ -10,7 +11,6 @@ BaseCharacter* player2 = nullptr; // initialized by first time calling IdleState
 // each State class has a pointer to the controller -> controller->moveLeft = true; etc.
 // each State class has a pointer to the statemachine -> statemachine->changeState("Walk"); etc.
 InputHandler* inputHandler = nullptr; // initialized by first time calling IdleState::Init()
-
 
 void State::setOwner(BaseCharacter* owner)
 {
@@ -40,7 +40,6 @@ void IdleState::Init()
     owner->stop(); // set moveVector.x = 0
     statemachine->changeState("Idle");
     std::cout << "IdleState Init" << std::endl;
-    stateName = "Idle";
 }
 
 void IdleState::Update(float deltaTime)
@@ -48,9 +47,22 @@ void IdleState::Update(float deltaTime)
     // allowed transitions
     // walk, jump, duck, punch, kick, block, hit, hurt
 
+    // Walk
     if (controller->moveLeft || controller->moveRight)
     {
         statemachine->changeState("Walk");
+    }
+
+    // Jump
+    if (controller->jump)
+    {
+        statemachine->changeState("Jump");
+    }
+
+    // Duck
+    if (controller->duck)
+    {
+        statemachine->changeState("Duck");
     }
 }
 
@@ -66,13 +78,18 @@ void WalkState::Init()
 {
     std::cout << "WalkState Init" << std::endl;
 
-    stateName = "Walk";
-
     statemachine->changeState("Walk");
 }
 
 void WalkState::Update(float deltaTime)
 {
+
+    if (!controller->moveLeft && !controller->moveRight)
+    {
+        statemachine->changeState("Idle");
+    }
+
+    // Walk
     if (controller->moveLeft)
     {
         owner->moveLeft();
@@ -81,9 +98,11 @@ void WalkState::Update(float deltaTime)
     {
         owner->moveRight();
     }
-    else
+
+    // Jump
+    if (controller->jump)
     {
-        statemachine->changeState("Idle");
+        statemachine->changeState("Jump");
     }
 }
 
@@ -98,27 +117,65 @@ void JumpState::Init()
 {
     std::cout << "JumpState Init" << std::endl;
 
-    stateName = "Jump";
+    alreadyJumped = false;
+
+    // check if player wants to move left or right while in the air, cannot change direction in the air
+    if (controller->moveLeft)
+    {
+        goLeft = true;
+    }
+    else if (controller->moveRight)
+    {
+        goRight = true;
+    }
 }
 
 void JumpState::Update(float deltaTime)
 {
+    // jump if not already jumped and is on the ground then jump
+    if (owner->getIsOnGround() && alreadyJumped == false)
+    {
+        alreadyJumped = true;
+        owner->jump();
+    }
+    // stop if already jumped and is on the ground and transition to idle
+    else if (owner->getIsOnGround() && alreadyJumped == true)
+    {
+        statemachine->changeState("Idle");
+    }
+
+    // check if player wants to move left or right while in the air
+    if (goLeft)
+    {
+        owner->moveLeft();
+    }
+    else if (goRight)
+    {
+        owner->moveRight();
+    }
 }
 
 void JumpState::Finalize()
 {
     std::cout << "JumpState Finalize" << std::endl;
+
+    // reset the bools for next jump
+    goLeft = false;
+    goRight = false;
 }
 /* #endregion */
 
 void DuckState::Init()
 {
-    stateName = "Duck";
 }
 
 /* #region DuckState */
 void DuckState::Update(float deltaTime)
 {
+    if (!controller->duck)
+    {
+        statemachine->changeState("Idle");
+    }
 }
 
 void DuckState::Finalize()
@@ -129,7 +186,6 @@ void DuckState::Finalize()
 /* #region PunchState */
 void PunchState::Init()
 {
-    stateName = "Punch";
 }
 
 void PunchState::Update(float deltaTime)
@@ -144,7 +200,6 @@ void PunchState::Finalize()
 /* #region KickState */
 void KickState::Init()
 {
-    stateName = "Kick";
 }
 
 void KickState::Update(float deltaTime)
@@ -159,7 +214,6 @@ void KickState::Finalize()
 /* #region BlockState */
 void BlockState::Init()
 {
-    stateName = "Block";
 }
 
 void BlockState::Update(float deltaTime)
@@ -174,7 +228,6 @@ void BlockState::Finalize()
 /* #region HitState */
 void HitState::Init()
 {
-    stateName = "Hit";
 }
 
 void HitState::Update(float deltaTime)
@@ -189,7 +242,6 @@ void HitState::Finalize()
 /* #region HurtState */
 void HurtState::Init()
 {
-    stateName = "Hurt";
 }
 
 void HurtState::Update(float deltaTime)
