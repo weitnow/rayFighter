@@ -3,9 +3,11 @@
 
 #include "../Characters/BaseCharacter.h"
 #include "../GameObjects/BaseGameObject.h"
-#include "CollisionManager.h"
 #include "Core.h"
 #include <algorithm> // for std::remove and std::find
+
+// Forward declaration of CollisionManager
+class CollisionManager;
 
 // Forward declaration of InputHandler
 class InputHandler;
@@ -19,6 +21,8 @@ public:
 
     // Method to access the single instance of the class
     static GameManager& getInstance();
+
+    void init();
 
     // Public methods for managing game objects
     void addBaseCharacter(const std::string& CharName, BaseCharacter* character);

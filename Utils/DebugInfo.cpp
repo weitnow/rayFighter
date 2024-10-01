@@ -1,4 +1,5 @@
 #include "DebugInfo.h"
+#include "HelperFunctions.h"
 
 constexpr int RECT_WIDTH = 1520;
 constexpr int RECT_HEIGHT = 400;

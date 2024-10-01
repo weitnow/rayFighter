@@ -3,9 +3,8 @@
 #include "Statemachine/Statemachine.h"
 
 BaseCharacter::BaseCharacter(AsepriteManager* asepriteManager, float x, float y)
-    : BaseGameObject(asepriteManager, x, y), moveVector({0, 0}), jumpForce(4.4f), walkingSpeed(1.f), isOnGround(false),
-      animFileName("gbFighter"), isLeft(true), playerNumber(-1), statemachine(std::make_unique<Statemachine>(*this)),
-      currentState("Idle")
+    : BaseGameObject(asepriteManager, x, y), moveVector({0, 0}), isOnGround(false), animFileName("gbFighter"),
+      isLeft(true), playerNumber(-1), statemachine(std::make_unique<Statemachine>(*this)), currentState("Idle")
 {
     statemachine->setOwner(this);
 
@@ -29,7 +28,9 @@ void BaseCharacter::update(float deltaTime)
         // TODO: Implement scale function
     }
 
-    this->setPos(this->getPos().x + moveVector.x, this->getPos().y + moveVector.y);
+    // UPDATE THE POSITION
+    this->setPos(this->getPos().x + (moveVector.x + pushVector.x) * deltaTime,
+                 this->getPos().y + (moveVector.y + pushVector.y) * deltaTime);
 
     //APPLY GRAVITY
     //if character is on the ground, stop falling

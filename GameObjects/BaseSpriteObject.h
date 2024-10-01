@@ -4,12 +4,14 @@
 
 #ifndef GBFIGHTER_BASESPRITEOBJECT_H
 #define GBFIGHTER_BASESPRITEOBJECT_H
-#include "raylib.h"
 #include "CollisionBox2D.h"
+#include "raylib.h"
+#include <../Utils/Core.h>
 #include <map>
 #include <string>
 
-class BaseSpriteObject {
+class BaseSpriteObject
+{
 public:
     BaseSpriteObject();
     BaseSpriteObject(float x, float y);
@@ -49,7 +51,7 @@ protected:
     Rectangle destRect;
 
     // a map which holds all the collisionbox-obj
-    std::map<std::string, CollisionBox2D> collisionboxes;
+    Dictionary<std::string, CollisionBox2D> collisionboxes;
 };
 
 

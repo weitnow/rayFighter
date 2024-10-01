@@ -1,3 +1,4 @@
+#include "../Characters/BaseCharacter.h"
 #include "../GameObjects/CollisionBox2D.h"
 #include <algorithm> // Include this header for std::remove
 #include <iostream>
@@ -14,23 +15,21 @@ public:
     // Constructor that takes a reference or pointer to GameManager
     CollisionManager(GameManager& manager);
 
-    // Add a new collision box to the manager
-    void addCollisionBox(CollisionBox2D* box);
-
-    // Remove a collision box from the manager
-    void removeCollisionBox(CollisionBox2D* box);
+    // Initialize the collision manager
+    void init();
 
     // Check collisions between all collision boxes
     void update(float deltaTime);
 
-private:
-    // Vector storing all the collision boxes
-    std::vector<CollisionBox2D*> collisionBoxes;
-
     // Check if two collision boxes collide
-    bool checkCollision(CollisionBox2D* box1, CollisionBox2D* box2);
+    bool checkCollision(CollisionBox2D& box1, CollisionBox2D& box2);
+    bool checkCollision(CollisionBox2D* box1ptr, CollisionBox2D* box2ptr);
 
+private:
     GameManager& gameManager; // Reference to the GameManager instance
+
+    BaseCharacter* player1;
+    BaseCharacter* player2;
 };
 
 

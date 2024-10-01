@@ -7,4 +7,4 @@ Color Colors::getRedTransparent()
     return redTransparent;
 }
 
-float Global::gravity = 13.f;
+float Global::gravity = 830.f;

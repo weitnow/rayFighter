@@ -1,4 +1,5 @@
 #include "GameManager.h"
+#include "CollisionManager.h"
 
 // Define the static member variable and pass the GameManager instance to the constructor
 CollisionManager GameManager::collisionManager(GameManager::getInstance());
@@ -10,10 +11,14 @@ GameManager& GameManager::getInstance()
     return instance;
 }
 
+void GameManager::init()
+{
+    collisionManager.init();
+}
+
 // Private constructor definition
 GameManager::GameManager() : player1(nullptr), player2(nullptr), player1and2set(false)
 {
-    // Initialize your game objects management here
 }
 
 // Optionally, define the destructor
@@ -46,18 +51,13 @@ void GameManager::_checkCollisionsBetweenPlayers()
     }
 
     // Check if player1 and player2 are colliding
-    auto& player1CollisionBoxes = player1->getCollisionBoxes();
-    auto& player2CollisionBoxes = player2->getCollisionBoxes();
+    CollisionBox2D& player1PushBox = player1->getCollisionBoxes()["player1PushBox"];
+    CollisionBox2D& player2PushBox = player2->getCollisionBoxes()["player2PushBox"];
 
-    CollisionBox2D& player1CollisionBox = player1CollisionBoxes["Collisionbox"];
-    CollisionBox2D& player2CollisionBox = player2CollisionBoxes["Collisionbox"];
-
-    Rectangle& player1Rect = player1CollisionBox.getRectangle();
-    Rectangle& player2Rect = player2CollisionBox.getRectangle();
-
-    if (CheckCollisionRecs(player1Rect, player2Rect))
+    if (collisionManager.checkCollision(player1PushBox, player2PushBox))
     {
-        player1->setPos(player1->getPos().x - 1, player1->getPos().y);
+        // Handle collision (you can define specific collision logic here)
+        std::cout << "Collision detected between player1 and player2" << std::endl;
     }
 }
 
@@ -145,12 +145,14 @@ void GameManager::update(float deltaTime)
         object->update(deltaTime);
     }
 
-
     // Update all baseCharacters
     for (auto& pair : baseCharacters)
     {
         pair.second->update(deltaTime);
     }
+
+    // Update the collision manager
+    collisionManager.update(deltaTime);
 
     _checkCollisionsBetweenPlayers();
 }

@@ -2,7 +2,7 @@
 #include "../Constants.h"
 #include <assert.h>
 
-BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager) : ObjName("")
+BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager) : ObjName(""), pushVector({0, 0})
 {
     scale = 1.f;
     pos = {Constants::X, Constants::Y};
@@ -151,7 +151,22 @@ void BaseGameObject::removeCollisionBox(std::string hitboxName)
     collisionBoxes.erase(hitboxName);
 }
 
-std::map<std::string, CollisionBox2D>& BaseGameObject::getCollisionBoxes()
+Dictionary<std::string, CollisionBox2D>& BaseGameObject::getCollisionBoxes()
 {
     return collisionBoxes;
+}
+
+void BaseGameObject::setPushVector(Vector2 pushVector)
+{
+    this->pushVector = pushVector;
+}
+
+Vector2 BaseGameObject::getPushVector()
+{
+    return pushVector;
+}
+
+void BaseGameObject::resetPushVector()
+{
+    pushVector = {0, 0};
 }

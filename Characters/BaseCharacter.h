@@ -53,8 +53,8 @@ public:
 protected:
     // member variables
     bool isOnGround;
-    float jumpForce;
-    float walkingSpeed = 1.f;
+    float jumpForce = 300.f;
+    float walkingSpeed = 60.f;
     Vector2 moveVector; // (x,y)
     unique<Statemachine> statemachine;
     std::string animFileName;

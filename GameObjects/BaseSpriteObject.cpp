@@ -67,9 +67,6 @@ void BaseSpriteObject::draw()
         DrawTexturePro(myDebug32x32Texture, sourceRect, destRect, origin, rotation, WHITE);
     }
 
-    //draw a rectangle
-    //DrawRectangle(pos.x, pos.y, width * scalex, height * scaley, Colors::getRedTransparent());
-
     // draw collisionboxes
     for (auto& pair : collisionboxes)
     {

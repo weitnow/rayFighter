@@ -3,6 +3,7 @@
 #define GBFIGHTER_BASEGAMEOBJECT_H
 
 #include "../Utils/AsepriteManager.h"
+#include "../Utils/Core.h"
 #include "BaseSpriteObject.h"
 #include "CollisionBox2D.h"
 #include <raylib.h>
@@ -47,7 +48,12 @@ public:
     void removeCollisionBox(std::string hitboxName);
 
     // collision boxes
-    std::map<std::string, CollisionBox2D>& getCollisionBoxes();
+    Dictionary<std::string, CollisionBox2D>& getCollisionBoxes();
+
+    //pushVector
+    void setPushVector(Vector2 pushVector);
+    Vector2 getPushVector();
+    void resetPushVector();
 
 protected:
     Vector2 pos;
@@ -58,15 +64,17 @@ protected:
     std::string currentFrameTag;
     std::string ObjName;
 
+    Vector2 pushVector;
+
     // a map which holds all the sprite-objs
-    std::map<std::string, BaseSpriteObject> sprites;
+    Dictionary<std::string, BaseSpriteObject> sprites;
 
     AsepriteAnimationFile* animfilePtr;
     AsepriteManager* asepriteManagerPtr;
 
 
     // a map which holds all the collisionbox-objs
-    std::map<std::string, CollisionBox2D> collisionBoxes;
+    Dictionary<std::string, CollisionBox2D> collisionBoxes;
 };
 
 #endif // GBFIGHTER_BASEGAMEOBJECT_H

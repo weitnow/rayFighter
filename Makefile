@@ -83,6 +83,8 @@ else
 	rm -f $(BUILD_DIR)/$(EXECUTABLE_NAME)
 endif
 
+rebuild: clean build
+
 
 valgrind: build
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./$(BUILD_DIR)/$(EXECUTABLE_NAME)
