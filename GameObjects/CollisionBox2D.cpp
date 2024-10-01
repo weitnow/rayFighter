@@ -10,9 +10,16 @@ CollisionBox2D::CollisionBox2D()
 {
 }
 
-CollisionBox2D::CollisionBox2D(std::string name, float offsetx, float offsety, float width, float height, Color color)
+CollisionBox2D::CollisionBox2D(std::string name,
+                               float offsetx,
+                               float offsety,
+                               float width,
+                               float height,
+                               CollisionBoxType collisionBoxType,
+                               bool isActive,
+                               Color color)
     : name(name), width(width), height(height), color(color), offset{offsetx, offsety},
-      myRectangle{0, 0, width, height}, objPos{0, 0}, pos{0, 0}
+      myRectangle{0, 0, width, height}, objPos{0, 0}, pos{0, 0}, isActive(isActive), type(collisionBoxType)
 {
 }
 
@@ -48,4 +55,9 @@ void CollisionBox2D::setObjPos(float x, float y)
 Rectangle& CollisionBox2D::getRectangle()
 {
     return myRectangle;
+}
+
+std::string CollisionBox2D::getName()
+{
+    return name;
 }

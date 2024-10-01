@@ -3,6 +3,7 @@
 
 #include "../Characters/BaseCharacter.h"
 #include "../GameObjects/BaseGameObject.h"
+#include "CollisionManager.h"
 #include "Core.h"
 #include <algorithm> // for std::remove and std::find
 
@@ -22,8 +23,8 @@ public:
     // Public methods for managing game objects
     void addBaseCharacter(const std::string& CharName, BaseCharacter* character);
     void removeBaseCharacter(const std::string& CharName);
-    void addObject();
-    void removeObject();
+    void addBaseGameObject(BaseGameObject* object);
+    void removeBaseGameObject();
     void update(float deltaTime);
     BaseCharacter* getBaseCharacter(const std::string& CharName);
     void draw();
@@ -31,6 +32,10 @@ public:
     // InputHandler
     void addInputHandler(InputHandler* inputHandler);
     InputHandler* getInputHandler();
+
+    // CollisionManager
+    static CollisionManager& getCollisionManager();
+
 
 private:
     // Private constructor to prevent direct instantiation
@@ -45,6 +50,9 @@ private:
 
     // InputHandler
     InputHandler* inputHandler;
+
+    // CollisionManager
+    static CollisionManager collisionManager;
 
     bool player1and2set;
     // player 1 and player 2

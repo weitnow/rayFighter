@@ -36,7 +36,14 @@ public:
     std::string getCurrentFrameTag();
 
     // hitboxes
-    void addCollisionBox(std::string hitboxName, float x, float y, float width, float height, Color color = BLUE);
+    void addCollisionBox(std::string hitboxName,
+                         float x,
+                         float y,
+                         float width,
+                         float height,
+                         CollisionBoxType collisionBoxType = CollisionBoxType::PUSHBOX,
+                         bool isActive = true,
+                         Color color = BLUE);
     void removeCollisionBox(std::string hitboxName);
 
     // collision boxes

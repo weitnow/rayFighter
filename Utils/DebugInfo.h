@@ -21,7 +21,7 @@ public:
     void draw();
     void drawGameObjectData(BaseGameObject* gameObject, const std::string& objectName, int x, int y);
 
-protected:
+private:
     Dictionary<std::string, BaseGameObject*> gameObjects;
     std::string currentGameObjectName;
     int rectWidth;
@@ -30,6 +30,9 @@ protected:
     int rectY;
     Color rectColor;
     bool player1InGameObjects;
+
+    void _drawCharacterData(BaseCharacter* character, const std::string& objectName, int x, int y);
+    void _drawGameObjectData(BaseGameObject* gameObject, const std::string& objectName, int x, int y);
 };
 
 #endif //DEBUG_INFO_H

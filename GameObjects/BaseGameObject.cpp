@@ -50,6 +50,11 @@ void BaseGameObject::update(float deltaTime)
 
 void BaseGameObject::draw()
 {
+    if (animfilePtr != nullptr)
+    {
+        animfilePtr->drawCurrentSelectedTag(getPos().x, getPos().y, scale, color, isFlippedX, isFlippedY);
+    }
+
 #ifdef DEBUG
     // Draw a small rectangle at the position of the gameobj.
     DrawRectangleLines(getPos().x,
@@ -64,11 +69,6 @@ void BaseGameObject::draw()
         pair.second.draw();
     }
 #endif
-
-    if (animfilePtr != nullptr)
-    {
-        animfilePtr->drawCurrentSelectedTag(getPos().x, getPos().y, scale, color, isFlippedX, isFlippedY);
-    }
 }
 
 void BaseGameObject::setObjName(std::string name)
@@ -138,9 +138,12 @@ void BaseGameObject::addCollisionBox(std::string hitboxName,
                                      float offsetY,
                                      float width,
                                      float height,
+                                     CollisionBoxType collisionBoxType,
+                                     bool isActive,
                                      Color color)
 {
-    collisionBoxes[hitboxName] = CollisionBox2D{hitboxName, offsetX, offsetY, width, height, color};
+    collisionBoxes[hitboxName] =
+        CollisionBox2D{hitboxName, offsetX, offsetY, width, height, collisionBoxType, isActive, color};
 }
 
 void BaseGameObject::removeCollisionBox(std::string hitboxName)

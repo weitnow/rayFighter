@@ -52,9 +52,17 @@ public:
         {
             newState = std::make_shared<PunchState>();
         }
+        else if (stateName == "Kick")
+        {
+            newState = std::make_shared<KickState>();
+        }
         else if (stateName == "Block")
         {
             newState = std::make_shared<BlockState>();
+        }
+        else if (stateName == "Hit")
+        {
+            newState = std::make_shared<HitState>();
         }
         else if (stateName == "Hurt")
         {

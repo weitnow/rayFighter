@@ -75,17 +75,29 @@ void DebugInfo::update(float deltaTime)
 // Function to draw data for any game object
 void DebugInfo::drawGameObjectData(BaseGameObject* gameObject, const std::string& objectName, int x, int y)
 {
-    BaseCharacter* character = static_cast<BaseCharacter*>(gameObject);
+    BaseCharacter* character = dynamic_cast<BaseCharacter*>(gameObject);
 
+    if (character != nullptr) // if the cast was successful, we have a character
+    {
+        _drawCharacterData(character, objectName, x, y);
+    }
+    else // otherwise character is a nullptr and we have to use gameObject
+    {
+        _drawGameObjectData(gameObject, objectName, x, y);
+    }
+}
+
+void DebugInfo::_drawCharacterData(BaseCharacter* character, const std::string& objectName, int x, int y)
+{
     DrawText(("DebugName: " + objectName).c_str(), x, y, TEXT_SIZE, TEXT_COLOR);
-    DrawText(("Pos: " + std::to_string(static_cast<int>(gameObject->getPos().x)) + ", " +
-              std::to_string(static_cast<int>(gameObject->getPos().y)))
+    DrawText(("Pos: " + std::to_string(static_cast<int>(character->getPos().x)) + ", " +
+              std::to_string(static_cast<int>(character->getPos().y)))
                  .c_str(),
              x,
              y + 20,
              TEXT_SIZE,
              TEXT_COLOR);
-    DrawText(("FrameTag: " + gameObject->getCurrentFrameTag()).c_str(), x, y + 40, TEXT_SIZE, TEXT_COLOR);
+    DrawText(("FrameTag: " + character->getCurrentFrameTag()).c_str(), x, y + 40, TEXT_SIZE, TEXT_COLOR);
     DrawText(("CurrentState: " + character->getCurrentState()).c_str(), x, y + 60, TEXT_SIZE, TEXT_COLOR);
     DrawText(("IsOnGround: " + std::to_string(character->getIsOnGround())).c_str(), x, y + 80, TEXT_SIZE, TEXT_COLOR);
 
@@ -97,7 +109,7 @@ void DebugInfo::drawGameObjectData(BaseGameObject* gameObject, const std::string
              TEXT_SIZE,
              TEXT_COLOR);
 
-    int milliseconds = static_cast<int>(gameObject->getAnim()->getDurationCurrentFrame() * 1000);
+    int milliseconds = static_cast<int>(character->getAnim()->getDurationCurrentFrame() * 1000);
     DrawText(("Frameduration: " + std::to_string(milliseconds)).c_str(), x, y + 120, TEXT_SIZE, TEXT_COLOR);
     DrawText(("isLeft: " + std::to_string(character->getIsLeft())).c_str(), x, y + 140, TEXT_SIZE, TEXT_COLOR);
     DrawText(("PlayerNumber: " + std::to_string(character->getPlayerNumber())).c_str(),
@@ -105,7 +117,21 @@ void DebugInfo::drawGameObjectData(BaseGameObject* gameObject, const std::string
              y + 160,
              TEXT_SIZE,
              TEXT_COLOR);
-    DrawText(("ObjName: " + gameObject->getObjName()).c_str(), x, y + 180, TEXT_SIZE, TEXT_COLOR);
+    DrawText(("ObjName: " + character->getObjName()).c_str(), x, y + 180, TEXT_SIZE, TEXT_COLOR);
+}
+
+void DebugInfo::_drawGameObjectData(BaseGameObject* gameObject, const std::string& objectName, int x, int y)
+{
+    DrawText(("DebugName: " + objectName).c_str(), x, y, TEXT_SIZE, TEXT_COLOR);
+    DrawText(("Pos: " + std::to_string(static_cast<int>(gameObject->getPos().x)) + ", " +
+              std::to_string(static_cast<int>(gameObject->getPos().y)))
+                 .c_str(),
+             x,
+             y + 20,
+             TEXT_SIZE,
+             TEXT_COLOR);
+    DrawText(("FrameTag: " + gameObject->getCurrentFrameTag()).c_str(), x, y + 40, TEXT_SIZE, TEXT_COLOR);
+    DrawText(("ObjName: " + gameObject->getObjName()).c_str(), x, y + 60, TEXT_SIZE, TEXT_COLOR);
 }
 
 void DebugInfo::draw()

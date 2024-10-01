@@ -64,6 +64,20 @@ void IdleState::Update(float deltaTime)
     {
         statemachine->changeState("Duck");
     }
+
+    // Punch
+    if (controller->punch)
+    {
+        statemachine->changeState("Punch");
+    }
+    else if (controller->kick)
+    {
+        statemachine->changeState("Kick");
+    }
+    else if (controller->block)
+    {
+        statemachine->changeState("Block");
+    }
 }
 
 void IdleState::Finalize()
@@ -103,6 +117,25 @@ void WalkState::Update(float deltaTime)
     if (controller->jump)
     {
         statemachine->changeState("Jump");
+    }
+    // Duck
+    else if (controller->duck)
+    {
+        statemachine->changeState("Duck");
+    }
+
+    // Punch
+    if (controller->punch)
+    {
+        statemachine->changeState("Punch");
+    }
+    else if (controller->kick)
+    {
+        statemachine->changeState("Kick");
+    }
+    else if (controller->block)
+    {
+        statemachine->changeState("Block");
     }
 }
 
@@ -167,6 +200,8 @@ void JumpState::Finalize()
 
 void DuckState::Init()
 {
+    // make sure the character cannot move while ducking
+    owner->stop();
 }
 
 /* #region DuckState */
@@ -186,10 +221,16 @@ void DuckState::Finalize()
 /* #region PunchState */
 void PunchState::Init()
 {
+    // make sure the character cannot move while punching
+    owner->stop();
 }
 
 void PunchState::Update(float deltaTime)
 {
+    if (!controller->punch)
+    {
+        statemachine->changeState("Idle");
+    }
 }
 
 void PunchState::Finalize()

@@ -31,7 +31,7 @@ void BaseCharacter::update(float deltaTime)
 
     this->setPos(this->getPos().x + moveVector.x, this->getPos().y + moveVector.y);
 
-    //apply gravity
+    //APPLY GRAVITY
     //if character is on the ground, stop falling
     if (this->getPos().y > Constants::BASELINE || isOnGround)
     {
@@ -45,9 +45,10 @@ void BaseCharacter::update(float deltaTime)
         this->moveVector.y += Global::gravity * deltaTime;
     }
 
-    // update the state
+    // UPDATE THE STATE
     statemachine->update(deltaTime);
 
+    // KEEP THE CHARACTER IN THE WINDOW
     // check if the character is out of bounds
     if (this->getPos().x < 0)
     {
@@ -58,14 +59,14 @@ void BaseCharacter::update(float deltaTime)
         this->setPos(Constants::BACKGROUND_WIDTH - Constants::PLAYER_WIDTH, this->getPos().y);
     }
 
-    // update hitboxes
+    // UPDATE THE COLLISION BOXES
     for (auto& pair : collisionBoxes)
     {
         pair.second.update(deltaTime);
         pair.second.setObjPos(getPos().x, getPos().y);
     }
 
-    // update the sprite
+    // UPDATE THE SPRITE
     if (statemachine->getCurrentStateAsString() == "No current state")
     {
         setCurrentFrameTag(animFileName + "-Idle");
@@ -75,8 +76,6 @@ void BaseCharacter::update(float deltaTime)
         currentState = statemachine->getCurrentStateAsString();
         setCurrentFrameTag(animFileName + "-" + statemachine->getCurrentStateAsString());
     }
-
-
     // check if this->animfileptr is not nullptr - if its not, then update the animation
     if (animfilePtr != nullptr)
     {

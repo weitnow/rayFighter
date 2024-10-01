@@ -619,7 +619,7 @@
    { "name": "Face down", "from": 28, "to": 28, "direction": "forward", "color": "#000000ff" },
    { "name": "Stunned", "from": 29, "to": 32, "direction": "forward", "color": "#000000ff" },
    { "name": "Win", "from": 33, "to": 34, "direction": "forward", "color": "#000000ff" },
-   { "name": "A Move", "from": 35, "to": 36, "direction": "forward", "color": "#000000ff" },
+   { "name": "Kick", "from": 35, "to": 36, "direction": "forward", "color": "#000000ff" },
    { "name": "A Move Close", "from": 37, "to": 38, "direction": "forward", "color": "#000000ff" },
    { "name": "A Move Crounch", "from": 39, "to": 40, "direction": "forward", "color": "#000000ff" },
    { "name": "A Move Aerial", "from": 41, "to": 41, "direction": "forward", "color": "#000000ff" },

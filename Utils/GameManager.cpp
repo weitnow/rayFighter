@@ -1,5 +1,8 @@
 #include "GameManager.h"
 
+// Define the static member variable and pass the GameManager instance to the constructor
+CollisionManager GameManager::collisionManager(GameManager::getInstance());
+
 // Define the static method to get the single instance of the class
 GameManager& GameManager::getInstance()
 {
@@ -118,12 +121,12 @@ void GameManager::removeBaseCharacter(const std::string& CharName)
 }
 
 // Define the methods to manage game objects
-void GameManager::addObject()
+void GameManager::addBaseGameObject(BaseGameObject* object)
 {
-    // Implementation of adding an object
+    gameObjects.push_back(object);
 }
 
-void GameManager::removeObject()
+void GameManager::removeBaseGameObject()
 {
     // Implementation of removing an object
 }
@@ -135,6 +138,12 @@ void GameManager::update(float deltaTime)
 
     // Update isLeft for player1 and player2
     _updateIsLeftPlayer1and2();
+
+    // Update all gameObjects
+    for (auto& object : gameObjects)
+    {
+        object->update(deltaTime);
+    }
 
 
     // Update all baseCharacters
@@ -159,13 +168,17 @@ BaseCharacter* GameManager::getBaseCharacter(const std::string& CharName)
 
 void GameManager::draw()
 {
+    // Draw all gameObjects
+    for (auto& object : gameObjects)
+    {
+        object->draw();
+    }
+
     // Draw all baseCharacters
     for (auto& pair : baseCharacters)
     {
         pair.second->draw();
     }
-
-    // Draw other game objects
 }
 
 void GameManager::addInputHandler(InputHandler* inputHandler)
@@ -180,4 +193,9 @@ InputHandler* GameManager::getInputHandler()
         std::cerr << "GameManager::getInputHandler -> InputHandler not set." << std::endl;
     }
     return inputHandler;
+}
+
+CollisionManager& GameManager::getCollisionManager()
+{
+    return collisionManager;
 }
