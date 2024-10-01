@@ -57,7 +57,16 @@ void GameManager::_checkCollisionsBetweenPlayers()
     if (collisionManager.checkCollision(player1PushBox, player2PushBox))
     {
         // Handle collision (you can define specific collision logic here)
-        std::cout << "Collision detected between player1 and player2" << std::endl;
+        if (player1->getIsLeft())
+        {
+            player1->setPushVector({-50, 0});
+            player2->setPushVector({50, 0});
+        }
+        else
+        {
+            player1->setPushVector({50, 0});
+            player2->setPushVector({-50, 0});
+        }
     }
 }
 

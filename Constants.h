@@ -39,6 +39,7 @@ namespace Global
 {
 // Global Variables
 extern float gravity;
+extern float pushReduction;
 } // namespace Global
 
 namespace Colors

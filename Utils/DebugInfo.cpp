@@ -102,23 +102,31 @@ void DebugInfo::_drawCharacterData(BaseCharacter* character, const std::string& 
     DrawText(("CurrentState: " + character->getCurrentState()).c_str(), x, y + 60, TEXT_SIZE, TEXT_COLOR);
     DrawText(("IsOnGround: " + std::to_string(character->getIsOnGround())).c_str(), x, y + 80, TEXT_SIZE, TEXT_COLOR);
 
-    int moveDirectionX = static_cast<int>(character->getMoveVector().x);
-    int moveDirectionY = static_cast<int>(character->getMoveVector().y);
+    int moveDirectionX = character->getMoveVector().x;
+    int moveDirectionY = character->getMoveVector().y;
     DrawText(("MoveDirection: " + std::to_string(moveDirectionX) + ", " + std::to_string(moveDirectionY)).c_str(),
              x,
              y + 100,
              TEXT_SIZE,
              TEXT_COLOR);
 
-    int milliseconds = static_cast<int>(character->getAnim()->getDurationCurrentFrame() * 1000);
-    DrawText(("Frameduration: " + std::to_string(milliseconds)).c_str(), x, y + 120, TEXT_SIZE, TEXT_COLOR);
-    DrawText(("isLeft: " + std::to_string(character->getIsLeft())).c_str(), x, y + 140, TEXT_SIZE, TEXT_COLOR);
-    DrawText(("PlayerNumber: " + std::to_string(character->getPlayerNumber())).c_str(),
+    float pushVectorX = character->getPushVector().x;
+    float pushVectorY = character->getPushVector().y;
+    DrawText(("PushVector: " + std::to_string(pushVectorX) + ", " + std::to_string(pushVectorY)).c_str(),
              x,
-             y + 160,
+             y + 120,
              TEXT_SIZE,
              TEXT_COLOR);
-    DrawText(("ObjName: " + character->getObjName()).c_str(), x, y + 180, TEXT_SIZE, TEXT_COLOR);
+
+    int milliseconds = character->getAnim()->getDurationCurrentFrame() * 1000;
+    DrawText(("Frameduration: " + std::to_string(milliseconds)).c_str(), x, y + 140, TEXT_SIZE, TEXT_COLOR);
+    DrawText(("isLeft: " + std::to_string(character->getIsLeft())).c_str(), x, y + 160, TEXT_SIZE, TEXT_COLOR);
+    DrawText(("PlayerNumber: " + std::to_string(character->getPlayerNumber())).c_str(),
+             x,
+             y + 180,
+             TEXT_SIZE,
+             TEXT_COLOR);
+    DrawText(("ObjName: " + character->getObjName()).c_str(), x, y + 200, TEXT_SIZE, TEXT_COLOR);
 }
 
 void DebugInfo::_drawGameObjectData(BaseGameObject* gameObject, const std::string& objectName, int x, int y)

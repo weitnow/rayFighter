@@ -8,3 +8,4 @@ Color Colors::getRedTransparent()
 }
 
 float Global::gravity = 830.f;
+float Global::pushReduction = 1000.f;

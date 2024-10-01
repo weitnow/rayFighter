@@ -32,33 +32,18 @@ void BaseCharacter::update(float deltaTime)
     this->setPos(this->getPos().x + (moveVector.x + pushVector.x) * deltaTime,
                  this->getPos().y + (moveVector.y + pushVector.y) * deltaTime);
 
+
+    // REDUCE PUSH VECTOR
+    _reducePushVector(deltaTime);
+
     //APPLY GRAVITY
-    //if character is on the ground, stop falling
-    if (this->getPos().y > Constants::BASELINE || isOnGround)
-    {
-        this->isOnGround = true;
-        this->setPos(this->getPos().x, Constants::BASELINE);
-        this->moveVector.y = 0;
-    }
-    else if (this->getPos().y < Constants::BASELINE || !isOnGround)
-    {
-        this->isOnGround = false;
-        this->moveVector.y += Global::gravity * deltaTime;
-    }
+    _applyGravity(deltaTime);
 
     // UPDATE THE STATE
     statemachine->update(deltaTime);
 
-    // KEEP THE CHARACTER IN THE WINDOW
-    // check if the character is out of bounds
-    if (this->getPos().x < 0)
-    {
-        this->setPos(0, this->getPos().y);
-    }
-    else if (this->getPos().x > Constants::BACKGROUND_WIDTH - Constants::PLAYER_WIDTH)
-    {
-        this->setPos(Constants::BACKGROUND_WIDTH - Constants::PLAYER_WIDTH, this->getPos().y);
-    }
+    // KEEP THE CHARACTER ON THE STAGE
+    _keepOnStage();
 
     // UPDATE THE COLLISION BOXES
     for (auto& pair : collisionBoxes)
@@ -219,5 +204,99 @@ Statemachine& BaseCharacter::getStatemachine()
     else
     {
         throw std::runtime_error("Statemachine is nullptr");
+    }
+}
+
+void BaseCharacter::_reducePushVector(float deltaTime)
+{
+
+    if (abs(pushVector.x) == 0 && abs(pushVector.y) == 0)
+    {
+        return;
+    }
+
+    // Clamp small pushVector components to zero
+    if (abs(pushVector.x) < 5.f)
+    {
+        pushVector.x = 0;
+    }
+
+    if (abs(pushVector.y) < 5.f)
+    {
+        pushVector.y = 0;
+    }
+
+    // Reduce pushVector.x towards zero
+    if (pushVector.x > 0.f)
+    {
+        pushVector.x -= Global::pushReduction * deltaTime;
+
+        // Prevent overshooting below zero
+        if (pushVector.x < 0.f)
+        {
+            pushVector.x = 0.f;
+        }
+    }
+    else if (pushVector.x < 0.f)
+    {
+        pushVector.x += Global::pushReduction * deltaTime;
+
+        // Prevent overshooting above zero
+        if (pushVector.x > 0.f)
+        {
+            pushVector.x = 0.f;
+        }
+    }
+
+    // Reduce pushVector.y towards zero
+    if (pushVector.y > 0.f)
+    {
+        pushVector.y -= Global::pushReduction * deltaTime;
+
+        // Prevent overshooting below zero
+        if (pushVector.y < 0.f)
+        {
+            pushVector.y = 0.f;
+        }
+    }
+    else if (pushVector.y < 0.f)
+    {
+        pushVector.y += Global::pushReduction * deltaTime;
+
+        // Prevent overshooting above zero
+        if (pushVector.y > 0.f)
+        {
+            pushVector.y = 0.f;
+        }
+    }
+}
+
+void BaseCharacter::_applyGravity(float deltaTime)
+{
+    //if character is on the ground, stop falling
+    if (this->getPos().y > Constants::BASELINE || isOnGround)
+    {
+        this->isOnGround = true;
+        this->setPos(this->getPos().x, Constants::BASELINE);
+        this->moveVector.y = 0;
+    }
+    else if (this->getPos().y < Constants::BASELINE || !isOnGround)
+    {
+        this->isOnGround = false;
+        this->moveVector.y += Global::gravity * deltaTime;
+    }
+}
+
+void BaseCharacter::_keepOnStage()
+{
+    // KEEP THE CHARACTER IN THE WINDOW
+    // check if the character is out of bounds
+    if (this->getPos().x < 0)
+    {
+        this->setPos(0, this->getPos().y);
+    }
+    else if (this->getPos().x > Constants::BACKGROUND_WIDTH - Constants::PLAYER_WIDTH)
+    {
+        this->setPos(Constants::BACKGROUND_WIDTH - Constants::PLAYER_WIDTH, this->getPos().y);
     }
 }

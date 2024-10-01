@@ -80,7 +80,7 @@ int main(void)
     unique<BaseGameObject> barrel = std::make_unique<BaseGameObject>(asepriteManager, 20, 142);
     barrel->setCurrentFrameTag("barrel-Idle");
     barrel->setObjName("Barrel");
-    barrel->addCollisionBox("Collisionbox", 10, 10, 10, 10, CollisionBoxType::HITBOX, true, RED);
+    barrel->addCollisionBox("Collisionbox", 10, 10, 13, 17, CollisionBoxType::HURTBOX, true, GREEN);
 
 
     // Add the player1 and player2 to the gameManager

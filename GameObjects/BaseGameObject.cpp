@@ -144,6 +144,10 @@ void BaseGameObject::addCollisionBox(std::string hitboxName,
 {
     collisionBoxes[hitboxName] =
         CollisionBox2D{hitboxName, offsetX, offsetY, width, height, collisionBoxType, isActive, color};
+
+    collisionBoxes[hitboxName].setObjPos(
+        pos.x,
+        pos.y); // set the position of the collision box to the position of the gameobject
 }
 
 void BaseGameObject::removeCollisionBox(std::string hitboxName)
