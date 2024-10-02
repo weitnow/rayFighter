@@ -94,8 +94,7 @@ void GameManager::_checkCollisionsBetweenPlayerAndGameObjects()
                 if (collisionManager.checkCollision(player1PunchBox, objectCollisionBox))
                 {
                     // Handle collision (you can define specific collision logic here)
-                    object->setPushVector({50, 0});
-                    object->setCurrentFrameTag("barrel-Hit");
+                    object->takeDamage();
                 }
             }
         }

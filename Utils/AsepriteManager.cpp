@@ -156,6 +156,9 @@ bool AsepriteAnimationFile::setFrameTag(const std::string& filenameTagname)
 
     current_filenameTagname = filenameTagname;
 
+    //set initial values
+    animJustFinished = false;
+
     FrameTag current_FrameTag = this->asepriteManager->getFrameTag(current_filenameTagname);
 
     min_frame = current_FrameTag.from;

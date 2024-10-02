@@ -156,6 +156,11 @@ void DebugInfo::_drawGameObjectData(BaseGameObject* gameObject, const std::strin
              y + 80,
              TEXT_SIZE,
              TEXT_COLOR);
+    DrawText(("hasAnimJustFinished: " + std::to_string(gameObject->getAnim()->hasAnimJustFinished())).c_str(),
+             x,
+             y + 100,
+             TEXT_SIZE,
+             TEXT_COLOR);
 }
 
 void DebugInfo::draw()

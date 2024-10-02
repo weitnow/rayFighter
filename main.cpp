@@ -2,6 +2,7 @@
 #include "Characters/Fighter_Andi.h"
 #include "Constants.h"
 #include "GameObjects/BaseGameObject.h"
+#include "GameObjects/Items/Barrel.h"
 #include "Utils/AsepriteManager.h"
 #include "Utils/CollisionManager.h"
 #include "Utils/Core.h"
@@ -65,7 +66,7 @@ int main(void)
 
     // TODO: get rid of this - just for testing
     // Create a BaseGameObject with a barrel Sprite for testing
-    unique<BaseGameObject> barrel = std::make_unique<BaseGameObject>(asepriteManager, 20, 142);
+    unique<Barrel> barrel = std::make_unique<Barrel>(asepriteManager, 20, 142);
     barrel->setCurrentFrameTag("barrel-Idle");
     barrel->setObjName("Barrel");
     barrel->addCollisionBox("Collisionbox", 10, 10, 13, 17, CollisionBoxType::HURTBOX, true, GREEN);
@@ -128,7 +129,7 @@ int main(void)
         inputHandler->Update();
 
         // Update gameObjects (player1 and player2 included)
-        gameManager.update(deltaTime);
+        gameManager.update(deltaTime * Constants::TIME_MULTIPLIER);
 
         //----------------------------------------------------------------------------------
         // Draw to RenderTexture

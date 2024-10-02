@@ -2,13 +2,12 @@
 #include "../Constants.h"
 #include <assert.h>
 
-BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager) : ObjName(""), pushVector({0, 0})
+BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager)
+    : ObjName(""), pushVector({0, 0}), scale(1.f), pos{Constants::X, Constants::Y}, color(WHITE), isFlippedX(false),
+      isFlippedY(false), isActive(true), isAlive(true), isInvincible(false), life(2), _invincibleCounter(0.f),
+      invincibleTime(Constants::INVINCIBLE_TIME)
 {
-    scale = 1.f;
-    pos = {Constants::X, Constants::Y};
-    color = WHITE;
-    isFlippedX = false;
-    isFlippedY = false;
+
     this->asepriteManagerPtr = asepriteManager;
     this->animfilePtr = this->asepriteManagerPtr->getAnimFile("gbFighter");
     this->currentFrameTag = "gbFighter-Idle";
@@ -58,23 +57,39 @@ void BaseGameObject::draw()
 {
     if (animfilePtr != nullptr)
     {
-        animfilePtr->drawCurrentSelectedTag(getPos().x, getPos().y, scale, color, isFlippedX, isFlippedY);
-    }
-
 #ifdef DEBUG
-    // Draw a small rectangle at the position of the gameobj.
-    DrawRectangleLines(getPos().x,
-                       getPos().y,
-                       Constants::GAMEOBJ_SIZE.x,
-                       Constants::GAMEOBJ_SIZE.y,
-                       Constants::GAMEOBJ_COLOR);
+        if (!isInvincible)
+        {
+            animfilePtr->drawCurrentSelectedTag(getPos().x, getPos().y, scale, color, isFlippedX, isFlippedY);
+        }
+        else
+        {
+            animfilePtr->drawCurrentSelectedTag(getPos().x, getPos().y, scale, BLUE, isFlippedX, isFlippedY);
+        }
 
-    // Draw collision boxes
-    for (auto& pair : collisionBoxes)
-    {
-        pair.second.draw();
-    }
+
+        // Draw a small rectangle at the position of the gameobj.
+        DrawRectangleLines(getPos().x,
+                           getPos().y,
+                           Constants::GAMEOBJ_SIZE.x,
+                           Constants::GAMEOBJ_SIZE.y,
+                           Constants::GAMEOBJ_COLOR);
+
+        // Draw collision boxes
+        for (auto& pair : collisionBoxes)
+        {
+            pair.second.draw();
+        }
+
+#else
+        animfilePtr->drawCurrentSelectedTag(getPos().x, getPos().y, scale, color, isFlippedX, isFlippedY);
 #endif
+    }
+}
+
+void BaseGameObject::takeDamage(float damage)
+{
+    std::cout << "BaseGameObject::takeDamage -> " << ObjName << " took " << damage << " damage." << std::endl;
 }
 
 void BaseGameObject::setObjName(std::string name)

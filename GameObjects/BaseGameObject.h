@@ -18,6 +18,8 @@ public:
     virtual void update(float deltaTime);
     virtual void draw();
 
+    virtual void takeDamage(float damage = 1.f);
+
     void setObjName(std::string name);
     std::string getObjName();
 
@@ -47,6 +49,7 @@ public:
                          Color color = BLUE);
     void removeCollisionBox(std::string hitboxName);
 
+
     // collision boxes
     Dictionary<std::string, CollisionBox2D>& getCollisionBoxes();
 
@@ -63,6 +66,12 @@ protected:
     bool isFlippedY;
     std::string currentFrameTag;
     std::string ObjName;
+    bool isActive;
+    bool isAlive;
+    bool isInvincible;
+    int life;
+    float _invincibleCounter;
+    float invincibleTime;
 
     Vector2 pushVector;
 
@@ -76,7 +85,7 @@ protected:
     Dictionary<std::string, CollisionBox2D> collisionBoxes;
 
     // member functions
-    void _reducePushVector(float deltaTime);
+    virtual void _reducePushVector(float deltaTime);
 };
 
 #endif // GBFIGHTER_BASEGAMEOBJECT_H

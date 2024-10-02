@@ -65,7 +65,6 @@ protected:
     CharacterController* controller;
 
     // member functions
-    void _reducePushVector(float deltaTime);
     void _applyGravity(float deltaTime);
     void _keepOnStage();
 };
