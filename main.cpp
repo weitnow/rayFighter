@@ -76,7 +76,7 @@ int main(void)
     gameManager.addBaseCharacter("player2", player2);
     gameManager.addBaseGameObject(barrel.get());
 
-    // Initialize Player 1 and Player 2 (needs to be done after adding them to the gameManager)
+    // Initialize Player 1 and Player 2 (needs to be done after adding them to the gameManager, otherwise the getBaseCharacter methode of GameManager which is Used in State.cpp will return a nullptr)
     // Player 1
     player1->setCurrentFrameTag("gbFighter-Idle"); // using gbFighter-Graphics
     player1->setObjName("Andy");
@@ -96,9 +96,12 @@ int main(void)
     // Create Static Background
     Texture2D stage = LoadTexture("Assets/Graphics/stage.png");
 
-
     gameManager
         .init(); // initialize gameManager (can only be done after all gameObjects are added and must be at the end)
+
+
+    // TESTING
+    //gameManager.
 
 
 #ifdef DEBUG
@@ -126,6 +129,10 @@ int main(void)
 
         // Update gameObjects (player1 and player2 included)
         gameManager.update(deltaTime);
+
+        //TESTING
+        std::cout << "Barrel " << barrel->getObjName() << std::endl;
+        std::cout << "END OF TESTING" << std::endl;
 
         //----------------------------------------------------------------------------------
         // Draw to RenderTexture

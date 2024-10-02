@@ -27,10 +27,14 @@ public:
     // Public methods for managing game objects
     void addBaseCharacter(const std::string& CharName, BaseCharacter* character);
     void removeBaseCharacter(const std::string& CharName);
+    BaseCharacter* getBaseCharacter(const std::string& CharName);
+
     void addBaseGameObject(BaseGameObject* object);
     void removeBaseGameObject();
+
+
+    // Update and draw methods
     void update(float deltaTime);
-    BaseCharacter* getBaseCharacter(const std::string& CharName);
     void draw();
 
     // InputHandler
