@@ -38,8 +38,8 @@ public:
 
     // hitboxes
     void addCollisionBox(std::string hitboxName,
-                         float x,
-                         float y,
+                         float offsetX,
+                         float offsetY,
                          float width,
                          float height,
                          CollisionBoxType collisionBoxType = CollisionBoxType::PUSHBOX,

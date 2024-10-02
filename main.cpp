@@ -59,21 +59,9 @@ int main(void)
 
     // Create Player 1
     BaseCharacter* player1 = new BaseCharacter(asepriteManager, Constants::PLAYER1_X, Constants::BASELINE);
-    player1->setCurrentFrameTag("gbFighter-Idle"); // using gbFighter-Graphics
-    player1->setObjName("Andy");
-    player1->setPlayerNumber(1);
-    player1->addController(inputHandler->getPlayer1Controller());
-    player1->addCollisionBox("player1PushBox", 10, 0, 10, 30, CollisionBoxType::PUSHBOX, true, BLUE);
-    player1->getStatemachine().changeState("Idle");
 
     // Create Player 2
     BaseCharacter* player2 = new BaseCharacter(asepriteManager, Constants::PLAYER2_X, Constants::BASELINE);
-    player2->setCurrentFrameTag("nesFighter-Idle"); // using nesFighter-Graphics
-    player2->setObjName("Ken");
-    player2->setPlayerNumber(2);
-    player2->addController(inputHandler->getPlayer2Controller());
-    player2->addCollisionBox("player2PushBox", 16, 0, 10, 30, CollisionBoxType::PUSHBOX, true, BLUE);
-    player2->getStatemachine().changeState("Idle");
 
     // TODO: get rid of this - just for testing
     // Create a BaseGameObject with a barrel Sprite for testing
@@ -87,6 +75,23 @@ int main(void)
     gameManager.addBaseCharacter("player1", player1);
     gameManager.addBaseCharacter("player2", player2);
     gameManager.addBaseGameObject(barrel.get());
+
+    // Initialize Player 1 and Player 2 (needs to be done after adding them to the gameManager)
+    // Player 1
+    player1->setCurrentFrameTag("gbFighter-Idle"); // using gbFighter-Graphics
+    player1->setObjName("Andy");
+    player1->setPlayerNumber(1);
+    player1->addController(inputHandler->getPlayer1Controller());
+    player1->addCollisionBox("player1PushBox", 10, 0, 10, 30, CollisionBoxType::PUSHBOX, true, BLUE);
+    player1->getStatemachine().changeState("Idle");
+    // Player 2
+    player2->setCurrentFrameTag("nesFighter-Idle"); // using nesFighter-Graphics
+    player2->setObjName("Ken");
+    player2->setPlayerNumber(2);
+    player2->addController(inputHandler->getPlayer2Controller());
+    player2->addCollisionBox("player2PushBox", 16, 0, 10, 30, CollisionBoxType::PUSHBOX, true, BLUE);
+    player2->getStatemachine().changeState("Idle");
+
 
     // Create Static Background
     Texture2D stage = LoadTexture("Assets/Graphics/stage.png");

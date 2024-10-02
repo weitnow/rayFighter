@@ -27,6 +27,10 @@ void IdleState::Init()
     if (player1 == nullptr)
     {
         player1 = gameManager.getBaseCharacter("player1");
+        if (player1 == nullptr) // if player1 is still nullptr
+        {
+            throw std::runtime_error("State.cpp -> Error: player1 not found in baseCharacters map.");
+        }
     }
     if (player2 == nullptr)
     {
@@ -223,6 +227,24 @@ void PunchState::Init()
 {
     // make sure the character cannot move while punching
     owner->stop();
+
+    // add punch hitbox
+    // if player1
+    if (owner->getPlayerNumber() == 1)
+    {
+        // if player1 is left
+        if (owner->getIsLeft())
+        {
+            // add punch hitbox to the left of player1
+            owner->addCollisionBox("punch", 25, 10, 5, 5, CollisionBoxType::HITBOX, true, RED);
+        }
+        // if player1 is right
+        else
+        {
+            // add punch hitbox to the right of player1
+            owner->addCollisionBox("punch", 1, 10, 5, 5, CollisionBoxType::HITBOX, true, RED);
+        }
+    }
 }
 
 void PunchState::Update(float deltaTime)
@@ -235,6 +257,8 @@ void PunchState::Update(float deltaTime)
 
 void PunchState::Finalize()
 {
+    // remove punch hitbox
+    owner->removeCollisionBox("punch");
 }
 /* #endregion */
 

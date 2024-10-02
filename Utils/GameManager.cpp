@@ -70,6 +70,38 @@ void GameManager::_checkCollisionsBetweenPlayers()
     }
 }
 
+void GameManager::_checkCollisionsBetweenPlayerAndGameObjects()
+{
+
+
+    Dictionary<std::string, CollisionBox2D>& player1CollisionBoxes = player1->getCollisionBoxes();
+
+    // check if there is a key named "punch" in the player1CollisionBoxes
+
+    if (player1CollisionBoxes.find("punch") != player1CollisionBoxes.end())
+    {
+        // check if the player1 punch hitbox collides with any of the gameObjects
+        CollisionBox2D& player1PunchBox = player1CollisionBoxes["punch"];
+
+        for (auto& object : gameObjects)
+        {
+            Dictionary<std::string, CollisionBox2D>& objectCollisionBoxes = object->getCollisionBoxes();
+
+            for (auto& pair : objectCollisionBoxes)
+            {
+                CollisionBox2D& objectCollisionBox = pair.second;
+
+                if (collisionManager.checkCollision(player1PunchBox, objectCollisionBox))
+                {
+                    // Handle collision (you can define specific collision logic here)
+                    object->setPushVector({50, 0});
+                    object->setCurrentFrameTag("barrel-Hit");
+                }
+            }
+        }
+    }
+}
+
 void GameManager::_setPlayer1and2()
 {
     // Check if player1 and player2 are set
@@ -164,6 +196,8 @@ void GameManager::update(float deltaTime)
     collisionManager.update(deltaTime);
 
     _checkCollisionsBetweenPlayers();
+
+    _checkCollisionsBetweenPlayerAndGameObjects();
 }
 
 BaseCharacter* GameManager::getBaseCharacter(const std::string& CharName)

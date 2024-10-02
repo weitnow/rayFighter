@@ -2,6 +2,7 @@
 #include "../BaseCharacter.h"
 #include <string>
 
+
 Statemachine::Statemachine(BaseCharacter& characterRef)
     : character(characterRef), currentState(nullptr), previousState(nullptr), nextState(nullptr)
 {
