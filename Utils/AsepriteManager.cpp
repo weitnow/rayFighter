@@ -15,6 +15,7 @@ AsepriteAnimationFile::AsepriteAnimationFile(std::string filename,
     min_frame = 0;
     max_frame = 0;
     update_counter = 0.0f;
+    animJustFinished = false;
 }
 
 AsepriteAnimationFile::~AsepriteAnimationFile()
@@ -26,9 +27,14 @@ FrameTag AsepriteAnimationFile::getFrameTag(const std::string& filenameTagname) 
     return this->asepriteManager->getFrameTag(filenameTagname);
 }
 
-std::string AsepriteAnimationFile::getAnimFilename()
+std::string AsepriteAnimationFile::getAnimFilename() const
 {
     return this->filename;
+}
+
+std::string AsepriteAnimationFile::getAnimFilenameTagname() const
+{
+    return this->current_filenameTagname;
 }
 
 float AsepriteAnimationFile::getDurationCurrentFrame(int frameNumber)
@@ -41,6 +47,26 @@ float AsepriteAnimationFile::getDurationCurrentFrame(int frameNumber)
 float AsepriteAnimationFile::getDurationCurrentFrame()
 {
     return getDurationCurrentFrame(current_frame);
+}
+
+bool AsepriteAnimationFile::hasAnimJustFinished() const
+{
+    return animJustFinished;
+}
+
+int AsepriteAnimationFile::getCurrentFrame() const
+{
+    return current_frame;
+}
+
+int AsepriteAnimationFile::getMinFrame() const
+{
+    return min_frame;
+}
+
+int AsepriteAnimationFile::getMaxFrame() const
+{
+    return max_frame;
 }
 
 void AsepriteAnimationFile::drawFrame(const std::string& filenameTagname,
@@ -103,11 +129,13 @@ void AsepriteAnimationFile::nextFrame()
 {
     if (current_frame < max_frame)
     {
+        animJustFinished = false;
         current_frame++;
     }
     else
     {
         current_frame = min_frame;
+        animJustFinished = true;
     }
 }
 

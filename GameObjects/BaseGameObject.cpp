@@ -34,6 +34,12 @@ void BaseGameObject::update(float deltaTime)
         // TODO: Implement scale function
     }
 
+    // update the position
+    setPos(getPos().x + (pushVector.x) * deltaTime, getPos().y + (pushVector.y) * deltaTime);
+
+    // reduce push vector
+    _reducePushVector(deltaTime);
+
     // update hitboxes
     for (auto& pair : collisionBoxes)
     {
@@ -173,4 +179,67 @@ Vector2 BaseGameObject::getPushVector()
 void BaseGameObject::resetPushVector()
 {
     pushVector = {0, 0};
+}
+
+void BaseGameObject::_reducePushVector(float deltaTime)
+{
+    if (abs(pushVector.x) == 0 && abs(pushVector.y) == 0)
+    {
+        return;
+    }
+
+    // Clamp small pushVector components to zero
+    if (abs(pushVector.x) < 5.f)
+    {
+        pushVector.x = 0;
+    }
+
+    if (abs(pushVector.y) < 5.f)
+    {
+        pushVector.y = 0;
+    }
+
+    // Reduce pushVector.x towards zero
+    if (pushVector.x > 0.f)
+    {
+        pushVector.x -= Global::pushReduction * deltaTime;
+
+        // Prevent overshooting below zero
+        if (pushVector.x < 0.f)
+        {
+            pushVector.x = 0.f;
+        }
+    }
+    else if (pushVector.x < 0.f)
+    {
+        pushVector.x += Global::pushReduction * deltaTime;
+
+        // Prevent overshooting above zero
+        if (pushVector.x > 0.f)
+        {
+            pushVector.x = 0.f;
+        }
+    }
+
+    // Reduce pushVector.y towards zero
+    if (pushVector.y > 0.f)
+    {
+        pushVector.y -= Global::pushReduction * deltaTime;
+
+        // Prevent overshooting below zero
+        if (pushVector.y < 0.f)
+        {
+            pushVector.y = 0.f;
+        }
+    }
+    else if (pushVector.y < 0.f)
+    {
+        pushVector.y += Global::pushReduction * deltaTime;
+
+        // Prevent overshooting above zero
+        if (pushVector.y > 0.f)
+        {
+            pushVector.y = 0.f;
+        }
+    }
 }

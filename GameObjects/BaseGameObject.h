@@ -72,9 +72,11 @@ protected:
     AsepriteAnimationFile* animfilePtr;
     AsepriteManager* asepriteManagerPtr;
 
-
     // a map which holds all the collisionbox-objs
     Dictionary<std::string, CollisionBox2D> collisionBoxes;
+
+    // member functions
+    void _reducePushVector(float deltaTime);
 };
 
 #endif // GBFIGHTER_BASEGAMEOBJECT_H

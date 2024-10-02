@@ -130,10 +130,6 @@ int main(void)
         // Update gameObjects (player1 and player2 included)
         gameManager.update(deltaTime);
 
-        //TESTING
-        std::cout << "Barrel " << barrel->getObjName() << std::endl;
-        std::cout << "END OF TESTING" << std::endl;
-
         //----------------------------------------------------------------------------------
         // Draw to RenderTexture
         //----------------------------------------------------------------------------------

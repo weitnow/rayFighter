@@ -3,6 +3,7 @@
 
 #include "../Constants.h"
 #include "../nlohmann/json.hpp"
+#include "Core.h"
 #include "raylib.h"
 #include <fstream>
 #include <iostream>
@@ -32,6 +33,7 @@ private:
     int max_frame;
     float update_counter;
     float current_duration;
+    bool animJustFinished;
 
 
 public:
@@ -44,16 +46,21 @@ public:
 
     // methods
     /**
-     * @brief Get the Frame Tag object. The object hast a name (for example "Idle"), a from, a to, a loop and a duration property. The number in "from"
+     * @brief Get the Frame Tag object. The object has a name (for example "Idle"), a from, a to, a loop and a duration property. The number in "from"
      * is the position of the starting picture, the number in "to" is the last picture of the animation. After the last picture, the first picture (from)
      * hast to be played again.
      * @param tagname
      * @return FrameTag
      */
     FrameTag getFrameTag(const std::string& filenameTagname);
-    std::string getAnimFilename();
+    std::string getAnimFilename() const;
+    std::string getAnimFilenameTagname() const;
     float getDurationCurrentFrame(int frameNumber);
     float getDurationCurrentFrame();
+    bool hasAnimJustFinished() const;
+    int getCurrentFrame() const;
+    int getMinFrame() const;
+    int getMaxFrame() const;
     void drawFrame(const std::string& filenameTagname,
                    int x,
                    int y,
@@ -129,7 +136,7 @@ public:
     Texture getTexture(const std::string& textureName);
 
     // public member variables
-    std::map<std::string, FrameTag> frameTags;
+    Dictionary<std::string, FrameTag> frameTags;
 
 private:
     // private member variable
