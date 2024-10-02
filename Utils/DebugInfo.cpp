@@ -172,7 +172,7 @@ void DebugInfo::_drawGameObjectData(BaseGameObject* gameObject, const std::strin
 
 void DebugInfo::draw()
 {
-    /* #region DRAW UPPER DEBUG WINDOW*/
+    /* #region DRAW UPPER DEBUG_WINDOW WINDOW*/
     // Draw rectangle and FPS
     DrawRectangle(rectX, rectY, rectWidth, rectHeight, rectColor);
     DrawFPS(rectX + 10, rectY + 10);
@@ -194,7 +194,7 @@ void DebugInfo::draw()
     }
     /* #endregion*/
 
-    /* #region DRAW RIGHT DEBUG WINDOW*/
+    /* #region DRAW RIGHT DEBUG_WINDOW WINDOW*/
     int windowX = 1545;
     int windowY = 0;
     int windowWidth = 374;

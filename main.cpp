@@ -100,12 +100,7 @@ int main(void)
     gameManager
         .init(); // initialize gameManager (can only be done after all gameObjects are added and must be at the end)
 
-
-    // TESTING
-    //gameManager.
-
-
-#ifdef DEBUG
+#ifdef DEBUG_WINDOW
     debugInfo->addGameObject("Player1", player1);
     debugInfo->addGameObject("Player2", player2);
     debugInfo->addGameObject(
@@ -173,7 +168,7 @@ int main(void)
         DrawRectangleLinesEx(Rectangle{1545, 0, 374, 1070}, 6, BLACK);
 
 
-#ifdef DEBUG
+#ifdef DEBUG_WINDOW
         debugInfo->draw();
 #endif
         screen2DManager->endDrawToScreen();

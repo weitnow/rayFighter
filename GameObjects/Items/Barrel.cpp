@@ -42,7 +42,7 @@ void Barrel::takeDamage(float damage)
 {
     if (!isInvincible)
     {
-        setPushVector({100, 0});
+        setPushVector({150, -50});
         setCurrentFrameTag("barrel-Hit");
         std::cout << "Barrel::takeDamage -> " << ObjName << " took " << damage << " damage." << std::endl;
         life -= damage;
