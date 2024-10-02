@@ -59,7 +59,9 @@ public:
     void resetPushVector();
 
 protected:
+    Vector2 orginalPos; // the original position of the object as it was created - used for reseting the object
     Vector2 pos;
+    Vector2 moveVector; // (x,y)
     float scale;
     Color color;
     bool isFlippedX;
@@ -72,6 +74,7 @@ protected:
     int life;
     float _invincibleCounter;
     float invincibleTime;
+    bool affectedByGravity;
 
     Vector2 pushVector;
 
@@ -86,6 +89,7 @@ protected:
 
     // member functions
     virtual void _reducePushVector(float deltaTime);
+    virtual void _applyGravity(float deltaTime);
 };
 
 #endif // GBFIGHTER_BASEGAMEOBJECT_H

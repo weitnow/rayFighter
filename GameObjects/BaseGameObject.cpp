@@ -4,8 +4,8 @@
 
 BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager)
     : ObjName(""), pushVector({0, 0}), scale(1.f), pos{Constants::X, Constants::Y}, color(WHITE), isFlippedX(false),
-      isFlippedY(false), isActive(true), isAlive(true), isInvincible(false), life(2), _invincibleCounter(0.f),
-      invincibleTime(Constants::INVINCIBLE_TIME)
+      isFlippedY(false), isActive(true), isAlive(true), isInvincible(false), life(Constants::DEFAULT_LIFE),
+      _invincibleCounter(0.f), invincibleTime(Constants::INVINCIBLE_TIME), affectedByGravity(true), moveVector({0, 0})
 {
 
     this->asepriteManagerPtr = asepriteManager;
@@ -17,6 +17,7 @@ BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager)
 BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager, float x, float y) : BaseGameObject(asepriteManager)
 {
     setPos(x, y);
+    orginalPos = pos; // save the original position for reseting the object
 }
 
 BaseGameObject::~BaseGameObject()
@@ -34,7 +35,14 @@ void BaseGameObject::update(float deltaTime)
     }
 
     // update the position
-    setPos(getPos().x + (pushVector.x) * deltaTime, getPos().y + (pushVector.y) * deltaTime);
+    this->setPos(this->getPos().x + (moveVector.x + pushVector.x) * deltaTime,
+                 this->getPos().y + (moveVector.y + pushVector.y) * deltaTime);
+
+    // apply gravity
+    if (affectedByGravity)
+    {
+        _applyGravity(deltaTime);
+    }
 
     // reduce push vector
     _reducePushVector(deltaTime);
@@ -256,5 +264,19 @@ void BaseGameObject::_reducePushVector(float deltaTime)
         {
             pushVector.y = 0.f;
         }
+    }
+}
+
+void BaseGameObject::_applyGravity(float deltaTime)
+{
+    // apply simplified gravity and check if the object is on its original position
+    if (pos.y >= orginalPos.y) // if the object is on the original position or below
+    {
+        moveVector.y = 0;     // stop falling
+        pos.y = orginalPos.y; // set the position to the original position
+    }
+    else if (pos.y < orginalPos.y) // if the object is above the original position
+    {
+        moveVector.y += Global::gravity * deltaTime; // apply gravity
     }
 }

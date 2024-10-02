@@ -34,7 +34,7 @@ private:
     float update_counter;
     float current_duration;
     bool animJustFinished;
-
+    bool loop;
 
 public:
     explicit AsepriteAnimationFile(std::string filename,
@@ -70,6 +70,7 @@ public:
                    bool flipY = false);
     void drawCurrentSelectedTag(int x, int y, float scale = 1.0f, Color tint = WHITE);
     void drawCurrentSelectedTag(int x, int y, float scale, Color tint, bool flipX, bool flipY);
+    void setLoop(bool loop);
 
     /**
      * @brief the update methode calls frequently the nextFrame() which switches to the next picture of the animation

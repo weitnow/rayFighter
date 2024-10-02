@@ -19,6 +19,8 @@ const int RENDERTARGET_WIDTH = 320;
 const int RENDERTARGET_HEIGHT = 180;
 const int BASELINE = 142;
 
+const int DEFAULT_LIFE = 3;
+
 const float INVINCIBLE_TIME = 1.0f; // time in seconds objects are invincible after taking damage
 
 const float TIME_MULTIPLIER =

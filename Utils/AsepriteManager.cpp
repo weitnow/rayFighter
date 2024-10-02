@@ -16,6 +16,7 @@ AsepriteAnimationFile::AsepriteAnimationFile(std::string filename,
     max_frame = 0;
     update_counter = 0.0f;
     animJustFinished = false;
+    loop = true;
 }
 
 AsepriteAnimationFile::~AsepriteAnimationFile()
@@ -111,6 +112,11 @@ void AsepriteAnimationFile::drawCurrentSelectedTag(int x, int y, float scale, Co
     drawFrame(current_filenameTagname, x, y, scale, tint, flipX, flipY);
 }
 
+void AsepriteAnimationFile::setLoop(bool loop)
+{
+    this->loop = loop;
+}
+
 void AsepriteAnimationFile::update(float deltaTime)
 {
     // get the duration of the current frame
@@ -134,7 +140,9 @@ void AsepriteAnimationFile::nextFrame()
     }
     else
     {
-        current_frame = min_frame;
+        if (loop)
+            current_frame = min_frame;
+
         animJustFinished = true;
     }
 }

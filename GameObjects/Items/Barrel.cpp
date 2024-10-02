@@ -29,9 +29,12 @@ void Barrel::update(float deltaTime)
         _invincibleCounter = 0.f;
     }
 
-    if (life <= 0)
+    if (life <= 0 && isAlive)
     {
         isAlive = false;
+        setPushVector({300, -150});
+        this->getAnim()->setLoop(false);
+        setCurrentFrameTag("barrel-Destroyed");
     }
 }
 
@@ -39,6 +42,7 @@ void Barrel::takeDamage(float damage)
 {
     if (!isInvincible)
     {
+        setPushVector({100, 0});
         setCurrentFrameTag("barrel-Hit");
         std::cout << "Barrel::takeDamage -> " << ObjName << " took " << damage << " damage." << std::endl;
         life -= damage;
@@ -49,4 +53,5 @@ void Barrel::takeDamage(float damage)
 
 void Barrel::_reducePushVector(float deltaTime)
 {
+    BaseGameObject::_reducePushVector(deltaTime);
 }

@@ -149,16 +149,23 @@ void DebugInfo::_drawGameObjectData(BaseGameObject* gameObject, const std::strin
              y + 20,
              TEXT_SIZE,
              TEXT_COLOR);
-    DrawText(("FrameTag: " + gameObject->getCurrentFrameTag()).c_str(), x, y + 40, TEXT_SIZE, TEXT_COLOR);
-    DrawText(("ObjName: " + gameObject->getObjName()).c_str(), x, y + 60, TEXT_SIZE, TEXT_COLOR);
+    DrawText(("PushVector: " + std::to_string(gameObject->getPushVector().x) + ", " +
+              std::to_string(gameObject->getPushVector().y))
+                 .c_str(),
+             x,
+             y + 40,
+             TEXT_SIZE,
+             TEXT_COLOR);
+    DrawText(("FrameTag: " + gameObject->getCurrentFrameTag()).c_str(), x, y + 60, TEXT_SIZE, TEXT_COLOR);
+    DrawText(("ObjName: " + gameObject->getObjName()).c_str(), x, y + 80, TEXT_SIZE, TEXT_COLOR);
     DrawText(("currentFrame: " + std::to_string(gameObject->getAnim()->getCurrentFrame())).c_str(),
              x,
-             y + 80,
+             y + 100,
              TEXT_SIZE,
              TEXT_COLOR);
     DrawText(("hasAnimJustFinished: " + std::to_string(gameObject->getAnim()->hasAnimJustFinished())).c_str(),
              x,
-             y + 100,
+             y + 120,
              TEXT_SIZE,
              TEXT_COLOR);
 }

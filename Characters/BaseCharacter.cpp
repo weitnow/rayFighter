@@ -3,8 +3,8 @@
 #include "Statemachine/Statemachine.h"
 
 BaseCharacter::BaseCharacter(AsepriteManager* asepriteManager, float x, float y)
-    : BaseGameObject(asepriteManager, x, y), moveVector({0, 0}), isOnGround(false), animFileName("gbFighter"),
-      isLeft(true), playerNumber(-1), statemachine(std::make_unique<Statemachine>(*this)), currentState("Idle")
+    : BaseGameObject(asepriteManager, x, y), isOnGround(false), animFileName("gbFighter"), isLeft(true),
+      playerNumber(-1), statemachine(std::make_unique<Statemachine>(*this)), currentState("Idle")
 {
     statemachine->setOwner(this);
 
@@ -37,7 +37,8 @@ void BaseCharacter::update(float deltaTime)
     _reducePushVector(deltaTime);
 
     //APPLY GRAVITY
-    _applyGravity(deltaTime);
+    if (affectedByGravity)
+        _applyGravity(deltaTime);
 
     // UPDATE THE STATE
     statemachine->update(deltaTime);

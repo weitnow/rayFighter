@@ -55,7 +55,6 @@ protected:
     bool isOnGround;
     float jumpForce = 300.f;
     float walkingSpeed = 60.f;
-    Vector2 moveVector; // (x,y)
     unique<Statemachine> statemachine;
     std::string animFileName;
     bool isLeft;      // true if the character is left of the other character, only vallid for player1 or player2
@@ -65,7 +64,7 @@ protected:
     CharacterController* controller;
 
     // member functions
-    void _applyGravity(float deltaTime);
+    virtual void _applyGravity(float deltaTime) override;
     void _keepOnStage();
 };
 
