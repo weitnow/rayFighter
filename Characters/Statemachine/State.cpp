@@ -2,6 +2,7 @@
 #include "../../Constants.h"
 #include "../../Utils/GameManager.h"
 #include "../../Utils/InputHandler.h"
+#include "../../Utils/SoundManager.h"
 
 GameManager& gameManager = GameManager::getInstance();
 BaseCharacter* player1 = nullptr; // initialized by first time calling IdleState::Init()
@@ -227,6 +228,9 @@ void PunchState::Init()
 {
     // make sure the character cannot move while punching
     owner->stop();
+
+    // play punch sound //TODO: get rid of this
+    SoundManager::getInstance().playSound(SoundManager::getInstance().punchSound);
 
     // add punch hitbox
     // if player1

@@ -10,6 +10,7 @@
 #include "Utils/GameManager.h"
 #include "Utils/InputHandler.h"
 #include "Utils/Screen2DManager.h"
+#include "Utils/SoundManager.h"
 #include "raylib.h"
 #include <iostream>
 
@@ -21,6 +22,9 @@ int main(void)
     // Initialize screen2DManager and set window size and title, this has to be done first before everything else
     Screen2DManager* screen2DManager =
         new Screen2DManager(Constants::SCREEN_WIDTH, Constants::SCREEN_HEIGHT, "C++ gbFighter");
+
+    // Initialize SoundManager
+    SoundManager& soundManager = SoundManager::getInstance();
 
     // Initialize InputHandler
     InputHandler* inputHandler = new InputHandler();
@@ -108,6 +112,9 @@ int main(void)
         barrel.get()); // dangerous, because the unique pointer is not copied //TODO: get rid of this
 #endif
 
+    // Start playing background music
+    soundManager.playBackgroundMusic(soundManager.ryu_music);
+
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
@@ -125,6 +132,11 @@ int main(void)
 
         // Update gameObjects (player1 and player2 included)
         gameManager.update(deltaTime * Constants::TIME_MULTIPLIER);
+
+        //----------------------------------------------------------------------------------
+        // Update Music
+        //----------------------------------------------------------------------------------
+        soundManager.updateBackgroundMusic();
 
         //----------------------------------------------------------------------------------
         // Draw to RenderTexture
