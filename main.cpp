@@ -89,6 +89,7 @@ int main(void)
     player1->addController(inputHandler->getPlayer1Controller());
     player1->addCollisionBox("player1PushBox", 10, 0, 10, 30, CollisionBoxType::PUSHBOX, true, BLUE);
     player1->addCollisionBoxForFrame("gbFighter-Punch", 1, CollisionBoxType::HITBOX, true, 10, 10, 20, 20);
+    player1->addCollisionBoxForFrame("gbFighter-Punch", -1, CollisionBoxType::PUSHBOX, true, 10, 10, 15, 15);
     player1->getStatemachine().changeState("Idle");
     // Player 2
     player2->setCurrentFrameTag("nesFighter-Idle"); // using nesFighter-Graphics

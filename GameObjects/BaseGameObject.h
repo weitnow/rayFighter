@@ -9,7 +9,7 @@
 #include <raylib.h>
 
 // Using directive to shorten the type name
-using CollisionMap = Dictionary<std::string, Dictionary<int, List<CollisionBox2D>>>;
+using CollisionMap = Dictionary<std::string, List<CollisionBox2D>>;
 
 class BaseGameObject
 {
@@ -62,7 +62,7 @@ public:
         const std::string& frameTag,
         int frameNumber,
         CollisionBoxType& collisionBoxType,
-        const std::vector<CollisionBox2D>& boxes); // this function overwrites the existing collisionBoxes of the frame
+        const List<CollisionBox2D>& boxes); // this function overwrites the existing collisionBoxes of the frame
 
     void addCollisionBoxForFrame(const std::string frameTag,
                                  int frameNumber,
@@ -122,6 +122,7 @@ protected:
     virtual void _applyGravity(float deltaTime);
     void _updateMemberVariables(); // update member variables from the animationfile
     void _updateCollisionBoxes(float deltaTime);
+    void _drawCollisionBoxes();
 
     List<CollisionBox2D> _checkIfCollisionMapHasCollisionBoxesAndReturnList(const std::string& currentFrameTag,
                                                                             const int currentFrameAbsolut,

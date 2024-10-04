@@ -95,42 +95,7 @@ void BaseGameObject::draw()
             pair.second.draw();
         }
 
-        /* #region --- DRAW COLLISIONBOXES */
-        // Draw the Hitboxes for the current frame
-        List<CollisionBox2D> collisionBoxes =
-            _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
-                                                               currentFrameAbsolut,
-                                                               CollisionBoxType::HITBOX);
-        for (auto& box : collisionBoxes)
-        {
-            box.draw();
-        }
-        // Draw the Hurtboxes for the current frame
-        collisionBoxes = _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
-                                                                            currentFrameAbsolut,
-                                                                            CollisionBoxType::HURTBOX);
-
-        for (auto& box : collisionBoxes)
-        {
-            box.draw();
-        }
-        // Draw the Pushboxes for the current frame
-        collisionBoxes = _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
-                                                                            currentFrameAbsolut,
-                                                                            CollisionBoxType::PUSHBOX);
-        for (auto& box : collisionBoxes)
-        {
-            box.draw();
-        }
-        // Draw the Throwboxes for the current frame
-        collisionBoxes = _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
-                                                                            currentFrameAbsolut,
-                                                                            CollisionBoxType::THROWBOX);
-        for (auto& box : collisionBoxes)
-        {
-            box.draw();
-        }
-        /* #endregion */
+        _drawCollisionBoxes();
 
 
 #else
@@ -235,19 +200,19 @@ void BaseGameObject::addCollisionBoxForFrameByInputingList(const std::string& fr
 {
     if (collisionBoxType == CollisionBoxType::HITBOX)
     {
-        hitBoxesPerFrame[frameTag][frameNumber] = boxes;
+        hitBoxesPerFrame[frameTag + std::to_string(frameNumber)] = boxes;
     }
     else if (collisionBoxType == CollisionBoxType::HURTBOX)
     {
-        hurtBoxesPerFrame[frameTag][frameNumber] = boxes;
+        hurtBoxesPerFrame[frameTag + std::to_string(frameNumber)] = boxes;
     }
     else if (collisionBoxType == CollisionBoxType::PUSHBOX)
     {
-        pushBoxesPerFrame[frameTag][frameNumber] = boxes;
+        pushBoxesPerFrame[frameTag + std::to_string(frameNumber)] = boxes;
     }
     else if (collisionBoxType == CollisionBoxType::THROWBOX)
     {
-        throwBoxesPerFrame[frameTag][frameNumber] = boxes;
+        throwBoxesPerFrame[frameTag + std::to_string(frameNumber)] = boxes;
     }
     else
     {
@@ -267,22 +232,22 @@ void BaseGameObject::addCollisionBoxForFrame(const std::string frameTag,
 
     if (collisionBoxType == CollisionBoxType::HITBOX)
     {
-        hitBoxesPerFrame[frameTag][frameNumber].push_back(
+        hitBoxesPerFrame[frameTag + std::to_string(frameNumber)].push_back(
             CollisionBox2D{"Hitbox", offsetX, offsetY, width, height, collisionBoxType, isActive, RED});
     }
     else if (collisionBoxType == CollisionBoxType::HURTBOX)
     {
-        hurtBoxesPerFrame[frameTag][frameNumber].push_back(
+        hurtBoxesPerFrame[frameTag + std::to_string(frameNumber)].push_back(
             CollisionBox2D{"Hurtbox", offsetX, offsetY, width, height, collisionBoxType, isActive, GREEN});
     }
     else if (collisionBoxType == CollisionBoxType::PUSHBOX)
     {
-        pushBoxesPerFrame[frameTag][frameNumber].push_back(
+        pushBoxesPerFrame[frameTag + std::to_string(frameNumber)].push_back(
             CollisionBox2D{"Pushbox", offsetX, offsetY, width, height, collisionBoxType, isActive, BLUE});
     }
     else if (collisionBoxType == CollisionBoxType::THROWBOX)
     {
-        throwBoxesPerFrame[frameTag][frameNumber].push_back(
+        throwBoxesPerFrame[frameTag + std::to_string(frameNumber)].push_back(
             CollisionBox2D{"Throwbox", offsetX, offsetY, width, height, collisionBoxType, isActive, BROWN});
     }
     else
@@ -400,26 +365,56 @@ void BaseGameObject::_updateCollisionBoxes(float deltaTime)
     // Loop through each CollisionMap
     for (auto* collisionMap : collisionMaps)
     {
-        // Loop through each frameTag (key = string, value = Dictionary<int, List<CollisionBox2D>>)
+        // Loop through each frameTag (key = string, value = List<CollisionBox2D>)
         for (auto& tagPair : *collisionMap)
         {
             const std::string& frameTag = tagPair.first;
-            auto& frameMap = tagPair.second;
+            auto& collisionBoxList = tagPair.second;
 
-            // Loop through each frameNumber (key = int, value = List<CollisionBox2D>)
-            for (auto& framePair : frameMap)
+            // Loop through each CollisionBox2D object and call its update method
+            for (auto& collisionBox : collisionBoxList)
             {
-                int frameNumber = framePair.first;
-                auto& collisionBoxList = framePair.second;
-
-                // Loop through each CollisionBox2D object and call its update method
-                for (auto& collisionBox : collisionBoxList)
-                {
-                    collisionBox.update(deltaTime);
-                    collisionBox.setObjPos(pos.x, pos.y);
-                }
+                collisionBox.update(deltaTime);
+                collisionBox.setObjPos(pos.x, pos.y);
             }
         }
+    }
+}
+
+void BaseGameObject::_drawCollisionBoxes()
+{
+    // Draw the Hitboxes for the current frame
+    List<CollisionBox2D> collisionBoxes = _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
+                                                                                             currentFrameAbsolut,
+                                                                                             CollisionBoxType::HITBOX);
+    for (auto& box : collisionBoxes)
+    {
+        box.draw();
+    }
+    // Draw the Hurtboxes for the current frame
+    collisionBoxes = _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
+                                                                        currentFrameAbsolut,
+                                                                        CollisionBoxType::HURTBOX);
+
+    for (auto& box : collisionBoxes)
+    {
+        box.draw();
+    }
+    // Draw the Pushboxes for the current frame
+    collisionBoxes = _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
+                                                                        currentFrameAbsolut,
+                                                                        CollisionBoxType::PUSHBOX);
+    for (auto& box : collisionBoxes)
+    {
+        box.draw();
+    }
+    // Draw the Throwboxes for the current frame
+    collisionBoxes = _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
+                                                                        currentFrameAbsolut,
+                                                                        CollisionBoxType::THROWBOX);
+    for (auto& box : collisionBoxes)
+    {
+        box.draw();
     }
 }
 
@@ -462,26 +457,15 @@ List<CollisionBox2D> BaseGameObject::_checkIfCollisionMapHasCollisionBoxesAndRet
     }
 
     // Check if the currentFrameTag exists in the chosen collisionMap
-    auto tagIt = collisionMap->find(currentFrameTag);
+    auto tagIt = collisionMap->find(currentFrameTag + std::to_string(currentFrameAbsolut));
     if (tagIt != collisionMap->end())
     {
-        // Check if the currentFrame exists in the inner map
-        auto& frameMap = tagIt->second;
-        auto frameIt = frameMap.find(currentFrameAbsolut);
-        if (frameIt != frameMap.end())
-        {
-            // return the vector of CollisionBox for the existing tag and frame
-            return frameIt->second;
-        }
-        else
-        {
-            // return an empty vector if the frame does not exist
-            return List<CollisionBox2D>();
-        }
+        // return the vector of CollisionBox for the existing tag and frame
+        return tagIt->second;
     }
     else
     {
-        // return an empty vector if the tag or frame does not exist
+        // return an empty vector if the frame does not exist
         return List<CollisionBox2D>();
     }
 }
