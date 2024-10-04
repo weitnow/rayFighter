@@ -97,6 +97,13 @@ int main(void)
     player2->addCollisionBox("player2PushBox", 16, 0, 10, 30, CollisionBoxType::PUSHBOX, true, BLUE);
     player2->getStatemachine().changeState("Idle");
 
+    // TEST
+    List<CollisionBox2D> collisionBoxes;
+    CollisionBox2D collisionBox{"Test", 10, 10, 20, 20, CollisionBoxType::HITBOX, true, RED};
+    collisionBox.setObjPos(player1->getPos().x, player1->getPos().y);
+    collisionBoxes.push_back(collisionBox);
+    player1->hitBoxesPerFrame["gbFighter-Idle"][1] = collisionBoxes;
+
 
     // Create Static Background
     Texture2D stage = LoadTexture("Assets/Graphics/stage.png");
@@ -113,7 +120,7 @@ int main(void)
 #endif
 
     // Start playing background music
-    soundManager.playBackgroundMusic(soundManager.ryu_music);
+    soundManager.playRandomBackgroundMusic();
 
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key

@@ -28,11 +28,11 @@ private:
     AsepriteManager* asepriteManager; // reference to the asepriteManager
     Texture texture;
     std::string current_filenameTagname;
-    int current_frame;
+    int current_frame; // current frame of the animation
     int min_frame;
     int max_frame;
     float update_counter;
-    float current_duration;
+    float current_duration; // duration of the current frame in milliseconds
     bool animJustFinished;
     bool loop;
 
@@ -171,7 +171,7 @@ struct FrameTag
     bool loop;
     int from;
     int to;
-    std::map<int, int> frameNumberDuration;
+    Dictionary<int, int> frameNumberDuration;
 };
 
 //overrite the operator<< for FrameTag

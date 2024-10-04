@@ -28,6 +28,7 @@ void BaseCharacter::update(float deltaTime)
         // TODO: Implement scale function
     }
 
+
     // UPDATE THE POSITION
     this->setPos(this->getPos().x + (moveVector.x + pushVector.x) * deltaTime,
                  this->getPos().y + (moveVector.y + pushVector.y) * deltaTime);
@@ -63,6 +64,9 @@ void BaseCharacter::update(float deltaTime)
         currentState = statemachine->getCurrentStateAsString();
         setCurrentFrameTag(animFileName + "-" + statemachine->getCurrentStateAsString());
     }
+    // update the member variables from the animationfile
+    _updateMemberVariables();
+
     // check if this->animfileptr is not nullptr - if its not, then update the animation
     if (animfilePtr != nullptr)
     {

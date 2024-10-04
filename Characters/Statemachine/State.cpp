@@ -182,7 +182,7 @@ void JumpState::Update(float deltaTime)
         statemachine->changeState("Idle");
     }
 
-    // check if player wants to move left or right while in the air
+    // check if player moved left or right at the start of the jump
     if (goLeft)
     {
         owner->moveLeft();

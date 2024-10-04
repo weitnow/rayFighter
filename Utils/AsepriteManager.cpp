@@ -175,7 +175,7 @@ bool AsepriteAnimationFile::setFrameTag(const std::string& filenameTagname)
     if (this->filename != current_FrameTag.texturename)
     {
         this->texture = this->asepriteManager->getTexture(current_FrameTag.texturename);
-        //std::cout << filename << " != " << current_FrameTag.texturename << std::endl;
+        this->filename = current_FrameTag.texturename;
     }
 
     current_frame = min_frame;

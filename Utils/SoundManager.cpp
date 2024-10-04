@@ -1,4 +1,6 @@
 #include "SoundManager.h"
+#include <cstdlib> // For rand()
+#include <ctime>   // For time()
 
 SoundManager::SoundManager() : currentBackgroundMusic(nullptr)
 {
@@ -16,8 +18,22 @@ SoundManager::SoundManager() : currentBackgroundMusic(nullptr)
     sagat_music = LoadMusicStream("Assets/Music/sagat_music.mp3");
     zangief_music = LoadMusicStream("Assets/Music/zangief_music.mp3");
 
+    // Store all background music in a list
+    backgroundMusicList = {&bison_music,
+                           &countryyard_music,
+                           &feilong_music,
+                           &guile_music,
+                           &ken_music,
+                           &killerinstinct_music,
+                           &ryu_music,
+                           &sagat_music,
+                           &zangief_music};
+
     // Load sound effects
     punchSound = LoadSound("Assets/Soundeffects/2BH.wav");
+
+    // Initialize random seed
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
 }
 
 
@@ -61,6 +77,15 @@ void SoundManager::playBackgroundMusic(Music& backgroundMusic)
     // Set the current music to the one being played
     currentBackgroundMusic = &backgroundMusic; // Store the currently playing music
     PlayMusicStream(backgroundMusic);
+}
+
+void SoundManager::playRandomBackgroundMusic()
+{
+    // Select a random index from the musicTracks vector
+    int randomIndex = std::rand() % backgroundMusicList.size();
+
+    // Play the selected random music
+    playBackgroundMusic(*backgroundMusicList[randomIndex]);
 }
 
 void SoundManager::playSound(Sound& sound)

@@ -12,7 +12,9 @@ enum class CollisionBoxType
 {
     HITBOX,
     HURTBOX,
-    PUSHBOX
+    PUSHBOX,
+    THROWBOX
+
 };
 
 

@@ -1,6 +1,7 @@
 #ifndef GBFIGHTER_SOUNDMANAGER_H
 #define GBFIGHTER_SOUNDMANAGER_H
 
+#include "Core.h"
 #include "raylib.h"
 
 class SoundManager
@@ -17,6 +18,7 @@ public:
     void updateBackgroundMusic();
 
     void playBackgroundMusic(Music& backgroundMusic);
+    void playRandomBackgroundMusic();
     void playSound(Sound& sound);
     void stopBackgroundMusic();
     void stopSound(Sound& sound);
@@ -40,7 +42,8 @@ private:
     SoundManager(); // Private constructor to prevent direct instantiation
 
     // Store the currently playing background music
-    Music* currentBackgroundMusic; // Pointer to the currently playing music
+    Music* currentBackgroundMusic;    // Pointer to the currently playing music
+    List<Music*> backgroundMusicList; // List of all background music
 
     // Prevent copying
     SoundManager(const SoundManager&) = delete;            // Delete copy constructor

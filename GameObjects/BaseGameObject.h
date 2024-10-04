@@ -8,6 +8,9 @@
 #include "CollisionBox2D.h"
 #include <raylib.h>
 
+// Using directive to shorten the type name
+using CollisionMap = Dictionary<std::string, Dictionary<int, List<CollisionBox2D>>>;
+
 class BaseGameObject
 {
 public:
@@ -38,7 +41,13 @@ public:
     virtual bool setCurrentFrameTag(std::string tag);
     std::string getCurrentFrameTag();
 
-    // hitboxes
+    // CollisionMap holds collisionBoxes per frame like this: collisionBoxesPerFrame["gbFighter-Idle"][0] = List<CollisionBox2D>
+    CollisionMap hitBoxesPerFrame;
+    CollisionMap hurtBoxesPerFrame;
+    CollisionMap pushBoxesPerFrame;
+    CollisionMap throwBoxesPerFrame;
+
+    // HitBoxes
     void addCollisionBox(std::string hitboxName,
                          float offsetX,
                          float offsetY,
@@ -66,11 +75,17 @@ protected:
     Color color;
     bool isFlippedX;
     bool isFlippedY;
-    std::string currentFrameTag;
-    std::string ObjName;
+    std::string currentFrameTag; // for example "gbFighter-Idle"
+    std::string ObjName;         // for example "Andy"
     bool isActive;
     bool isAlive;
     bool isInvincible;
+    int getDurationCurrentFrame; // Duration of the current frame in milliseconds
+    int currentFrame;            // current frame of the animation
+    int minFrame;                // min frame of the animation
+    int maxFrame;                // max frame of the animation
+    bool hasAnimJustFinished;    // true if the animation has just finished
+    int currentFrameAbsolut;     // current frame number of the animation - min frame
     int life;
     float _invincibleCounter;
     float invincibleTime;
@@ -79,7 +94,7 @@ protected:
     Vector2 pushVector;
 
     // a map which holds all the sprite-objs
-    Dictionary<std::string, BaseSpriteObject> sprites;
+    Dictionary<std::string, BaseSpriteObject> sprites; // normaly empty, but can be used to store multiple sprites
 
     AsepriteAnimationFile* animfilePtr;
     AsepriteManager* asepriteManagerPtr;
@@ -90,6 +105,7 @@ protected:
     // member functions
     virtual void _reducePushVector(float deltaTime);
     virtual void _applyGravity(float deltaTime);
+    virtual void _updateMemberVariables(); // update member variables from the animationfile
 };
 
 #endif // GBFIGHTER_BASEGAMEOBJECT_H
