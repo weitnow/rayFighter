@@ -54,6 +54,8 @@ void BaseCharacter::update(float deltaTime)
         pair.second.setObjPos(getPos().x, getPos().y);
     }
 
+    _updateCollisionBoxes(deltaTime);
+
     // UPDATE THE SPRITE
     if (statemachine->getCurrentStateAsString() == "No current state")
     {

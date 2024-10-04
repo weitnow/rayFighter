@@ -58,6 +58,21 @@ public:
                          Color color = BLUE);
     void removeCollisionBox(std::string hitboxName);
 
+    void addCollisionBoxForFrameByInputingList(
+        const std::string& frameTag,
+        int frameNumber,
+        CollisionBoxType& collisionBoxType,
+        const std::vector<CollisionBox2D>& boxes); // this function overwrites the existing collisionBoxes of the frame
+
+    void addCollisionBoxForFrame(const std::string frameTag,
+                                 int frameNumber,
+                                 CollisionBoxType collisionBoxType,
+                                 bool isActive,
+                                 float offsetX,
+                                 float offsetY,
+                                 float width,
+                                 float height);
+
 
     // collision boxes
     Dictionary<std::string, CollisionBox2D>& getCollisionBoxes();
@@ -105,7 +120,12 @@ protected:
     // member functions
     virtual void _reducePushVector(float deltaTime);
     virtual void _applyGravity(float deltaTime);
-    virtual void _updateMemberVariables(); // update member variables from the animationfile
+    void _updateMemberVariables(); // update member variables from the animationfile
+    void _updateCollisionBoxes(float deltaTime);
+
+    List<CollisionBox2D> _checkIfCollisionMapHasCollisionBoxesAndReturnList(const std::string& currentFrameTag,
+                                                                            const int currentFrameAbsolut,
+                                                                            CollisionBoxType collisionBoxType);
 };
 
 #endif // GBFIGHTER_BASEGAMEOBJECT_H

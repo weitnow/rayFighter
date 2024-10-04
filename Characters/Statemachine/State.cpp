@@ -231,24 +231,6 @@ void PunchState::Init()
 
     // play punch sound //TODO: get rid of this
     SoundManager::getInstance().playSound(SoundManager::getInstance().punchSound);
-
-    // add punch hitbox
-    // if player1
-    if (owner->getPlayerNumber() == 1)
-    {
-        // if player1 is left
-        if (owner->getIsLeft())
-        {
-            // add punch hitbox to the left of player1
-            owner->addCollisionBox("punch", 25, 10, 5, 5, CollisionBoxType::HITBOX, true, RED);
-        }
-        // if player1 is right
-        else
-        {
-            // add punch hitbox to the right of player1
-            owner->addCollisionBox("punch", 1, 10, 5, 5, CollisionBoxType::HITBOX, true, RED);
-        }
-    }
 }
 
 void PunchState::Update(float deltaTime)
@@ -261,8 +243,6 @@ void PunchState::Update(float deltaTime)
 
 void PunchState::Finalize()
 {
-    // remove punch hitbox
-    owner->removeCollisionBox("punch");
 }
 /* #endregion */
 
