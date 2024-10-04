@@ -86,11 +86,15 @@ int main(void)
     player1->setCurrentFrameTag("gbFighter-Idle"); // using gbFighter-Graphics
     player1->setObjName("Andy");
     player1->setPlayerNumber(1);
+
     player1->addController(inputHandler->getPlayer1Controller());
     player1->addCollisionBox("player1PushBox", 10, 0, 10, 30, CollisionBoxType::PUSHBOX, true, BLUE);
-    player1->addCollisionBoxForFrame("gbFighter-Punch", 1, CollisionBoxType::HITBOX, true, 10, 10, 20, 20);
-    player1->addCollisionBoxForFrame("gbFighter-Punch", -1, CollisionBoxType::PUSHBOX, true, 10, 10, 15, 15);
-    player1->getStatemachine().changeState("Idle");
+    player1->getStatemachine().changeState("Walk");
+    //player1->addCollisionBoxForFrame("gbFighter-Punch", 1, CollisionBoxType::HITBOX, true, 10, 10, 20, 20);
+    //player1->addCollisionBoxForFrame("gbFighter-Punch", -1, CollisionBoxType::PUSHBOX, true, 10, 10, 30, 30);
+    player1->addCollisionBoxForFrame("gbFighter-Idle", -2, CollisionBoxType::HURTBOX, true, 10, 10, 15, 15);
+
+
     // Player 2
     player2->setCurrentFrameTag("nesFighter-Idle"); // using nesFighter-Graphics
     player2->setObjName("Ken");

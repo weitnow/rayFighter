@@ -58,12 +58,6 @@ public:
                          Color color = BLUE);
     void removeCollisionBox(std::string hitboxName);
 
-    void addCollisionBoxForFrameByInputingList(
-        const std::string& frameTag,
-        int frameNumber,
-        CollisionBoxType& collisionBoxType,
-        const List<CollisionBox2D>& boxes); // this function overwrites the existing collisionBoxes of the frame
-
     void addCollisionBoxForFrame(const std::string frameTag,
                                  int frameNumber,
                                  CollisionBoxType collisionBoxType,
@@ -123,6 +117,13 @@ protected:
     void _updateMemberVariables(); // update member variables from the animationfile
     void _updateCollisionBoxes(float deltaTime);
     void _drawCollisionBoxes();
+    void _addCollisionBoxForFrameInternal(std::string frameTagName,
+                                          int offsetX,
+                                          int offsetY,
+                                          int width,
+                                          int height,
+                                          CollisionBoxType collisionBoxType,
+                                          bool isActive);
 
     List<CollisionBox2D> _checkIfCollisionMapHasCollisionBoxesAndReturnList(const std::string& currentFrameTag,
                                                                             const int currentFrameAbsolut,

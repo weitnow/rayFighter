@@ -193,33 +193,6 @@ void BaseGameObject::removeCollisionBox(std::string hitboxName)
     collisionBoxes.erase(hitboxName);
 }
 
-void BaseGameObject::addCollisionBoxForFrameByInputingList(const std::string& frameTag,
-                                                           int frameNumber,
-                                                           CollisionBoxType& collisionBoxType,
-                                                           const std::vector<CollisionBox2D>& boxes)
-{
-    if (collisionBoxType == CollisionBoxType::HITBOX)
-    {
-        hitBoxesPerFrame[frameTag + std::to_string(frameNumber)] = boxes;
-    }
-    else if (collisionBoxType == CollisionBoxType::HURTBOX)
-    {
-        hurtBoxesPerFrame[frameTag + std::to_string(frameNumber)] = boxes;
-    }
-    else if (collisionBoxType == CollisionBoxType::PUSHBOX)
-    {
-        pushBoxesPerFrame[frameTag + std::to_string(frameNumber)] = boxes;
-    }
-    else if (collisionBoxType == CollisionBoxType::THROWBOX)
-    {
-        throwBoxesPerFrame[frameTag + std::to_string(frameNumber)] = boxes;
-    }
-    else
-    {
-        throw std::runtime_error("CollisionBoxType not found");
-    }
-}
-
 void BaseGameObject::addCollisionBoxForFrame(const std::string frameTag,
                                              int frameNumber,
                                              CollisionBoxType collisionBoxType,
@@ -229,31 +202,38 @@ void BaseGameObject::addCollisionBoxForFrame(const std::string frameTag,
                                              float width,
                                              float height)
 {
+    std::string frameTagName = frameTag;
 
-    if (collisionBoxType == CollisionBoxType::HITBOX)
+    if (frameNumber == -1)
     {
-        hitBoxesPerFrame[frameTag + std::to_string(frameNumber)].push_back(
-            CollisionBox2D{"Hitbox", offsetX, offsetY, width, height, collisionBoxType, isActive, RED});
+        // the collision box is valid for all frames
+        // frameTag ex "gbFighter-Idle"
+        // get rid of the -Idle part
+        // and set the frameTagName to "gbFighter"
+        frameTagName = frameTag.substr(0, frameTag.find("-"));
     }
-    else if (collisionBoxType == CollisionBoxType::HURTBOX)
+    else if (frameNumber == -2)
     {
-        hurtBoxesPerFrame[frameTag + std::to_string(frameNumber)].push_back(
-            CollisionBox2D{"Hurtbox", offsetX, offsetY, width, height, collisionBoxType, isActive, GREEN});
-    }
-    else if (collisionBoxType == CollisionBoxType::PUSHBOX)
-    {
-        pushBoxesPerFrame[frameTag + std::to_string(frameNumber)].push_back(
-            CollisionBox2D{"Pushbox", offsetX, offsetY, width, height, collisionBoxType, isActive, BLUE});
-    }
-    else if (collisionBoxType == CollisionBoxType::THROWBOX)
-    {
-        throwBoxesPerFrame[frameTag + std::to_string(frameNumber)].push_back(
-            CollisionBox2D{"Throwbox", offsetX, offsetY, width, height, collisionBoxType, isActive, BROWN});
+        // the collision box is valid all frames of the frameTagName
+        // get the min and max frame number of the frameTagName
+        FrameTag tag = asepriteManagerPtr->getFrameTag(frameTag);
+        int NumberOfFrames = tag.to - tag.from;
+
+        for (int i = 0; i <= NumberOfFrames; ++i)
+        {
+            frameTagName = frameTag + std::to_string(i);
+            _addCollisionBoxForFrameInternal(frameTagName, offsetX, offsetY, width, height, collisionBoxType, isActive);
+        }
+        return;
     }
     else
     {
-        throw std::runtime_error("CollisionBoxType not found");
+        // the collision box is valid for a specific frame ex. "gbFighter-Idle0"
+        frameTagName += std::to_string(frameNumber);
     }
+
+
+    _addCollisionBoxForFrameInternal(frameTagName, offsetX, offsetY, width, height, collisionBoxType, isActive);
 }
 
 
@@ -404,6 +384,11 @@ void BaseGameObject::_drawCollisionBoxes()
     collisionBoxes = _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
                                                                         currentFrameAbsolut,
                                                                         CollisionBoxType::PUSHBOX);
+
+    std::cout << "currentFrameTag = " << currentFrameTag << std::endl;
+    std::cout << "collisionBoxes.size() = " << collisionBoxes.size() << std::endl;
+
+
     for (auto& box : collisionBoxes)
     {
         box.draw();
@@ -415,6 +400,40 @@ void BaseGameObject::_drawCollisionBoxes()
     for (auto& box : collisionBoxes)
     {
         box.draw();
+    }
+}
+
+void BaseGameObject::_addCollisionBoxForFrameInternal(std::string frameTagName,
+                                                      int offsetX,
+                                                      int offsetY,
+                                                      int width,
+                                                      int height,
+                                                      CollisionBoxType collisionBoxType,
+                                                      bool isActive)
+{
+    if (collisionBoxType == CollisionBoxType::HITBOX)
+    {
+        hitBoxesPerFrame[frameTagName].push_back(
+            CollisionBox2D{"Hitbox", offsetX, offsetY, width, height, collisionBoxType, isActive, RED});
+    }
+    else if (collisionBoxType == CollisionBoxType::HURTBOX)
+    {
+        hurtBoxesPerFrame[frameTagName].push_back(
+            CollisionBox2D{"Hurtbox", offsetX, offsetY, width, height, collisionBoxType, isActive, GREEN});
+    }
+    else if (collisionBoxType == CollisionBoxType::PUSHBOX)
+    {
+        pushBoxesPerFrame[frameTagName].push_back(
+            CollisionBox2D{"Pushbox", offsetX, offsetY, width, height, collisionBoxType, isActive, BLUE});
+    }
+    else if (collisionBoxType == CollisionBoxType::THROWBOX)
+    {
+        throwBoxesPerFrame[frameTagName].push_back(
+            CollisionBox2D{"Throwbox", offsetX, offsetY, width, height, collisionBoxType, isActive, BROWN});
+    }
+    else
+    {
+        throw std::runtime_error("CollisionBoxType not found");
     }
 }
 
@@ -437,6 +456,9 @@ List<CollisionBox2D> BaseGameObject::_checkIfCollisionMapHasCollisionBoxesAndRet
     //Reference to the appropriate CollisionMap
     CollisionMap* collisionMap = nullptr;
 
+    // Get rid of the -Idle part
+    std::string currentFrameTagWithoutIdle = currentFrameTag.substr(0, currentFrameTag.find("-"));
+
     // Determine which CollisionMap to use based on collisionBoxType
     switch (collisionBoxType)
     {
@@ -456,16 +478,25 @@ List<CollisionBox2D> BaseGameObject::_checkIfCollisionMapHasCollisionBoxesAndRet
         throw std::runtime_error("Invalid CollisionBoxType");
     }
 
+    // Create an empty vector of CollisionBox2D
+    List<CollisionBox2D> collisionBoxes;
+
     // Check if the currentFrameTag exists in the chosen collisionMap
     auto tagIt = collisionMap->find(currentFrameTag + std::to_string(currentFrameAbsolut));
     if (tagIt != collisionMap->end())
     {
-        // return the vector of CollisionBox for the existing tag and frame
-        return tagIt->second;
+        // if the tag exists, return the vector of CollisionBox for the existing tag and frame
+        collisionBoxes.insert(collisionBoxes.end(), tagIt->second.begin(), tagIt->second.end());
     }
-    else
+    // Check if the currentFrameTag exists in the chosen collisionMap without the frame number and without the -Idle
+    if (collisionMap->find(currentFrameTagWithoutIdle) != collisionMap->end())
     {
-        // return an empty vector if the frame does not exist
-        return List<CollisionBox2D>();
+        // if the tag exists, return the vector of CollisionBox for the existing tag and frame
+        collisionBoxes.insert(collisionBoxes.end(),
+                              collisionMap->at(currentFrameTagWithoutIdle).begin(),
+                              collisionMap->at(currentFrameTagWithoutIdle).end());
     }
+
+    // return an empty vector if the frame does not exist
+    return collisionBoxes;
 }
