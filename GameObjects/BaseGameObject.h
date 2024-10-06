@@ -23,6 +23,8 @@ public:
 
     virtual void takeDamage(float damage = 1.f);
 
+    int& getCurrentLife();
+
     void setObjName(std::string name);
     std::string getObjName();
 
@@ -41,23 +43,13 @@ public:
     virtual bool setCurrentFrameTag(std::string tag);
     std::string getCurrentFrameTag();
 
-    // CollisionMap holds collisionBoxes per frame like this: collisionBoxesPerFrame["gbFighter-Idle"][0] = List<CollisionBox2D>
-    CollisionMap hitBoxesPerFrame;
-    CollisionMap hurtBoxesPerFrame;
-    CollisionMap pushBoxesPerFrame;
-    CollisionMap throwBoxesPerFrame;
+    List<CollisionBox2D> getPushBoxes();
+    List<CollisionBox2D> getHitBoxes();
+    List<CollisionBox2D> getHurtBoxes();
+    List<CollisionBox2D> getThrowBoxes();
+
 
     // HitBoxes
-    void addCollisionBox(std::string hitboxName,
-                         float offsetX,
-                         float offsetY,
-                         float width,
-                         float height,
-                         CollisionBoxType collisionBoxType = CollisionBoxType::PUSHBOX,
-                         bool isActive = true,
-                         Color color = BLUE);
-    void removeCollisionBox(std::string hitboxName);
-
     void addCollisionBoxForFrame(const std::string frameTag,
                                  int frameNumber,
                                  CollisionBoxType collisionBoxType,
@@ -66,10 +58,6 @@ public:
                                  float offsetY,
                                  float width,
                                  float height);
-
-
-    // collision boxes
-    Dictionary<std::string, CollisionBox2D>& getCollisionBoxes();
 
     //pushVector
     void setPushVector(Vector2 pushVector);
@@ -100,16 +88,16 @@ protected:
     float invincibleTime;
     bool affectedByGravity;
 
-    Vector2 pushVector;
+    // CollisionMap holds collisionBoxes per frame like this: collisionBoxesPerFrame["gbFighter-Idle"][0] = List<CollisionBox2D>
+    CollisionMap hitBoxesPerFrame;
+    CollisionMap hurtBoxesPerFrame;
+    CollisionMap pushBoxesPerFrame;
+    CollisionMap throwBoxesPerFrame;
 
-    // a map which holds all the sprite-objs
-    Dictionary<std::string, BaseSpriteObject> sprites; // normaly empty, but can be used to store multiple sprites
+    Vector2 pushVector;
 
     AsepriteAnimationFile* animfilePtr;
     AsepriteManager* asepriteManagerPtr;
-
-    // a map which holds all the collisionbox-objs
-    Dictionary<std::string, CollisionBox2D> collisionBoxes;
 
     // member functions
     virtual void _reducePushVector(float deltaTime);

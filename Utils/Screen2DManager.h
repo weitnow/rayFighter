@@ -5,6 +5,7 @@
 #ifndef GBFIGHTER_SCREEN2DMANAGER_H
 #define GBFIGHTER_SCREEN2DMANAGER_H
 
+#include "../Gui/Lifebar.h"
 #include "raylib.h"
 #include <iostream>
 #include <map>
@@ -20,7 +21,10 @@
 class Screen2DManager
 {
 public:
-    Screen2DManager(const int screenWidth, const int screenHeight, const char *windowTitle, const bool windowResizable = false);
+    Screen2DManager(const int screenWidth,
+                    const int screenHeight,
+                    const char* windowTitle,
+                    const bool windowResizable = false);
 
     ~Screen2DManager();
 
@@ -65,6 +69,10 @@ private:
     Camera2D camera;
     std::map<std::string, RenderTexture2D> renderTargets;
     Rectangle scaledRectangle; // used for the DrawTexturePro-Function to draw the renderTarget to Screen
+
+    // Lifebar
+    Lifebar lifebar1;
+    Lifebar lifebar2;
 
     // Functions
     // Function to calculate scaled rectangle dimensions

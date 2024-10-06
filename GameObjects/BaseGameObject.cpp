@@ -48,13 +48,7 @@ void BaseGameObject::update(float deltaTime)
     // reduce push vector
     _reducePushVector(deltaTime);
 
-    // update hitboxes
-    for (auto& pair : collisionBoxes)
-    {
-        pair.second.update(deltaTime);
-        pair.second.setObjPos(pos.x, pos.y);
-    }
-
+    // update collision boxes
     _updateCollisionBoxes(deltaTime);
 
     // update the member variables from the animationfile
@@ -89,12 +83,7 @@ void BaseGameObject::draw()
                            Constants::GAMEOBJ_SIZE.y,
                            Constants::GAMEOBJ_COLOR);
 
-        // Draw collision boxes
-        for (auto& pair : collisionBoxes)
-        {
-            pair.second.draw();
-        }
-
+        // Draw the collision boxes
         _drawCollisionBoxes();
 
 
@@ -107,6 +96,11 @@ void BaseGameObject::draw()
 void BaseGameObject::takeDamage(float damage)
 {
     std::cout << "BaseGameObject::takeDamage -> " << ObjName << " took " << damage << " damage." << std::endl;
+}
+
+int& BaseGameObject::getCurrentLife()
+{
+    return life;
 }
 
 void BaseGameObject::setObjName(std::string name)
@@ -171,26 +165,33 @@ std::string BaseGameObject::getCurrentFrameTag()
     return currentFrameTag;
 }
 
-void BaseGameObject::addCollisionBox(std::string hitboxName,
-                                     float offsetX,
-                                     float offsetY,
-                                     float width,
-                                     float height,
-                                     CollisionBoxType collisionBoxType,
-                                     bool isActive,
-                                     Color color)
+// TODO: refactor this method to return a reference to the list and not a copy
+List<CollisionBox2D> BaseGameObject::getPushBoxes()
 {
-    collisionBoxes[hitboxName] =
-        CollisionBox2D{hitboxName, offsetX, offsetY, width, height, collisionBoxType, isActive, color};
-
-    collisionBoxes[hitboxName].setObjPos(
-        pos.x,
-        pos.y); // set the position of the collision box to the position of the gameobject
+    return _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
+                                                              currentFrameAbsolut,
+                                                              CollisionBoxType::PUSHBOX);
 }
 
-void BaseGameObject::removeCollisionBox(std::string hitboxName)
+List<CollisionBox2D> BaseGameObject::getHitBoxes()
 {
-    collisionBoxes.erase(hitboxName);
+    return _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
+                                                              currentFrameAbsolut,
+                                                              CollisionBoxType::HITBOX);
+}
+
+List<CollisionBox2D> BaseGameObject::getHurtBoxes()
+{
+    return _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
+                                                              currentFrameAbsolut,
+                                                              CollisionBoxType::HURTBOX);
+}
+
+List<CollisionBox2D> BaseGameObject::getThrowBoxes()
+{
+    return _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
+                                                              currentFrameAbsolut,
+                                                              CollisionBoxType::THROWBOX);
 }
 
 void BaseGameObject::addCollisionBoxForFrame(const std::string frameTag,
@@ -234,12 +235,6 @@ void BaseGameObject::addCollisionBoxForFrame(const std::string frameTag,
 
 
     _addCollisionBoxForFrameInternal(frameTagName, offsetX, offsetY, width, height, collisionBoxType, isActive);
-}
-
-
-Dictionary<std::string, CollisionBox2D>& BaseGameObject::getCollisionBoxes()
-{
-    return collisionBoxes;
 }
 
 void BaseGameObject::setPushVector(Vector2 pushVector)
@@ -384,9 +379,6 @@ void BaseGameObject::_drawCollisionBoxes()
     collisionBoxes = _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
                                                                         currentFrameAbsolut,
                                                                         CollisionBoxType::PUSHBOX);
-
-    std::cout << "currentFrameTag = " << currentFrameTag << std::endl;
-    std::cout << "collisionBoxes.size() = " << collisionBoxes.size() << std::endl;
 
 
     for (auto& box : collisionBoxes)

@@ -1,4 +1,5 @@
 #include "GameManager.h"
+#include "../Gui/Lifebar.h"
 #include "CollisionManager.h"
 
 // Define the static member variable and pass the GameManager instance to the constructor
@@ -17,14 +18,21 @@ void GameManager::init()
 }
 
 // Private constructor definition
-GameManager::GameManager() : player1(nullptr), player2(nullptr), player1and2set(false)
+GameManager::GameManager()
+    : player1(nullptr), player2(nullptr), player1and2set(false), lifebar1(nullptr), lifebar2(nullptr)
 {
+    lifebar1 = new Lifebar(Vector2{20, 75}, 5, 100, 3, GREEN, BLACK, "Player1");
+    lifebar2 = new Lifebar(Vector2{130, 75}, 5, 100, 3, GREEN, BLACK, "Player2");
 }
 
 // Optionally, define the destructor
 GameManager::~GameManager()
 {
     // Clean up resources if necessary
+    delete lifebar1;
+    delete lifebar2;
+    lifebar1 = nullptr;
+    lifebar2 = nullptr;
 }
 
 void GameManager::_updateIsLeftPlayer1and2()
@@ -51,8 +59,9 @@ void GameManager::_checkCollisionsBetweenPlayers()
     }
 
     // Check if player1 and player2 are colliding
-    CollisionBox2D& player1PushBox = player1->getCollisionBoxes()["player1PushBox"];
-    CollisionBox2D& player2PushBox = player2->getCollisionBoxes()["player2PushBox"];
+    // TODO: get rid of hardcoded [0]
+    CollisionBox2D player1PushBox = player1->getPushBoxes()[0];
+    CollisionBox2D player2PushBox = player2->getPushBoxes()[0];
 
     if (collisionManager.checkCollision(player1PushBox, player2PushBox))
     {
@@ -70,35 +79,23 @@ void GameManager::_checkCollisionsBetweenPlayers()
     }
 }
 
-void GameManager::_checkCollisionsBetweenPlayerAndGameObjects()
+bool GameManager::_checkHitsBetweenPlayers()
 {
-
-
-    Dictionary<std::string, CollisionBox2D>& player1CollisionBoxes = player1->getCollisionBoxes();
-
-    // check if there is a key named "punch" in the player1CollisionBoxes
-
-    if (player1CollisionBoxes.find("punch") != player1CollisionBoxes.end())
+    // loop through all hitboxes of player1
+    for (auto& hitbox : player1->getHitBoxes())
     {
-        // check if the player1 punch hitbox collides with any of the gameObjects
-        CollisionBox2D& player1PunchBox = player1CollisionBoxes["punch"];
-
-        for (auto& object : gameObjects)
+        // loop through all hurtboxes of player2
+        for (auto& hurtbox : player2->getHurtBoxes())
         {
-            Dictionary<std::string, CollisionBox2D>& objectCollisionBoxes = object->getCollisionBoxes();
-
-            for (auto& pair : objectCollisionBoxes)
+            if (collisionManager.checkCollision(hitbox, hurtbox))
             {
-                CollisionBox2D& objectCollisionBox = pair.second;
-
-                if (collisionManager.checkCollision(player1PunchBox, objectCollisionBox))
-                {
-                    // Handle collision (you can define specific collision logic here)
-                    object->takeDamage();
-                }
+                // Handle hit (you can define specific hit logic here)
+                player2->takeDamage(1);
+                return true;
             }
         }
     }
+    return false;
 }
 
 void GameManager::_setPlayer1and2()
@@ -196,7 +193,11 @@ void GameManager::update(float deltaTime)
 
     _checkCollisionsBetweenPlayers();
 
-    _checkCollisionsBetweenPlayerAndGameObjects();
+    _checkHitsBetweenPlayers();
+
+    // Update the lifebars
+    lifebar1->Update(player1->getCurrentLife());
+    lifebar2->Update(player1->getCurrentLife());
 }
 
 BaseCharacter* GameManager::getBaseCharacter(const std::string& CharName)
@@ -223,6 +224,13 @@ void GameManager::draw()
     {
         pair.second->draw();
     }
+
+    // Draw the lifebars
+    lifebar1->Draw();
+    lifebar2->Draw();
+
+    // Draw the deadSkull
+    deadSkull->drawCurrentSelectedTag(120, 70, 1, WHITE);
 }
 
 void GameManager::addInputHandler(InputHandler* inputHandler)
@@ -242,4 +250,23 @@ InputHandler* GameManager::getInputHandler()
 CollisionManager& GameManager::getCollisionManager()
 {
     return collisionManager;
+}
+
+void GameManager::addAsepriteManager(AsepriteManager* asepriteManager)
+{
+    if (asepriteManager == nullptr)
+    {
+        throw std::runtime_error("AsepriteManager is nullptr");
+    }
+
+    this->asepriteManager = asepriteManager;
+
+    // Load the deadSkull animation
+    deadSkull = asepriteManager->getAnimFile("deadSkull");
+    deadSkull->setFrameTag("deadSkull-Idle");
+}
+
+AsepriteManager* GameManager::getAsepriteManager()
+{
+    this->asepriteManager;
 }

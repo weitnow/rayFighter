@@ -62,6 +62,11 @@ int main(void)
     asepriteManager->loadAnimFile("barrel"); // asepriteManager.frameTags[barrel]
                                              // asepriteManager.textures[barrel]
 
+    asepriteManager->loadAnimFile("deadSkull");
+
+    // Add asepriteManager to gameManager
+    gameManager.addAsepriteManager(asepriteManager); // add asepriteManager to gameManager
+
     // Create Player 1
     BaseCharacter* player1 = new BaseCharacter(asepriteManager, Constants::PLAYER1_X, Constants::BASELINE);
 
@@ -73,8 +78,7 @@ int main(void)
     unique<Barrel> barrel = std::make_unique<Barrel>(asepriteManager, 20, 142);
     barrel->setCurrentFrameTag("barrel-Idle");
     barrel->setObjName("Barrel");
-    barrel->addCollisionBox("Collisionbox", 10, 10, 13, 17, CollisionBoxType::HURTBOX, true, GREEN);
-
+    barrel->addCollisionBoxForFrame("barrel-Idle", -1, CollisionBoxType::HURTBOX, true, 10, 10, 13, 17);
 
     // Add the player1 and player2 to the gameManager
     gameManager.addBaseCharacter("player1", player1);
@@ -86,13 +90,11 @@ int main(void)
     player1->setCurrentFrameTag("gbFighter-Idle"); // using gbFighter-Graphics
     player1->setObjName("Andy");
     player1->setPlayerNumber(1);
-
     player1->addController(inputHandler->getPlayer1Controller());
-    player1->addCollisionBox("player1PushBox", 10, 0, 10, 30, CollisionBoxType::PUSHBOX, true, BLUE);
+    player1->addCollisionBoxForFrame("gbFighter-Idle", -1, CollisionBoxType::PUSHBOX, true, 10, 0, 10, 30);
+    player1->addCollisionBoxForFrame("gbFighter-Punch", 1, CollisionBoxType::HITBOX, true, 26, 10, 5, 5);
+    player1->addCollisionBoxForFrame("gbFighter-Idle", -2, CollisionBoxType::HURTBOX, true, 10, 4, 12, 26);
     player1->getStatemachine().changeState("Walk");
-    //player1->addCollisionBoxForFrame("gbFighter-Punch", 1, CollisionBoxType::HITBOX, true, 10, 10, 20, 20);
-    //player1->addCollisionBoxForFrame("gbFighter-Punch", -1, CollisionBoxType::PUSHBOX, true, 10, 10, 30, 30);
-    player1->addCollisionBoxForFrame("gbFighter-Idle", -2, CollisionBoxType::HURTBOX, true, 10, 10, 15, 15);
 
 
     // Player 2
@@ -100,7 +102,8 @@ int main(void)
     player2->setObjName("Ken");
     player2->setPlayerNumber(2);
     player2->addController(inputHandler->getPlayer2Controller());
-    player2->addCollisionBox("player2PushBox", 16, 0, 10, 30, CollisionBoxType::PUSHBOX, true, BLUE);
+    player2->addCollisionBoxForFrame("nesFighter-Idle", -1, CollisionBoxType::PUSHBOX, true, 16, 0, 10, 30);
+    player2->addCollisionBoxForFrame("nesFighter-Idle", -2, CollisionBoxType::HURTBOX, true, 16, 0, 10, 25);
     player2->getStatemachine().changeState("Idle");
 
     // Create Static Background
@@ -129,8 +132,7 @@ int main(void)
         // Update
         //----------------------------------------------------------------------------------
 
-        // TODO: uncoment and refactor update of screen2DManager
-        //screen2DManager->update(deltaTime);
+        screen2DManager->update(deltaTime);
 
         // Handle Input (by calling the update method of the inputHandler)
         inputHandler->Update();

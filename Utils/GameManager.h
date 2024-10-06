@@ -6,6 +6,9 @@
 #include "Core.h"
 #include <algorithm> // for std::remove and std::find
 
+// Forward declaration of Lifebar
+class Lifebar;
+
 // Forward declaration of CollisionManager
 class CollisionManager;
 
@@ -44,6 +47,9 @@ public:
     // CollisionManager
     static CollisionManager& getCollisionManager();
 
+    void addAsepriteManager(AsepriteManager* asepriteManager);
+    AsepriteManager* getAsepriteManager();
+
 
 private:
     // Private constructor to prevent direct instantiation
@@ -56,6 +62,9 @@ private:
     Dictionary<std::string, BaseCharacter*> baseCharacters;
     List<BaseGameObject*> gameObjects;
 
+    // AsepriteManager
+    AsepriteManager* asepriteManager;
+
     // InputHandler
     InputHandler* inputHandler;
 
@@ -67,11 +76,16 @@ private:
     BaseCharacter* player1;
     BaseCharacter* player2;
 
+    // Lifebars
+    Lifebar* lifebar1;
+    Lifebar* lifebar2;
+    AsepriteAnimationFile* deadSkull;
+
     // member methodes
     void _setPlayer1and2();
     void _updateIsLeftPlayer1and2();
     void _checkCollisionsBetweenPlayers();
-    void _checkCollisionsBetweenPlayerAndGameObjects();
+    bool _checkHitsBetweenPlayers();
 };
 
 #endif //GAMEMANAGER_H

@@ -47,13 +47,7 @@ void BaseCharacter::update(float deltaTime)
     // KEEP THE CHARACTER ON THE STAGE
     _keepOnStage();
 
-    // UPDATE THE COLLISION BOXES
-    for (auto& pair : collisionBoxes)
-    {
-        pair.second.update(deltaTime);
-        pair.second.setObjPos(getPos().x, getPos().y);
-    }
-
+    // UPDATE COLLISION BOXES
     _updateCollisionBoxes(deltaTime);
 
     // UPDATE THE SPRITE

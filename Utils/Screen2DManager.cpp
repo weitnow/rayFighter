@@ -4,7 +4,12 @@
 
 #include "Screen2DManager.h"
 
-Screen2DManager::Screen2DManager(const int screenWidth, const int screenHeight, const char *windowTitle, const bool windowResizable)
+Screen2DManager::Screen2DManager(const int screenWidth,
+                                 const int screenHeight,
+                                 const char* windowTitle,
+                                 const bool windowResizable)
+    : lifebar1(Vector2{10, 10}, 20, 200, 100, GREEN, BLACK, "Player1"),
+      lifebar2(Vector2{10, 40}, 20, 200, 100, GREEN, BLACK, "Player2")
 {
     if (windowResizable)
     {
@@ -21,6 +26,8 @@ Screen2DManager::Screen2DManager(const int screenWidth, const int screenHeight, 
     camera.offset = Vector2{0.0f, 0.0f};
     camera.rotation = 0.0f;
     camera.zoom = 1.0f;
+
+    // Init Lifebar
 }
 
 Screen2DManager::~Screen2DManager()
@@ -30,7 +37,7 @@ Screen2DManager::~Screen2DManager()
 void Screen2DManager::unloadAllRenderTextures()
 {
     // Iterate over the map of renderTargets and unload all textures
-    for (auto &pair : renderTargets)
+    for (auto& pair : renderTargets)
     {
         if (pair.second.texture.id != 0)
         {
@@ -43,6 +50,7 @@ void Screen2DManager::unloadAllRenderTextures()
 
 void Screen2DManager::update(float deltaTime)
 {
+    /*
     // Camera rotation controls
     if (IsKeyDown(KEY_W))
         camera.rotation--;
@@ -60,6 +68,7 @@ void Screen2DManager::update(float deltaTime)
         camera.target.x--;
     if (IsKeyDown(KEY_D))
         camera.target.x++;
+        */
 }
 
 void Screen2DManager::createRenderTarget(std::string renderTargetName, int targetWidth, int targetHeight)
@@ -82,7 +91,12 @@ void Screen2DManager::drawRenderTarget(std::string renderTargetName)
 {
     RenderTexture2D renderTarget = renderTargets[renderTargetName];
     scaledRectangle = calculateScaledRectangle(renderTarget, renderTarget.texture.width, renderTarget.texture.height);
-    DrawTexturePro(renderTarget.texture, (Rectangle){0.0f, 0.0f, (float)renderTarget.texture.width, (float)-renderTarget.texture.height}, scaledRectangle, (Vector2){0, 0}, 0.0f, WHITE);
+    DrawTexturePro(renderTarget.texture,
+                   (Rectangle){0.0f, 0.0f, (float)renderTarget.texture.width, (float)-renderTarget.texture.height},
+                   scaledRectangle,
+                   (Vector2){0, 0},
+                   0.0f,
+                   WHITE);
 }
 
 void Screen2DManager::endDrawToRenderTarget()
@@ -110,5 +124,8 @@ Rectangle Screen2DManager::calculateScaledRectangle(RenderTexture2D renderTarget
     scaleHangover = (GetScreenWidth() - (int)renderTarget.texture.width) % 2;
     renderTarget.texture.width += scaleHangover;
 
-    return (Rectangle){static_cast<float>((GetScreenWidth() - renderTarget.texture.width) / 2), static_cast<float>((GetScreenHeight() - renderTarget.texture.height) / 2), static_cast<float>(renderTarget.texture.width), static_cast<float>(renderTarget.texture.height)};
+    return (Rectangle){static_cast<float>((GetScreenWidth() - renderTarget.texture.width) / 2),
+                       static_cast<float>((GetScreenHeight() - renderTarget.texture.height) / 2),
+                       static_cast<float>(renderTarget.texture.width),
+                       static_cast<float>(renderTarget.texture.height)};
 }
