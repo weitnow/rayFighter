@@ -4,10 +4,10 @@
 
 #ifndef GBFIGHTER_BASESPRITEOBJECT_H
 #define GBFIGHTER_BASESPRITEOBJECT_H
+#include "../Utils/Core.h"
 #include "CollisionBox2D.h"
-#include "raylib.h"
-#include <../Utils/Core.h>
 #include <map>
+#include <raylib.h>
 #include <string>
 
 class BaseSpriteObject

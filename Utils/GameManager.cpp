@@ -87,10 +87,11 @@ bool GameManager::_checkHitsBetweenPlayers()
         // loop through all hurtboxes of player2
         for (auto& hurtbox : player2->getHurtBoxes())
         {
-            if (collisionManager.checkCollision(hitbox, hurtbox))
+            if (collisionManager.checkCollision(hitbox, hurtbox) && player1->canDealDamage)
             {
                 // Handle hit (you can define specific hit logic here)
                 player2->takeDamage(1);
+                player1->canDealDamage = false;
                 return true;
             }
         }

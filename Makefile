@@ -24,7 +24,7 @@ CXX = g++
 CXXFLAGS = $(CXX_WARNINGS) -std=$(CXX_STANDARD)
 
 # Additional flags to specify the directories to search for header files
-CPPFLAGS = -I Assets -I Characters -I GameObjects -I Utils
+CPPFLAGS = -I Assets -I Characters -I./GameObjects -I./Utils
 
 LDFLAGS =
 
@@ -45,7 +45,12 @@ endif
 COMPILER_CALL = $(CXX) $(CPPFLAGS) $(CXXFLAGS)
 
 # Recursively find all .cpp files in subdirectories
-CXX_SOURCES := $(shell find . -name '*.cpp')
+ifeq ($(OS_WINDOWS), 1)
+    CXX_SOURCES := $(shell powershell -Command "Get-ChildItem -Recurse -Include *.cpp | Select-Object -ExpandProperty FullName")
+    CXX_SOURCES := $(subst \,/,$(CXX_SOURCES)) # Normalize Windows paths
+else
+    CXX_SOURCES := $(shell find . -name '*.cpp')
+endif
 
 # Create object file names based on source file names and directory structure
 CXX_OBJECTS = $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(CXX_SOURCES))

@@ -49,6 +49,9 @@ public:
     Vector2 getMoveVector();
     Statemachine& getStatemachine();
 
+    // TODO: refactor this to private
+    bool canDealDamage;
+
 
 protected:
     // member variables

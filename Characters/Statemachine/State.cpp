@@ -228,6 +228,7 @@ void PunchState::Init()
 {
     // make sure the character cannot move while punching
     owner->stop();
+    owner->canDealDamage = true;
 
     // play punch sound //TODO: get rid of this
     SoundManager::getInstance().playSound(SoundManager::getInstance().punchSound);

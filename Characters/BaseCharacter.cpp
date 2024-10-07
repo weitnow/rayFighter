@@ -4,7 +4,7 @@
 
 BaseCharacter::BaseCharacter(AsepriteManager* asepriteManager, float x, float y)
     : BaseGameObject(asepriteManager, x, y), isOnGround(false), animFileName("gbFighter"), isLeft(true),
-      playerNumber(-1), statemachine(std::make_unique<Statemachine>(*this)), currentState("Idle")
+      playerNumber(-1), statemachine(std::make_unique<Statemachine>(*this)), currentState("Idle"), canDealDamage(true)
 {
     statemachine->setOwner(this);
 
