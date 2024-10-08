@@ -132,7 +132,7 @@ int main(void)
         // Update
         //----------------------------------------------------------------------------------
 
-        screen2DManager->update(deltaTime);
+        screen2DManager->update(deltaTime * Constants::TIME_MULTIPLIER);
 
         // Handle Input (by calling the update method of the inputHandler)
         inputHandler->Update();

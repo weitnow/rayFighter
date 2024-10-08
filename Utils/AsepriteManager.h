@@ -32,7 +32,10 @@ private:
     int min_frame;
     int max_frame;
     float update_counter;
-    float current_duration; // duration of the current frame in milliseconds
+    float current_duration;                             // duration of the current frame in milliseconds
+    float animJustFinishedPlusLastFrameDurationCounter; // float value of duration of last frame
+    bool animJustFinishedPlusLastFrameDurationCounterSet;
+    bool animJustFinishedPlusLastFrameDuration;
     bool animJustFinished;
     bool loop;
 
@@ -58,6 +61,7 @@ public:
     float getDurationCurrentFrame(int frameNumber);
     float getDurationCurrentFrame();
     bool hasAnimJustFinished() const;
+    bool hasAnimJustFinishedPlusLastFrameDuration() const;
     int getCurrentFrame() const;
     int getMinFrame() const;
     int getMaxFrame() const;
@@ -71,6 +75,7 @@ public:
     void drawCurrentSelectedTag(int x, int y, float scale = 1.0f, Color tint = WHITE);
     void drawCurrentSelectedTag(int x, int y, float scale, Color tint, bool flipX, bool flipY);
     void setLoop(bool loop);
+    void resetBools();
 
     /**
      * @brief the update methode calls frequently the nextFrame() which switches to the next picture of the animation

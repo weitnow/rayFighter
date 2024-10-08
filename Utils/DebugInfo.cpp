@@ -137,6 +137,13 @@ void DebugInfo::_drawCharacterData(BaseCharacter* character, const std::string& 
              y + 240,
              TEXT_SIZE,
              TEXT_COLOR);
+    DrawText(("hasAnimJustFinishedPlusLastFrameDuration: " +
+              std::to_string(character->getAnim()->hasAnimJustFinishedPlusLastFrameDuration()))
+                 .c_str(),
+             x,
+             y + 260,
+             TEXT_SIZE,
+             TEXT_COLOR);
 }
 
 void DebugInfo::_drawGameObjectData(BaseGameObject* gameObject, const std::string& objectName, int x, int y)

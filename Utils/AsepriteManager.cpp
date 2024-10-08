@@ -15,6 +15,11 @@ AsepriteAnimationFile::AsepriteAnimationFile(std::string filename,
     min_frame = 0;
     max_frame = 0;
     update_counter = 0.0f;
+    current_duration = 0.0f;
+    animJustFinishedPlusLastFrameDurationCounter =
+        20.0f; // needs to be higher than the duration of the last frame otherwise animJustFinishedPlusLastFrameDuration will be true immidiately
+    animJustFinishedPlusLastFrameDurationCounterSet = false;
+    animJustFinishedPlusLastFrameDuration = false;
     animJustFinished = false;
     loop = true;
 }
@@ -53,6 +58,11 @@ float AsepriteAnimationFile::getDurationCurrentFrame()
 bool AsepriteAnimationFile::hasAnimJustFinished() const
 {
     return animJustFinished;
+}
+
+bool AsepriteAnimationFile::hasAnimJustFinishedPlusLastFrameDuration() const
+{
+    return animJustFinishedPlusLastFrameDuration;
 }
 
 int AsepriteAnimationFile::getCurrentFrame() const
@@ -129,11 +139,41 @@ void AsepriteAnimationFile::update(float deltaTime)
         nextFrame();
         update_counter = 0.0f;
     }
+
+    // if the animation just finished, count the time
+    if (animJustFinishedPlusLastFrameDurationCounter > 0.0f)
+    {
+
+        animJustFinishedPlusLastFrameDurationCounter -= deltaTime;
+        animJustFinishedPlusLastFrameDuration = false;
+    }
+    else
+    {
+
+        animJustFinishedPlusLastFrameDurationCounter = 0.0f;
+        animJustFinishedPlusLastFrameDuration = true;
+    }
+}
+
+void AsepriteAnimationFile::resetBools()
+{
+    animJustFinished = false;
+    animJustFinishedPlusLastFrameDuration = false;
+    animJustFinishedPlusLastFrameDurationCounter = 20.0f;
+    animJustFinishedPlusLastFrameDurationCounterSet = false;
 }
 
 void AsepriteAnimationFile::nextFrame()
 {
-    if (current_frame < max_frame)
+    if (max_frame - min_frame == 0)
+    {
+        if (!animJustFinishedPlusLastFrameDurationCounterSet)
+        {
+            animJustFinishedPlusLastFrameDurationCounter = getDurationCurrentFrame(current_frame) - 0.1f;
+            animJustFinishedPlusLastFrameDurationCounterSet = true;
+        }
+    }
+    else if (current_frame < max_frame)
     {
         animJustFinished = false;
         current_frame++;
@@ -144,6 +184,7 @@ void AsepriteAnimationFile::nextFrame()
             current_frame = min_frame;
 
         animJustFinished = true;
+        animJustFinishedPlusLastFrameDurationCounter = getDurationCurrentFrame(current_frame) - 0.1f;
     }
 }
 
@@ -163,6 +204,8 @@ bool AsepriteAnimationFile::setFrameTag(const std::string& filenameTagname)
     }
 
     current_filenameTagname = filenameTagname;
+
+    resetBools();
 
     //set initial values
     animJustFinished = false;

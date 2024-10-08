@@ -52,14 +52,26 @@ else
     CXX_SOURCES := $(shell find . -name '*.cpp')
 endif
 
+# Print CXX_SOURCES for debugging
+$(info CXX_SOURCES: $(CXX_SOURCES))
+
 # Create object file names based on source file names and directory structure
-CXX_OBJECTS = $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(CXX_SOURCES))
+ifeq ($(OS_WINDOWS), 1)
+	CXX_OBJECTS = $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(subst $(CURDIR)/,,$(CXX_SOURCES)))
+else
+	CXX_OBJECTS = $(patsubst %.cpp, $(BUILD_DIR)/%.o, $(CXX_SOURCES))
+endif
+
+# Print CXX_OBJECTS for debugging
+$(info CXX_OBJECTS: $(CXX_OBJECTS))
 
 ###########
 # TARGETS #
 ###########
 
 build: create_dir $(CXX_OBJECTS)
+	$(info CXX_OBJECTS: $(CXX_OBJECTS))
+	@echo "Compiling with: $(COMPILER_CALL) $(CXX_OBJECTS) $(LDFLAGS) $(USED_LIBS) -o $(BUILD_DIR)/$(EXECUTABLE_NAME)"
 	$(COMPILER_CALL) $(CXX_OBJECTS) $(LDFLAGS) $(USED_LIBS) -o $(BUILD_DIR)/$(EXECUTABLE_NAME)
 
 create_dir:
@@ -80,11 +92,12 @@ else
 endif
 
 clean:
-	find $(BUILD_DIR) -name "*.o" -delete
 	rm -f $(BUILD_DIR)/*.d
 ifeq ($(OS_WINDOWS), 1)
+	@powershell -Command "Get-ChildItem -Path '$(BUILD_DIR)\**\*.o' -Recurse -Force | Remove-Item -Force"
 	rm -f $(BUILD_DIR)/$(EXECUTABLE_NAME).exe
 else
+	find $(BUILD_DIR) -name "*.o" -delete
 	rm -f $(BUILD_DIR)/$(EXECUTABLE_NAME)
 endif
 
