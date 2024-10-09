@@ -105,7 +105,6 @@ void BaseGameObject::takeDamage(float damage)
     {
         life = 0;
         isAlive = false;
-        isActive = false;
     }
 }
 
@@ -120,6 +119,21 @@ void BaseGameObject::takeDamage(float damage, CollisionBox2D* hitbox)
 int& BaseGameObject::getCurrentLife()
 {
     return life;
+}
+
+bool BaseGameObject::getIsAlive()
+{
+    return isAlive;
+}
+
+bool BaseGameObject::getIsActive()
+{
+    return isActive;
+}
+
+void BaseGameObject::setLife(int currentLife)
+{
+    life = currentLife;
 }
 
 void BaseGameObject::setObjName(std::string name)
@@ -146,6 +160,11 @@ void BaseGameObject::setPos(Vector2 pos)
 Vector2 BaseGameObject::getPos() const
 {
     return pos;
+}
+
+void BaseGameObject::setAffectedByGravity(bool affectedByGravity)
+{
+    this->affectedByGravity = affectedByGravity;
 }
 
 void BaseGameObject::setScale(float scale)
@@ -314,6 +333,11 @@ Vector2 BaseGameObject::getPushVector()
 void BaseGameObject::resetPushVector()
 {
     pushVector = {0, 0};
+}
+
+void BaseGameObject::setMoveVectorY(int yValue)
+{
+    moveVector.y = yValue;
 }
 
 void BaseGameObject::_reducePushVector(float deltaTime)

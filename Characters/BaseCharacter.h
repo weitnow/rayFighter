@@ -25,8 +25,12 @@ public:
     void duck();
     void punch();
 
+    virtual void takeDamage(float damage, CollisionBox2D* hitbox) override;
+
     void setIsLeft(bool isLeft);
     bool getIsLeft();
+
+    virtual void setMoveVectorY(int yValue) override;
 
     void setPlayerNumber(int playerNumber);
     int getPlayerNumber();

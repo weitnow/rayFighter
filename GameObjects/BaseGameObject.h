@@ -25,6 +25,10 @@ public:
     virtual void takeDamage(float damage, CollisionBox2D* hitbox);
 
     int& getCurrentLife();
+    bool getIsAlive();
+    bool getIsActive();
+
+    void setLife(int currentLife);
 
     void setObjName(std::string name);
     std::string getObjName();
@@ -33,6 +37,9 @@ public:
     void setPos(float x, float y);
     void setPos(Vector2 pos);
     virtual Vector2 getPos() const;
+
+    //gravity
+    void setAffectedByGravity(bool affectedByGravity);
 
     // scale
     void setScale(float scale);
@@ -76,6 +83,9 @@ public:
     Vector2 getPushVector();
     void resetPushVector();
 
+    //moveVector
+    virtual void setMoveVectorY(int yValue);
+
 protected:
     Vector2 orginalPos; // the original position of the object as it was created - used for reseting the object
     Vector2 pos;
@@ -87,7 +97,7 @@ protected:
     std::string currentFrameTag; // for example "gbFighter-Idle"
     std::string ObjName;         // for example "Andy"
     bool isActive;
-    bool isAlive;
+    bool isAlive; // if life is < 0 takeDamage will set isAlive = false
     bool isInvincible;
     int getDurationCurrentFrame; // Duration of the current frame in milliseconds
     int currentFrame;            // current frame of the animation
@@ -96,6 +106,7 @@ protected:
     bool hasAnimJustFinished;    // true if the animation has just finished
     int currentFrameAbsolut;     // current frame number of the animation - min frame
     int life;
+
     float _invincibleCounter;
     float invincibleTime;
     bool affectedByGravity;

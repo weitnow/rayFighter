@@ -83,12 +83,6 @@ void IdleState::Update(float deltaTime)
     {
         statemachine->changeState("Block");
     }
-
-    // Death
-    if (owner->getCurrentLife() <= 0)
-    {
-        statemachine->changeState("Death");
-    }
 }
 
 void IdleState::Finalize()
@@ -293,10 +287,44 @@ void BlockState::Finalize()
 /* #region HitState */
 void HitState::Init()
 {
+    // make sure the character will not move
+    owner->stop();
+    owner->canDealDamage = false;
+
+    // set timer
+    if (owner->getIsAlive())
+    {
+        timer = 0.5f;
+    }
+    else
+    {
+        // if owner died
+        timer = 0.f;
+    }
 }
 
 void HitState::Update(float deltaTime)
 {
+
+    if (timer > 0.f)
+    {
+        timer -= deltaTime;
+    }
+    else
+    {
+        timer = 0.0f;
+
+        // check if the owner is dead
+        if (!owner->getIsAlive())
+        {
+            owner->setMoveVectorY(800);
+            statemachine->changeState("Death");
+        }
+        else
+        {
+            statemachine->changeState("Idle");
+        }
+    }
 }
 
 void HitState::Finalize()
@@ -321,9 +349,18 @@ void HurtState::Finalize()
 /* #region DeathState*/
 void DeathState::Init()
 {
-    // make sure the character cannot move while punching
+    // make sure the character will not move
     owner->stop();
     owner->canDealDamage = false;
+
+    // change deltaMultiplier
+    //gameManager.setDeltaTimeMultiplier(0.5f);
+
+    // TODO: change this to opponent
+    //player2->setAffectedByGravity(false);
+
+    //player2->setPushVector({0, -250});
+    player2->setMoveVectorY(-250);
 }
 
 void DeathState::Update(float deltaTime)

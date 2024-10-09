@@ -36,6 +36,7 @@ protected:
     BaseCharacter* owner = nullptr;            // Pointer to the BaseCharacter owning this state
     CharacterController* controller = nullptr; // Pointer to the CharacterController
     Statemachine* statemachine = nullptr;      // Pointer to the Statemachine
+    float timer = 0;
 };
 
 // Macro to declare State class methods

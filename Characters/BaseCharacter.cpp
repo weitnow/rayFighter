@@ -39,7 +39,10 @@ void BaseCharacter::update(float deltaTime)
 
     //APPLY GRAVITY
     if (affectedByGravity)
+    {
         _applyGravity(deltaTime);
+    }
+
 
     // UPDATE THE STATE
     statemachine->update(deltaTime);
@@ -111,6 +114,17 @@ void BaseCharacter::punch()
 {
 }
 
+void BaseCharacter::takeDamage(float damage, CollisionBox2D* hitbox)
+{
+
+
+    BaseGameObject::takeDamage(damage, hitbox);
+
+    // Todo: get rit of this
+    // change the state to hit
+    statemachine->changeState("Hit");
+}
+
 void BaseCharacter::setIsLeft(bool isLeft)
 {
     this->isLeft = isLeft;
@@ -129,6 +143,12 @@ void BaseCharacter::setIsLeft(bool isLeft)
 bool BaseCharacter::getIsLeft()
 {
     return isLeft;
+}
+
+void BaseCharacter::setMoveVectorY(int yValue)
+{
+    isOnGround = false;
+    BaseGameObject::setMoveVectorY(yValue);
 }
 
 void BaseCharacter::setPlayerNumber(int playerNumber)

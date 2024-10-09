@@ -144,6 +144,7 @@ void DebugInfo::_drawCharacterData(BaseCharacter* character, const std::string& 
              y + 260,
              TEXT_SIZE,
              TEXT_COLOR);
+    DrawText(("isAlive: " + std::to_string(character->getIsAlive())).c_str(), x, y + 280, TEXT_SIZE, TEXT_COLOR);
 }
 
 void DebugInfo::_drawGameObjectData(BaseGameObject* gameObject, const std::string& objectName, int x, int y)

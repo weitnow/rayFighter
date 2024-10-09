@@ -50,6 +50,9 @@ public:
     void addAsepriteManager(AsepriteManager* asepriteManager);
     AsepriteManager* getAsepriteManager();
 
+    // deltaTimeMultiplier
+    void setDeltaTimeMultiplier(float deltaTimeMultiplier);
+
 
 private:
     // Private constructor to prevent direct instantiation
@@ -80,6 +83,9 @@ private:
     Lifebar* lifebar1;
     Lifebar* lifebar2;
     AsepriteAnimationFile* deadSkull;
+
+    // deltaTimeMultiplier
+    float deltaTimeMultiplier = 1.f;
 
     // member methodes
     void _setPlayer1and2();

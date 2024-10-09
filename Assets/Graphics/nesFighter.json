@@ -181,7 +181,7 @@
    { "name": "Walk", "from": 2, "to": 3, "direction": "forward", "color": "#000000ff" },
    { "name": "Jump", "from": 5, "to": 5, "direction": "forward", "color": "#000000ff" },
    { "name": "Death", "from": 6, "to": 7, "direction": "forward", "color": "#000000ff" },
-   { "name": "Hurt", "from": 6, "to": 6, "direction": "forward", "color": "#000000ff" },
+   { "name": "Hit", "from": 6, "to": 6, "direction": "forward", "color": "#000000ff" },
    { "name": "Face Down", "from": 7, "to": 7, "direction": "forward", "color": "#000000ff" },
    { "name": "Block", "from": 8, "to": 8, "direction": "forward", "color": "#000000ff" },
    { "name": "Duck", "from": 9, "to": 9, "direction": "forward", "color": "#000000ff" },

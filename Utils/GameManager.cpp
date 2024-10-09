@@ -95,7 +95,11 @@ void GameManager::_checkHitsBetweenPlayers()
                 player2->takeDamage(1, &hitbox);
                 if (player1->getCurrentState() == "Kick")
                 {
-                    player2->setPushVector({150, 0});
+                    player2->setPushVector({200, 0});
+                }
+                else if (player1->getCurrentState() == "Punch")
+                {
+                    player2->setPushVector({120, 0});
                 }
 
                 player1->canDealDamage = false;
@@ -195,11 +199,16 @@ void GameManager::removeBaseGameObject()
 
 void GameManager::update(float deltaTime)
 {
+    // Multiply deltaTime by deltaTimeMultiplier (can be used to speed up or slow down the game)
+    deltaTime *= deltaTimeMultiplier;
+
     // Set player1 and player2 if not already set
     _setPlayer1and2();
 
     // Update isLeft for player1 and player2
     _updateIsLeftPlayer1and2();
+
+    _checkHitsBetweenPlayers();
 
     // Update all gameObjects
     for (auto& object : gameObjects)
@@ -218,7 +227,6 @@ void GameManager::update(float deltaTime)
 
     _checkCollisionsBetweenPlayers();
 
-    _checkHitsBetweenPlayers();
 
     // Update the lifebars
     lifebar1->Update(player1->getCurrentLife());
@@ -294,4 +302,9 @@ void GameManager::addAsepriteManager(AsepriteManager* asepriteManager)
 AsepriteManager* GameManager::getAsepriteManager()
 {
     this->asepriteManager;
+}
+
+void GameManager::setDeltaTimeMultiplier(float deltaTimeMultiplier)
+{
+    this->deltaTimeMultiplier = deltaTimeMultiplier;
 }
