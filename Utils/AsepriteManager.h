@@ -74,7 +74,6 @@ public:
                    bool flipY = false);
     void drawCurrentSelectedTag(int x, int y, float scale = 1.0f, Color tint = WHITE);
     void drawCurrentSelectedTag(int x, int y, float scale, Color tint, bool flipX, bool flipY);
-    void setLoop(bool loop);
     void resetBools();
 
     /**
@@ -129,7 +128,7 @@ public:
      * @param filenameTagname ex. gbFighter-Idle
      * @return
      */
-    FrameTag getFrameTag(const std::string& filenameTagname);
+    FrameTag& getFrameTag(const std::string& filenameTagname);
 
     /**
      * @brief This function returns a pointer to an AsepriteAnimationFile

@@ -122,11 +122,6 @@ void AsepriteAnimationFile::drawCurrentSelectedTag(int x, int y, float scale, Co
     drawFrame(current_filenameTagname, x, y, scale, tint, flipX, flipY);
 }
 
-void AsepriteAnimationFile::setLoop(bool loop)
-{
-    this->loop = loop;
-}
-
 void AsepriteAnimationFile::update(float deltaTime)
 {
     // get the duration of the current frame
@@ -165,6 +160,7 @@ void AsepriteAnimationFile::resetBools()
 
 void AsepriteAnimationFile::nextFrame()
 {
+    // if the animation has only one frame
     if (max_frame - min_frame == 0)
     {
         if (!animJustFinishedPlusLastFrameDurationCounterSet)
@@ -173,13 +169,16 @@ void AsepriteAnimationFile::nextFrame()
             animJustFinishedPlusLastFrameDurationCounterSet = true;
         }
     }
+    // if the animation has more than one frame check if the current frame is not the last frame
     else if (current_frame < max_frame)
     {
         animJustFinished = false;
         current_frame++;
     }
+    // if it is the last frame, check if the animation should loop
     else
     {
+        // if the animation should loop, go back to the first frame
         if (loop)
             current_frame = min_frame;
 
@@ -195,6 +194,7 @@ bool AsepriteAnimationFile::setFrameTag(const std::string& filenameTagname)
         return false;
     }
 
+    current_filenameTagname = filenameTagname;
 
     if (this->asepriteManager->frameTags.find(filenameTagname) == this->asepriteManager->frameTags.end())
     {
@@ -202,8 +202,6 @@ bool AsepriteAnimationFile::setFrameTag(const std::string& filenameTagname)
             "AsepriteAnimationFile::setFrameTag -> Error: asepriteManager is nullptr or the filenameTagname " +
             filenameTagname + " does not exist");
     }
-
-    current_filenameTagname = filenameTagname;
 
     resetBools();
 
@@ -214,6 +212,7 @@ bool AsepriteAnimationFile::setFrameTag(const std::string& filenameTagname)
 
     min_frame = current_FrameTag.from;
     max_frame = current_FrameTag.to;
+    loop = current_FrameTag.loop;
 
     if (this->filename != current_FrameTag.texturename)
     {
@@ -310,7 +309,7 @@ void AsepriteManager::loadAnimFile(const std::string& filename)
             frameTag.direction = (*jsonfile)["meta"]["frameTags"][i]["direction"];
             frameTag.sourceSizeX = (*jsonfile)["frames"][filename + " 0.aseprite"]["spriteSourceSize"]["w"];
             frameTag.sourceSizeY = (*jsonfile)["frames"][filename + " 0.aseprite"]["spriteSourceSize"]["h"];
-            frameTag.loop = false;
+            frameTag.loop = true;
             frameTag.from = (*jsonfile)["meta"]["frameTags"][i]["from"];
             frameTag.to = (*jsonfile)["meta"]["frameTags"][i]["to"];
 
@@ -357,7 +356,7 @@ void AsepriteManager::loadAnimFile(const std::string& filename)
 }
 
 
-FrameTag AsepriteManager::getFrameTag(const std::string& filenameTagname)
+FrameTag& AsepriteManager::getFrameTag(const std::string& filenameTagname)
 {
     try
     {

@@ -33,7 +33,6 @@ void Barrel::update(float deltaTime)
     {
         isAlive = false;
         setPushVector({300, -150});
-        this->getAnim()->setLoop(false);
         setCurrentFrameTag("barrel-Destroyed");
     }
 }

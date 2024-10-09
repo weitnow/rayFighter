@@ -110,12 +110,12 @@ void InputHandler::_handlePlayer1Input()
         player1Controller->duck = true;
     }
 
-    if (IsKeyDown(KEY_J))
+    if (IsKeyPressed(KEY_J))
     {
         //gameManager->getBaseCharacter("player1")->punch();
         player1Controller->punch = true;
     }
-    if (IsKeyDown(KEY_K))
+    if (IsKeyPressed(KEY_K))
     {
         //gameManager->getBaseCharacter("player1")->kick();
         player1Controller->kick = true;
@@ -149,5 +149,21 @@ void InputHandler::_handlePlayer2Input()
     {
         //gameManager->getBaseCharacter("player2")->duck();
         player2Controller->duck = true;
+    }
+
+    if (IsKeyPressed(KEY_U))
+    {
+        //gameManager->getBaseCharacter("player2")->punch();
+        player2Controller->punch = true;
+    }
+    if (IsKeyPressed(KEY_I))
+    {
+        //gameManager->getBaseCharacter("player2")->kick();
+        // not implemented yet
+    }
+    if (IsKeyDown(KEY_O))
+    {
+        //gameManager->getBaseCharacter("player2")->block();
+        player2Controller->block = true;
     }
 }

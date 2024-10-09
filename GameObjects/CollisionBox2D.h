@@ -17,25 +17,30 @@ enum class CollisionBoxType
 
 };
 
+enum class HurtboxType
+{
+    HEAD,
+    BODY,
+    LEGS
+};
+
 
 class CollisionBox2D
 {
 public:
-    CollisionBox2D();
-    CollisionBox2D(std::string name,
-                   float offsetx,
+    CollisionBox2D(float offsetx,
                    float offsety,
                    float width,
                    float height,
                    CollisionBoxType collisionBoxType = CollisionBoxType::PUSHBOX,
                    bool isActive = true,
-                   Color color = BLUE);
+                   Color color = BLUE,
+                   HurtboxType hurtboxType = HurtboxType::BODY);
     ~CollisionBox2D();
     void update(float deltaTime);
     void draw();
     void setObjPos(float x, float y);
     Rectangle& getRectangle();
-    std::string getName();
 
 
 protected:
@@ -46,9 +51,9 @@ protected:
     float width;
     float height;
     Color color;
-    std::string name;
     bool isActive;
-    CollisionBoxType type;
+    CollisionBoxType collisionBoxType;
+    HurtboxType hurtboxType; // only used for Hurtboxes
 };
 
 

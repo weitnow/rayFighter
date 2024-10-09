@@ -68,9 +68,13 @@ public:
         {
             newState = std::make_shared<HurtState>();
         }
+        else if (stateName == "Death")
+        {
+            newState = std::make_shared<DeathState>();
+        }
         else
         {
-            throw std::invalid_argument("Unknown state name");
+            throw std::invalid_argument(stateName + " is Unknown state name");
         }
 
         // Set the owner of the new state

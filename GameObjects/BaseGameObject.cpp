@@ -95,8 +95,27 @@ void BaseGameObject::draw()
 
 void BaseGameObject::takeDamage(float damage)
 {
+#ifdef DEBUG
     std::cout << "BaseGameObject::takeDamage -> " << ObjName << " took " << damage << " damage." << std::endl;
+#endif
+
+    life -= damage;
+
+    if (life <= 0)
+    {
+        life = 0;
+        isAlive = false;
+        isActive = false;
+    }
 }
+
+void BaseGameObject::takeDamage(float damage, CollisionBox2D* hitbox)
+{
+    std::cout << "BaseGameObject::takeDamage -> " << ObjName << " took " << damage << " damage." << std::endl;
+
+    takeDamage(damage);
+}
+
 
 int& BaseGameObject::getCurrentLife()
 {
@@ -197,6 +216,7 @@ List<CollisionBox2D> BaseGameObject::getThrowBoxes()
 void BaseGameObject::addCollisionBoxForFrame(const std::string frameTag,
                                              int frameNumber,
                                              CollisionBoxType collisionBoxType,
+                                             HurtboxType hurtboxType,
                                              bool isActive,
                                              float offsetX,
                                              float offsetY,
@@ -223,7 +243,14 @@ void BaseGameObject::addCollisionBoxForFrame(const std::string frameTag,
         for (int i = 0; i <= NumberOfFrames; ++i)
         {
             frameTagName = frameTag + std::to_string(i);
-            _addCollisionBoxForFrameInternal(frameTagName, offsetX, offsetY, width, height, collisionBoxType, isActive);
+            _addCollisionBoxForFrameInternal(frameTagName,
+                                             offsetX,
+                                             offsetY,
+                                             width,
+                                             height,
+                                             collisionBoxType,
+                                             hurtboxType,
+                                             isActive);
         }
         return;
     }
@@ -234,7 +261,44 @@ void BaseGameObject::addCollisionBoxForFrame(const std::string frameTag,
     }
 
 
-    _addCollisionBoxForFrameInternal(frameTagName, offsetX, offsetY, width, height, collisionBoxType, isActive);
+    _addCollisionBoxForFrameInternal(frameTagName,
+                                     offsetX,
+                                     offsetY,
+                                     width,
+                                     height,
+                                     collisionBoxType,
+                                     hurtboxType,
+                                     isActive);
+}
+
+void BaseGameObject::addCollisionBoxForFrame(const std::string frameTag,
+                                             int frameNumber,
+                                             CollisionBoxType collisionBoxType,
+                                             bool isActive,
+                                             float offsetX,
+                                             float offsetY,
+                                             float width,
+                                             float height)
+{
+#ifdef DEBUG
+    if (collisionBoxType == CollisionBoxType::HURTBOX)
+    {
+        std::cerr << "BaseGameObject::addCollisionBoxForFrame -> "
+                  << "You have to specify a HurtboxType for a Hurtbox. "
+                  << "Otherwise HurtboxType::BODY assumed" << std::endl;
+    }
+#endif
+
+
+    addCollisionBoxForFrame(frameTag,
+                            frameNumber,
+                            collisionBoxType,
+                            HurtboxType::BODY,
+                            isActive,
+                            offsetX,
+                            offsetY,
+                            width,
+                            height);
 }
 
 void BaseGameObject::setPushVector(Vector2 pushVector)
@@ -401,27 +465,28 @@ void BaseGameObject::_addCollisionBoxForFrameInternal(std::string frameTagName,
                                                       int width,
                                                       int height,
                                                       CollisionBoxType collisionBoxType,
+                                                      HurtboxType hurtboxType,
                                                       bool isActive)
 {
     if (collisionBoxType == CollisionBoxType::HITBOX)
     {
         hitBoxesPerFrame[frameTagName].push_back(
-            CollisionBox2D{"Hitbox", offsetX, offsetY, width, height, collisionBoxType, isActive, RED});
+            CollisionBox2D{offsetX, offsetY, width, height, collisionBoxType, isActive, RED, hurtboxType});
     }
     else if (collisionBoxType == CollisionBoxType::HURTBOX)
     {
         hurtBoxesPerFrame[frameTagName].push_back(
-            CollisionBox2D{"Hurtbox", offsetX, offsetY, width, height, collisionBoxType, isActive, GREEN});
+            CollisionBox2D{offsetX, offsetY, width, height, collisionBoxType, isActive, GREEN, hurtboxType});
     }
     else if (collisionBoxType == CollisionBoxType::PUSHBOX)
     {
         pushBoxesPerFrame[frameTagName].push_back(
-            CollisionBox2D{"Pushbox", offsetX, offsetY, width, height, collisionBoxType, isActive, BLUE});
+            CollisionBox2D{offsetX, offsetY, width, height, collisionBoxType, isActive, BLUE, hurtboxType});
     }
     else if (collisionBoxType == CollisionBoxType::THROWBOX)
     {
         throwBoxesPerFrame[frameTagName].push_back(
-            CollisionBox2D{"Throwbox", offsetX, offsetY, width, height, collisionBoxType, isActive, BROWN});
+            CollisionBox2D{offsetX, offsetY, width, height, collisionBoxType, isActive, BROWN, hurtboxType});
     }
     else
     {

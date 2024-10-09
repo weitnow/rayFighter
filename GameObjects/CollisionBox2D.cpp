@@ -5,21 +5,16 @@
 #include "CollisionBox2D.h"
 #include "../Constants.h"
 
-CollisionBox2D::CollisionBox2D()
-    : name("CollisionBox2D"), width(16.0f), height(16.0f), color(Colors::getRedTransparent())
-{
-}
-
-CollisionBox2D::CollisionBox2D(std::string name,
-                               float offsetx,
+CollisionBox2D::CollisionBox2D(float offsetx,
                                float offsety,
                                float width,
                                float height,
                                CollisionBoxType collisionBoxType,
                                bool isActive,
-                               Color color)
-    : name(name), width(width), height(height), color(color), offset{offsetx, offsety},
-      myRectangle{0, 0, width, height}, objPos{0, 0}, pos{0, 0}, isActive(isActive), type(collisionBoxType)
+                               Color color,
+                               HurtboxType hurtboxType)
+    : width(width), height(height), color(color), offset{offsetx, offsety}, myRectangle{0, 0, width, height},
+      objPos{0, 0}, pos{0, 0}, isActive(isActive), collisionBoxType(collisionBoxType), hurtboxType(hurtboxType)
 {
 }
 
@@ -55,9 +50,4 @@ void CollisionBox2D::setObjPos(float x, float y)
 Rectangle& CollisionBox2D::getRectangle()
 {
     return myRectangle;
-}
-
-std::string CollisionBox2D::getName()
-{
-    return name;
 }

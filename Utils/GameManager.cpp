@@ -1,6 +1,7 @@
 #include "GameManager.h"
 #include "../Gui/Lifebar.h"
 #include "CollisionManager.h"
+#include "SoundManager.h"
 
 // Define the static member variable and pass the GameManager instance to the constructor
 CollisionManager GameManager::collisionManager(GameManager::getInstance());
@@ -79,8 +80,9 @@ void GameManager::_checkCollisionsBetweenPlayers()
     }
 }
 
-bool GameManager::_checkHitsBetweenPlayers()
+void GameManager::_checkHitsBetweenPlayers()
 {
+    // TODO: refactor this, this stuff must be in the statemachine
     // loop through all hitboxes of player1
     for (auto& hitbox : player1->getHitBoxes())
     {
@@ -90,13 +92,35 @@ bool GameManager::_checkHitsBetweenPlayers()
             if (collisionManager.checkCollision(hitbox, hurtbox) && player1->canDealDamage)
             {
                 // Handle hit (you can define specific hit logic here)
-                player2->takeDamage(1);
+                player2->takeDamage(1, &hitbox);
+                if (player1->getCurrentState() == "Kick")
+                {
+                    player2->setPushVector({150, 0});
+                }
+
                 player1->canDealDamage = false;
-                return true;
+
+                SoundManager::getInstance().playSound(SoundManager::getInstance().punchSound);
             }
         }
     }
-    return false;
+
+    // loop through all hitboxes of player2
+    for (auto& hitbox : player2->getHitBoxes())
+    {
+        // loop through all hurtboxes of player1
+        for (auto& hurtbox : player1->getHurtBoxes())
+        {
+            if (collisionManager.checkCollision(hitbox, hurtbox) && player2->canDealDamage)
+            {
+                // Handle hit (you can define specific hit logic here)
+                player1->takeDamage(1, &hitbox);
+                player2->canDealDamage = false;
+
+                SoundManager::getInstance().playSound(SoundManager::getInstance().punchSound);
+            }
+        }
+    }
 }
 
 void GameManager::_setPlayer1and2()
@@ -198,7 +222,7 @@ void GameManager::update(float deltaTime)
 
     // Update the lifebars
     lifebar1->Update(player1->getCurrentLife());
-    lifebar2->Update(player1->getCurrentLife());
+    lifebar2->Update(player2->getCurrentLife());
 }
 
 BaseCharacter* GameManager::getBaseCharacter(const std::string& CharName)

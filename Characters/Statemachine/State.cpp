@@ -83,6 +83,12 @@ void IdleState::Update(float deltaTime)
     {
         statemachine->changeState("Block");
     }
+
+    // Death
+    if (owner->getCurrentLife() <= 0)
+    {
+        statemachine->changeState("Death");
+    }
 }
 
 void IdleState::Finalize()
@@ -229,14 +235,11 @@ void PunchState::Init()
     // make sure the character cannot move while punching
     owner->stop();
     owner->canDealDamage = true;
-
-    // play punch sound //TODO: get rid of this
-    SoundManager::getInstance().playSound(SoundManager::getInstance().punchSound);
 }
 
 void PunchState::Update(float deltaTime)
 {
-    if (!controller->punch)
+    if (owner->getAnim()->hasAnimJustFinishedPlusLastFrameDuration())
     {
         statemachine->changeState("Idle");
     }
@@ -250,10 +253,17 @@ void PunchState::Finalize()
 /* #region KickState */
 void KickState::Init()
 {
+    // make sure the character cannot move while punching
+    owner->stop();
+    owner->canDealDamage = true;
 }
 
 void KickState::Update(float deltaTime)
 {
+    if (owner->getAnim()->hasAnimJustFinishedPlusLastFrameDuration())
+    {
+        statemachine->changeState("Idle");
+    }
 }
 
 void KickState::Finalize()
@@ -264,10 +274,15 @@ void KickState::Finalize()
 /* #region BlockState */
 void BlockState::Init()
 {
+    owner->stop();
 }
 
 void BlockState::Update(float deltaTime)
 {
+    if (!controller->block)
+    {
+        statemachine->changeState("Idle");
+    }
 }
 
 void BlockState::Finalize()
@@ -301,4 +316,22 @@ void HurtState::Update(float deltaTime)
 void HurtState::Finalize()
 {
 }
+/* #endregion */
+
+/* #region DeathState*/
+void DeathState::Init()
+{
+    // make sure the character cannot move while punching
+    owner->stop();
+    owner->canDealDamage = false;
+}
+
+void DeathState::Update(float deltaTime)
+{
+}
+
+void DeathState::Finalize()
+{
+}
+
 /* #endregion */

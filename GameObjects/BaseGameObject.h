@@ -22,6 +22,7 @@ public:
     virtual void draw();
 
     virtual void takeDamage(float damage = 1.f);
+    virtual void takeDamage(float damage, CollisionBox2D* hitbox);
 
     int& getCurrentLife();
 
@@ -53,11 +54,22 @@ public:
     void addCollisionBoxForFrame(const std::string frameTag,
                                  int frameNumber,
                                  CollisionBoxType collisionBoxType,
+                                 HurtboxType hurtboxType,
                                  bool isActive,
                                  float offsetX,
                                  float offsetY,
                                  float width,
                                  float height);
+
+    void addCollisionBoxForFrame(const std::string frameTag,
+                                 int frameNumber,
+                                 CollisionBoxType collisionBoxType,
+                                 bool isActive,
+                                 float offsetX,
+                                 float offsetY,
+                                 float width,
+                                 float height);
+
 
     //pushVector
     void setPushVector(Vector2 pushVector);
@@ -111,6 +123,7 @@ protected:
                                           int width,
                                           int height,
                                           CollisionBoxType collisionBoxType,
+                                          HurtboxType hurtboxType,
                                           bool isActive);
 
     List<CollisionBox2D> _checkIfCollisionMapHasCollisionBoxesAndReturnList(const std::string& currentFrameTag,

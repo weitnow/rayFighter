@@ -2,6 +2,7 @@
 #define GBFIGHTER_LIFEBAR_H
 
 #include "raylib.h"
+#include <iostream>
 #include <string>
 
 

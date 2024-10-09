@@ -85,7 +85,7 @@ private:
     void _setPlayer1and2();
     void _updateIsLeftPlayer1and2();
     void _checkCollisionsBetweenPlayers();
-    bool _checkHitsBetweenPlayers();
+    void _checkHitsBetweenPlayers();
 };
 
 #endif //GAMEMANAGER_H

@@ -52,9 +52,13 @@ int main(void)
     asepriteManager->loadAnimFile("gbFighter"); // asepriteManager.frameTags[gbFighter-Idle]
                                                 // asepriteManager.textures[gbFighter]
 
+    asepriteManager->getFrameTag("gbFighter-Death").loop = false; // set loop to false for the death animation
+
 
     asepriteManager->loadAnimFile("nesFighter"); // asepriteManager.frameTags[nesFighter-Idle]
                                                  // asepriteManager.textures[nesFighter]
+
+    asepriteManager->getFrameTag("nesFighter-Death").loop = false; // set loop to false for the death animation
 
     asepriteManager->loadAnimFile("bgAnimation"); // asepriteManager.frameTags[bgAnimation]
                                                   // asepriteManager.textures[bgAnimation]
@@ -93,7 +97,16 @@ int main(void)
     player1->addController(inputHandler->getPlayer1Controller());
     player1->addCollisionBoxForFrame("gbFighter-Idle", -1, CollisionBoxType::PUSHBOX, true, 10, 0, 10, 30);
     player1->addCollisionBoxForFrame("gbFighter-Punch", 1, CollisionBoxType::HITBOX, true, 26, 10, 5, 5);
-    player1->addCollisionBoxForFrame("gbFighter-Idle", -2, CollisionBoxType::HURTBOX, true, 10, 4, 12, 26);
+    player1->addCollisionBoxForFrame("gbFighter-Kick", 1, CollisionBoxType::HITBOX, true, 26, 10, 5, 5);
+    player1->addCollisionBoxForFrame("gbFighter-Idle",
+                                     -2,
+                                     CollisionBoxType::HURTBOX,
+                                     HurtboxType::BODY,
+                                     true,
+                                     10,
+                                     4,
+                                     12,
+                                     26);
     player1->getStatemachine().changeState("Walk");
 
 
@@ -103,7 +116,16 @@ int main(void)
     player2->setPlayerNumber(2);
     player2->addController(inputHandler->getPlayer2Controller());
     player2->addCollisionBoxForFrame("nesFighter-Idle", -1, CollisionBoxType::PUSHBOX, true, 16, 0, 10, 30);
-    player2->addCollisionBoxForFrame("nesFighter-Idle", -2, CollisionBoxType::HURTBOX, true, 16, 0, 10, 25);
+    player2->addCollisionBoxForFrame("nesFighter-Punch", 0, CollisionBoxType::HITBOX, true, 0, 15, 5, 5);
+    player2->addCollisionBoxForFrame("nesFighter-Idle",
+                                     -2,
+                                     CollisionBoxType::HURTBOX,
+                                     HurtboxType::BODY,
+                                     true,
+                                     16,
+                                     0,
+                                     10,
+                                     25);
     player2->getStatemachine().changeState("Idle");
 
     // Create Static Background

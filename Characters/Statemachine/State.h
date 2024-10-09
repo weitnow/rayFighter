@@ -106,6 +106,13 @@ public:
     STATE_METHODS
 };
 
+class DeathState : public State
+{
+public:
+    DeathState() : State("Death") {};
+    STATE_METHODS
+};
+
 #undef STATE_METHODS
 
 #endif //GBFIGHTER_STATE_H

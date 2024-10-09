@@ -108,9 +108,3 @@ Vector2 BaseSpriteObject::getScale()
 {
     return scale;
 }
-
-void BaseSpriteObject::addCollisionBox(std::string hitboxName)
-{
-
-    collisionboxes[hitboxName] = CollisionBox2D{};
-}

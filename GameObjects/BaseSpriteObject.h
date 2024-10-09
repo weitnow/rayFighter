@@ -30,9 +30,6 @@ public:
     void setScale(Vector2 scale);
     Vector2 getScale();
 
-    //hitboxes
-    void addCollisionBox(std::string hitboxName);
-
 protected:
     // Define the origin point for rotation (the center of the rectangle)
     Vector2 origin;
