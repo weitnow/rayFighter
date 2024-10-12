@@ -68,6 +68,15 @@ private:
     bool goRight = false;
     bool goLeft = false;
 };
+
+class JumpPunchState : public State
+{
+public:
+    JumpPunchState() : State("JumpPunch") {};
+    STATE_METHODS
+};
+
+
 class DuckState : public State
 {
 public:

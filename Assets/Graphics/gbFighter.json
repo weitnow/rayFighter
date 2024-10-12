@@ -626,7 +626,7 @@
    { "name": "Punch", "from": 42, "to": 43, "direction": "forward", "color": "#000000ff" },
    { "name": "B Move Close", "from": 44, "to": 45, "direction": "forward", "color": "#000000ff" },
    { "name": "B Move Crouch", "from": 46, "to": 46, "direction": "forward", "color": "#000000ff" },
-   { "name": "B Move Aerial", "from": 47, "to": 47, "direction": "forward", "color": "#000000ff" },
+   { "name": "JumpPunch", "from": 47, "to": 47, "direction": "forward", "color": "#000000ff" },
    { "name": "Throw", "from": 48, "to": 50, "direction": "forward", "color": "#000000ff" },
    { "name": "A+B Move", "from": 51, "to": 56, "direction": "forward", "color": "#000000ff" },
    { "name": "A+B Move Crouched", "from": 57, "to": 60, "direction": "forward", "color": "#000000ff" },

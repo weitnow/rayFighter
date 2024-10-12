@@ -44,6 +44,10 @@ public:
         {
             newState = std::make_shared<JumpState>();
         }
+        else if (stateName == "JumpPunch")
+        {
+            newState = std::make_shared<JumpPunchState>();
+        }
         else if (stateName == "Duck")
         {
             newState = std::make_shared<DuckState>();

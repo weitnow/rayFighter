@@ -157,6 +157,13 @@ void JumpState::Init()
 
     alreadyJumped = false;
 
+    // check if last state was jumpPunch
+    if (owner->getStatemachine().getPreviousStateAsString() == "JumpPunch")
+    {
+        std::cout << "JumpState Init -> last state was JumpPunch" << std::endl;
+        alreadyJumped = true;
+    }
+
     // check if player wants to move left or right while in the air, cannot change direction in the air
     if (controller->moveLeft)
     {
@@ -191,6 +198,12 @@ void JumpState::Update(float deltaTime)
     {
         owner->moveRight();
     }
+
+    // check if player is punching or kicking
+    if (controller->punch)
+    {
+        statemachine->changeState("JumpPunch");
+    }
 }
 
 void JumpState::Finalize()
@@ -202,6 +215,26 @@ void JumpState::Finalize()
     goRight = false;
 }
 /* #endregion */
+
+void JumpPunchState::Init()
+{
+    owner->canDealDamage = true;
+
+    // play sound
+    SoundManager::getInstance().playSound(SoundManager::getInstance().punchSound);
+}
+
+void JumpPunchState::Update(float deltaTime)
+{
+    if (owner->getAnim()->hasAnimJustFinishedPlusLastFrameDuration())
+    {
+        statemachine->changeState("Jump");
+    }
+}
+
+void JumpPunchState::Finalize()
+{
+}
 
 void DuckState::Init()
 {
