@@ -308,3 +308,8 @@ void GameManager::setDeltaTimeMultiplier(float deltaTimeMultiplier)
 {
     this->deltaTimeMultiplier = deltaTimeMultiplier;
 }
+
+void GameManager::playerKo(int playerNumber)
+{
+    deadSkull->setFrameTag("deadSkull-Amazed");
+}

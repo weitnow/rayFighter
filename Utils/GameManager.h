@@ -53,6 +53,8 @@ public:
     // deltaTimeMultiplier
     void setDeltaTimeMultiplier(float deltaTimeMultiplier);
 
+    void playerKo(int playerNumber);
+
 
 private:
     // Private constructor to prevent direct instantiation

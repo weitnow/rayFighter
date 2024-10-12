@@ -36,7 +36,9 @@ public:
     Music zangief_music;
 
     // Sound Effects Objects
+    Sound hitSound;
     Sound punchSound;
+    Sound ko;
 
 private:
     SoundManager(); // Private constructor to prevent direct instantiation

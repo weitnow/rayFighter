@@ -30,7 +30,9 @@ SoundManager::SoundManager() : currentBackgroundMusic(nullptr)
                            &zangief_music};
 
     // Load sound effects
-    punchSound = LoadSound("Assets/Soundeffects/2BH.wav");
+    hitSound = LoadSound("Assets/Soundeffects/2BH.wav");
+    punchSound = LoadSound("Assets/Soundeffects/mk2/mk2-00136.mp3");
+    ko = LoadSound("Assets/Soundeffects/ko.mp3");
 
     // Initialize random seed
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
@@ -51,7 +53,9 @@ SoundManager::~SoundManager()
     UnloadMusicStream(zangief_music);
 
     // Unload Sound Effects
+    UnloadSound(hitSound);
     UnloadSound(punchSound);
+    UnloadSound(ko);
 
     // Close audio device
     CloseAudioDevice();

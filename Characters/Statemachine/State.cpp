@@ -229,6 +229,9 @@ void PunchState::Init()
     // make sure the character cannot move while punching
     owner->stop();
     owner->canDealDamage = true;
+
+    // play sound
+    SoundManager::getInstance().playSound(SoundManager::getInstance().punchSound);
 }
 
 void PunchState::Update(float deltaTime)
@@ -250,6 +253,9 @@ void KickState::Init()
     // make sure the character cannot move while punching
     owner->stop();
     owner->canDealDamage = true;
+
+    // play sound
+    SoundManager::getInstance().playSound(SoundManager::getInstance().punchSound);
 }
 
 void KickState::Update(float deltaTime)
@@ -290,6 +296,9 @@ void HitState::Init()
     // make sure the character will not move
     owner->stop();
     owner->canDealDamage = false;
+
+    // play sound
+    SoundManager::getInstance().playSound(SoundManager::getInstance().hitSound);
 
     // set timer
     if (owner->getIsAlive())
@@ -352,6 +361,12 @@ void DeathState::Init()
     // make sure the character will not move
     owner->stop();
     owner->canDealDamage = false;
+
+    // play sound
+    SoundManager::getInstance().playSound(SoundManager::getInstance().ko);
+
+    // tell the GameManager that the player is KO
+    gameManager.playerKo(owner->getPlayerNumber());
 
     // change deltaMultiplier
     //gameManager.setDeltaTimeMultiplier(0.5f);

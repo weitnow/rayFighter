@@ -111,7 +111,7 @@ int main(void)
 
 
     // Player 2
-    player2->setLife(1);                            // Todo: get rid of setLife
+    player2->setLife(2);                            // Todo: get rid of setLife
     player2->setCurrentFrameTag("nesFighter-Idle"); // using nesFighter-Graphics
     player2->setObjName("Ken");
     player2->setPlayerNumber(2);
