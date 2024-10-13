@@ -1,11 +1,7 @@
-//
-// Created by weitnow on 12/26/23.
-//
-
 #ifndef GBFIGHTER_SCREEN2DMANAGER_H
 #define GBFIGHTER_SCREEN2DMANAGER_H
 
-#include "../Gui/Lifebar.h"
+//#include "../Gui/Lifebar.h"
 #include "raylib.h"
 #include <iostream>
 #include <map>
@@ -64,19 +60,20 @@ public:
     void drawRenderTarget(std::string renderTargetName);
     void endDrawToScreen();
 
+    Camera2D camera;
+
 private:
     // Member variables
-    Camera2D camera;
+
     std::map<std::string, RenderTexture2D> renderTargets;
     Rectangle scaledRectangle; // used for the DrawTexturePro-Function to draw the renderTarget to Screen
 
-    // Lifebar
-    Lifebar lifebar1;
-    Lifebar lifebar2;
+    // Member methods
 
-    // Functions
-    // Function to calculate scaled rectangle dimensions
+    // Method to calculate scaled rectangle dimensions
     Rectangle calculateScaledRectangle(RenderTexture2D renderTarget, int targetWidth, int targetHeight);
+
+    Rectangle alternativeCalculateScaledRectangle(RenderTexture2D renderTarget, int targetWidth, int targetHeight);
 };
 
 #endif // GBFIGHTER_SCREEN2DMANAGER_H

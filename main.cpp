@@ -48,7 +48,6 @@ int main(void)
         Constants::RENDERTARGET_WIDTH,
         Constants::RENDERTARGET_HEIGHT); // Create a RenderTexture2D to be used for render to texture
 
-
     asepriteManager->loadAnimFile("gbFighter"); // asepriteManager.frameTags[gbFighter-Idle]
                                                 // asepriteManager.textures[gbFighter]
 
@@ -157,7 +156,7 @@ int main(void)
                                             "stage-desert",
                                             "stage-outworld",
                                             "stage-park",
-                                            "stage-labratory",
+                                            "stage-laboratory",
                                             "stage-temple",
                                             "stage-shaolin",
                                             "stage-pyramid",
@@ -187,7 +186,7 @@ int main(void)
         // Update
         //----------------------------------------------------------------------------------
 
-        screen2DManager->update(deltaTime * Constants::TIME_MULTIPLIER);
+        screen2DManager->update(deltaTime * Constants::TIME_MULTIPLIER); // update camera
 
         // Handle Input (by calling the update method of the inputHandler)
         inputHandler->Update();
@@ -195,19 +194,19 @@ int main(void)
         // Update gameObjects (player1 and player2 included)
         gameManager.update(deltaTime * Constants::TIME_MULTIPLIER);
 
-        //----------------------------------------------------------------------------------
         // Update Music
-        //----------------------------------------------------------------------------------
         soundManager.updateBackgroundMusic();
 
         //----------------------------------------------------------------------------------
         // Draw to RenderTexture
         //----------------------------------------------------------------------------------
-
         // BeginTextureMode(target);
         screen2DManager->beginDrawToRenderTarget("mainRenderTarget");
 
         ClearBackground(RAYWHITE);
+
+        // Begin the camera
+        BeginMode2D(screen2DManager->camera);
 
         // draw stage
         float stage_scale = 1.f;
@@ -216,22 +215,16 @@ int main(void)
         // draw gameObjects (player1 and player2 included)
         gameManager.draw();
 
-        /*
-        BeginMode2D(camera);
-
-        player1->draw();
-        player2->draw();
-
+        // End the camera
         EndMode2D();
-        */
-
 
         screen2DManager->endDrawToRenderTarget();
-
         //----------------------------------------------------------------------------------
         // Draw to Screen
         //----------------------------------------------------------------------------------
         screen2DManager->beginDrawToScreen();
+
+        ClearBackground(GREEN);
 
         // Draw RenderTexture to Screen
         screen2DManager->drawRenderTarget("mainRenderTarget");
@@ -241,13 +234,12 @@ int main(void)
         // Draw a second black outlined rectangle on the right side of the screen
         DrawRectangleLinesEx(Rectangle{1545, 0, 374, 1070}, 6, BLACK);
 
-
 #ifdef DEBUG_WINDOW
         debugInfo->draw();
 #endif
+
         screen2DManager->endDrawToScreen();
     }
-
     //----------------------------------------------------------------------------------
     // De-Initialization
     //--------------------------------------------------------------------------------------
@@ -260,8 +252,7 @@ int main(void)
     delete inputHandler;    //deallocate memory on the heap
     delete asepriteManager; //deallocate memory on the heap
     delete debugInfo;       //deallocate memory on the heap
-
-    delete background; // deallocate memory on the heap
+    delete background;      //deallocate memory on the heap
 
     CloseWindow(); // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
