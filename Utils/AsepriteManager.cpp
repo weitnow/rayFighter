@@ -80,16 +80,16 @@ int AsepriteAnimationFile::getMaxFrame() const
     return max_frame;
 }
 
-void AsepriteAnimationFile::drawFrame(const std::string& filenameTagname,
-                                      int x,
-                                      int y,
-                                      float scale,
-                                      Color tint,
-                                      bool flipX,
-                                      bool flipY)
+void AsepriteAnimationFile::_drawFrame(const std::string& filenameTagname,
+                                       int x,
+                                       int y,
+                                       float scale,
+                                       Color tint,
+                                       bool flipX,
+                                       bool flipY)
 {
-    int sizeX = this->asepriteManager->getFrameTag(filenameTagname).sourceSizeX;
-    int sizeY = this->asepriteManager->getFrameTag(filenameTagname).sourceSizeY;
+    int sizeX = this->asepriteManager->getFrameTag(filenameTagname).sourceSizeX; // width of the frame
+    int sizeY = this->asepriteManager->getFrameTag(filenameTagname).sourceSizeY; // height of the frame
 
     // Determine source rectangle (which part of the texture to draw)
     Rectangle sourceRec = {
@@ -111,15 +111,47 @@ void AsepriteAnimationFile::drawFrame(const std::string& filenameTagname,
     DrawTexturePro(texture, sourceRec, destRec, Vector2{0, 0}, 0.0f, tint);
 }
 
+void AsepriteAnimationFile::drawFrame(const std::string& filenameTagname,
+                                      int x,
+                                      int y,
+                                      float scale,
+                                      Color tint,
+                                      bool flipX,
+                                      bool flipY)
+{
+    int sizeX = this->asepriteManager->getFrameTag(filenameTagname).sourceSizeX; // width of the frame
+    int sizeY = this->asepriteManager->getFrameTag(filenameTagname).sourceSizeY; // height of the frame
+    int frameNumber = this->asepriteManager->getFrameTag(filenameTagname).from;
+
+    // Determine source rectangle (which part of the texture to draw)
+    Rectangle sourceRec = {
+        (float)frameNumber * sizeX,     // X position of the frame
+        0,                              // Y position (top of the texture)
+        (flipX ? -1.0f : 1.0f) * sizeX, // Flip horizontally if flipX is true
+        (flipY ? -1.0f : 1.0f) * sizeY  // Flip vertically if flipY is true
+    };
+
+    // Determine destination rectangle (where to draw the texture on screen)
+    Rectangle destRec = {
+        (float)x,      // X position to draw
+        (float)y,      // Y position to draw
+        sizeX * scale, // Scaled width
+        sizeY * scale  // Scaled height
+    };
+
+    // Draw the texture with the specified scaling and tint
+    DrawTexturePro(texture, sourceRec, destRec, Vector2{0, 0}, 0.0f, tint);
+}
+
 
 void AsepriteAnimationFile::drawCurrentSelectedTag(int x, int y, float scale, Color tint)
 {
-    drawFrame(current_filenameTagname, x, y, scale, tint, false, false);
+    _drawFrame(current_filenameTagname, x, y, scale, tint, false, false);
 }
 
 void AsepriteAnimationFile::drawCurrentSelectedTag(int x, int y, float scale, Color tint, bool flipX, bool flipY)
 {
-    drawFrame(current_filenameTagname, x, y, scale, tint, flipX, flipY);
+    _drawFrame(current_filenameTagname, x, y, scale, tint, flipX, flipY);
 }
 
 void AsepriteAnimationFile::update(float deltaTime)

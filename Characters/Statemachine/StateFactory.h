@@ -52,6 +52,18 @@ public:
         {
             newState = std::make_shared<DuckState>();
         }
+        else if (stateName == "DuckPunch")
+        {
+            newState = std::make_shared<DuckPunchState>();
+        }
+        else if (stateName == "DuckKick")
+        {
+            newState = std::make_shared<DuckKickState>();
+        }
+        else if (stateName == "DuckBlock")
+        {
+            newState = std::make_shared<DuckBlockState>();
+        }
         else if (stateName == "Punch")
         {
             newState = std::make_shared<PunchState>();

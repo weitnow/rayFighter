@@ -89,18 +89,42 @@ public:
     PunchState() : State("Punch") {};
     STATE_METHODS
 };
+
+class DuckPunchState : public State
+{
+public:
+    DuckPunchState() : State("DuckPunch") {};
+    STATE_METHODS
+};
+
+
 class KickState : public State
 {
 public:
     KickState() : State("Kick") {};
     STATE_METHODS
 };
+class DuckKickState : public State
+{
+public:
+    DuckKickState() : State("DuckKick") {};
+    STATE_METHODS
+};
+
 class BlockState : public State
 {
 public:
     BlockState() : State("Block") {};
     STATE_METHODS
 };
+
+class DuckBlockState : public State
+{
+public:
+    DuckBlockState() : State("DuckBlock") {};
+    STATE_METHODS
+};
+
 
 class HitState : public State
 {

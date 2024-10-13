@@ -65,6 +65,13 @@ public:
     int getCurrentFrame() const;
     int getMinFrame() const;
     int getMaxFrame() const;
+    void _drawFrame(const std::string& filenameTagname,
+                    int x,
+                    int y,
+                    float scale = 1.0f,
+                    Color tint = WHITE,
+                    bool flipX = false,
+                    bool flipY = false);
     void drawFrame(const std::string& filenameTagname,
                    int x,
                    int y,

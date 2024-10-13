@@ -249,6 +249,20 @@ void DuckState::Update(float deltaTime)
     {
         statemachine->changeState("Idle");
     }
+
+    // check if player is punching or kicking or blocking
+    if (controller->punch)
+    {
+        statemachine->changeState("DuckPunch");
+    }
+    else if (controller->kick)
+    {
+        statemachine->changeState("DuckKick");
+    }
+    else if (controller->block)
+    {
+        statemachine->changeState("DuckBlock");
+    }
 }
 
 void DuckState::Finalize()
@@ -280,6 +294,26 @@ void PunchState::Finalize()
 }
 /* #endregion */
 
+void DuckPunchState::Init()
+{
+    owner->canDealDamage = true;
+
+    // play sound
+    SoundManager::getInstance().playSound(SoundManager::getInstance().punchSound);
+}
+
+void DuckPunchState::Update(float deltaTime)
+{
+    if (owner->getAnim()->hasAnimJustFinishedPlusLastFrameDuration())
+    {
+        statemachine->changeState("Duck");
+    }
+}
+
+void DuckPunchState::Finalize()
+{
+}
+
 /* #region KickState */
 void KickState::Init()
 {
@@ -304,6 +338,26 @@ void KickState::Finalize()
 }
 /* #endregion */
 
+void DuckKickState::Init()
+{
+    owner->canDealDamage = true;
+
+    // play sound
+    SoundManager::getInstance().playSound(SoundManager::getInstance().punchSound);
+}
+
+void DuckKickState::Update(float deltaTime)
+{
+    if (owner->getAnim()->hasAnimJustFinishedPlusLastFrameDuration())
+    {
+        statemachine->changeState("Duck");
+    }
+}
+
+void DuckKickState::Finalize()
+{
+}
+
 /* #region BlockState */
 void BlockState::Init()
 {
@@ -322,6 +376,28 @@ void BlockState::Finalize()
 {
 }
 /* #endregion */
+
+void DuckBlockState::Init()
+{
+    owner->stop();
+}
+
+void DuckBlockState::Update(float deltaTime)
+{
+    if (!controller->block)
+    {
+        statemachine->changeState("Duck");
+    }
+
+    if (!controller->duck)
+    {
+        statemachine->changeState("Idle");
+    }
+}
+
+void DuckBlockState::Finalize()
+{
+}
 
 /* #region HitState */
 void HitState::Init()

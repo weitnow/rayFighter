@@ -66,6 +66,9 @@ int main(void)
     asepriteManager->loadAnimFile("barrel"); // asepriteManager.frameTags[barrel]
                                              // asepriteManager.textures[barrel]
 
+    asepriteManager->loadAnimFile("stage"); // asepriteManager.frameTags[stage-temple]
+                                            // asepriteManager.textures[stage]
+
     asepriteManager->loadAnimFile("deadSkull");
 
     // Add asepriteManager to gameManager
@@ -95,9 +98,11 @@ int main(void)
     player1->setObjName("Andy");
     player1->setPlayerNumber(1);
     player1->addController(inputHandler->getPlayer1Controller());
+    // [0, 1, 2...] = frameNumber, -1 = valid for all frames of the frameTagName, -2 = valid for all frames of the frameTagName
     player1->addCollisionBoxForFrame("gbFighter-Idle", -1, CollisionBoxType::PUSHBOX, true, 10, 0, 10, 30);
     player1->addCollisionBoxForFrame("gbFighter-Punch", 1, CollisionBoxType::HITBOX, true, 26, 10, 5, 5);
     player1->addCollisionBoxForFrame("gbFighter-Kick", 1, CollisionBoxType::HITBOX, true, 26, 10, 5, 5);
+    player1->addCollisionBoxForFrame("gbFighter-JumpPunch", 0, CollisionBoxType::HITBOX, true, 24, 20, 5, 5);
     player1->addCollisionBoxForFrame("gbFighter-Idle",
                                      -2,
                                      CollisionBoxType::HURTBOX,
@@ -129,9 +134,6 @@ int main(void)
                                      25);
     player2->getStatemachine().changeState("Idle");
 
-    // Create Static Background
-    Texture2D stage = LoadTexture("Assets/Graphics/stage.png");
-
     gameManager
         .init(); // initialize gameManager (can only be done after all gameObjects are added and must be at the end)
 
@@ -144,7 +146,35 @@ int main(void)
 #endif
 
     // Start playing background music
-    soundManager.playRandomBackgroundMusic();
+    if (Constants::BACKGROUND_MUSIC)
+    {
+        soundManager.playRandomBackgroundMusic();
+    }
+
+    // TODO: refactor this
+    /* #region select a background by random*/
+    std::vector<std::string> backgrounds = {"stage-factory",
+                                            "stage-desert",
+                                            "stage-outworld",
+                                            "stage-park",
+                                            "stage-labratory",
+                                            "stage-temple",
+                                            "stage-shaolin",
+                                            "stage-pyramid",
+                                            "stage-city",
+                                            "stage-boulevard",
+                                            "stage-jungle",
+                                            "stage-wushu",
+                                            "stage-london",
+                                            "stage-ricefield",
+                                            "stage-ring"};
+    // Seed the random number generator
+    std::srand(static_cast<unsigned>(std::time(0)));
+    // Generate a random index between 0 and backgrounds.size() - 1
+    int randomIndex = std::rand() % backgrounds.size();
+    // Select a random background
+    std::string randomBackground = backgrounds[randomIndex];
+    /* #endregion */
 
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
@@ -179,7 +209,7 @@ int main(void)
 
         // draw stage
         float stage_scale = 1.f;
-        DrawTextureEx(stage, {0, 80}, 0, stage_scale, WHITE);
+        asepriteManager->getAnimFile("stage")->drawFrame(randomBackground, 0, 80, stage_scale, WHITE);
 
         // draw gameObjects (player1 and player2 included)
         gameManager.draw();
@@ -224,7 +254,6 @@ int main(void)
     delete player2;
 
     screen2DManager->unloadAllRenderTextures();
-    UnloadTexture(stage);
     delete screen2DManager; //deallocate memory on the heap
     delete inputHandler;    //deallocate memory on the heap
     delete asepriteManager; //deallocate memory on the heap
