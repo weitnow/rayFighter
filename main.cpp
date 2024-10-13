@@ -176,6 +176,8 @@ int main(void)
     std::string randomBackground = backgrounds[randomIndex];
     /* #endregion */
 
+    AsepriteAnimationFile* background = asepriteManager->getAnimFile("stage");
+
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
@@ -209,7 +211,7 @@ int main(void)
 
         // draw stage
         float stage_scale = 1.f;
-        asepriteManager->getAnimFile("stage")->drawFrame(randomBackground, 0, 80, stage_scale, WHITE);
+        background->drawFrame(randomBackground, 0, 80, stage_scale, WHITE);
 
         // draw gameObjects (player1 and player2 included)
         gameManager.draw();
@@ -258,6 +260,8 @@ int main(void)
     delete inputHandler;    //deallocate memory on the heap
     delete asepriteManager; //deallocate memory on the heap
     delete debugInfo;       //deallocate memory on the heap
+
+    delete background; // deallocate memory on the heap
 
     CloseWindow(); // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
