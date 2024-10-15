@@ -38,6 +38,19 @@ public:
     void setPos(Vector2 pos);
     virtual Vector2 getPos() const;
 
+    //pushVector
+    void setPushVector(Vector2 pushVector);
+    Vector2 getPushVector();
+    void resetPushVector();
+
+    //moveVector
+    virtual void setMoveVectorY(int yValue);
+
+    //camVector
+    void setCamVector(Vector2 camVector);
+    Vector2 getCamVector();
+    void resetCamVector();
+
     //gravity
     void setAffectedByGravity(bool affectedByGravity);
 
@@ -78,18 +91,12 @@ public:
                                  float height);
 
 
-    //pushVector
-    void setPushVector(Vector2 pushVector);
-    Vector2 getPushVector();
-    void resetPushVector();
-
-    //moveVector
-    virtual void setMoveVectorY(int yValue);
-
 protected:
     Vector2 orginalPos; // the original position of the object as it was created - used for reseting the object
-    Vector2 pos;
-    Vector2 moveVector; // (x,y)
+    Vector2 pos;        // calculated in the update method
+    Vector2 moveVector; // (x,y) used to walk and jump
+    Vector2 pushVector; // (x,y) used by setPushVector and reduced by _reducePushVector in update methode
+    Vector2 camVector;  // (x,y) used by camera if background is scrolled to move baseGameObj with it
     float scale;
     Color color;
     bool isFlippedX;
@@ -117,7 +124,6 @@ protected:
     CollisionMap pushBoxesPerFrame;
     CollisionMap throwBoxesPerFrame;
 
-    Vector2 pushVector;
 
     AsepriteAnimationFile* animfilePtr;
     AsepriteManager* asepriteManagerPtr;

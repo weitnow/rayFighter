@@ -61,9 +61,9 @@ void Screen2DManager::update(float deltaTime)
         camera.zoom -= 0.01f;
     */
     // Camera x controls
-    if (IsKeyDown(KEY_B))
-        camera.target.x--;
     if (IsKeyDown(KEY_N))
+        camera.target.x--;
+    if (IsKeyDown(KEY_M))
         camera.target.x++;
 }
 
@@ -86,11 +86,9 @@ void Screen2DManager::beginDrawToRenderTarget(std::string renderTargetName)
 void Screen2DManager::drawRenderTarget(std::string renderTargetName)
 {
     RenderTexture2D renderTarget = renderTargets[renderTargetName];
-    //scaledRectangle = calculateScaledRectangle(renderTarget, renderTarget.texture.width, renderTarget.texture.height);
-    scaledRectangle =
-        alternativeCalculateScaledRectangle(renderTarget, renderTarget.texture.width, renderTarget.texture.height);
-
     /*
+    scaledRectangle = calculateScaledRectangle(renderTarget, renderTarget.texture.width, renderTarget.texture.height);
+
     DrawTexturePro(renderTarget.texture,
                    (Rectangle){0.0f, 0.0f, (float)renderTarget.texture.width, (float)-renderTarget.texture.height},
                    scaledRectangle,
@@ -98,8 +96,9 @@ void Screen2DManager::drawRenderTarget(std::string renderTargetName)
                    0.0f,
                    WHITE);
     */
-    Rectangle sourceRec = {0.0f, 0.0f, 240, -135};
-    Rectangle destRec = {0.0f, 540.0f * 0.8, 960 * 1.2, 540 * 1.2};
+    //Rectangle sourceRec = {0.0f, 0.0f, 240, -135};
+    Rectangle sourceRec = {0.0f, 0.0f, 256, -144};
+    Rectangle destRec = {10.0f, 420.0f, 1120, 630};
 
     DrawTexturePro(renderTarget.texture, sourceRec, destRec, Vector2{0, 0}, 0.0f, WHITE);
 }
@@ -131,43 +130,6 @@ Rectangle Screen2DManager::calculateScaledRectangle(RenderTexture2D renderTarget
 
     return (Rectangle){static_cast<float>((GetScreenWidth() - renderTarget.texture.width) / 2),
                        static_cast<float>((GetScreenHeight() - renderTarget.texture.height) / 2),
-                       static_cast<float>(renderTarget.texture.width),
-                       static_cast<float>(renderTarget.texture.height)};
-}
-
-Rectangle Screen2DManager::alternativeCalculateScaledRectangle(RenderTexture2D renderTarget,
-                                                               int targetWidth,
-                                                               int targetHeight)
-{
-    const float zoomLevel = 2.0f; // Define the zoom level
-
-    // Set a new height and calculate the corresponding width while maintaining aspect ratio
-    float newHeight = 500 * zoomLevel; // Set the desired height with zoom
-    float aspectRatio = static_cast<float>(targetWidth) / static_cast<float>(targetHeight);
-    renderTarget.texture.height = newHeight;
-    renderTarget.texture.width = newHeight * aspectRatio; // Calculate width based on the new height
-
-    int scaleHangover = 0;
-
-    // Check if the calculated width exceeds the screen width
-    if (renderTarget.texture.width > GetScreenWidth())
-    {
-        renderTarget.texture.width = GetScreenWidth(); // Clamp width to screen width
-        renderTarget.texture.height =
-            renderTarget.texture.width / aspectRatio; // Adjust height to maintain aspect ratio
-    }
-
-    // Calculate any hangover to ensure width is even
-    scaleHangover = (GetScreenWidth() - static_cast<int>(renderTarget.texture.width)) % 2;
-    renderTarget.texture.width += scaleHangover;
-
-    // Calculate the position for lower-left corner
-    float posX = 0;                                               // Align to the left edge of the screen
-    float posY = GetScreenHeight() - renderTarget.texture.height; // Align to the bottom of the screen
-
-    // Return the rectangle with the new position and adjusted dimensions
-    return (Rectangle){posX,
-                       posY,
                        static_cast<float>(renderTarget.texture.width),
                        static_cast<float>(renderTarget.texture.height)};
 }

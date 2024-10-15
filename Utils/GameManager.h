@@ -56,6 +56,9 @@ public:
     void playerKo(int playerNumber);
 
 
+    float middlePointXbetweenPlayers = 0.f;
+
+
 private:
     // Private constructor to prevent direct instantiation
     GameManager();

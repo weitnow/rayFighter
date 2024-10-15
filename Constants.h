@@ -5,20 +5,20 @@
 
 // switch DEBUG_WINDOW-Mode on and enable debug-draw and log stuff on the terminal
 #define DEBUG_WINDOW // uncomment to enable debug window
-#define DEBUG        // uncomment to enable debug messages and debug draw
+//#define DEBUG        // uncomment to enable debug messages and debug draw
 //#define DEBUG_COLLISION_BOXES_NAMES // uncomment to enable debug messages for collision boxes names
 
 namespace Constants
 {
 
-const int BACKGROUND_WIDTH = 258;
+const int BACKGROUND_WIDTH = 256;
 const int PLAYER_WIDTH = 32;
 
 const int SCREEN_WIDTH = 1920;
 const int SCREEN_HEIGHT = 1080;
 const int RENDERTARGET_WIDTH = 320;
 const int RENDERTARGET_HEIGHT = 180;
-const int BASELINE = 142;
+const int BASELINE = 102;
 
 /*
 1920 x 1080
@@ -44,7 +44,7 @@ const int PLAYER1_X = 80;
 const int PLAYER2_X = 120;
 
 // Default values used for instantiate BaseGameObjects if default constructor is used
-const float Y = 142.0f;
+const float Y = 102.0f;
 const float X = 100.0f;
 const float HEIGHT = 32.f;
 const float WIDTH = 32.f;
@@ -59,6 +59,7 @@ namespace Global
 // Global Variables
 extern float gravity;
 extern float pushReduction;
+
 } // namespace Global
 
 namespace Colors

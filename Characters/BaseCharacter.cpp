@@ -30,8 +30,8 @@ void BaseCharacter::update(float deltaTime)
 
 
     // UPDATE THE POSITION
-    this->setPos(this->getPos().x + (moveVector.x + pushVector.x) * deltaTime,
-                 this->getPos().y + (moveVector.y + pushVector.y) * deltaTime);
+    this->setPos(this->getPos().x + (moveVector.x + pushVector.x + camVector.x) * deltaTime,
+                 this->getPos().y + (moveVector.y + pushVector.y + camVector.y) * deltaTime);
 
 
     // REDUCE PUSH VECTOR
@@ -250,10 +250,12 @@ void BaseCharacter::_keepOnStage()
     // check if the character is out of bounds
     if (this->getPos().x < 0)
     {
+        // keep player on screen
         this->setPos(0, this->getPos().y);
     }
     else if (this->getPos().x > Constants::BACKGROUND_WIDTH - Constants::PLAYER_WIDTH)
     {
+        // keep player on screen
         this->setPos(Constants::BACKGROUND_WIDTH - Constants::PLAYER_WIDTH, this->getPos().y);
     }
 }

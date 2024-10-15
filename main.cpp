@@ -43,10 +43,15 @@ int main(void)
     SetTargetFPS(Constants::FPS); // Set  game to run at X frames-per-second (recommended: 60)
 
     // Populate membervariables of the GlobalObjects
+    /*
     screen2DManager->createRenderTarget(
         "mainRenderTarget",
         Constants::RENDERTARGET_WIDTH,
         Constants::RENDERTARGET_HEIGHT); // Create a RenderTexture2D to be used for render to texture
+    */
+    screen2DManager->createRenderTarget("mainRenderTarget",
+                                        256,
+                                        144); // Create a RenderTexture2D to be used for render to texture
 
     asepriteManager->loadAnimFile("gbFighter"); // asepriteManager.frameTags[gbFighter-Idle]
                                                 // asepriteManager.textures[gbFighter]
@@ -81,7 +86,7 @@ int main(void)
 
     // TODO: get rid of this - just for testing
     // Create a BaseGameObject with a barrel Sprite for testing
-    unique<Barrel> barrel = std::make_unique<Barrel>(asepriteManager, 20, 142);
+    unique<Barrel> barrel = std::make_unique<Barrel>(asepriteManager, 20, 102);
     barrel->setCurrentFrameTag("barrel-Idle");
     barrel->setObjName("Barrel");
     barrel->addCollisionBoxForFrame("barrel-Idle", -1, CollisionBoxType::HURTBOX, true, 10, 10, 13, 17);
@@ -177,6 +182,9 @@ int main(void)
 
     AsepriteAnimationFile* background = asepriteManager->getAnimFile("stage");
 
+    // TEST
+    float camPos = 0;
+
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
@@ -205,18 +213,49 @@ int main(void)
 
         ClearBackground(RAYWHITE);
 
+
+        // calculate Camera
+        float& middlepointX = gameManager.middlePointXbetweenPlayers;
+
+        if (middlepointX < 85.f)
+        {
+            camPos = camPos - 30 * deltaTime;
+            player1->setCamVector(Vector2{30.f, 0.f});
+            player2->setCamVector(Vector2{30.f, 0.f});
+        }
+        else if (middlepointX > 172.f)
+        {
+            // move background to the left
+            camPos = camPos + 30 * deltaTime;
+            player1->setCamVector(Vector2{-30.f, 0.f});
+            player2->setCamVector(Vector2{-30.f, 0.f});
+        }
+        else
+        {
+            // don't move anything
+            player1->resetCamVector();
+            player2->resetCamVector();
+        }
+
+        screen2DManager->camera.target.x = camPos;
+
+
         // Begin the camera
         BeginMode2D(screen2DManager->camera);
 
         // draw stage
         float stage_scale = 1.f;
-        background->drawFrame(randomBackground, 0, 80, stage_scale, WHITE);
+
+        background->drawFrame(randomBackground, 0 - Constants::BACKGROUND_WIDTH, 40, stage_scale, WHITE);
+        background->drawFrame(randomBackground, 0, 40, stage_scale, WHITE);
+        background->drawFrame(randomBackground, 0 + Constants::BACKGROUND_WIDTH, 40, stage_scale, WHITE);
+
+        // End the camera
+        EndMode2D();
 
         // draw gameObjects (player1 and player2 included)
         gameManager.draw();
 
-        // End the camera
-        EndMode2D();
 
         screen2DManager->endDrawToRenderTarget();
         //----------------------------------------------------------------------------------

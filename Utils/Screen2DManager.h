@@ -72,8 +72,6 @@ private:
 
     // Method to calculate scaled rectangle dimensions
     Rectangle calculateScaledRectangle(RenderTexture2D renderTarget, int targetWidth, int targetHeight);
-
-    Rectangle alternativeCalculateScaledRectangle(RenderTexture2D renderTarget, int targetWidth, int targetHeight);
 };
 
 #endif // GBFIGHTER_SCREEN2DMANAGER_H

@@ -22,8 +22,8 @@ void GameManager::init()
 GameManager::GameManager()
     : player1(nullptr), player2(nullptr), player1and2set(false), lifebar1(nullptr), lifebar2(nullptr)
 {
-    lifebar1 = new Lifebar(Vector2{20, 75}, 5, 100, 3, GREEN, BLACK, "Player1");
-    lifebar2 = new Lifebar(Vector2{130, 75}, 5, 100, 3, GREEN, BLACK, "Player2");
+    lifebar1 = new Lifebar(Vector2{20, 32}, 5, 100, 3, GREEN, BLACK, "Player1");
+    lifebar2 = new Lifebar(Vector2{130, 32}, 5, 100, 3, GREEN, BLACK, "Player2");
 }
 
 // Optionally, define the destructor
@@ -231,6 +231,9 @@ void GameManager::update(float deltaTime)
     // Update the lifebars
     lifebar1->Update(player1->getCurrentLife());
     lifebar2->Update(player2->getCurrentLife());
+
+    // calculate middlePointXbetweenPlayers
+    middlePointXbetweenPlayers = (player1->getPos().x + player2->getPos().x + 32) / 2.f;
 }
 
 BaseCharacter* GameManager::getBaseCharacter(const std::string& CharName)
@@ -263,7 +266,11 @@ void GameManager::draw()
     lifebar2->Draw();
 
     // Draw the deadSkull
-    deadSkull->drawCurrentSelectedTag(120, 70, 1, WHITE);
+    deadSkull->drawCurrentSelectedTag(120, 28, 1, WHITE);
+
+
+    // Draw Middlepointline
+    DrawLine(middlePointXbetweenPlayers, 0, middlePointXbetweenPlayers, 300, RED);
 }
 
 void GameManager::addInputHandler(InputHandler* inputHandler)
