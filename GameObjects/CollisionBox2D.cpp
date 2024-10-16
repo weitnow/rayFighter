@@ -19,6 +19,7 @@ CollisionBox2D::CollisionBox2D(float offsetx,
       objPos{0, 0}, pos{0, 0}, isActive(isActive), collisionBoxType(collisionBoxType), hurtboxType(hurtboxType),
       isFlippedX(false)
 {
+    //todo: get rid of hardcoded 32.f and get with of the sprite
     float flippedX = abs(32.f - offsetx - width);
     offsetFlippedX = {flippedX, offsety};
 }
