@@ -236,6 +236,12 @@ void DebugInfo::draw()
         std::string distanceText = "Distance betw Players: " + oss.str();
 
         DrawText(distanceText.c_str(), windowX + 10, windowY + 70, TEXT_SIZE, TEXT_COLOR);
+
+        DrawText(("P1 is flipped: " + std::to_string(player1->getIsFlippedX())).c_str(),
+                 windowX + 10,
+                 windowY + 90,
+                 TEXT_SIZE,
+                 TEXT_COLOR);
     }
 
 

@@ -131,6 +131,7 @@ int main(void)
                                      10,
                                      25);
     player2->getStatemachine().changeState("Idle");
+    player2->setSpriteOffsetX(5);
 
     gameManager
         .init(); // initialize gameManager (can only be done after all gameObjects are added and must be at the end)

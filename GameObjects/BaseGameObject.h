@@ -39,6 +39,10 @@ public:
     virtual bool setCurrentFrameTag(std::string tag);
     std::string getCurrentFrameTag();
 
+    bool getIsFlippedX();
+    void setSpriteOffsetX(int spriteOffsetX);
+
+    // collision boxes
     List<CollisionBox2D> getPushBoxes();
     List<CollisionBox2D> getHitBoxes();
     List<CollisionBox2D> getHurtBoxes();
@@ -100,6 +104,8 @@ protected:
     Color color;
     bool isFlippedX;
     bool isFlippedY;
+    int spriteOffsetX;
+    int spriteOffsetY;
     std::string currentFrameTag; // for example "gbFighter-Idle"
     std::string ObjName;         // for example "Andy"
     bool isActive;

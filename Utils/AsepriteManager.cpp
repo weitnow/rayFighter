@@ -98,10 +98,9 @@ void AsepriteAnimationFile::_drawFrame(const std::string& filenameTagname,
                                        float scale,
                                        Color tint,
                                        bool flipX,
-                                       bool flipY)
+                                       bool flipY,
+                                       int offsetFlipX)
 {
-    //int sizeX = this->asepriteManager->getFrameTag(filenameTagname).sourceSizeX; // width of the frame
-    //int sizeY = this->asepriteManager->getFrameTag(filenameTagname).sourceSizeY; // height of the frame
 
     // Determine source rectangle (which part of the texture to draw)
     Rectangle sourceRec = {
@@ -119,8 +118,14 @@ void AsepriteAnimationFile::_drawFrame(const std::string& filenameTagname,
         spriteSizeY * scale  // Scaled height
     };
 
+    // Adjust the origin point for flipping
+    Vector2 origin = {
+        (flipX ? offsetFlipX : -offsetFlipX), // Flip point adjusted by offsetFlipX
+        0                                     // Y origin point remains unchanged
+    };
+
     // Draw the texture with the specified scaling and tint
-    DrawTexturePro(texture, sourceRec, destRec, Vector2{0, 0}, 0.0f, tint);
+    DrawTexturePro(texture, sourceRec, destRec, origin, 0.0f, tint);
 }
 
 void AsepriteAnimationFile::drawFrame(const std::string& filenameTagname,
@@ -158,12 +163,18 @@ void AsepriteAnimationFile::drawFrame(const std::string& filenameTagname,
 
 void AsepriteAnimationFile::drawCurrentSelectedTag(int x, int y, float scale, Color tint)
 {
-    _drawFrame(current_filenameTagname, x, y, scale, tint, false, false);
+    _drawFrame(current_filenameTagname, x, y, scale, tint, false, false, 0);
 }
 
-void AsepriteAnimationFile::drawCurrentSelectedTag(int x, int y, float scale, Color tint, bool flipX, bool flipY)
+void AsepriteAnimationFile::drawCurrentSelectedTag(int x,
+                                                   int y,
+                                                   float scale,
+                                                   Color tint,
+                                                   bool flipX,
+                                                   bool flipY,
+                                                   int offsetFlippedX)
 {
-    _drawFrame(current_filenameTagname, x, y, scale, tint, flipX, flipY);
+    _drawFrame(current_filenameTagname, x, y, scale, tint, flipX, flipY, offsetFlippedX);
 }
 
 void AsepriteAnimationFile::update(float deltaTime)
@@ -259,6 +270,8 @@ bool AsepriteAnimationFile::setFrameTag(const std::string& filenameTagname)
 
     min_frame = current_FrameTag.from;
     max_frame = current_FrameTag.to;
+    spriteSizeX = current_FrameTag.sourceSizeX;
+    spriteSizeY = current_FrameTag.sourceSizeY;
     loop = current_FrameTag.loop;
 
     if (this->filename != current_FrameTag.texturename)

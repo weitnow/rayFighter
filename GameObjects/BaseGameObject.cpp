@@ -7,7 +7,7 @@ BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager)
       isFlippedY(false), isActive(true), isAlive(true), isInvincible(false), life(Constants::DEFAULT_LIFE),
       _invincibleCounter(0.f), invincibleTime(Constants::INVINCIBLE_TIME), affectedByGravity(true), moveVector({0, 0}),
       getDurationCurrentFrame(0), currentFrame(0), minFrame(0), maxFrame(0), hasAnimJustFinished(false),
-      currentFrameTag(""), currentFrameAbsolut(0), camVector{0, 0}
+      currentFrameTag(""), currentFrameAbsolut(0), camVector{0, 0}, spriteOffsetX(0), spriteOffsetY(0)
 {
 
     this->asepriteManagerPtr = asepriteManager;
@@ -69,11 +69,13 @@ void BaseGameObject::draw()
 #ifdef DEBUG
         if (!isInvincible)
         {
-            animfilePtr->drawCurrentSelectedTag(getPos().x, getPos().y, scale, color, isFlippedX, isFlippedY);
+            animfilePtr
+                ->drawCurrentSelectedTag(getPos().x, getPos().y, scale, color, isFlippedX, isFlippedY, spriteOffsetX);
         }
         else
         {
-            animfilePtr->drawCurrentSelectedTag(getPos().x, getPos().y, scale, BLUE, isFlippedX, isFlippedY);
+            animfilePtr
+                ->drawCurrentSelectedTag(getPos().x, getPos().y, scale, BLUE, isFlippedX, isFlippedY, spriteOffsetX);
         }
 
 
@@ -95,13 +97,14 @@ void BaseGameObject::draw()
 
 #endif
 
-
+#ifdef DEBUG_COLLISION_BOXES
         // Draw the collision boxes
         _drawCollisionBoxes();
-
+#endif
 
 #else
-        animfilePtr->drawCurrentSelectedTag(getPos().x, getPos().y, scale, color, isFlippedX, isFlippedY);
+        animfilePtr
+            ->drawCurrentSelectedTag(getPos().x, getPos().y, scale, color, isFlippedX, isFlippedY, offsetFlippedX);
 #endif
     }
 }
@@ -214,6 +217,16 @@ bool BaseGameObject::setCurrentFrameTag(std::string tag)
 std::string BaseGameObject::getCurrentFrameTag()
 {
     return currentFrameTag;
+}
+
+bool BaseGameObject::getIsFlippedX()
+{
+    return isFlippedX;
+}
+
+void BaseGameObject::setSpriteOffsetX(int offsetFlippedX)
+{
+    this->spriteOffsetX = offsetFlippedX;
 }
 
 // TODO: refactor this method to return a reference to the list and not a copy
@@ -465,7 +478,7 @@ void BaseGameObject::_updateCollisionBoxes(float deltaTime)
             // Loop through each CollisionBox2D object and call its update method
             for (auto& collisionBox : collisionBoxList)
             {
-                collisionBox.update(deltaTime);
+                collisionBox.update(deltaTime, isFlippedX);
                 collisionBox.setObjPos(pos.x, pos.y);
             }
         }

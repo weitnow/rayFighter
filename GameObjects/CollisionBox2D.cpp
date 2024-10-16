@@ -5,6 +5,8 @@
 #include "CollisionBox2D.h"
 #include "../Constants.h"
 
+#include <iostream> // get rid just for debbuging needed
+
 CollisionBox2D::CollisionBox2D(float offsetx,
                                float offsety,
                                float width,
@@ -14,8 +16,11 @@ CollisionBox2D::CollisionBox2D(float offsetx,
                                Color color,
                                HurtboxType hurtboxType)
     : width(width), height(height), color(color), offset{offsetx, offsety}, myRectangle{0, 0, width, height},
-      objPos{0, 0}, pos{0, 0}, isActive(isActive), collisionBoxType(collisionBoxType), hurtboxType(hurtboxType)
+      objPos{0, 0}, pos{0, 0}, isActive(isActive), collisionBoxType(collisionBoxType), hurtboxType(hurtboxType),
+      isFlippedX(false)
 {
+    float flippedX = abs(32.f - offsetx - width);
+    offsetFlippedX = {flippedX, offsety};
 }
 
 
@@ -23,9 +28,21 @@ CollisionBox2D::~CollisionBox2D()
 {
 }
 
-void CollisionBox2D::update(float deltaTime)
+void CollisionBox2D::update(float deltaTime, bool isFlippedX)
 {
-    pos = {objPos.x + offset.x, objPos.y + offset.y};
+    this->isFlippedX = isFlippedX;
+
+    if (!isFlippedX)
+    {
+        pos = {objPos.x + offset.x, objPos.y + offset.y};
+    }
+    else
+    {
+        pos = {objPos.x + offsetFlippedX.x, objPos.y + offset.y};
+    }
+
+
+    //pos = {objPos.x + offset.x, objPos.y + offset.y};
 
     myRectangle.x = pos.x;
     myRectangle.y = pos.y;
@@ -33,12 +50,12 @@ void CollisionBox2D::update(float deltaTime)
 
 void CollisionBox2D::draw()
 {
-#ifdef DEBUG_COLLISION_BOXES_NAMES
-    // show name of the collision box
-    DrawText(name.c_str(), objPos.x, objPos.y - 10, 10, color);
-#endif
-
     DrawRectangleLinesEx(myRectangle, 1, color);
+    if (collisionBoxType == CollisionBoxType::HITBOX)
+    {
+        std::cout << "Is flipped X: " << isFlippedX << std::endl;
+        std::cout << myRectangle.x << std::endl;
+    }
 }
 
 void CollisionBox2D::setObjPos(float x, float y)

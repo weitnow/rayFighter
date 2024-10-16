@@ -24,9 +24,11 @@ GameManager::GameManager()
 {
     lifebar1 = new Lifebar(Vector2{20, 32}, 5, 100, 3, GREEN, BLACK, "Player1");
     lifebar2 = new Lifebar(Vector2{130, 32}, 5, 100, 3, GREEN, BLACK, "Player2");
+
+    // Load the dead skull animation
+    //deadSkull = asepriteManager->getAnimFile("deadSkull");
 }
 
-// Optionally, define the destructor
 GameManager::~GameManager()
 {
     // Clean up resources if necessary
@@ -286,6 +288,7 @@ void GameManager::draw()
 
     // Draw the deadSkull
     deadSkull->drawCurrentSelectedTag(120, 28, 1, WHITE);
+
 
 #ifdef DEBUG
     // Draw Middlepointline

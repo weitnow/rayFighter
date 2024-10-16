@@ -75,7 +75,8 @@ public:
                     float scale = 1.0f,
                     Color tint = WHITE,
                     bool flipX = false,
-                    bool flipY = false);
+                    bool flipY = false,
+                    int offsetFlipX = 0);
     void drawFrame(const std::string& filenameTagname,
                    int x,
                    int y,
@@ -84,7 +85,7 @@ public:
                    bool flipX = false,
                    bool flipY = false);
     void drawCurrentSelectedTag(int x, int y, float scale = 1.0f, Color tint = WHITE);
-    void drawCurrentSelectedTag(int x, int y, float scale, Color tint, bool flipX, bool flipY);
+    void drawCurrentSelectedTag(int x, int y, float scale, Color tint, bool flipX, bool flipY, int offsetFlippedX);
     void resetBools();
 
     /**
