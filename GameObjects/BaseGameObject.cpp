@@ -104,7 +104,7 @@ void BaseGameObject::draw()
 
 #else
         animfilePtr
-            ->drawCurrentSelectedTag(getPos().x, getPos().y, scale, color, isFlippedX, isFlippedY, offsetFlippedX);
+            ->drawCurrentSelectedTag(getPos().x, getPos().y, scale, color, isFlippedX, isFlippedY, spriteOffsetX);
 #endif
     }
 }
@@ -307,7 +307,7 @@ void BaseGameObject::addCollisionBoxForFrame(const std::string frameTag,
     }
 
     // get the with of the sprite from the frametag
-    int spritewith = asepriteManagerPtr->getFrameTag(frameTag).sourceSizeX;
+    int sourceSizeX = asepriteManagerPtr->getFrameTag(frameTag).sourceSizeX;
 
 
     _addCollisionBoxForFrameInternal(frameTagName,
@@ -315,7 +315,7 @@ void BaseGameObject::addCollisionBoxForFrame(const std::string frameTag,
                                      offsetY,
                                      width,
                                      height,
-                                     spritewith,
+                                     sourceSizeX,
                                      collisionBoxType,
                                      hurtboxType,
                                      isActive);

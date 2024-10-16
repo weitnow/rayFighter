@@ -20,7 +20,7 @@ CollisionBox2D::CollisionBox2D(float offsetx,
       objPos{0, 0}, pos{0, 0}, isActive(isActive), collisionBoxType(collisionBoxType), hurtboxType(hurtboxType),
       isFlippedX(false), hitboxOwnerWith(hitboxOwnerWith)
 {
-    float flippedX = abs(hitboxOwnerWith - offsetx - width);
+    float flippedX = (hitboxOwnerWith - offsetx - width);
     offsetFlippedX = {flippedX, offsety};
 }
 

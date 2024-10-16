@@ -5,8 +5,8 @@
 
 #define DEBUG_WINDOW // uncomment to enable debug window
 
-#define DEBUG // uncomment to enable debug messages and debug draw
-//#define DEBUG_SPRITE_BORDER
+#define DEBUG // if this is not define, no other of the following DEBUG-definition will work r
+#define DEBUG_SPRITE_BORDER
 #define DEBUG_COLLISION_BOXES
 
 namespace Constants

@@ -242,6 +242,12 @@ void DebugInfo::draw()
                  windowY + 90,
                  TEXT_SIZE,
                  TEXT_COLOR);
+
+        DrawText(("P2 is flipped: " + std::to_string(player2->getIsFlippedX())).c_str(),
+                 windowX + 10,
+                 windowY + 110,
+                 TEXT_SIZE,
+                 TEXT_COLOR);
     }
 
 
