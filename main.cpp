@@ -34,13 +34,7 @@ int main(void)
     inputHandler->addGameManager(gameManager);                                  // add gameManager to inputHandler
     asepriteManager->init();                                                    // load all aseprite files
     gameManager.addAsepriteManager(asepriteManager);                            // add asepriteManager to gameManager
-
-
-    SetTargetFPS(Constants::FPS); // Set  game to run at X frames-per-second (recommended: 60)
-
-    // Set the resolution/size of the of the renderTarget (not the screen resolution), default is 1120x630
-    // screen2DManager->setResolution(Resolution::R_1920x1080);
-    // screen2DManager->setResolution(Resolution::R_2560x1440);
+    screen2DManager->init(); // setFPS and setSize of the renderTarget
 
     // Create Player 1 and 2
     Fighter1* player1 = new Fighter1(asepriteManager, Constants::PLAYER1_X, Constants::BASELINE);

@@ -30,6 +30,8 @@ public:
 
     ~Screen2DManager();
 
+    void init();
+
     /**
      * @brief Iterates over the membervariable "rendertargets" which is a std::map with RenderTextures and unloads all textures.
      */

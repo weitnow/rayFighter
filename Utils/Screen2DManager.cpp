@@ -35,6 +35,16 @@ Screen2DManager::~Screen2DManager()
 {
 }
 
+void Screen2DManager::init()
+{
+    // Set  game to run at X frames-per-second (recommended: 60)
+    SetTargetFPS(Constants::FPS); // Raylib function
+
+    // Set the resolution/size of the of the renderTarget (not the screen resolution), default is 1120x630
+    // setResolution(Resolution::R_1920x1080);
+    // setResolution(Resolution::R_2560x1440);
+}
+
 void Screen2DManager::unloadRenderTarget()
 {
     std::cout << "Unloading texture with id: " << renderTarget.texture.id << std::endl;
