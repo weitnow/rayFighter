@@ -42,16 +42,8 @@ int main(void)
 
     SetTargetFPS(Constants::FPS); // Set  game to run at X frames-per-second (recommended: 60)
 
-    // Populate membervariables of the GlobalObjects
-    /*
-    screen2DManager->createRenderTarget(
-        "mainRenderTarget",
-        Constants::RENDERTARGET_WIDTH,
-        Constants::RENDERTARGET_HEIGHT); // Create a RenderTexture2D to be used for render to texture
-    */
-    screen2DManager->createRenderTarget("mainRenderTarget",
-                                        256,
-                                        144); // Create a RenderTexture2D to be used for render to texture
+    //screen2DManager->setResolution(Resolution::R_1920x1080);
+    //screen2DManager->setResolution(Resolution::R_2560x1440);
 
     asepriteManager->loadAnimFile("gbFighter"); // asepriteManager.frameTags[gbFighter-Idle]
                                                 // asepriteManager.textures[gbFighter]
@@ -209,7 +201,7 @@ int main(void)
         // Draw to RenderTexture
         //----------------------------------------------------------------------------------
         // BeginTextureMode(target);
-        screen2DManager->beginDrawToRenderTarget("mainRenderTarget");
+        screen2DManager->beginDrawToRenderTarget();
 
         ClearBackground(RAYWHITE);
 
@@ -217,18 +209,18 @@ int main(void)
         // calculate Camera
         float& middlepointX = gameManager.middlePointXbetweenPlayers;
 
-        if (middlepointX < 85.f)
+        if (middlepointX < 105.f)
         {
-            camPos = camPos - 30 * deltaTime;
-            player1->setCamVector(Vector2{30.f, 0.f});
-            player2->setCamVector(Vector2{30.f, 0.f});
+            camPos = camPos - 50 * deltaTime;
+            player1->setCamVector(Vector2{50.f, 0.f});
+            player2->setCamVector(Vector2{50.f, 0.f});
         }
-        else if (middlepointX > 172.f)
+        else if (middlepointX > 152.f)
         {
             // move background to the left
-            camPos = camPos + 30 * deltaTime;
-            player1->setCamVector(Vector2{-30.f, 0.f});
-            player2->setCamVector(Vector2{-30.f, 0.f});
+            camPos = camPos + 50 * deltaTime;
+            player1->setCamVector(Vector2{-50.f, 0.f});
+            player2->setCamVector(Vector2{-50.f, 0.f});
         }
         else
         {
@@ -286,7 +278,7 @@ int main(void)
     delete player1;
     delete player2;
 
-    screen2DManager->unloadAllRenderTextures();
+    screen2DManager->unloadRenderTarget();
     delete screen2DManager; //deallocate memory on the heap
     delete inputHandler;    //deallocate memory on the heap
     delete asepriteManager; //deallocate memory on the heap

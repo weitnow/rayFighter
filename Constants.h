@@ -16,18 +16,10 @@ const int PLAYER_WIDTH = 32;
 
 const int SCREEN_WIDTH = 1920;
 const int SCREEN_HEIGHT = 1080;
-const int RENDERTARGET_WIDTH = 320;
-const int RENDERTARGET_HEIGHT = 180;
-const int BASELINE = 102;
 
-/*
-1920 x 1080
-960 x 540
-640 x 360
-480 x 270
-320 x 180
-240 x 135
-*/
+const int RENDERTARGET_WIDTH = 256;
+const int RENDERTARGET_HEIGHT = 144;
+const int BASELINE = 102;
 
 const bool BACKGROUND_MUSIC = false;
 

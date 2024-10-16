@@ -1,13 +1,11 @@
-//
-// Created by weitnow on 12/26/23.
-//
-
 #include "Screen2DManager.h"
+#include "../Constants.h"
 
 Screen2DManager::Screen2DManager(const int screenWidth,
                                  const int screenHeight,
                                  const char* windowTitle,
-                                 const bool windowResizable)
+                                 const bool windowResizable,
+                                 const Resolution resolution)
 
 {
     if (windowResizable)
@@ -17,7 +15,6 @@ Screen2DManager::Screen2DManager(const int screenWidth,
     }
 
     // Initialize window
-
     InitWindow(screenWidth, screenHeight, windowTitle);
 
     // Initialize Camera
@@ -25,24 +22,22 @@ Screen2DManager::Screen2DManager(const int screenWidth,
     camera.offset = Vector2{0.0f, 0.0f};
     camera.rotation = 0.0f;
     camera.zoom = 1.0f;
+
+    // set Resolution of the destRec (not the screen resolution)
+    this->resolution = resolution;
+
+    // initialize the rernderTarget with 256x144
+    renderTarget = LoadRenderTexture(Constants::RENDERTARGET_WIDTH, Constants::RENDERTARGET_HEIGHT);
 }
 
 Screen2DManager::~Screen2DManager()
 {
 }
 
-void Screen2DManager::unloadAllRenderTextures()
+void Screen2DManager::unloadRenderTarget()
 {
-    // Iterate over the map of renderTargets and unload all textures
-    for (auto& pair : renderTargets)
-    {
-        if (pair.second.texture.id != 0)
-        {
-            // print texture.id to console
-            std::cout << "Unloading texture with id: " << pair.second.texture.id << std::endl;
-            UnloadRenderTexture(pair.second); // pair.first is the key, pair.second is the value
-        }
-    }
+    std::cout << "Unloading texture with id: " << renderTarget.texture.id << std::endl;
+    UnloadRenderTexture(renderTarget); // Raylib function
 }
 
 void Screen2DManager::update(float deltaTime)
@@ -67,38 +62,55 @@ void Screen2DManager::update(float deltaTime)
         camera.target.x++;
 }
 
-void Screen2DManager::createRenderTarget(std::string renderTargetName, int targetWidth, int targetHeight)
-{
-    RenderTexture2D renderTexture = LoadRenderTexture(targetWidth, targetHeight);
-    renderTargets[renderTargetName] = renderTexture;
-}
-
 void Screen2DManager::beginDrawToScreen()
 {
     BeginDrawing(); // Raylib function
 }
 
-void Screen2DManager::beginDrawToRenderTarget(std::string renderTargetName)
+void Screen2DManager::beginDrawToRenderTarget()
 {
-    BeginTextureMode(renderTargets[renderTargetName]);
+    BeginTextureMode(renderTarget); // Raylib function
 }
 
 void Screen2DManager::drawRenderTarget(std::string renderTargetName)
 {
-    RenderTexture2D renderTarget = renderTargets[renderTargetName];
-    /*
-    scaledRectangle = calculateScaledRectangle(renderTarget, renderTarget.texture.width, renderTarget.texture.height);
 
-    DrawTexturePro(renderTarget.texture,
-                   (Rectangle){0.0f, 0.0f, (float)renderTarget.texture.width, (float)-renderTarget.texture.height},
-                   scaledRectangle,
-                   (Vector2){0, 0},
-                   0.0f,
-                   WHITE);
-    */
-    //Rectangle sourceRec = {0.0f, 0.0f, 240, -135};
     Rectangle sourceRec = {0.0f, 0.0f, 256, -144};
     Rectangle destRec = {10.0f, 420.0f, 1120, 630};
+
+    if (resolution == Resolution::R_256x144)
+    {
+        destRec = {0.0f, 0.0f, 256, 144};
+    }
+    else if (resolution == Resolution::R_320x180)
+    {
+        destRec = {0.0f, 0.0f, 320, 180};
+    }
+    else if (resolution == Resolution::R_480x270)
+    {
+        destRec = {0.0f, 0.0f, 480, 270};
+    }
+    else if (resolution == Resolution::R_640x360)
+    {
+        destRec = {0.0f, 0.0f, 640, 360};
+    }
+    else if (resolution == Resolution::R_960x540)
+    {
+        destRec = {0.0f, 0.0f, 960, 540};
+    }
+    else if (resolution == Resolution::R_1120x630)
+    {
+        destRec = {10.0f, 420.0f, 1120, 630};
+    }
+    else if (resolution == Resolution::R_1920x1080)
+    {
+        destRec = {0.0f, 0.0f, 1920, 1080};
+    }
+    else if (resolution == Resolution::R_2560x1440)
+    {
+        destRec = {0.0f, 0.0f, 2560, 1440};
+    }
+
 
     DrawTexturePro(renderTarget.texture, sourceRec, destRec, Vector2{0, 0}, 0.0f, WHITE);
 }
@@ -113,23 +125,7 @@ void Screen2DManager::endDrawToScreen()
     EndDrawing(); // Raylib function
 }
 
-Rectangle Screen2DManager::calculateScaledRectangle(RenderTexture2D renderTarget, int targetWidth, int targetHeight)
+void Screen2DManager::setResolution(Resolution resolution)
 {
-    renderTarget.texture.height = GetScreenHeight();
-    renderTarget.texture.width = (float)renderTarget.texture.height * ((float)targetWidth / (float)targetHeight);
-    int scaleHangover = 0;
-
-    if (renderTarget.texture.width > GetScreenWidth())
-    {
-        renderTarget.texture.width = GetScreenWidth();
-        renderTarget.texture.height = (float)renderTarget.texture.width * ((float)targetHeight / (float)targetWidth);
-    }
-
-    scaleHangover = (GetScreenWidth() - (int)renderTarget.texture.width) % 2;
-    renderTarget.texture.width += scaleHangover;
-
-    return (Rectangle){static_cast<float>((GetScreenWidth() - renderTarget.texture.width) / 2),
-                       static_cast<float>((GetScreenHeight() - renderTarget.texture.height) / 2),
-                       static_cast<float>(renderTarget.texture.width),
-                       static_cast<float>(renderTarget.texture.height)};
+    this->resolution = resolution;
 }
