@@ -11,16 +11,16 @@ CollisionBox2D::CollisionBox2D(float offsetx,
                                float offsety,
                                float width,
                                float height,
+                               float hitboxOwnerWith,
                                CollisionBoxType collisionBoxType,
                                bool isActive,
                                Color color,
                                HurtboxType hurtboxType)
     : width(width), height(height), color(color), offset{offsetx, offsety}, myRectangle{0, 0, width, height},
       objPos{0, 0}, pos{0, 0}, isActive(isActive), collisionBoxType(collisionBoxType), hurtboxType(hurtboxType),
-      isFlippedX(false)
+      isFlippedX(false), hitboxOwnerWith(hitboxOwnerWith)
 {
-    //todo: get rid of hardcoded 32.f and get with of the sprite
-    float flippedX = abs(32.f - offsetx - width);
+    float flippedX = abs(hitboxOwnerWith - offsetx - width);
     offsetFlippedX = {flippedX, offsety};
 }
 
@@ -52,11 +52,6 @@ void CollisionBox2D::update(float deltaTime, bool isFlippedX)
 void CollisionBox2D::draw()
 {
     DrawRectangleLinesEx(myRectangle, 1, color);
-    if (collisionBoxType == CollisionBoxType::HITBOX)
-    {
-        std::cout << "Is flipped X: " << isFlippedX << std::endl;
-        std::cout << myRectangle.x << std::endl;
-    }
 }
 
 void CollisionBox2D::setObjPos(float x, float y)

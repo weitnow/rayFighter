@@ -143,6 +143,7 @@ protected:
                                           int offsetY,
                                           int width,
                                           int height,
+                                          float hitboxOwnerWith,
                                           CollisionBoxType collisionBoxType,
                                           HurtboxType hurtboxType,
                                           bool isActive);

@@ -293,6 +293,7 @@ void BaseGameObject::addCollisionBoxForFrame(const std::string frameTag,
                                              offsetY,
                                              width,
                                              height,
+                                             tag.sourceSizeX,
                                              collisionBoxType,
                                              hurtboxType,
                                              isActive);
@@ -305,12 +306,16 @@ void BaseGameObject::addCollisionBoxForFrame(const std::string frameTag,
         frameTagName += std::to_string(frameNumber);
     }
 
+    // get the with of the sprite from the frametag
+    int spritewith = asepriteManagerPtr->getFrameTag(frameTag).sourceSizeX;
+
 
     _addCollisionBoxForFrameInternal(frameTagName,
                                      offsetX,
                                      offsetY,
                                      width,
                                      height,
+                                     spritewith,
                                      collisionBoxType,
                                      hurtboxType,
                                      isActive);
@@ -529,29 +534,58 @@ void BaseGameObject::_addCollisionBoxForFrameInternal(std::string frameTagName,
                                                       int offsetY,
                                                       int width,
                                                       int height,
+                                                      float hitboxOwnerWith,
                                                       CollisionBoxType collisionBoxType,
                                                       HurtboxType hurtboxType,
                                                       bool isActive)
 {
     if (collisionBoxType == CollisionBoxType::HITBOX)
     {
-        hitBoxesPerFrame[frameTagName].push_back(
-            CollisionBox2D{offsetX, offsetY, width, height, collisionBoxType, isActive, RED, hurtboxType});
+        hitBoxesPerFrame[frameTagName].push_back(CollisionBox2D{offsetX,
+                                                                offsetY,
+                                                                width,
+                                                                height,
+                                                                hitboxOwnerWith,
+                                                                collisionBoxType,
+                                                                isActive,
+                                                                RED,
+                                                                hurtboxType});
     }
     else if (collisionBoxType == CollisionBoxType::HURTBOX)
     {
-        hurtBoxesPerFrame[frameTagName].push_back(
-            CollisionBox2D{offsetX, offsetY, width, height, collisionBoxType, isActive, GREEN, hurtboxType});
+        hurtBoxesPerFrame[frameTagName].push_back(CollisionBox2D{offsetX,
+                                                                 offsetY,
+                                                                 width,
+                                                                 height,
+                                                                 hitboxOwnerWith,
+                                                                 collisionBoxType,
+                                                                 isActive,
+                                                                 GREEN,
+                                                                 hurtboxType});
     }
     else if (collisionBoxType == CollisionBoxType::PUSHBOX)
     {
-        pushBoxesPerFrame[frameTagName].push_back(
-            CollisionBox2D{offsetX, offsetY, width, height, collisionBoxType, isActive, BLUE, hurtboxType});
+        pushBoxesPerFrame[frameTagName].push_back(CollisionBox2D{offsetX,
+                                                                 offsetY,
+                                                                 width,
+                                                                 height,
+                                                                 hitboxOwnerWith,
+                                                                 collisionBoxType,
+                                                                 isActive,
+                                                                 BLUE,
+                                                                 hurtboxType});
     }
     else if (collisionBoxType == CollisionBoxType::THROWBOX)
     {
-        throwBoxesPerFrame[frameTagName].push_back(
-            CollisionBox2D{offsetX, offsetY, width, height, collisionBoxType, isActive, BROWN, hurtboxType});
+        throwBoxesPerFrame[frameTagName].push_back(CollisionBox2D{offsetX,
+                                                                  offsetY,
+                                                                  width,
+                                                                  height,
+                                                                  hitboxOwnerWith,
+                                                                  collisionBoxType,
+                                                                  isActive,
+                                                                  BROWN,
+                                                                  hurtboxType});
     }
     else
     {
