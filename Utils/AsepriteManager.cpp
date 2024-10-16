@@ -14,6 +14,8 @@ AsepriteAnimationFile::AsepriteAnimationFile(std::string filename,
     current_frame = 0;
     min_frame = 0;
     max_frame = 0;
+    spriteSizeX = 0;
+    spriteSizeY = 0;
     update_counter = 0.0f;
     current_duration = 0.0f;
     animJustFinishedPlusLastFrameDurationCounter =
@@ -55,6 +57,16 @@ float AsepriteAnimationFile::getDurationCurrentFrame()
     return getDurationCurrentFrame(current_frame);
 }
 
+int AsepriteAnimationFile::getSpriteSizeX() const
+{
+    return spriteSizeX;
+}
+
+int AsepriteAnimationFile::getSpriteSizeY() const
+{
+    return spriteSizeY;
+}
+
 bool AsepriteAnimationFile::hasAnimJustFinished() const
 {
     return animJustFinished;
@@ -88,23 +100,23 @@ void AsepriteAnimationFile::_drawFrame(const std::string& filenameTagname,
                                        bool flipX,
                                        bool flipY)
 {
-    int sizeX = this->asepriteManager->getFrameTag(filenameTagname).sourceSizeX; // width of the frame
-    int sizeY = this->asepriteManager->getFrameTag(filenameTagname).sourceSizeY; // height of the frame
+    //int sizeX = this->asepriteManager->getFrameTag(filenameTagname).sourceSizeX; // width of the frame
+    //int sizeY = this->asepriteManager->getFrameTag(filenameTagname).sourceSizeY; // height of the frame
 
     // Determine source rectangle (which part of the texture to draw)
     Rectangle sourceRec = {
-        (float)current_frame * sizeX,   // X position of the frame
-        0,                              // Y position (top of the texture)
-        (flipX ? -1.0f : 1.0f) * sizeX, // Flip horizontally if flipX is true
-        (flipY ? -1.0f : 1.0f) * sizeY  // Flip vertically if flipY is true
+        (float)current_frame * spriteSizeX,   // X position of the frame
+        0,                                    // Y position (top of the texture)
+        (flipX ? -1.0f : 1.0f) * spriteSizeX, // Flip horizontally if flipX is true
+        (flipY ? -1.0f : 1.0f) * spriteSizeY  // Flip vertically if flipY is true
     };
 
     // Determine destination rectangle (where to draw the texture on screen)
     Rectangle destRec = {
-        (float)x,      // X position to draw
-        (float)y,      // Y position to draw
-        sizeX * scale, // Scaled width
-        sizeY * scale  // Scaled height
+        (float)x,            // X position to draw
+        (float)y,            // Y position to draw
+        spriteSizeX * scale, // Scaled width
+        spriteSizeY * scale  // Scaled height
     };
 
     // Draw the texture with the specified scaling and tint
@@ -158,6 +170,9 @@ void AsepriteAnimationFile::update(float deltaTime)
 {
     // get the duration of the current frame
     current_duration = getDurationCurrentFrame(current_frame);
+    // get the sprite size of the current frame
+    spriteSizeX = this->asepriteManager->getFrameTag(current_filenameTagname).sourceSizeX;
+    spriteSizeY = this->asepriteManager->getFrameTag(current_filenameTagname).sourceSizeY;
 
     // update the counter with the deltaTime
     update_counter += deltaTime;

@@ -19,14 +19,6 @@ enum class Resolution
     R_2560x1440
 };
 
-/**
- * @class Screen2Dmanager
- * @brief Manages 2D screen. It created the gaming window and is rendering assets to the screen using render targets
- * @param[in] screenWidth the width of the game window on the screen
- * @param[in] screenHeight the height of the game window on the screen
- * @param[in] windowTitle the title of the game window
- * @param[in] windowResize optional, if set to true, the window will be resizable
- */
 class Screen2DManager
 {
 public:
@@ -54,7 +46,7 @@ public:
     void endDrawToRenderTarget();
 
     void beginDrawToScreen();
-    void drawRenderTarget(std::string renderTargetName);
+    void drawRenderTarget();
     void endDrawToScreen();
 
     void setResolution(Resolution resolution);
@@ -64,8 +56,9 @@ public:
 private:
     // Member variables
     RenderTexture2D renderTarget; // the renderTarget to draw to, which is 256x144 and will be scaled up
-    Rectangle scaledRectangle;    // used for the DrawTexturePro-Function to draw the renderTarget to Screen
-    Resolution resolution;        // the resolution of the destRec
+    Rectangle destRec;            // the destination rectangle for the renderTarget (size of the renderTarget)
+    Rectangle sourceRec;          // the source rectangle (256x144)
+    Resolution resolution;        // the resolution the destRec gets set to
 };
 
 #endif // GBFIGHTER_SCREEN2DMANAGER_H

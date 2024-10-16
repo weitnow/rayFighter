@@ -35,6 +35,9 @@ public:
     void addBaseGameObject(BaseGameObject* object);
     void removeBaseGameObject();
 
+    void addBaseSpriteObject(BaseSpriteObject* object);
+    void removeBaseSpriteObject();
+
 
     // Update and draw methods
     void update(float deltaTime);
@@ -69,6 +72,7 @@ private:
     // Private member variables to manage game objects
     Dictionary<std::string, BaseCharacter*> baseCharacters;
     List<BaseGameObject*> gameObjects;
+    List<BaseSpriteObject*> baseSpriteObjects;
 
     // AsepriteManager
     AsepriteManager* asepriteManager;

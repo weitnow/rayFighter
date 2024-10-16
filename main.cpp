@@ -42,8 +42,9 @@ int main(void)
 
     SetTargetFPS(Constants::FPS); // Set  game to run at X frames-per-second (recommended: 60)
 
-    //screen2DManager->setResolution(Resolution::R_1920x1080);
-    //screen2DManager->setResolution(Resolution::R_2560x1440);
+    // Set the resolution/size of the of the renderTarget (not the screen resolution), default is 1120x630
+    // screen2DManager->setResolution(Resolution::R_1920x1080);
+    // screen2DManager->setResolution(Resolution::R_2560x1440);
 
     asepriteManager->loadAnimFile("gbFighter"); // asepriteManager.frameTags[gbFighter-Idle]
                                                 // asepriteManager.textures[gbFighter]
@@ -68,7 +69,7 @@ int main(void)
     asepriteManager->loadAnimFile("deadSkull");
 
     // Add asepriteManager to gameManager
-    gameManager.addAsepriteManager(asepriteManager); // add asepriteManager to gameManager
+    gameManager.addAsepriteManager(asepriteManager);
 
     // Create Player 1
     BaseCharacter* player1 = new BaseCharacter(asepriteManager, Constants::PLAYER1_X, Constants::BASELINE);
@@ -82,6 +83,7 @@ int main(void)
     barrel->setCurrentFrameTag("barrel-Idle");
     barrel->setObjName("Barrel");
     barrel->addCollisionBoxForFrame("barrel-Idle", -1, CollisionBoxType::HURTBOX, true, 10, 10, 13, 17);
+
 
     // Add the player1 and player2 to the gameManager
     gameManager.addBaseCharacter("player1", player1);
@@ -258,12 +260,14 @@ int main(void)
         ClearBackground(GREEN);
 
         // Draw RenderTexture to Screen
-        screen2DManager->drawRenderTarget("mainRenderTarget");
+        screen2DManager->drawRenderTarget();
 
+#ifdef DEBUG_WINDOW
         // Draw a black outlined rectangle around the mainView
         DrawRectangleLinesEx(Rectangle{0, 0, 1540, 1070}, 6, BLACK);
         // Draw a second black outlined rectangle on the right side of the screen
         DrawRectangleLinesEx(Rectangle{1545, 0, 374, 1070}, 6, BLACK);
+#endif
 
 #ifdef DEBUG_WINDOW
         debugInfo->draw();

@@ -195,6 +195,18 @@ void GameManager::addBaseGameObject(BaseGameObject* object)
 void GameManager::removeBaseGameObject()
 {
     // Implementation of removing an object
+    throw std::runtime_error("GameManager::removeBaseGameObject -> Not implemented yet.");
+}
+
+void GameManager::addBaseSpriteObject(BaseSpriteObject* object)
+{
+    baseSpriteObjects.push_back(object);
+}
+
+void GameManager::removeBaseSpriteObject()
+{
+    // Implementation of removing an object
+    throw std::runtime_error("GameManager::removeBaseSpriteObject -> Not implemented yet.");
 }
 
 void GameManager::update(float deltaTime)
@@ -255,11 +267,18 @@ void GameManager::draw()
         object->draw();
     }
 
+    // Draw all baseSpriteObjects
+    for (auto& object : baseSpriteObjects)
+    {
+        object->draw();
+    }
+
     // Draw all baseCharacters
     for (auto& pair : baseCharacters)
     {
         pair.second->draw();
     }
+
 
     // Draw the lifebars
     lifebar1->Draw();
@@ -268,9 +287,10 @@ void GameManager::draw()
     // Draw the deadSkull
     deadSkull->drawCurrentSelectedTag(120, 28, 1, WHITE);
 
-
+#ifdef DEBUG
     // Draw Middlepointline
     DrawLine(middlePointXbetweenPlayers, 0, middlePointXbetweenPlayers, 300, RED);
+#endif
 }
 
 void GameManager::addInputHandler(InputHandler* inputHandler)

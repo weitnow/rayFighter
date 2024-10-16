@@ -25,13 +25,24 @@ public:
     virtual void takeDamage(float damage, CollisionBox2D* hitbox);
 
     int& getCurrentLife();
+    void setLife(int currentLife);
+
     bool getIsAlive();
     bool getIsActive();
 
-    void setLife(int currentLife);
-
     void setObjName(std::string name);
     std::string getObjName();
+
+    // sprites
+    void addAnim(AsepriteAnimationFile* animfileptr);
+    AsepriteAnimationFile* getAnim();
+    virtual bool setCurrentFrameTag(std::string tag);
+    std::string getCurrentFrameTag();
+
+    List<CollisionBox2D> getPushBoxes();
+    List<CollisionBox2D> getHitBoxes();
+    List<CollisionBox2D> getHurtBoxes();
+    List<CollisionBox2D> getThrowBoxes();
 
     // position
     void setPos(float x, float y);
@@ -57,18 +68,6 @@ public:
     // scale
     void setScale(float scale);
     float getScale();
-
-    // sprites
-    void addAnim(AsepriteAnimationFile* animfileptr);
-    AsepriteAnimationFile* getAnim();
-    virtual bool setCurrentFrameTag(std::string tag);
-    std::string getCurrentFrameTag();
-
-    List<CollisionBox2D> getPushBoxes();
-    List<CollisionBox2D> getHitBoxes();
-    List<CollisionBox2D> getHurtBoxes();
-    List<CollisionBox2D> getThrowBoxes();
-
 
     // HitBoxes
     void addCollisionBoxForFrame(const std::string frameTag,
@@ -123,7 +122,6 @@ protected:
     CollisionMap hurtBoxesPerFrame;
     CollisionMap pushBoxesPerFrame;
     CollisionMap throwBoxesPerFrame;
-
 
     AsepriteAnimationFile* animfilePtr;
     AsepriteManager* asepriteManagerPtr;

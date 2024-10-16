@@ -16,6 +16,8 @@ BaseSpriteObject::BaseSpriteObject()
     sourceRect = {0.0f, 0.0f, 32, 32};
     destRect = {pos.x, pos.y, scale.y * sourceRect.height, scale.x * sourceRect.width};
     myDebug32x32Texture = LoadTexture("Assets/Graphics/debug32x32.png");
+    myTexture =
+        LoadTexture("Assets/Graphics/debug32x32.png"); // default texture, will be overwritten by the inheriting class
 }
 
 BaseSpriteObject::BaseSpriteObject(float x, float y) : BaseSpriteObject()
@@ -34,12 +36,6 @@ void BaseSpriteObject::update(float deltaTime)
         // then we have to update the destRect which we use for the DrawTexturePro function in the draw method of this class
         destRect.x = pos.x;
         destRect.y = pos.y;
-    }
-
-    // update hitboxes
-    for (auto& pair : collisionboxes)
-    {
-        pair.second.update(deltaTime);
     }
 }
 
@@ -67,11 +63,6 @@ void BaseSpriteObject::draw()
         DrawTexturePro(myDebug32x32Texture, sourceRect, destRect, origin, rotation, WHITE);
     }
 
-    // draw collisionboxes
-    for (auto& pair : collisionboxes)
-    {
-        pair.second.draw();
-    }
 #endif
 }
 

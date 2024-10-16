@@ -23,11 +23,12 @@ Screen2DManager::Screen2DManager(const int screenWidth,
     camera.rotation = 0.0f;
     camera.zoom = 1.0f;
 
-    // set Resolution of the destRec (not the screen resolution)
-    this->resolution = resolution;
-
     // initialize the rernderTarget with 256x144
     renderTarget = LoadRenderTexture(Constants::RENDERTARGET_WIDTH, Constants::RENDERTARGET_HEIGHT);
+    sourceRec = {0.0f, 0.0f, Constants::RENDERTARGET_WIDTH, -Constants::RENDERTARGET_HEIGHT};
+
+    // set Resolution of the destRec (not the screen resolution)
+    this->setResolution(resolution);
 }
 
 Screen2DManager::~Screen2DManager()
@@ -72,11 +73,24 @@ void Screen2DManager::beginDrawToRenderTarget()
     BeginTextureMode(renderTarget); // Raylib function
 }
 
-void Screen2DManager::drawRenderTarget(std::string renderTargetName)
+void Screen2DManager::drawRenderTarget()
 {
+    DrawTexturePro(renderTarget.texture, sourceRec, destRec, Vector2{0, 0}, 0.0f, WHITE);
+}
 
-    Rectangle sourceRec = {0.0f, 0.0f, 256, -144};
-    Rectangle destRec = {10.0f, 420.0f, 1120, 630};
+void Screen2DManager::endDrawToRenderTarget()
+{
+    EndTextureMode(); // Raylib function
+}
+
+void Screen2DManager::endDrawToScreen()
+{
+    EndDrawing(); // Raylib function
+}
+
+void Screen2DManager::setResolution(Resolution resolution)
+{
+    this->resolution = resolution;
 
     if (resolution == Resolution::R_256x144)
     {
@@ -110,22 +124,4 @@ void Screen2DManager::drawRenderTarget(std::string renderTargetName)
     {
         destRec = {0.0f, 0.0f, 2560, 1440};
     }
-
-
-    DrawTexturePro(renderTarget.texture, sourceRec, destRec, Vector2{0, 0}, 0.0f, WHITE);
-}
-
-void Screen2DManager::endDrawToRenderTarget()
-{
-    EndTextureMode(); // Raylib function
-}
-
-void Screen2DManager::endDrawToScreen()
-{
-    EndDrawing(); // Raylib function
-}
-
-void Screen2DManager::setResolution(Resolution resolution)
-{
-    this->resolution = resolution;
 }

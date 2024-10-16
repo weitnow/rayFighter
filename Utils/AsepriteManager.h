@@ -31,6 +31,8 @@ private:
     int current_frame; // current frame of the animation
     int min_frame;
     int max_frame;
+    int spriteSizeX;
+    int spriteSizeY;
     float update_counter;
     float current_duration;                             // duration of the current frame in milliseconds
     float animJustFinishedPlusLastFrameDurationCounter; // float value of duration of last frame
@@ -60,6 +62,8 @@ public:
     std::string getAnimFilenameTagname() const;
     float getDurationCurrentFrame(int frameNumber);
     float getDurationCurrentFrame();
+    int getSpriteSizeX() const;
+    int getSpriteSizeY() const;
     bool hasAnimJustFinished() const;
     bool hasAnimJustFinishedPlusLastFrameDuration() const;
     int getCurrentFrame() const;

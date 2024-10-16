@@ -46,9 +46,6 @@ protected:
 
     // Define the destination rectangle (used for scaling the object)
     Rectangle destRect;
-
-    // a map which holds all the collisionbox-obj
-    Dictionary<std::string, CollisionBox2D> collisionboxes;
 };
 
 

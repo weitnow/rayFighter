@@ -5,7 +5,8 @@
 
 // switch DEBUG_WINDOW-Mode on and enable debug-draw and log stuff on the terminal
 #define DEBUG_WINDOW // uncomment to enable debug window
-//#define DEBUG        // uncomment to enable debug messages and debug draw
+#define DEBUG        // uncomment to enable debug messages and debug draw
+#define DEBUG_SPRITE_BORDER
 //#define DEBUG_COLLISION_BOXES_NAMES // uncomment to enable debug messages for collision boxes names
 
 namespace Constants
@@ -19,7 +20,8 @@ const int SCREEN_HEIGHT = 1080;
 
 const int RENDERTARGET_WIDTH = 256;
 const int RENDERTARGET_HEIGHT = 144;
-const int BASELINE = 102;
+
+const int BASELINE = 102; //ground level where the player stands
 
 const bool BACKGROUND_MUSIC = false;
 

@@ -84,6 +84,18 @@ void BaseGameObject::draw()
                            Constants::GAMEOBJ_SIZE.y,
                            Constants::GAMEOBJ_COLOR);
 
+        // Draw the Spriteborder
+#ifdef DEBUG_SPRITE_BORDER
+
+        DrawRectangleLines(getPos().x,
+                           getPos().y,
+                           animfilePtr->getSpriteSizeX() * scale,
+                           animfilePtr->getSpriteSizeY() * scale,
+                           YELLOW);
+
+#endif
+
+
         // Draw the collision boxes
         _drawCollisionBoxes();
 
