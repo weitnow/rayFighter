@@ -12,6 +12,8 @@ public:
     virtual void update(float deltaTime) override;
     virtual void takeDamage(float damage = 1.f) override;
 
+    virtual void init() override;
+
 
 private:
     virtual void _reducePushVector(float deltaTime) override;

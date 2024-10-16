@@ -299,6 +299,32 @@ AsepriteManager::AsepriteManager(std::string foldername)
 AsepriteManager::~AsepriteManager()
 {
 }
+void AsepriteManager::init()
+{
+    // load all aseprite files in the folder
+    loadAnimFile("gbFighter"); // asepriteManager.frameTags[gbFighter-Idle]
+                               // asepriteManager.textures[gbFighter]
+
+    getFrameTag("gbFighter-Death").loop = false; // set loop to false for the death animation
+
+
+    loadAnimFile("nesFighter"); // asepriteManager.frameTags[nesFighter-Idle]
+                                // asepriteManager.textures[nesFighter]
+
+    getFrameTag("nesFighter-Death").loop = false; // set loop to false for the death animation
+
+    loadAnimFile("bgAnimation"); // asepriteManager.frameTags[bgAnimation]
+                                 // asepriteManager.textures[bgAnimation]
+
+    loadAnimFile("barrel"); // asepriteManager.frameTags[barrel]
+                            // asepriteManager.textures[barrel]
+
+    loadAnimFile("stage"); // asepriteManager.frameTags[stage-temple]
+                           // asepriteManager.textures[stage]
+
+    loadAnimFile("deadSkull");
+}
+
 nlohmann::json* AsepriteManager::loadJsonFile(const std::string& filename)
 {
     std::string path_with_filename = foldername + filename + ".json";

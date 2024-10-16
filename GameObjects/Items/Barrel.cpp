@@ -50,6 +50,10 @@ void Barrel::takeDamage(float damage)
     }
 }
 
+void Barrel::init()
+{
+}
+
 void Barrel::_reducePushVector(float deltaTime)
 {
     BaseGameObject::_reducePushVector(deltaTime);

@@ -3,11 +3,33 @@
 
 #include "raylib.h"
 
+//----------------------------------------------------------------------------------
+// DEBUG WINDOW
+//----------------------------------------------------------------------------------
 #define DEBUG_WINDOW // uncomment to enable debug window
 
-#define DEBUG // if this is not define, no other of the following DEBUG-definition will work r
-#define DEBUG_SPRITE_BORDER
-#define DEBUG_COLLISION_BOXES
+//----------------------------------------------------------------------------------
+// ENABLE DEBUGGING
+//----------------------------------------------------------------------------------
+#define DEBUG // if this is not define, no other of the following DEBUG-definition will work
+
+//----------------------------------------------------------------------------------
+// DRAW SPRITE BORDER
+//----------------------------------------------------------------------------------
+//#define DEBUG_SPRITE_BORDER
+
+//----------------------------------------------------------------------------------
+// DRAW COLLISION BOXES
+//----------------------------------------------------------------------------------
+#define DEBUG_COLLISION_BOXES // if this is not defined, no other of the following COLLISION_BOXES-definition will work
+#define DEBUG_HITBOXES
+#define DEBUG_HURTBOXES
+//#define DEBUG_PUSHBOXES
+#define DEBUG_THROWBOXES
+
+//----------------------------------------------------------------------------------
+// ...
+//----------------------------------------------------------------------------------
 
 namespace Constants
 {

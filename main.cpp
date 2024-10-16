@@ -1,5 +1,5 @@
-#include "Characters/BaseCharacter.h"
-#include "Characters/Fighter_Andi.h"
+#include "Characters/Fighter1.h"
+#include "Characters/Fighter2.h"
 #include "Constants.h"
 #include "GameObjects/BaseGameObject.h"
 #include "GameObjects/Items/Barrel.h"
@@ -23,22 +23,18 @@ int main(void)
     Screen2DManager* screen2DManager =
         new Screen2DManager(Constants::SCREEN_WIDTH, Constants::SCREEN_HEIGHT, "C++ gbFighter");
 
-    // Initialize SoundManager
     SoundManager& soundManager = SoundManager::getInstance();
-
-    // Initialize InputHandler
     InputHandler* inputHandler = new InputHandler();
-
-    // Initialize global Variables and GlobalObjects
-    float deltaTime;                                                            // will be updated in the main game loop
+    float deltaTime; // global variable - will be updated in the main game loop
     AsepriteManager* asepriteManager = new AsepriteManager{"Assets/Graphics/"}; // instance of AsepriteManager
-    DebugInfo* debugInfo = new DebugInfo();
-    inputHandler->addDebugInfo(*debugInfo);                // add debugInfo to inputHandler
-                                                           // instance of DebugInfo
-    GameManager& gameManager = GameManager::getInstance(); // instance of GameObjectsManager
+    DebugInfo* debugInfo = new DebugInfo();                                     // instance of DebugInfo
+    inputHandler->addDebugInfo(*debugInfo);                                     // add debugInfo to inputHandler
+    GameManager& gameManager = GameManager::getInstance();                      // instance of GameObjectsManager
+    gameManager.addInputHandler(inputHandler);                                  // add inputHandler to gameManager
+    inputHandler->addGameManager(gameManager);                                  // add gameManager to inputHandler
+    asepriteManager->init();                                                    // load all aseprite files
+    gameManager.addAsepriteManager(asepriteManager);                            // add asepriteManager to gameManager
 
-    gameManager.addInputHandler(inputHandler); // add inputHandler to gameManager
-    inputHandler->addGameManager(gameManager); // add gameManager to inputHandler
 
     SetTargetFPS(Constants::FPS); // Set  game to run at X frames-per-second (recommended: 60)
 
@@ -46,36 +42,9 @@ int main(void)
     // screen2DManager->setResolution(Resolution::R_1920x1080);
     // screen2DManager->setResolution(Resolution::R_2560x1440);
 
-    asepriteManager->loadAnimFile("gbFighter"); // asepriteManager.frameTags[gbFighter-Idle]
-                                                // asepriteManager.textures[gbFighter]
-
-    asepriteManager->getFrameTag("gbFighter-Death").loop = false; // set loop to false for the death animation
-
-
-    asepriteManager->loadAnimFile("nesFighter"); // asepriteManager.frameTags[nesFighter-Idle]
-                                                 // asepriteManager.textures[nesFighter]
-
-    asepriteManager->getFrameTag("nesFighter-Death").loop = false; // set loop to false for the death animation
-
-    asepriteManager->loadAnimFile("bgAnimation"); // asepriteManager.frameTags[bgAnimation]
-                                                  // asepriteManager.textures[bgAnimation]
-
-    asepriteManager->loadAnimFile("barrel"); // asepriteManager.frameTags[barrel]
-                                             // asepriteManager.textures[barrel]
-
-    asepriteManager->loadAnimFile("stage"); // asepriteManager.frameTags[stage-temple]
-                                            // asepriteManager.textures[stage]
-
-    asepriteManager->loadAnimFile("deadSkull");
-
-    // Add asepriteManager to gameManager
-    gameManager.addAsepriteManager(asepriteManager);
-
-    // Create Player 1
-    BaseCharacter* player1 = new BaseCharacter(asepriteManager, Constants::PLAYER1_X, Constants::BASELINE);
-
-    // Create Player 2
-    BaseCharacter* player2 = new BaseCharacter(asepriteManager, Constants::PLAYER2_X, Constants::BASELINE);
+    // Create Player 1 and 2
+    Fighter1* player1 = new Fighter1(asepriteManager, Constants::PLAYER1_X, Constants::BASELINE);
+    Fighter2* player2 = new Fighter2(asepriteManager, Constants::PLAYER2_X, Constants::BASELINE);
 
     // TODO: get rid of this - just for testing
     // Create a BaseGameObject with a barrel Sprite for testing
@@ -84,54 +53,14 @@ int main(void)
     barrel->setObjName("Barrel");
     barrel->addCollisionBoxForFrame("barrel-Idle", -1, CollisionBoxType::HURTBOX, true, 10, 10, 13, 17);
 
-
-    // Add the player1 and player2 to the gameManager
+    // Add the player1 and player2 and gameobjects to the gameManager
     gameManager.addBaseCharacter("player1", player1);
     gameManager.addBaseCharacter("player2", player2);
     gameManager.addBaseGameObject(barrel.get());
 
     // Initialize Player 1 and Player 2 (needs to be done after adding them to the gameManager, otherwise the getBaseCharacter methode of GameManager which is Used in State.cpp will return a nullptr)
-    // Player 1
-    player1->setCurrentFrameTag("gbFighter-Idle"); // using gbFighter-Graphics
-    player1->setObjName("Andy");
-    player1->setPlayerNumber(1);
-    player1->addController(inputHandler->getPlayer1Controller());
-    // [0, 1, 2...] = frameNumber, -1 = valid for all frames of the frameTagName, -2 = valid for all frames of the frameTagName
-    player1->addCollisionBoxForFrame("gbFighter-Idle", -1, CollisionBoxType::PUSHBOX, true, 10, 0, 10, 30);
-    player1->addCollisionBoxForFrame("gbFighter-Punch", 1, CollisionBoxType::HITBOX, true, 26, 10, 5, 5);
-    player1->addCollisionBoxForFrame("gbFighter-Kick", 1, CollisionBoxType::HITBOX, true, 30, 10, 5, 5);
-    player1->addCollisionBoxForFrame("gbFighter-JumpPunch", 0, CollisionBoxType::HITBOX, true, 24, 20, 5, 5);
-    player1->addCollisionBoxForFrame("gbFighter-Idle",
-                                     -2,
-                                     CollisionBoxType::HURTBOX,
-                                     HurtboxType::BODY,
-                                     true,
-                                     10,
-                                     4,
-                                     12,
-                                     26);
-    player1->getStatemachine().changeState("Walk");
-
-
-    // Player 2
-    player2->setLife(2);                            // Todo: get rid of setLife
-    player2->setCurrentFrameTag("nesFighter-Idle"); // using nesFighter-Graphics
-    player2->setObjName("Ken");
-    player2->setPlayerNumber(2);
-    player2->addController(inputHandler->getPlayer2Controller());
-    player2->addCollisionBoxForFrame("nesFighter-Idle", -1, CollisionBoxType::PUSHBOX, true, 16, 0, 10, 30);
-    player2->addCollisionBoxForFrame("nesFighter-Punch", 0, CollisionBoxType::HITBOX, true, 30, 15, 5, 5);
-    player2->addCollisionBoxForFrame("nesFighter-Idle",
-                                     -2,
-                                     CollisionBoxType::HURTBOX,
-                                     HurtboxType::BODY,
-                                     true,
-                                     16,
-                                     0,
-                                     10,
-                                     25);
-    player2->getStatemachine().changeState("Idle");
-    player2->setSpriteOffsetX(5);
+    player1->init();
+    player2->init();
 
     gameManager
         .init(); // initialize gameManager (can only be done after all gameObjects are added and must be at the end)
@@ -292,7 +221,6 @@ int main(void)
 
     CloseWindow(); // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
-
 
     return 0;
 }
