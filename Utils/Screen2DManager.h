@@ -25,26 +25,20 @@ public:
     Screen2DManager(const int screenWidth,
                     const int screenHeight,
                     const char* windowTitle,
-                    const bool windowResizable = false,
-                    const Resolution resolution = Resolution::R_1120x630);
+                    const bool windowResizable,
+                    const Resolution resolution);
 
     ~Screen2DManager();
 
     void init();
 
-    /**
-     * @brief Iterates over the membervariable "rendertargets" which is a std::map with RenderTextures and unloads all textures.
-     */
     void unloadRenderTarget();
 
     void update(float deltaTime);
 
     void beginDrawToRenderTarget();
 
-    /**
-     * @brief This has to be called to after finishing drawing to a renderTarget.
-     *
-     */
+
     void endDrawToRenderTarget();
 
     void beginDrawToScreen();

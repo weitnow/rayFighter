@@ -70,54 +70,66 @@ void BaseGameObject::draw()
 {
     if (animfilePtr != nullptr)
     {
-#ifdef DEBUG
-        if (!isInvincible)
+
+
+        if (Global::debugMode)
         {
-            animfilePtr
-                ->drawCurrentSelectedTag(getPos().x, getPos().y, scale, color, isFlippedX, isFlippedY, spriteOffsetX);
+
+            if (!isInvincible)
+            {
+                animfilePtr->drawCurrentSelectedTag(getPos().x,
+                                                    getPos().y,
+                                                    scale,
+                                                    color,
+                                                    isFlippedX,
+                                                    isFlippedY,
+                                                    spriteOffsetX);
+            }
+            else
+            {
+                animfilePtr->drawCurrentSelectedTag(getPos().x,
+                                                    getPos().y,
+                                                    scale,
+                                                    BLUE,
+                                                    isFlippedX,
+                                                    isFlippedY,
+                                                    spriteOffsetX);
+            }
+
+
+            // Draw a small rectangle at the position of the gameobj.
+            DrawRectangleLines(getPos().x,
+                               getPos().y,
+                               Constants::GAMEOBJ_SIZE.x,
+                               Constants::GAMEOBJ_SIZE.y,
+                               Constants::GAMEOBJ_COLOR);
+
+            // Draw the Spriteborder
+            if (Global::debugSpriteBorder)
+            {
+                DrawRectangleLines(getPos().x,
+                                   getPos().y,
+                                   animfilePtr->getSpriteSizeX() * scale,
+                                   animfilePtr->getSpriteSizeY() * scale,
+                                   YELLOW);
+            }
+            if (Global::debugCollisionBoxes)
+            {
+                // Draw the collision boxes
+                _drawCollisionBoxes();
+            }
         }
         else
         {
+
             animfilePtr
-                ->drawCurrentSelectedTag(getPos().x, getPos().y, scale, BLUE, isFlippedX, isFlippedY, spriteOffsetX);
+                ->drawCurrentSelectedTag(getPos().x, getPos().y, scale, color, isFlippedX, isFlippedY, spriteOffsetX);
         }
-
-
-        // Draw a small rectangle at the position of the gameobj.
-        DrawRectangleLines(getPos().x,
-                           getPos().y,
-                           Constants::GAMEOBJ_SIZE.x,
-                           Constants::GAMEOBJ_SIZE.y,
-                           Constants::GAMEOBJ_COLOR);
-
-        // Draw the Spriteborder
-#ifdef DEBUG_SPRITE_BORDER
-
-        DrawRectangleLines(getPos().x,
-                           getPos().y,
-                           animfilePtr->getSpriteSizeX() * scale,
-                           animfilePtr->getSpriteSizeY() * scale,
-                           YELLOW);
-
-#endif
-
-#ifdef DEBUG_COLLISION_BOXES
-        // Draw the collision boxes
-        _drawCollisionBoxes();
-#endif
-
-#else
-        animfilePtr
-            ->drawCurrentSelectedTag(getPos().x, getPos().y, scale, color, isFlippedX, isFlippedY, spriteOffsetX);
-#endif
     }
 }
 
 void BaseGameObject::takeDamage(float damage)
 {
-#ifdef DEBUG
-    std::cout << "BaseGameObject::takeDamage -> " << ObjName << " took " << damage << " damage." << std::endl;
-#endif
 
     life -= damage;
 

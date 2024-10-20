@@ -34,11 +34,11 @@
 namespace Constants
 {
 
-const int BACKGROUND_WIDTH = 256;
-const int PLAYER_WIDTH = 32;
-
 const int SCREEN_WIDTH = 1920;
 const int SCREEN_HEIGHT = 1080;
+
+const int BACKGROUND_WIDTH = 256;
+const int PLAYER_WIDTH = 32;
 
 const int RENDERTARGET_WIDTH = 256;
 const int RENDERTARGET_HEIGHT = 144;
@@ -75,6 +75,15 @@ namespace Global
 // Global Variables
 extern float gravity;
 extern float pushReduction;
+
+extern bool debugMode;
+extern bool debugWindow;
+extern bool debugSpriteBorder;
+extern bool debugCollisionBoxes;
+extern bool debugHitboxes;
+extern bool debugHurtboxes;
+extern bool debugPushboxes;
+extern bool debugThrowboxes;
 
 } // namespace Global
 

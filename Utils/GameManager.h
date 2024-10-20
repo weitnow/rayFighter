@@ -6,6 +6,9 @@
 #include "Core.h"
 #include <algorithm> // for std::remove and std::find
 
+// Forward declation of Game
+class Game;
+
 // Forward declaration of Lifebar
 class Lifebar;
 
@@ -50,6 +53,8 @@ public:
     // CollisionManager
     static CollisionManager& getCollisionManager();
 
+    void addGameInstance(Game* game);
+
     void addAsepriteManager(AsepriteManager* asepriteManager);
     AsepriteManager* getAsepriteManager();
 
@@ -60,6 +65,8 @@ public:
 
 
     float middlePointXbetweenPlayers = 0.f;
+
+    void setDebugMode(bool debugMode);
 
 
 private:
@@ -92,6 +99,9 @@ private:
     Lifebar* lifebar1;
     Lifebar* lifebar2;
     AsepriteAnimationFile* deadSkull;
+
+    // Game
+    Game* game;
 
     // deltaTimeMultiplier
     float deltaTimeMultiplier = 1.f;

@@ -1,4 +1,5 @@
 #include "GameManager.h"
+#include "../Game/Game.h"
 #include "../Gui/Lifebar.h"
 #include "CollisionManager.h"
 #include "SoundManager.h"
@@ -310,6 +311,11 @@ CollisionManager& GameManager::getCollisionManager()
     return collisionManager;
 }
 
+void GameManager::addGameInstance(Game* game)
+{
+    this->game = game;
+}
+
 void GameManager::addAsepriteManager(AsepriteManager* asepriteManager)
 {
     if (asepriteManager == nullptr)
@@ -337,4 +343,41 @@ void GameManager::setDeltaTimeMultiplier(float deltaTimeMultiplier)
 void GameManager::playerKo(int playerNumber)
 {
     deadSkull->setFrameTag("deadSkull-Amazed");
+}
+
+void GameManager::setDebugMode(bool debugMode)
+{
+    Global::debugMode = debugMode;
+    Global::debugWindow = debugMode;
+    Global::debugSpriteBorder = debugMode;
+    Global::debugCollisionBoxes = debugMode;
+    Global::debugHitboxes = debugMode;
+    Global::debugHurtboxes = debugMode;
+    Global::debugPushboxes = debugMode;
+    Global::debugThrowboxes = debugMode;
+
+    if (debugMode)
+    {
+        if (game == nullptr)
+        {
+            throw std::runtime_error("GameManager::setDebugMode -> Game instance not set.");
+        }
+        std::cout << "DebugMode is set to true" << std::endl;
+
+        // Add gameObjects to the debugInfo
+        game->debugInfo->addGameObject("Player1", game->player1);
+        game->debugInfo->addGameObject("Player2", game->player2);
+        game->debugInfo->addGameObject(
+            "Barrel",
+            game->barrel.get()); // dangerous, because the unique pointer is not copied //TODO: get rid of this
+
+        // change resolution of the renderTarget
+        game->screen2DManager->setResolution(Resolution::R_1120x630);
+    }
+    else
+    {
+        std::cout << "DebugMode is set to false" << std::endl;
+        // change resolution of the renderTarget
+        game->screen2DManager->setResolution(Resolution::R_1920x1080);
+    }
 }
