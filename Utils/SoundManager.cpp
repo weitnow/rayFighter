@@ -33,9 +33,6 @@ SoundManager::SoundManager() : currentBackgroundMusic(nullptr)
     hitSound = LoadSound("Assets/Soundeffects/2BH.wav");
     punchSound = LoadSound("Assets/Soundeffects/mk2/mk2-00136.mp3");
     ko = LoadSound("Assets/Soundeffects/ko.mp3");
-
-    // Initialize random seed
-    std::srand(static_cast<unsigned int>(std::time(nullptr)));
 }
 
 

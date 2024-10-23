@@ -4,6 +4,12 @@
 void GameState::Enter()
 {
     BaseState::Enter();
+
+    // Start playing random background music
+    if (Constants::BACKGROUND_MUSIC)
+    {
+        game->soundManager->playRandomBackgroundMusic();
+    }
 }
 
 void GameState::Update()

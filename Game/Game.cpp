@@ -50,13 +50,6 @@ Game::Game()
         ->init(); // initialize gameManager (can only be done after all gameObjects are added and must be at the end)
 
 
-    // Start playing background music
-    if (Constants::BACKGROUND_MUSIC)
-    {
-        soundManager->playRandomBackgroundMusic();
-    }
-
-
     std::vector<std::string> backgrounds = {"stage-factory",
                                             "stage-desert",
                                             "stage-outworld",
