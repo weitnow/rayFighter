@@ -3,37 +3,8 @@
 
 #include "raylib.h"
 
-//----------------------------------------------------------------------------------
-// DEBUG WINDOW
-//----------------------------------------------------------------------------------
-#define DEBUG_WINDOW // uncomment to enable debug window
-
-//----------------------------------------------------------------------------------
-// ENABLE DEBUGGING
-//----------------------------------------------------------------------------------
-#define DEBUG // if this is not define, no other of the following DEBUG-definition will work
-
-//----------------------------------------------------------------------------------
-// DRAW SPRITE BORDER
-//----------------------------------------------------------------------------------
-//#define DEBUG_SPRITE_BORDER
-
-//----------------------------------------------------------------------------------
-// DRAW COLLISION BOXES
-//----------------------------------------------------------------------------------
-#define DEBUG_COLLISION_BOXES // if this is not defined, no other of the following COLLISION_BOXES-definition will work
-#define DEBUG_HITBOXES
-#define DEBUG_HURTBOXES
-//#define DEBUG_PUSHBOXES
-#define DEBUG_THROWBOXES
-
-//----------------------------------------------------------------------------------
-// ...
-//----------------------------------------------------------------------------------
-
 namespace Constants
 {
-
 const int SCREEN_WIDTH = 1920;
 const int SCREEN_HEIGHT = 1080;
 
@@ -45,7 +16,7 @@ const int RENDERTARGET_HEIGHT = 144;
 
 const int BASELINE = 102; //ground level where the player stands
 
-const bool BACKGROUND_MUSIC = false;
+const bool BACKGROUND_MUSIC = true;
 
 const int DEFAULT_LIFE = 3;
 
@@ -65,8 +36,7 @@ const float X = 100.0f;
 const float HEIGHT = 32.f;
 const float WIDTH = 32.f;
 
-
-const Color GAMEOBJ_COLOR = BLUE;    // used to specify the color of the debug rectangle
+const Color GAMEOBJ_COLOR = YELLOW;  // used to specify the color of the debug rectangle
 const Vector2 GAMEOBJ_SIZE = {3, 3}; // used specify the size of the debug rectangle
 } // namespace Constants
 

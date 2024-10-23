@@ -7,18 +7,10 @@ BaseCharacter::BaseCharacter(AsepriteManager* asepriteManager, float x, float y)
       playerNumber(-1), statemachine(std::make_unique<Statemachine>(*this)), currentState("Idle"), canDealDamage(true)
 {
     statemachine->setOwner(this);
-
-#ifdef DEBUG
-    std::cout << "BaseCharacter created" << std::endl;
-#endif
 }
-
 
 BaseCharacter::~BaseCharacter()
 {
-#ifdef DEBUG
-    std::cout << "BaseCharacter destroyed" << std::endl;
-#endif
 }
 
 void BaseCharacter::update(float deltaTime)

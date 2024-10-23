@@ -41,7 +41,6 @@ void BaseSpriteObject::update(float deltaTime)
 
 void BaseSpriteObject::draw()
 {
-
     // draw myTexture
     if (scale.x == 1 && scale.y == 1)
     {
@@ -52,18 +51,18 @@ void BaseSpriteObject::draw()
         DrawTexturePro(myTexture, sourceRect, destRect, origin, rotation, WHITE);
     }
 
-#ifdef DEBUG
-    //draw debug.png 32x32 pixel
-    if (scale.x == 1 && scale.y == 1)
+    if (Global::debugMode)
     {
-        DrawTextureRec(myDebug32x32Texture, sourceRect, pos, WHITE);
+        //draw debug.png 32x32 pixel
+        if (scale.x == 1 && scale.y == 1)
+        {
+            DrawTextureRec(myDebug32x32Texture, sourceRect, pos, WHITE);
+        }
+        else
+        {
+            DrawTexturePro(myDebug32x32Texture, sourceRect, destRect, origin, rotation, WHITE);
+        }
     }
-    else
-    {
-        DrawTexturePro(myDebug32x32Texture, sourceRect, destRect, origin, rotation, WHITE);
-    }
-
-#endif
 }
 
 void BaseSpriteObject::setPos(float x, float y)

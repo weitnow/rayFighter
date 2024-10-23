@@ -3,18 +3,12 @@
 
 void GameState::Enter()
 {
-    // Initialization for the game scene
-    if (!Global::debugMode)
-    {
-        //set resolution of the renderTarget to full HD
-        game->screen2DManager->setResolution(Resolution::R_1920x1080);
-    }
+    BaseState::Enter();
 }
 
 void GameState::Update()
 {
-    game->screen2DManager->update(game->deltaTime * Constants::TIME_MULTIPLIER); // update camera
-    game->inputHandler->Update();                                                // Handle Input
+    game->inputHandler->Update(); // Handle Input
     game->gameManager->update(game->deltaTime *
                               Constants::TIME_MULTIPLIER); // Update gameObjects (player1 and player2 included)
     game->soundManager->updateBackgroundMusic();           // Update Music}

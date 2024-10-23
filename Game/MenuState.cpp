@@ -4,12 +4,12 @@
 
 void MenuState::Enter()
 {
+    BaseState::Enter();
 }
 
 void MenuState::Update()
 {
-    game->screen2DManager->update(game->deltaTime * Constants::TIME_MULTIPLIER); // update camera
-    game->inputHandler->Update();
+    game->inputHandler->Update(); // Handle Input
 }
 
 void MenuState::Render()

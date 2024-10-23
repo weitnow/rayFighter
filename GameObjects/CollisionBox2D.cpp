@@ -1,11 +1,6 @@
-//
-// Created by weitnow on 1/1/24.
-//
-
 #include "CollisionBox2D.h"
 #include "../Constants.h"
 
-#include <iostream> // get rid just for debbuging needed
 
 CollisionBox2D::CollisionBox2D(float offsetx,
                                float offsety,
@@ -41,9 +36,6 @@ void CollisionBox2D::update(float deltaTime, bool isFlippedX)
     {
         pos = {objPos.x + offsetFlippedX.x, objPos.y + offset.y};
     }
-
-
-    //pos = {objPos.x + offset.x, objPos.y + offset.y};
 
     myRectangle.x = pos.x;
     myRectangle.y = pos.y;

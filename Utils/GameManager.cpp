@@ -286,10 +286,11 @@ void GameManager::draw()
     // Draw the deadSkull
     deadSkull->drawCurrentSelectedTag(120, 28, 1, WHITE);
 
-#ifdef DEBUG
-    // Draw Middlepointline
-    DrawLine(middlePointXbetweenPlayers, 0, middlePointXbetweenPlayers, 300, RED);
-#endif
+    if (Global::debugMode)
+    {
+        // Draw the middlePointXbetweenPlayers
+        DrawLine(middlePointXbetweenPlayers, 0, middlePointXbetweenPlayers, 300, RED);
+    }
 }
 
 void GameManager::addInputHandler(InputHandler* inputHandler)
@@ -349,12 +350,12 @@ void GameManager::setDebugMode(bool debugMode)
 {
     Global::debugMode = debugMode;
     Global::debugWindow = debugMode;
-    Global::debugSpriteBorder = debugMode;
+    Global::debugSpriteBorder = false; //debugMode;
     Global::debugCollisionBoxes = debugMode;
     Global::debugHitboxes = debugMode;
     Global::debugHurtboxes = debugMode;
-    Global::debugPushboxes = debugMode;
-    Global::debugThrowboxes = debugMode;
+    Global::debugPushboxes = false;  //debugMode;
+    Global::debugThrowboxes = false; //debugMode;
 
     if (debugMode)
     {

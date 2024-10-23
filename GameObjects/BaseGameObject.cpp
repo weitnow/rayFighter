@@ -70,11 +70,8 @@ void BaseGameObject::draw()
 {
     if (animfilePtr != nullptr)
     {
-
-
         if (Global::debugMode)
         {
-
             if (!isInvincible)
             {
                 animfilePtr->drawCurrentSelectedTag(getPos().x,
@@ -509,48 +506,59 @@ void BaseGameObject::_updateCollisionBoxes(float deltaTime)
 void BaseGameObject::_drawCollisionBoxes()
 {
     // Draw the Hitboxes for the current frame
-#ifdef DEBUG_HITBOXES
-    List<CollisionBox2D> collisionBoxes = _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
-                                                                                             currentFrameAbsolut,
-                                                                                             CollisionBoxType::HITBOX);
-    for (auto& box : collisionBoxes)
+    if (Global::debugHitboxes)
     {
-        box.draw();
+        List<CollisionBox2D> collisionBoxes =
+            _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
+                                                               currentFrameAbsolut,
+                                                               CollisionBoxType::HITBOX);
+        for (auto& box : collisionBoxes)
+        {
+            box.draw();
+        }
     }
-#endif
+
 
     // Draw the Hurtboxes for the current frame
-#ifdef DEBUG_HURTBOXES
-    collisionBoxes = _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
-                                                                        currentFrameAbsolut,
-                                                                        CollisionBoxType::HURTBOX);
-    for (auto& box : collisionBoxes)
+    if (Global::debugHurtboxes)
     {
-        box.draw();
+        List<CollisionBox2D> collisionBoxes =
+            _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
+                                                               currentFrameAbsolut,
+                                                               CollisionBoxType::HURTBOX);
+        for (auto& box : collisionBoxes)
+        {
+            box.draw();
+        }
     }
-#endif
+
 
     // Draw the Pushboxes for the current frame
-#ifdef DEBUG_PUSHBOXES
-    collisionBoxes = _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
-                                                                        currentFrameAbsolut,
-                                                                        CollisionBoxType::PUSHBOX);
-    for (auto& box : collisionBoxes)
+    if (Global::debugPushboxes)
     {
-        box.draw();
+        List<CollisionBox2D> collisionBoxes =
+            _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
+                                                               currentFrameAbsolut,
+                                                               CollisionBoxType::PUSHBOX);
+        for (auto& box : collisionBoxes)
+        {
+            box.draw();
+        }
     }
-#endif
+
 
     // Draw the Throwboxes for the current frame
-#ifdef DEBUG_THROWBOXES
-    collisionBoxes = _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
-                                                                        currentFrameAbsolut,
-                                                                        CollisionBoxType::THROWBOX);
-    for (auto& box : collisionBoxes)
+    if (Global::debugThrowboxes)
     {
-        box.draw();
+        List<CollisionBox2D> collisionBoxes =
+            _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
+                                                               currentFrameAbsolut,
+                                                               CollisionBoxType::THROWBOX);
+        for (auto& box : collisionBoxes)
+        {
+            box.draw();
+        }
     }
-#endif
 }
 
 void BaseGameObject::_addCollisionBoxForFrameInternal(std::string frameTagName,

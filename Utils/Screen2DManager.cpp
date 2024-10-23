@@ -53,24 +53,6 @@ void Screen2DManager::unloadRenderTarget()
 
 void Screen2DManager::update(float deltaTime)
 {
-    /*
-    // Camera rotation controls
-    if (IsKeyDown(KEY_W))
-        camera.rotation--;
-    else if (IsKeyDown(KEY_S))
-        camera.rotation++;
-
-    // Camera zoom controls
-    if (IsKeyDown(KEY_I))
-        camera.zoom += 0.01f;
-    if (IsKeyDown(KEY_U))
-        camera.zoom -= 0.01f;
-    */
-    // Camera x controls
-    if (IsKeyDown(KEY_N))
-        camera.target.x--;
-    if (IsKeyDown(KEY_M))
-        camera.target.x++;
 }
 
 void Screen2DManager::beginDrawToScreen()
