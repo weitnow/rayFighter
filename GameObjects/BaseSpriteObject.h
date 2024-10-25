@@ -1,7 +1,3 @@
-//
-// Created by weitnow on 12/7/23.
-//
-
 #ifndef GBFIGHTER_BASESPRITEOBJECT_H
 #define GBFIGHTER_BASESPRITEOBJECT_H
 #include "../Utils/Core.h"
@@ -14,7 +10,7 @@ class BaseSpriteObject
 {
 public:
     BaseSpriteObject();
-    BaseSpriteObject(float x, float y);
+    BaseSpriteObject(float x, float y, const std::string& texturePath = "Assets/Graphics/debug32x32.png");
     ~BaseSpriteObject();
 
     void update(float deltaTime);
@@ -24,6 +20,9 @@ public:
     void setPos(float x, float y);
     void setPos(Vector2 pos);
     Vector2 getPos();
+
+    //texture
+    void loadTexture(const std::string& texturePath);
 
     //scale
     void setScale(float x, float y);

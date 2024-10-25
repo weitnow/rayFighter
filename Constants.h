@@ -30,12 +30,6 @@ const int FPS = 60;
 const int PLAYER1_X = 80;
 const int PLAYER2_X = 120;
 
-// Default values used for instantiate BaseGameObjects if default constructor is used
-const float Y = 102.0f;
-const float X = 100.0f;
-const float HEIGHT = 32.f;
-const float WIDTH = 32.f;
-
 const Color GAMEOBJ_COLOR = YELLOW;  // used to specify the color of the debug rectangle
 const Vector2 GAMEOBJ_SIZE = {3, 3}; // used specify the size of the debug rectangle
 } // namespace Constants

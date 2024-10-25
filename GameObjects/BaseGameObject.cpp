@@ -3,9 +3,9 @@
 #include <assert.h>
 
 BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager)
-    : ObjName(""), pushVector({0, 0}), scale(1.f), pos{Constants::X, Constants::Y}, color(WHITE), isFlippedX(false),
-      isFlippedY(false), isActive(true), isAlive(true), isInvincible(false), life(Constants::DEFAULT_LIFE),
-      _invincibleCounter(0.f), invincibleTime(Constants::INVINCIBLE_TIME), affectedByGravity(true), moveVector({0, 0}),
+    : ObjName(""), pushVector({0, 0}), scale(1.f), pos{0.f, 0.f}, color(WHITE), isFlippedX(false), isFlippedY(false),
+      isActive(true), isAlive(true), isInvincible(false), life(Constants::DEFAULT_LIFE), _invincibleCounter(0.f),
+      invincibleTime(Constants::INVINCIBLE_TIME), affectedByGravity(true), moveVector({0, 0}),
       getDurationCurrentFrame(0), currentFrame(0), minFrame(0), maxFrame(0), hasAnimJustFinished(false),
       currentFrameTag(""), currentFrameAbsolut(0), camVector{0, 0}, spriteOffsetX(0), spriteOffsetY(0)
 {

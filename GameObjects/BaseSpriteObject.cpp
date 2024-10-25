@@ -10,19 +10,19 @@ BaseSpriteObject::BaseSpriteObject()
 {
     scale.x = 1.f;
     scale.y = 1.f;
-    pos = {Constants::X, Constants::Y};
+    pos = {0.f, 0.f};
     origin = {0, 0};
     rotation = 0.0f;
-    sourceRect = {0.0f, 0.0f, 32, 32};
     destRect = {pos.x, pos.y, scale.y * sourceRect.height, scale.x * sourceRect.width};
-    myDebug32x32Texture = LoadTexture("Assets/Graphics/debug32x32.png");
-    myTexture =
-        LoadTexture("Assets/Graphics/debug32x32.png"); // default texture, will be overwritten by the inheriting class
+    myDebug32x32Texture = LoadTexture("Assets/Graphics/debug32x32.png"); //Raylib function
+    loadTexture("Assets/Graphics/debug32x32.png");                       //class method
 }
 
-BaseSpriteObject::BaseSpriteObject(float x, float y) : BaseSpriteObject()
+BaseSpriteObject::BaseSpriteObject(float x, float y, const std::string& texturePath) : BaseSpriteObject()
 {
     setPos(x, y);
+    loadTexture(texturePath);
+    std::cout << "calling BaseSpriteObj with " << texturePath << std::endl;
 }
 
 BaseSpriteObject::~BaseSpriteObject()
@@ -78,6 +78,12 @@ void BaseSpriteObject::setPos(Vector2 pos)
 Vector2 BaseSpriteObject::getPos()
 {
     return pos;
+}
+
+void BaseSpriteObject::loadTexture(const std::string& texturePath)
+{
+    myTexture = LoadTexture(texturePath.c_str());
+    sourceRect = {0.0f, 0.0f, static_cast<float>(myTexture.width), static_cast<float>(myTexture.width)};
 }
 
 void BaseSpriteObject::setScale(float x, float y)
