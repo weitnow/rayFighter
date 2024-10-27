@@ -253,6 +253,9 @@ void GameManager::update(float deltaTime)
     lifebar1->Update(player1->getCurrentLife());
     lifebar2->Update(player2->getCurrentLife());
 
+    // Update the deadSkull
+    deadSkull->update(deltaTime);
+
     // calculate middlePointXbetweenPlayers
     middlePointXbetweenPlayers = (player1->getPos().x + player2->getPos().x + 32) / 2.f;
 }

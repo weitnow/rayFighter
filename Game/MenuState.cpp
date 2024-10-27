@@ -3,7 +3,8 @@
 #include "GameState.h"
 
 
-MenuState::MenuState(Game* game) : BaseState(game), aafTitleScreen(nullptr), gameAboutToStart(false), timerInMs{3.0f}
+MenuState::MenuState(Game* game)
+    : BaseState(game), aafTitleScreen(nullptr), gameAboutToStart(false), timerInMs{3.0f}, deadSoundPlayed(false)
 {
 }
 
@@ -44,7 +45,7 @@ void MenuState::Update()
     {
         if (selectedOption == PLAY)
         {
-            // Start the game (you would implement game logic here)
+            // Start the game
             std::cout << "Starting the game..." << std::endl;
             gameAboutToStart = true;
             game->soundManager->playSound(game->soundManager->bloodSplatter);
@@ -66,9 +67,19 @@ void MenuState::Update()
     aafTitleScreen->update(game->deltaTime);
 
     if (gameAboutToStart)
+
     {
         timerInMs -= game->deltaTime;
-        if (timerInMs <= 0)
+
+        if (timerInMs <= 1.4f && !deadSoundPlayed)
+        {
+            game->soundManager->playSound(game->soundManager->scream);
+            game->soundManager->playSound(game->soundManager->laugh);
+            deadSoundPlayed = true;
+        }
+
+
+        if (timerInMs <= -2.0f)
         {
             game->ChangeState(std::make_unique<GameState>(game));
         }

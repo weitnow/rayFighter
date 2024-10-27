@@ -323,6 +323,8 @@ void AsepriteManager::init()
                            // asepriteManager.textures[stage]
 
     loadAnimFile("deadSkull");
+    getFrameTag("deadSkull-Amazed").loop = false;
+
     loadAnimFile("titleScreen");
     getFrameTag("titleScreen-Transition").loop = false;
 }

@@ -29,6 +29,7 @@ private:
     bool gameAboutToStart;
     AsepriteAnimationFile* aafTitleScreen;
     float timerInMs;
+    bool deadSoundPlayed;
 };
 
 #endif

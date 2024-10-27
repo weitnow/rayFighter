@@ -34,6 +34,8 @@ SoundManager::SoundManager() : currentBackgroundMusic(nullptr)
     punchSound = LoadSound("Assets/Soundeffects/mk2/mk2-00136.mp3");
     ko = LoadSound("Assets/Soundeffects/ko.mp3");
     bloodSplatter = LoadSound("Assets/Soundeffects/bloodSplatter.mp3");
+    scream = LoadSound("Assets/Soundeffects/scream.mp3");
+    laugh = LoadSound("Assets/Soundeffects/laugh.mp3");
 }
 
 
@@ -55,6 +57,8 @@ SoundManager::~SoundManager()
     UnloadSound(punchSound);
     UnloadSound(ko);
     UnloadSound(bloodSplatter);
+    UnloadSound(scream);
+    UnloadSound(laugh);
 
     // Close audio device
     CloseAudioDevice();

@@ -40,6 +40,8 @@ public:
     Sound punchSound;
     Sound ko;
     Sound bloodSplatter;
+    Sound scream;
+    Sound laugh;
 
 private:
     SoundManager(); // Private constructor to prevent direct instantiation
