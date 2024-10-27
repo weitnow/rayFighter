@@ -88,6 +88,32 @@ void MenuState::Render()
     // draw stage
     aafTitleScreen->drawCurrentSelectedTag(0, 0);
 
+    // draw options
+    if (selectedOption == PLAY)
+    {
+        DrawText("1P Start",
+                 Constants::RENDERTARGET_WIDTH / 2 - MeasureText("1P Start", 8) / 2,
+                 105,
+                 8,
+                 Constants::RAYFIGHTER_WHITE);
+    }
+    else if (selectedOption == OPTIONS)
+    {
+        DrawText("Options",
+                 Constants::RENDERTARGET_WIDTH / 2 - MeasureText("Options", 8) / 2,
+                 105,
+                 8,
+                 Constants::RAYFIGHTER_WHITE);
+    }
+    else if (selectedOption == EXIT)
+    {
+        DrawText("Exit",
+                 Constants::RENDERTARGET_WIDTH / 2 - MeasureText("Exit", 8) / 2,
+                 105,
+                 8,
+                 Constants::RAYFIGHTER_WHITE);
+    }
+
 
     game->screen2DManager->endDrawToRenderTarget();
     //----------------------------------------------------------------------------------
@@ -99,28 +125,6 @@ void MenuState::Render()
 
     // Draw RenderTexture to Screen
     game->screen2DManager->drawRenderTarget();
-
-    // Draw Menu
-    // Title
-    DrawText("Main Menu", Constants::SCREEN_WIDTH / 2 - MeasureText("Main Menu", 40) / 2, 125, 40, BLACK);
-
-    // Menu options
-    DrawText("Start Game",
-             Constants::SCREEN_WIDTH / 2 - MeasureText("Start Game", 20) / 2,
-             200,
-             20,
-             (selectedOption == PLAY) ? RED : BLACK);
-    DrawText("Options",
-             Constants::SCREEN_WIDTH / 2 - MeasureText("Options", 20) / 2,
-             250,
-             20,
-             (selectedOption == OPTIONS) ? RED : BLACK);
-    DrawText("Exit",
-             Constants::SCREEN_WIDTH / 2 - MeasureText("Exit", 20) / 2,
-             300,
-             20,
-             (selectedOption == EXIT) ? RED : BLACK);
-
 
     game->screen2DManager->endDrawToScreen();
 }

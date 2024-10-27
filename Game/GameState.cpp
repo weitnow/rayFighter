@@ -1,6 +1,9 @@
 #include "GameState.h"
 #include "Game.h"
 
+// Todo: get rid of his, only used for testing
+#include "../Utils/HelperFunctions.h"
+
 void GameState::Enter()
 {
     BaseState::Enter();
@@ -15,6 +18,7 @@ void GameState::Enter()
 void GameState::Update()
 {
     game->inputHandler->Update(); // Handle Input
+
     game->gameManager->update(game->deltaTime *
                               Constants::TIME_MULTIPLIER); // Update gameObjects (player1 and player2 included)
     game->soundManager->updateBackgroundMusic();           // Update Music}
