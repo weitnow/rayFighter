@@ -145,7 +145,8 @@
    { "name": "ring", "from": 14, "to": 14, "direction": "forward", "color": "#000000ff" }
   ],
   "layers": [
-   { "name": "Layer", "opacity": 255, "blendMode": "normal" }
+   { "name": "Level", "opacity": 255, "blendMode": "normal" },
+   { "name": "HueDeSaturation", "opacity": 77, "blendMode": "normal" }
   ],
   "slices": [
   ]

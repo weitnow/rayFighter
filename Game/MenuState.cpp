@@ -3,6 +3,15 @@
 #include "GameState.h"
 
 
+MenuState::MenuState(Game* game) : BaseState(game), aafTitleScreen(nullptr), gameAboutToStart(false), timerInMs{3.0f}
+{
+}
+
+MenuState::~MenuState()
+{
+    //deletion of heap memory is in the exit method
+}
+
 void MenuState::Enter()
 {
     BaseState::Enter();
@@ -13,6 +22,10 @@ void MenuState::Enter()
         game->soundManager->playBackgroundMusic(game->soundManager->killerinstinct_music);
     }
     selectedOption = MenuOptions::PLAY;
+
+    // load TitleScreen
+    aafTitleScreen = game->asepriteManager->getAnimFile("titleScreen");
+    aafTitleScreen->setFrameTag("titleScreen-Titlescreen");
 }
 
 void MenuState::Update()
@@ -33,7 +46,9 @@ void MenuState::Update()
         {
             // Start the game (you would implement game logic here)
             std::cout << "Starting the game..." << std::endl;
-            game->ChangeState(std::make_unique<GameState>(game));
+            gameAboutToStart = true;
+            game->soundManager->playSound(game->soundManager->bloodSplatter);
+            aafTitleScreen->setFrameTag("titleScreen-Transition");
         }
         else if (selectedOption == OPTIONS)
         {
@@ -44,6 +59,18 @@ void MenuState::Update()
         {
             // Exit the game
             std::cout << "Exiting the game..." << std::endl;
+            CloseWindow(); //FIXME: memory leak, implement that game closes properly         }
+        }
+    }
+
+    aafTitleScreen->update(game->deltaTime);
+
+    if (gameAboutToStart)
+    {
+        timerInMs -= game->deltaTime;
+        if (timerInMs <= 0)
+        {
+            game->ChangeState(std::make_unique<GameState>(game));
         }
     }
 }
@@ -59,11 +86,7 @@ void MenuState::Render()
 
 
     // draw stage
-    float stage_scale = 1.f;
-
-    game->background->drawFrame(game->randomBackground, 0, 40, stage_scale, WHITE);
-
-    titleScreen.draw();
+    aafTitleScreen->drawCurrentSelectedTag(0, 0);
 
 
     game->screen2DManager->endDrawToRenderTarget();
@@ -79,22 +102,22 @@ void MenuState::Render()
 
     // Draw Menu
     // Title
-    DrawText("Main Menu", Constants::SCREEN_WIDTH / 2 - MeasureText("Main Menu", 40) / 2, 320, 40, BLACK);
+    DrawText("Main Menu", Constants::SCREEN_WIDTH / 2 - MeasureText("Main Menu", 40) / 2, 125, 40, BLACK);
 
     // Menu options
     DrawText("Start Game",
              Constants::SCREEN_WIDTH / 2 - MeasureText("Start Game", 20) / 2,
-             400,
+             200,
              20,
              (selectedOption == PLAY) ? RED : BLACK);
     DrawText("Options",
              Constants::SCREEN_WIDTH / 2 - MeasureText("Options", 20) / 2,
-             450,
+             250,
              20,
              (selectedOption == OPTIONS) ? RED : BLACK);
     DrawText("Exit",
              Constants::SCREEN_WIDTH / 2 - MeasureText("Exit", 20) / 2,
-             500,
+             300,
              20,
              (selectedOption == EXIT) ? RED : BLACK);
 
@@ -105,4 +128,6 @@ void MenuState::Render()
 
 void MenuState::Exit()
 {
+    delete aafTitleScreen;
+    aafTitleScreen = nullptr;
 }

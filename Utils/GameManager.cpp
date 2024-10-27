@@ -1,4 +1,5 @@
 #include "GameManager.h"
+#include "../Constants.h"
 #include "../Game/Game.h"
 #include "../Gui/Lifebar.h"
 #include "CollisionManager.h"
@@ -23,8 +24,16 @@ void GameManager::init()
 GameManager::GameManager()
     : player1(nullptr), player2(nullptr), player1and2set(false), lifebar1(nullptr), lifebar2(nullptr)
 {
-    lifebar1 = new Lifebar(Vector2{20, 32}, 5, 100, 3, GREEN, BLACK, "Player1");
-    lifebar2 = new Lifebar(Vector2{130, 32}, 5, 100, 3, GREEN, BLACK, "Player2");
+
+    lifebar1 =
+        new Lifebar(Vector2{20, 32}, 5, 100, 3, Constants::RAYFIGHTER_ROSA, Constants::RAYFIGHTER_DARKBROWN, "Player1");
+    lifebar2 = new Lifebar(Vector2{130, 32},
+                           5,
+                           100,
+                           3,
+                           Constants::RAYFIGHTER_ROSA,
+                           Constants::RAYFIGHTER_DARKBROWN,
+                           "Player2");
 }
 
 GameManager::~GameManager()

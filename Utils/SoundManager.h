@@ -39,6 +39,7 @@ public:
     Sound hitSound;
     Sound punchSound;
     Sound ko;
+    Sound bloodSplatter;
 
 private:
     SoundManager(); // Private constructor to prevent direct instantiation

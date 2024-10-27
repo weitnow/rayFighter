@@ -32,6 +32,14 @@ const int PLAYER2_X = 120;
 
 const Color GAMEOBJ_COLOR = YELLOW;  // used to specify the color of the debug rectangle
 const Vector2 GAMEOBJ_SIZE = {3, 3}; // used specify the size of the debug rectangle
+
+
+//RayFighter Colors
+const Color RAYFIGHTER_DARKBROWN = {56, 24, 8, 255};
+const Color RAYFIGHTER_LIGHTBROWN = {152, 88, 56, 255};
+const Color RAYFIGHTER_ROSA = {208, 144, 120, 255};
+const Color RAYFIGHTER_WHITE = {248, 248, 248, 255};
+
 } // namespace Constants
 
 namespace Global

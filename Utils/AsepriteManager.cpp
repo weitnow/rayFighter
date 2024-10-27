@@ -323,6 +323,8 @@ void AsepriteManager::init()
                            // asepriteManager.textures[stage]
 
     loadAnimFile("deadSkull");
+    loadAnimFile("titleScreen");
+    getFrameTag("titleScreen-Transition").loop = false;
 }
 
 nlohmann::json* AsepriteManager::loadJsonFile(const std::string& filename)

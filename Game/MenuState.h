@@ -1,7 +1,7 @@
 #ifndef MENUSTATE_H
 #define MENUSTATE_H
 
-#include "../Gui/Titlescreen.h"
+#include "../Utils/AsepriteManager.h"
 #include "BaseState.h"
 #include "raylib.h"
 
@@ -17,7 +17,8 @@ enum MenuOptions
 class MenuState : public BaseState
 {
 public:
-    MenuState(Game* game) : BaseState(game), titleScreen(0, 0) {};
+    MenuState(Game* game);
+    ~MenuState();
     void Enter() override;
     void Update() override;
     void Render() override;
@@ -25,7 +26,9 @@ public:
 
 private:
     int selectedOption;
-    Titlescreen titleScreen;
+    bool gameAboutToStart;
+    AsepriteAnimationFile* aafTitleScreen;
+    float timerInMs;
 };
 
 #endif
