@@ -49,7 +49,7 @@ void MenuState::Update()
             // Start the game
             std::cout << "Starting the game..." << std::endl;
             gameAboutToStart = true;
-            game->soundManager->playSound("bloodSplatter");
+            game->soundManager->playSound("bloodSplatter.mp3");
             aafTitleScreen->setFrameTag("titleScreen-Transition");
         }
         else if (selectedOption == OPTIONS)
@@ -74,8 +74,8 @@ void MenuState::Update()
 
         if (timerInMs <= 1.4f && !deadSoundPlayed)
         {
-            game->soundManager->playSound("scream");
-            game->soundManager->playSound("laugh");
+            game->soundManager->playSound("scream.mp3");
+            game->soundManager->playSound("laugh.mp3");
             deadSoundPlayed = true;
         }
 
