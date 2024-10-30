@@ -221,7 +221,7 @@ void JumpPunchState::Init()
     owner->canDealDamage = true;
 
     // play sound
-    SoundManager::getInstance().playSound(SoundManager::getInstance().punchSound);
+    SoundManager::getInstance().playSound("mk2/punchSound.mp3");
 }
 
 void JumpPunchState::Update(float deltaTime)
@@ -278,7 +278,7 @@ void PunchState::Init()
     owner->canDealDamage = true;
 
     // play sound
-    SoundManager::getInstance().playSound(SoundManager::getInstance().punchSound);
+    SoundManager::getInstance().playSound("mk2/punchSound.mp3");
 }
 
 void PunchState::Update(float deltaTime)
@@ -299,7 +299,7 @@ void DuckPunchState::Init()
     owner->canDealDamage = true;
 
     // play sound
-    SoundManager::getInstance().playSound(SoundManager::getInstance().punchSound);
+    SoundManager::getInstance().playSound("mk2/punchSound.mp3");
 }
 
 void DuckPunchState::Update(float deltaTime)
@@ -322,7 +322,7 @@ void KickState::Init()
     owner->canDealDamage = true;
 
     // play sound
-    SoundManager::getInstance().playSound(SoundManager::getInstance().punchSound);
+    SoundManager::getInstance().playSound("mk2/punchSound.mp3");
 }
 
 void KickState::Update(float deltaTime)
@@ -343,7 +343,7 @@ void DuckKickState::Init()
     owner->canDealDamage = true;
 
     // play sound
-    SoundManager::getInstance().playSound(SoundManager::getInstance().punchSound);
+    SoundManager::getInstance().playSound("mk2/punchSound.mp3");
 }
 
 void DuckKickState::Update(float deltaTime)
@@ -407,7 +407,7 @@ void HitState::Init()
     owner->canDealDamage = false;
 
     // play sound
-    SoundManager::getInstance().playSound(SoundManager::getInstance().hitSound);
+    SoundManager::getInstance().playSound("hitSound.wav");
 
     // set timer
     if (owner->getIsAlive())
@@ -472,7 +472,7 @@ void DeathState::Init()
     owner->canDealDamage = false;
 
     // play sound
-    SoundManager::getInstance().playSound(SoundManager::getInstance().ko);
+    SoundManager::getInstance().playSound("ko.mp3");
 
     // tell the GameManager that the player is KO
     gameManager.playerKo(owner->getPlayerNumber());

@@ -11,9 +11,11 @@ void GameState::Enter()
     // Start playing random background music
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->playRandomBackgroundMusic();
+        game->soundManager->loadBackgroundMusic("ken_music.mp3");
+        game->soundManager->playBackgroundMusic("ken_music.mp3");
     }
 }
+
 
 void GameState::Update()
 {
@@ -105,4 +107,8 @@ void GameState::Render()
 void GameState::Exit()
 {
     // Cleanup for game scene
+
+    // Stop playing background music
+    game->soundManager->stopBackgroundMusic();
+    game->soundManager->unloadBackgroundMusic("ken_music.mp3");
 }

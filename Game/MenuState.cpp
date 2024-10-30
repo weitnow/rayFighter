@@ -20,7 +20,8 @@ void MenuState::Enter()
     // Start playing background music
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->playBackgroundMusic(game->soundManager->killerinstinct_music);
+        game->soundManager->loadBackgroundMusic("killerinstinct_music.mp3");
+        game->soundManager->playBackgroundMusic("killerinstinct_music.mp3");
     }
     selectedOption = MenuOptions::PLAY;
 
@@ -48,7 +49,7 @@ void MenuState::Update()
             // Start the game
             std::cout << "Starting the game..." << std::endl;
             gameAboutToStart = true;
-            game->soundManager->playSound(game->soundManager->bloodSplatter);
+            game->soundManager->playSound("bloodSplatter");
             aafTitleScreen->setFrameTag("titleScreen-Transition");
         }
         else if (selectedOption == OPTIONS)
@@ -73,8 +74,8 @@ void MenuState::Update()
 
         if (timerInMs <= 1.4f && !deadSoundPlayed)
         {
-            game->soundManager->playSound(game->soundManager->scream);
-            game->soundManager->playSound(game->soundManager->laugh);
+            game->soundManager->playSound("scream");
+            game->soundManager->playSound("laugh");
             deadSoundPlayed = true;
         }
 

@@ -5,7 +5,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 10, "h": 10 },
     "sourceSize": { "w": 10, "h": 10 },
-    "duration": 1400
+    "duration": 1900
    },
    "deadSkull 1.aseprite": {
     "frame": { "x": 10, "y": 0, "w": 10, "h": 10 },
@@ -13,7 +13,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 10, "h": 10 },
     "sourceSize": { "w": 10, "h": 10 },
-    "duration": 1400
+    "duration": 1900
    },
    "deadSkull 2.aseprite": {
     "frame": { "x": 20, "y": 0, "w": 10, "h": 10 },

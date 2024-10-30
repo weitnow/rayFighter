@@ -15,44 +15,48 @@ public:
     }
     ~SoundManager();
 
+    // needs to be called in the main loop
     void updateBackgroundMusic();
 
-    void playBackgroundMusic(Music& backgroundMusic);
-    void playRandomBackgroundMusic();
-    void playSound(Sound& sound);
+    // <-- Background Music -->
+    // Loading and unloading music
+    void loadBackgroundMusic(const std::string& filename);
+    void unloadBackgroundMusic(const std::string& filename);
+    void unloadAllBackgroundMusic();
+    // Playing and stopping music
+    void playBackgroundMusic(const std::string& filename);
     void stopBackgroundMusic();
-    void stopSound(Sound& sound);
 
+    // <-- Sound Effects -->
+    // Loading and unloading sound effects
+    void loadSoundEffects(const std::string& filename);
+    void unloadSoundEffects(const std::string& filename);
+    void unloadAllSoundEffects();
+    // Playing sound effects
+    void playSound(const std::string& filename);
 
-    // Background Music Objects
-    Music bison_music;
-    Music countryyard_music;
-    Music feilong_music;
-    Music guile_music;
-    Music ken_music;
-    Music killerinstinct_music;
-    Music ryu_music;
-    Music sagat_music;
-    Music zangief_music;
-
-    // Sound Effects Objects
-    Sound hitSound;
-    Sound punchSound;
-    Sound ko;
-    Sound bloodSplatter;
-    Sound scream;
-    Sound laugh;
 
 private:
     SoundManager(); // Private constructor to prevent direct instantiation
 
-    // Store the currently playing background music
-    Music* currentBackgroundMusic;    // Pointer to the currently playing music
-    List<Music*> backgroundMusicList; // List of all background music
+    // needs to be called once before using the SoundManager
+    void _setPahToMusic(const std::string& path);
+    void _setPathToSoundEffects(const std::string& path);
 
     // Prevent copying
     SoundManager(const SoundManager&) = delete;            // Delete copy constructor
     SoundManager& operator=(const SoundManager&) = delete; // Delete copy assignment operator
+
+    // Store the currently playing background music
+    Music* currentBackgroundMusic; // Pointer to the currently playing music
+    Dictionary<std::string, Music> backgroundMusicDict;
+
+    // Store sound effects
+    Dictionary<std::string, Sound> soundEffectsDict;
+
+
+    std::string musicPath;
+    std::string soundEffectsPath;
 };
 
 #endif //GBFIGHTER_SOUNDMANAGER_H
