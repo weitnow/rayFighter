@@ -10,9 +10,16 @@ class Lifebar
 {
 public:
     // Constructor to initialize the lifebar with int maxHp
-    Lifebar(Vector2 pos, int height, int width, int maxHp, Color color, Color border, std::string name)
+    Lifebar(Vector2 pos,
+            int height,
+            int width,
+            int maxHp,
+            Color color,
+            Color border,
+            std::string name,
+            int playerNumber)
         : position(pos), height(height), width(width), currentHealth(maxHp), maxHealth(maxHp), barColor(color),
-          borderColor(border), fighterName(name)
+          borderColor(border), fighterName(name), playerNumber(playerNumber)
     {
     }
 
@@ -23,8 +30,23 @@ public:
         float healthPercentage = static_cast<float>(currentHealth) / static_cast<float>(maxHealth);
         float currentBarWidth = width * healthPercentage;
 
-        // Draw the actual health bar
-        DrawRectangle(position.x, position.y, static_cast<int>(currentBarWidth), height, barColor);
+        if (playerNumber == 1)
+        {
+            // Calculate the x position for the shrinking effect from the outside
+            float currentBarPositionX = position.x + (width - currentBarWidth);
+
+            // Draw the actual health bar from the outside to the inside
+            DrawRectangle(static_cast<int>(currentBarPositionX),
+                          position.y,
+                          static_cast<int>(currentBarWidth),
+                          height,
+                          barColor);
+        }
+        else if (playerNumber == 2)
+        {
+            // Draw the actual health bar
+            DrawRectangle(position.x, position.y, static_cast<int>(currentBarWidth), height, barColor);
+        }
 
         // Draw the border (optional)
         DrawRectangleLines(position.x, position.y, width, height, borderColor);
@@ -56,6 +78,7 @@ private:
     Color barColor;
     Color borderColor;
     std::string fighterName;
+    int playerNumber;
 };
 
 #endif //GBFIGHTER_LIFEBAR_H
