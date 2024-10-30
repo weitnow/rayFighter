@@ -20,8 +20,8 @@ void MenuState::Enter()
     // Start playing background music
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->loadBackgroundMusic("killerinstinct_music.mp3");
-        game->soundManager->playBackgroundMusic("killerinstinct_music.mp3");
+        game->soundManager->loadMusic("stompingrockfourshots.mp3", 0.2f);
+        game->soundManager->playBackgroundMusic("stompingrockfourshots.mp3");
     }
     selectedOption = MenuOptions::PLAY;
 
@@ -149,6 +149,6 @@ void MenuState::Exit()
 
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->unloadBackgroundMusic("killerinstinct_music.mp3");
+        game->soundManager->unloadMusic("stompingrockfourshots.mp3");
     }
 }

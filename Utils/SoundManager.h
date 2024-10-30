@@ -19,17 +19,17 @@ public:
     void updateBackgroundMusic();
 
     // <-- Background Music -->
-    // Loading and unloading music
-    void loadBackgroundMusic(const std::string& filename);
-    void unloadBackgroundMusic(const std::string& filename);
-    void unloadAllBackgroundMusic();
+    // Loading and unloading music and setting volume
+    void loadMusic(const std::string& filename, const float volume = 1.f);
+    void unloadMusic(const std::string& filename);
+    void unloadAllMusic();
     // Playing and stopping music
     void playBackgroundMusic(const std::string& filename);
     void stopBackgroundMusic();
 
     // <-- Sound Effects -->
     // Loading and unloading sound effects
-    void loadSoundEffects(const std::string& filename);
+    void loadSoundEffects(const std::string& filename, const float volume = 1.f);
     void unloadSoundEffects(const std::string& filename);
     void unloadAllSoundEffects();
     // Playing sound effects

@@ -11,19 +11,19 @@ SoundManager::SoundManager() : currentBackgroundMusic(nullptr)
     _setPathToSoundEffects("Assets/Soundeffects/");
 
     // Load sound effects (only the ones that are used everywhere in the game, because the rest is loaded in the game-states for the specific states and characters)
-    loadSoundEffects("mk2/punchSound.mp3");
+    loadSoundEffects("mk2/punchSound.mp3", 1.5f);
     loadSoundEffects("ko.mp3");
     loadSoundEffects("bloodSplatter.mp3");
     loadSoundEffects("scream.mp3");
     loadSoundEffects("laugh.mp3");
-    loadSoundEffects("hitSound.wav");
+    loadSoundEffects("hitSound.wav", 1.5f);
 }
 
 
 SoundManager::~SoundManager()
 {
     // Unload Music
-    unloadAllBackgroundMusic();
+    unloadAllMusic();
 
     // Unload Sound Effects
     unloadAllSoundEffects();
@@ -51,7 +51,7 @@ void SoundManager::updateBackgroundMusic()
     }
 }
 
-void SoundManager::loadBackgroundMusic(const std::string& filename)
+void SoundManager::loadMusic(const std::string& filename, const float volume)
 {
     // check if music is already in the dictionary
     if (backgroundMusicDict.find(filename) != backgroundMusicDict.end())
@@ -70,6 +70,9 @@ void SoundManager::loadBackgroundMusic(const std::string& filename)
     // Load the music from the specified path
     Music music = LoadMusicStream((musicPath + filename).c_str());
 
+    // set Volume
+    SetMusicVolume(music, volume);
+
     // check if music was loaded
     if (music.stream.buffer == nullptr)
     {
@@ -81,7 +84,7 @@ void SoundManager::loadBackgroundMusic(const std::string& filename)
     backgroundMusicDict[filename] = music;
 }
 
-void SoundManager::unloadBackgroundMusic(const std::string& filename)
+void SoundManager::unloadMusic(const std::string& filename)
 {
     // check if music is already loaded
     if (backgroundMusicDict.find(filename) == backgroundMusicDict.end())
@@ -101,7 +104,7 @@ void SoundManager::unloadBackgroundMusic(const std::string& filename)
     backgroundMusicDict.erase(filename);
 }
 
-void SoundManager::unloadAllBackgroundMusic()
+void SoundManager::unloadAllMusic()
 {
     // loop through the dictionary and unload all music
     for (auto& music : backgroundMusicDict)
@@ -140,7 +143,7 @@ void SoundManager::stopBackgroundMusic()
     }
 }
 
-void SoundManager::loadSoundEffects(const std::string& filename)
+void SoundManager::loadSoundEffects(const std::string& filename, const float volume)
 {
     // check if sound effect is already in the dictionary
     if (soundEffectsDict.find(filename) != soundEffectsDict.end())
@@ -158,6 +161,9 @@ void SoundManager::loadSoundEffects(const std::string& filename)
 
     // Load the sound effect from the specified path
     Sound sound = LoadSound((soundEffectsPath + filename).c_str());
+
+    // set Volume
+    SetSoundVolume(sound, volume);
 
     // check if sound effect was loaded
     if (sound.stream.buffer == nullptr)

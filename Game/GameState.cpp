@@ -11,8 +11,8 @@ void GameState::Enter()
     // Start playing random background music
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->loadBackgroundMusic("ken_music.mp3");
-        game->soundManager->playBackgroundMusic("ken_music.mp3");
+        game->soundManager->loadMusic("aheroofthe80s.mp3", 0.3f);
+        game->soundManager->playBackgroundMusic("aheroofthe80s.mp3");
     }
 }
 
@@ -113,7 +113,6 @@ void GameState::Exit()
 
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->stopBackgroundMusic();
-        game->soundManager->unloadBackgroundMusic("ken_music.mp3");
+        game->soundManager->unloadMusic("aheroofthe80s.mp3");
     }
 }
