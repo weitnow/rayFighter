@@ -109,6 +109,11 @@ void GameState::Exit()
     // Cleanup for game scene
 
     // Stop playing background music
-    game->soundManager->stopBackgroundMusic();
-    game->soundManager->unloadBackgroundMusic("ken_music.mp3");
+
+
+    if (Constants::BACKGROUND_MUSIC)
+    {
+        game->soundManager->stopBackgroundMusic();
+        game->soundManager->unloadBackgroundMusic("ken_music.mp3");
+    }
 }

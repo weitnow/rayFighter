@@ -146,4 +146,9 @@ void MenuState::Exit()
 {
     delete aafTitleScreen;
     aafTitleScreen = nullptr;
+
+    if (Constants::BACKGROUND_MUSIC)
+    {
+        game->soundManager->unloadBackgroundMusic("killerinstinct_music.mp3");
+    }
 }

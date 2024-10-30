@@ -90,6 +90,12 @@ void SoundManager::unloadBackgroundMusic(const std::string& filename)
         return;
     }
 
+    // check if music is currently playing
+    if (currentBackgroundMusic == &backgroundMusicDict[filename])
+    {
+        stopBackgroundMusic();
+    }
+
     // Unload the music from the dictionary
     UnloadMusicStream(backgroundMusicDict[filename]);
     backgroundMusicDict.erase(filename);
