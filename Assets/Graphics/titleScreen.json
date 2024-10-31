@@ -136,7 +136,6 @@
    { "name": "Sky", "opacity": 255, "blendMode": "normal" },
    { "name": "Hills", "opacity": 255, "blendMode": "normal" },
    { "name": "Temple", "opacity": 255, "blendMode": "normal" },
-   { "name": "HueLightSaturation", "opacity": 77, "blendMode": "normal" },
    { "name": "Text", "opacity": 255, "blendMode": "normal" },
    { "name": "Blood", "opacity": 255, "blendMode": "normal" },
    { "name": "Fighter", "opacity": 255, "blendMode": "normal" },
