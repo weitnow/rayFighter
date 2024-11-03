@@ -3,6 +3,10 @@
 
 #include "BaseState.h"
 #include <raylib.h>
+#include <string>
+
+// forward declarations
+class AsepriteAnimationFile;
 
 class GameState : public BaseState
 {
@@ -17,6 +21,8 @@ public:
 protected:
     // Game Objects
     float camPos;
+    AsepriteAnimationFile* background;
+    std::string randomBackground;
 };
 
 #endif

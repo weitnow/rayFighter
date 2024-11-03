@@ -19,11 +19,8 @@ public:
     ~Game();
 
     void ChangeState(std::unique_ptr<BaseState> newState);
-
     void Update();
-
     void Render();
-
     bool quit;
 
     //private:
@@ -36,9 +33,8 @@ public:
     AsepriteManager* asepriteManager;
     DebugInfo* debugInfo;
     GameManager* gameManager;
-    AsepriteAnimationFile* background;
+
     float deltaTime;
-    std::string randomBackground;
 };
 
 #endif

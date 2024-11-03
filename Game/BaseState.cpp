@@ -12,7 +12,6 @@ BaseState::BaseState(Game* game) : game(game)
     gameManager = game->gameManager;
     player1 = nullptr;
     player2 = nullptr;
-    camPos = 0;
 }
 
 void BaseState::Enter()

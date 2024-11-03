@@ -34,10 +34,22 @@ protected:
     AsepriteManager* asepriteManager;
     DebugInfo* debugInfo;
     GameManager* gameManager;
-    Fighter1* player1;
-    Fighter2* player2;
+    Fighter1* player1; // is a nullptr, set in GameState (and deleted when GameState is deleted)
+    Fighter2* player2; // is a nullptr, set in GameState (and deleted when GameState is deleted)
     float deltaTime;
-    float camPos;
+
+    // <-- GameState.h -->
+    // Game Objects
+    // float camPos;
+    // AsepriteAnimationFile* background;
+    // std::string randomBackground;
+
+    // <-- MenuState.h -->
+    // int selectedOption;
+    // bool gameAboutToStart;
+    // AsepriteAnimationFile* aafTitleScreen;
+    // float timerInMs;
+    // bool deadSoundPlayed;
 };
 
 

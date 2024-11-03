@@ -3,10 +3,11 @@
 
 Game::Game() : quit(false)
 {
-    // Managing Global Compontents
+
     // Initialize random seed once
     initializeRandom(); // defined in HelperFunctions.h, used to seed the random number generator for getRandomValueOf
 
+    // Managing Global Compontents - which will be used in all game states
     // Initialize screen2DManager and set window size and title, this has to be done first before everything else
     screen2DManager = new Screen2DManager(Constants::SCREEN_WIDTH,
                                           Constants::SCREEN_HEIGHT,
@@ -24,42 +25,19 @@ Game::Game() : quit(false)
     gameManager->addGameInstance(this);                        // add game to gameManager
     inputHandler->addGameManager(*gameManager);                // add gameManager to inputHandler
     asepriteManager->init();                                   // load all aseprite files
-    gameManager->addAsepriteManager(asepriteManager);          // add asepriteManager to gameManager
-    screen2DManager->init();                                   // setFPS and setSize of the renderTarget
+    //gameManager->addAsepriteManager(asepriteManager);          // add asepriteManager to gameManager
+    screen2DManager->init(); // setFPS and setSize of the renderTarget
 
-
-    std::vector<std::string> backgrounds = {"stage-factory",
-                                            "stage-desert",
-                                            "stage-outworld",
-                                            "stage-park",
-                                            "stage-laboratory",
-                                            "stage-temple",
-                                            "stage-shaolin",
-                                            "stage-pyramid",
-                                            "stage-city",
-                                            "stage-boulevard",
-                                            "stage-jungle",
-                                            "stage-wushu",
-                                            "stage-london",
-                                            "stage-ricefield",
-                                            "stage-ring"};
-
-    randomBackground = getRandomValueOf(backgrounds);
-
-    background = asepriteManager->getAnimFile("stage");
-    deltaTime = GetFrameTime();
+    deltaTime = GetFrameTime(); // will be feed in the update method of the different game states
 }
 
 Game::~Game()
 {
-
-
     screen2DManager->unloadRenderTarget();
     delete screen2DManager; //deallocate memory on the heap
     delete inputHandler;    //deallocate memory on the heap
     delete asepriteManager; //deallocate memory on the heap
     delete debugInfo;       //deallocate memory on the heap
-    delete background;      //deallocate memory on the heap
 }
 
 void Game::ChangeState(std::unique_ptr<BaseState> newState)

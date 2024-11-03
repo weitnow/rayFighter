@@ -1,6 +1,7 @@
 #include "GameState.h"
 #include "../Characters/Fighter1.h"
 #include "../Characters/Fighter2.h"
+#include "../Utils/HelperFunctions.h" // for getRandomValueOf
 #include "Game.h"
 
 // Todo: get rid of his, only used for testing
@@ -25,6 +26,26 @@ GameState::GameState(Game* game) : BaseState(game)
         ->init(); // initialize gameManager (can only be done after all gameObjects are added and must be at the end)
 
     camPos = 0;
+
+    std::vector<std::string> backgrounds = {"stage-factory",
+                                            "stage-desert",
+                                            "stage-outworld",
+                                            "stage-park",
+                                            "stage-laboratory",
+                                            "stage-temple",
+                                            "stage-shaolin",
+                                            "stage-pyramid",
+                                            "stage-city",
+                                            "stage-boulevard",
+                                            "stage-jungle",
+                                            "stage-wushu",
+                                            "stage-london",
+                                            "stage-ricefield",
+                                            "stage-ring"};
+
+    randomBackground = getRandomValueOf(backgrounds);
+
+    background = asepriteManager->getAnimFile("stage");
 }
 
 GameState::~GameState()
@@ -37,6 +58,8 @@ GameState::~GameState()
     // Deleting Global Components
     delete player1;
     delete player2;
+
+    delete background; //deallocate memory on the heap
 }
 
 void GameState::Enter()
@@ -105,9 +128,9 @@ void GameState::Render()
     // draw stage
     float stage_scale = 1.f;
 
-    game->background->drawFrame(game->randomBackground, 0 - Constants::BACKGROUND_WIDTH, 40, stage_scale, WHITE);
-    game->background->drawFrame(game->randomBackground, 0, 40, stage_scale, WHITE);
-    game->background->drawFrame(game->randomBackground, 0 + Constants::BACKGROUND_WIDTH, 40, stage_scale, WHITE);
+    background->drawFrame(randomBackground, 0 - Constants::BACKGROUND_WIDTH, 40, stage_scale, WHITE);
+    background->drawFrame(randomBackground, 0, 40, stage_scale, WHITE);
+    background->drawFrame(randomBackground, 0 + Constants::BACKGROUND_WIDTH, 40, stage_scale, WHITE);
 
     // End the camera
     EndMode2D();
