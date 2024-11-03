@@ -1,6 +1,6 @@
 #include "Game.h"
 
-Game::Game()
+Game::Game() : quit(false)
 {
     // Managing Global Compontents
     // Initialize random seed once

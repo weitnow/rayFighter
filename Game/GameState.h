@@ -8,7 +8,7 @@ class GameState : public BaseState
 {
 public:
     GameState(Game* game) : BaseState(game) {};
-    virtual ~GameState() = default;
+    virtual ~GameState();
     virtual void Enter() override;
     virtual void Update() override;
     virtual void Render() override;

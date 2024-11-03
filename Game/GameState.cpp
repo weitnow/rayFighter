@@ -4,6 +4,14 @@
 // Todo: get rid of his, only used for testing
 #include "../Utils/HelperFunctions.h"
 
+GameState::~GameState()
+{
+    if (Constants::BACKGROUND_MUSIC)
+    {
+        game->soundManager->unloadMusic("aheroofthe80s.mp3");
+    }
+}
+
 void GameState::Enter()
 {
     BaseState::Enter();
@@ -106,13 +114,4 @@ void GameState::Render()
 
 void GameState::Exit()
 {
-    // Cleanup for game scene
-
-    // Stop playing background music
-
-
-    if (Constants::BACKGROUND_MUSIC)
-    {
-        game->soundManager->unloadMusic("aheroofthe80s.mp3");
-    }
 }

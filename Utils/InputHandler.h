@@ -39,6 +39,7 @@ private:
     void _resetBoolsToFalse(CharacterController* controller);
     void _handlePlayer1Input();
     void _handlePlayer2Input();
+    void _handleGameInput();
 
     CharacterController* player1Controller;
     CharacterController* player2Controller;

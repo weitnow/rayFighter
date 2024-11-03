@@ -103,7 +103,7 @@ void GameManager::_checkHitsBetweenPlayers()
 
                 player1->canDealDamage = false;
 
-                SoundManager::getInstance().playSound("punchSound");
+                SoundManager::getInstance().playSound("mk2/punchSound.mp3");
             }
         }
     }
@@ -120,7 +120,7 @@ void GameManager::_checkHitsBetweenPlayers()
                 player1->takeDamage(1, &hitbox);
                 player2->canDealDamage = false;
 
-                SoundManager::getInstance().playSound("punchSound");
+                SoundManager::getInstance().playSound("mk2/punchSound.mp3");
             }
         }
     }

@@ -27,6 +27,8 @@ public:
 
     void Render();
 
+    bool quit;
+
     //private:
     std::unique_ptr<BaseState> currentState;
 
