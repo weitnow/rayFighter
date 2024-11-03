@@ -19,10 +19,16 @@ public:
     virtual void Exit() override;
 
 protected:
-    // Game Objects
     float camPos;
     AsepriteAnimationFile* background;
     std::string randomBackground;
+
+    float middlePointXbetweenPlayers = 0.f;
+
+    void setDebugMode(bool debugMode);
+    void _updateIsLeftPlayer1and2();
+    void _checkCollisionsBetweenPlayers();
+    void _checkHitsBetweenPlayers();
 };
 
 #endif

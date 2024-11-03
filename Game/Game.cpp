@@ -13,21 +13,15 @@ Game::Game() : quit(false)
                                           Constants::SCREEN_HEIGHT,
                                           "C++ gbFighter",
                                           false,
-                                          Resolution::R_1120x630);
+                                          Resolution::R_1920x1080);
 
     soundManager = &SoundManager::getInstance();
     inputHandler = new InputHandler();
     asepriteManager = new AsepriteManager{"Assets/Graphics/"}; // instance of AsepriteManager
     debugInfo = new DebugInfo();                               // instance of DebugInfo
     inputHandler->addDebugInfo(*debugInfo);                    // add debugInfo to inputHandler
-    gameManager = &GameManager::getInstance();                 // instance of GameObjectsManager
-    gameManager->addInputHandler(inputHandler);                // add inputHandler to gameManager
-    gameManager->addGameInstance(this);                        // add game to gameManager
-    inputHandler->addGameManager(*gameManager);                // add gameManager to inputHandler
     asepriteManager->init();                                   // load all aseprite files
-    //gameManager->addAsepriteManager(asepriteManager);          // add asepriteManager to gameManager
-    screen2DManager->init(); // setFPS and setSize of the renderTarget
-
+    screen2DManager->init();                                   // setFPS and setSize of the renderTarget
     deltaTime = GetFrameTime(); // will be feed in the update method of the different game states
 }
 

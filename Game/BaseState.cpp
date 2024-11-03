@@ -1,6 +1,6 @@
 #include "BaseState.h"
+#include "../Utils/CollisionManager.h"
 #include "Game.h"
-
 BaseState::BaseState(Game* game) : game(game)
 {
 
@@ -12,6 +12,11 @@ BaseState::BaseState(Game* game) : game(game)
     gameManager = game->gameManager;
     player1 = nullptr;
     player2 = nullptr;
+    collisionManager = nullptr;
+}
+
+BaseState::~BaseState()
+{
 }
 
 void BaseState::Enter()

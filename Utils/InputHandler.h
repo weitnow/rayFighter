@@ -2,7 +2,6 @@
 #define INPUT_HANDLER_H
 
 #include "DebugInfo.h"
-#include "GameManager.h"
 #include "raylib.h"
 
 struct CharacterController
@@ -29,7 +28,6 @@ public:
 
     void Update();
 
-    void addGameManager(GameManager& gameManager);
     void addDebugInfo(DebugInfo& debugInfo);
 
     CharacterController* const getPlayer1Controller();
@@ -43,7 +41,6 @@ private:
 
     CharacterController* player1Controller;
     CharacterController* player2Controller;
-    GameManager* gameManager;
     DebugInfo* debugInfo;
 };
 

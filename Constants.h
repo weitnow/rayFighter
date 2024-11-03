@@ -22,9 +22,6 @@ const int DEFAULT_LIFE = 3;
 
 const float INVINCIBLE_TIME = 1.0f; // time in seconds objects are invincible after taking damage
 
-const float TIME_MULTIPLIER =
-    1.f; //used to reduce the deltaTime for debugging purposes 1.0f = normal speed, 0.1f = 10x slower
-
 const int FPS = 60;
 
 const int PLAYER1_X = 80;

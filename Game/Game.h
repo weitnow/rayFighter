@@ -2,8 +2,6 @@
 #define GAME_H
 
 #include "../Utils/AsepriteManager.h"
-#include "../Utils/GameManager.h"
-//#include "../Utils/HelperFunctions.h"
 #include "../Utils/InputHandler.h"
 #include "../Utils/Screen2DManager.h"
 #include "../Utils/SoundManager.h"

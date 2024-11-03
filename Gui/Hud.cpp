@@ -1,5 +1,5 @@
 #include "Hud.h"
-#include "../Utils/GameManager.h"
+
 
 Hud::Hud()
 {
