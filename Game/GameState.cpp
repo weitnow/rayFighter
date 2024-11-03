@@ -1,8 +1,31 @@
 #include "GameState.h"
+#include "../Characters/Fighter1.h"
+#include "../Characters/Fighter2.h"
 #include "Game.h"
 
 // Todo: get rid of his, only used for testing
-#include "../Utils/HelperFunctions.h"
+//#include "../Utils/HelperFunctions.h"
+
+GameState::GameState(Game* game) : BaseState(game)
+{
+    // Create Player 1 and 2
+    player1 = new Fighter1(asepriteManager, Constants::PLAYER1_X, Constants::BASELINE);
+    player2 = new Fighter2(asepriteManager, Constants::PLAYER2_X, Constants::BASELINE);
+
+
+    // Add the player1 and player2 and gameobjects to the gameManager
+    gameManager->addBaseCharacter("player1", player1);
+    gameManager->addBaseCharacter("player2", player2);
+
+    // Initialize Player 1 and Player 2 (needs to be done after adding them to the gameManager, otherwise the getBaseCharacter methode of GameManager which is Used in State.cpp will return a nullptr)
+    player1->init();
+    player2->init();
+
+    gameManager
+        ->init(); // initialize gameManager (can only be done after all gameObjects are added and must be at the end)
+
+    camPos = 0;
+}
 
 GameState::~GameState()
 {
@@ -10,6 +33,10 @@ GameState::~GameState()
     {
         game->soundManager->unloadMusic("aheroofthe80s.mp3");
     }
+
+    // Deleting Global Components
+    delete player1;
+    delete player2;
 }
 
 void GameState::Enter()
@@ -51,25 +78,25 @@ void GameState::Render()
 
     if (middlepointX < 105.f)
     {
-        game->camPos = game->camPos - 50 * game->deltaTime;
-        game->player1->setCamVector(Vector2{50.f, 0.f});
-        game->player2->setCamVector(Vector2{50.f, 0.f});
+        camPos = camPos - 50 * game->deltaTime;
+        player1->setCamVector(Vector2{50.f, 0.f});
+        player2->setCamVector(Vector2{50.f, 0.f});
     }
     else if (middlepointX > 152.f)
     {
         // move background to the left
-        game->camPos = game->camPos + 50 * game->deltaTime;
-        game->player1->setCamVector(Vector2{-50.f, 0.f});
-        game->player2->setCamVector(Vector2{-50.f, 0.f});
+        camPos = camPos + 50 * game->deltaTime;
+        player1->setCamVector(Vector2{-50.f, 0.f});
+        player2->setCamVector(Vector2{-50.f, 0.f});
     }
     else
     {
         // don't move anything
-        game->player1->resetCamVector();
-        game->player2->resetCamVector();
+        player1->resetCamVector();
+        player2->resetCamVector();
     }
 
-    game->screen2DManager->camera.target.x = game->camPos;
+    game->screen2DManager->camera.target.x = camPos;
 
 
     // Begin the camera

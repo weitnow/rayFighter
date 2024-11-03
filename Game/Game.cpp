@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "../Utils/HelperFunctions.h" // for initializeRandom
 
 Game::Game() : quit(false)
 {
@@ -26,29 +27,6 @@ Game::Game() : quit(false)
     gameManager->addAsepriteManager(asepriteManager);          // add asepriteManager to gameManager
     screen2DManager->init();                                   // setFPS and setSize of the renderTarget
 
-    // Create Player 1 and 2
-    player1 = new Fighter1(asepriteManager, Constants::PLAYER1_X, Constants::BASELINE);
-    player2 = new Fighter2(asepriteManager, Constants::PLAYER2_X, Constants::BASELINE);
-
-    // TODO: get rid of this - just for testing
-    // Create a BaseGameObject with a barrel Sprite for testing
-    barrel = std::make_unique<Barrel>(asepriteManager, 20, 102);
-    barrel->setCurrentFrameTag("barrel-Idle");
-    barrel->setObjName("Barrel");
-    barrel->addCollisionBoxForFrame("barrel-Idle", -1, CollisionBoxType::HURTBOX, true, 10, 10, 13, 17);
-
-    // Add the player1 and player2 and gameobjects to the gameManager
-    gameManager->addBaseCharacter("player1", player1);
-    gameManager->addBaseCharacter("player2", player2);
-    gameManager->addBaseGameObject(barrel.get());
-
-    // Initialize Player 1 and Player 2 (needs to be done after adding them to the gameManager, otherwise the getBaseCharacter methode of GameManager which is Used in State.cpp will return a nullptr)
-    player1->init();
-    player2->init();
-
-    gameManager
-        ->init(); // initialize gameManager (can only be done after all gameObjects are added and must be at the end)
-
 
     std::vector<std::string> backgrounds = {"stage-factory",
                                             "stage-desert",
@@ -70,14 +48,11 @@ Game::Game() : quit(false)
 
     background = asepriteManager->getAnimFile("stage");
     deltaTime = GetFrameTime();
-    camPos = 0;
 }
 
 Game::~Game()
 {
-    // Deleting Global Components
-    delete player1;
-    delete player2;
+
 
     screen2DManager->unloadRenderTarget();
     delete screen2DManager; //deallocate memory on the heap
@@ -103,6 +78,10 @@ void Game::Update()
     if (currentState)
     {
         currentState->Update();
+    }
+    else
+    {
+        throw std::runtime_error("Game.cpp: currentState is nullptr");
     }
 }
 

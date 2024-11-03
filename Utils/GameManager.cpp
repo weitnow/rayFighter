@@ -363,11 +363,9 @@ void GameManager::setDebugMode(bool debugMode)
         std::cout << "DebugMode is set to true" << std::endl;
 
         // Add gameObjects to the debugInfo
-        game->debugInfo->addGameObject("Player1", game->player1);
-        game->debugInfo->addGameObject("Player2", game->player2);
-        game->debugInfo->addGameObject(
-            "Barrel",
-            game->barrel.get()); // dangerous, because the unique pointer is not copied //TODO: get rid of this
+        game->debugInfo->addGameObject("Player1", getPlayer1());
+        game->debugInfo->addGameObject("Player2", getPlayer2());
+
 
         // change resolution of the renderTarget
         game->screen2DManager->setResolution(Resolution::R_1120x630);

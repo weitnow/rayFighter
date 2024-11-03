@@ -7,12 +7,16 @@
 class GameState : public BaseState
 {
 public:
-    GameState(Game* game) : BaseState(game) {};
+    GameState(Game* game);
     virtual ~GameState();
     virtual void Enter() override;
     virtual void Update() override;
     virtual void Render() override;
     virtual void Exit() override;
+
+protected:
+    // Game Objects
+    float camPos;
 };
 
 #endif
