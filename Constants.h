@@ -16,7 +16,7 @@ const int RENDERTARGET_HEIGHT = 144;
 
 const int BASELINE = 102; //ground level where the player stands
 
-const bool BACKGROUND_MUSIC = true;
+const bool BACKGROUND_MUSIC = false;
 
 const int DEFAULT_LIFE = 3;
 

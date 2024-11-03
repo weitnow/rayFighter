@@ -1,7 +1,7 @@
 #include "GameManager.h"
 #include "../Constants.h"
 #include "../Game/Game.h"
-#include "../Gui/Lifebar.h"
+#include "../Gui/Hud.h"
 #include "CollisionManager.h"
 #include "SoundManager.h"
 
@@ -22,34 +22,17 @@ void GameManager::init()
 
 // Private constructor definition
 GameManager::GameManager()
-    : player1(nullptr), player2(nullptr), player1and2set(false), lifebar1(nullptr), lifebar2(nullptr)
+    : player1(nullptr), player2(nullptr), player1and2set(false), game(nullptr), deltaTimeMultiplier(1.f)
 {
-
-    lifebar1 = new Lifebar(Vector2{20, 32},
-                           5,
-                           100,
-                           3,
-                           Constants::RAYFIGHTER_ROSA,
-                           Constants::RAYFIGHTER_DARKBROWN,
-                           "Player1",
-                           1);
-    lifebar2 = new Lifebar(Vector2{130, 32},
-                           5,
-                           100,
-                           3,
-                           Constants::RAYFIGHTER_ROSA,
-                           Constants::RAYFIGHTER_DARKBROWN,
-                           "Player2",
-                           2);
+    // Initialize the HUD
+    hud = new Hud();
 }
 
 GameManager::~GameManager()
 {
     // Clean up resources if necessary
-    delete lifebar1;
-    delete lifebar2;
-    lifebar1 = nullptr;
-    lifebar2 = nullptr;
+    delete hud;
+    hud = nullptr;
 }
 
 void GameManager::_updateIsLeftPlayer1and2()
@@ -256,12 +239,8 @@ void GameManager::update(float deltaTime)
     _checkCollisionsBetweenPlayers();
 
 
-    // Update the lifebars
-    lifebar1->Update(player1->getCurrentLife());
-    lifebar2->Update(player2->getCurrentLife());
-
-    // Update the deadSkull
-    deadSkull->update(deltaTime);
+    // Update the HUD
+    hud->Update(deltaTime);
 
     // calculate middlePointXbetweenPlayers
     middlePointXbetweenPlayers = (player1->getPos().x + player2->getPos().x + 32) / 2.f;
@@ -298,12 +277,11 @@ void GameManager::draw()
         pair.second->draw();
     }
 
-    // Draw the lifebars
-    lifebar1->Draw();
-    lifebar2->Draw();
+    // Draw a white rectangle for UpperGui
+    DrawRectangle(0, 0, 256, 40, WHITE);
 
-    // Draw the deadSkull
-    deadSkull->drawCurrentSelectedTag(5, 28, 1, WHITE);
+    // Draw the HUD
+    hud->Draw();
 
     if (Global::debugMode)
     {
@@ -344,14 +322,14 @@ void GameManager::addAsepriteManager(AsepriteManager* asepriteManager)
     }
 
     this->asepriteManager = asepriteManager;
-
-    // Load the deadSkull animation
-    deadSkull = asepriteManager->getAnimFile("deadSkull");
-    deadSkull->setFrameTag("deadSkull-Idle");
 }
 
 AsepriteManager* GameManager::getAsepriteManager()
 {
+    if (asepriteManager == nullptr)
+    {
+        throw std::runtime_error("GameManager::getAsepriteManager -> asepriteManager is nullptr.");
+    }
     this->asepriteManager;
 }
 
@@ -362,7 +340,7 @@ void GameManager::setDeltaTimeMultiplier(float deltaTimeMultiplier)
 
 void GameManager::playerKo(int playerNumber)
 {
-    deadSkull->setFrameTag("deadSkull-Amazed");
+    //bgHUD->setFrameTag("bgUpperGui-Amazed");
 }
 
 void GameManager::setDebugMode(bool debugMode)
@@ -400,4 +378,23 @@ void GameManager::setDebugMode(bool debugMode)
         // change resolution of the renderTarget
         game->screen2DManager->setResolution(Resolution::R_1920x1080);
     }
+}
+
+BaseCharacter* GameManager::getPlayer1()
+{
+    if (player1 == nullptr)
+    {
+        throw std::runtime_error("GameManager::getPlayer1 -> player1 is nullptr.");
+    }
+
+    return player1;
+}
+
+BaseCharacter* GameManager::getPlayer2()
+{
+    if (player2 == nullptr)
+    {
+        throw std::runtime_error("GameManager::getPlayer2 -> player2 is nullptr.");
+    }
+    return player2;
 }

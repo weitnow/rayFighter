@@ -313,8 +313,6 @@ void AsepriteManager::init()
 
     getFrameTag("nesFighter-Death").loop = false; // set loop to false for the death animation
 
-    loadAnimFile("bgAnimation"); // asepriteManager.frameTags[bgAnimation]
-                                 // asepriteManager.textures[bgAnimation]
 
     loadAnimFile("barrel"); // asepriteManager.frameTags[barrel]
                             // asepriteManager.textures[barrel]
@@ -322,8 +320,8 @@ void AsepriteManager::init()
     loadAnimFile("stage"); // asepriteManager.frameTags[stage-temple]
                            // asepriteManager.textures[stage]
 
-    loadAnimFile("deadSkull");
-    getFrameTag("deadSkull-Amazed").loop = false;
+    loadAnimFile("bgHUD");
+    //getFrameTag("bgUpperGui-Amazed").loop = false;
 
     loadAnimFile("titleScreen");
     getFrameTag("titleScreen-Transition").loop = false;

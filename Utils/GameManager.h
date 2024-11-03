@@ -3,6 +3,7 @@
 
 #include "../Characters/BaseCharacter.h"
 #include "../GameObjects/BaseGameObject.h"
+#include "../Gui/Hud.h"
 #include "Core.h"
 #include <algorithm> // for std::remove and std::find
 
@@ -68,6 +69,9 @@ public:
 
     void setDebugMode(bool debugMode);
 
+    BaseCharacter* getPlayer1();
+    BaseCharacter* getPlayer2();
+
 
 private:
     // Private constructor to prevent direct instantiation
@@ -95,10 +99,8 @@ private:
     BaseCharacter* player1;
     BaseCharacter* player2;
 
-    // Lifebars
-    Lifebar* lifebar1;
-    Lifebar* lifebar2;
-    AsepriteAnimationFile* deadSkull;
+    // Hud
+    Hud* hud;
 
     // Game
     Game* game;
