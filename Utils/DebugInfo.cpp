@@ -209,7 +209,8 @@ void DebugInfo::draw()
     int windowHeight = 1070;
 
     // get reference to statemachine of player1
-    GameManager& gameManager = GameManager::getInstance();
+    // Todo: Refactor the following code
+    /*
     BaseCharacter* player1 = gameManager.getBaseCharacter("player1");
     BaseCharacter* player2 = gameManager.getBaseCharacter("player2");
     if (player1 != nullptr && player2 != nullptr)
@@ -249,7 +250,7 @@ void DebugInfo::draw()
                  TEXT_SIZE,
                  TEXT_COLOR);
     }
-
+    */
 
     /* #endregion*/
 }

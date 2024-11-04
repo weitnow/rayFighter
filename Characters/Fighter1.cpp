@@ -13,6 +13,7 @@ Fighter1::~Fighter1()
 
 void Fighter1::init()
 {
+    BaseCharacter::init();
     setCurrentFrameTag("gbFighter-Idle"); // using gbFighter-Graphics
     setObjName("Andy");
     setPlayerNumber(1);

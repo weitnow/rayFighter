@@ -20,7 +20,7 @@ public:
     MenuState(Game* game);
     ~MenuState();
     void Enter() override;
-    void Update() override;
+    void Update(float deltaTime) override;
     void Render() override;
     void Exit() override;
 

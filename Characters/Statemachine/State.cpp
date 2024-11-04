@@ -3,8 +3,6 @@
 #include "../../Utils/InputHandler.h"
 #include "../../Utils/SoundManager.h"
 
-BaseCharacter* player1 = nullptr; // initialized by first time calling IdleState::Init()
-BaseCharacter* player2 = nullptr; // initialized by first time calling IdleState::Init()
 // each State class has a pointer to the owner BaseCharacter -> owner->getPos() or if(owner->isLeft()) etc.
 // or if(ownwer->getPlayernumber() == 1) etc.
 // each State class has a pointer to the controller -> controller->moveLeft = true; etc.
@@ -14,32 +12,13 @@ InputHandler* inputHandler = nullptr; // initialized by first time calling IdleS
 void State::setOwner(BaseCharacter* owner)
 {
     this->owner = owner;
-    controller = owner->getController();
     statemachine = &(owner->getStatemachine());
+    controller = owner->getController();
 }
 
 /* #region IdleState */
 void IdleState::Init()
 {
-    /* #region Init local player1 and player2 ptr for easy access */
-    // this code needs to run only once
-    if (player1 == nullptr)
-    {
-        player1 = gameManager.getBaseCharacter("player1");
-        if (player1 == nullptr) // if player1 is still nullptr
-        {
-            throw std::runtime_error("State.cpp -> Error: player1 not found in baseCharacters map.");
-        }
-    }
-    if (player2 == nullptr)
-    {
-        player2 = gameManager.getBaseCharacter("player2");
-    }
-    if (inputHandler == nullptr)
-    {
-        inputHandler = gameManager.getInputHandler();
-    }
-
     owner->stop(); // set moveVector.x = 0
     statemachine->changeState("Idle");
     std::cout << "IdleState Init" << std::endl;
@@ -100,7 +79,6 @@ void WalkState::Init()
 
 void WalkState::Update(float deltaTime)
 {
-
     if (!controller->moveLeft && !controller->moveRight)
     {
         statemachine->changeState("Idle");
@@ -472,8 +450,6 @@ void DeathState::Init()
     // play sound
     SoundManager::getInstance().playSound("ko.mp3");
 
-    // tell the GameManager that the player is KO
-    gameManager.playerKo(owner->getPlayerNumber());
 
     // change deltaMultiplier
     //gameManager.setDeltaTimeMultiplier(0.5f);
@@ -482,7 +458,7 @@ void DeathState::Init()
     //player2->setAffectedByGravity(false);
 
     //player2->setPushVector({0, -250});
-    player2->setMoveVectorY(-250);
+    //player2->setMoveVectorY(-250);
 }
 
 void DeathState::Update(float deltaTime)

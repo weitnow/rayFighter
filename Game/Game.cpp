@@ -49,7 +49,7 @@ void Game::Update()
     deltaTime = GetFrameTime();
     if (currentState)
     {
-        currentState->Update();
+        currentState->Update(deltaTime);
     }
     else
     {

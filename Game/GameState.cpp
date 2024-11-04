@@ -5,8 +5,6 @@
 #include "../Utils/HelperFunctions.h" // for getRandomValueOf
 #include "Game.h"
 
-// Todo: get rid of his, only used for testing
-//#include "../Utils/HelperFunctions.h"
 
 GameState::GameState(Game* game) : BaseState(game)
 {
@@ -14,14 +12,14 @@ GameState::GameState(Game* game) : BaseState(game)
     player1 = new Fighter1(asepriteManager, Constants::PLAYER1_X, Constants::BASELINE);
     player2 = new Fighter2(asepriteManager, Constants::PLAYER2_X, Constants::BASELINE);
 
-    collisionManager = new CollisionManager(*this);
 
-
-    // Initialize Player 1 and Player 2 (needs to be done after adding them to the gameManager, otherwise the getBaseCharacter methode of GameManager which is Used in State.cpp will return a nullptr)
-    player1->init();
     player1->addController(game->inputHandler->getPlayer1Controller());
-    player2->init();
+    player1->init();
+
     player2->addController(game->inputHandler->getPlayer2Controller());
+    player2->init();
+
+    collisionManager = new CollisionManager(*this);
 
     camPos = 0;
 
@@ -79,7 +77,7 @@ void GameState::Enter()
 }
 
 
-void GameState::Update()
+void GameState::Update(float deltaTime)
 {
     game->inputHandler->Update(); // Handle Input
 
@@ -102,10 +100,13 @@ void GameState::Update()
     // Update the collision manager
     collisionManager->update(deltaTime);
 
+    // Update players
+    player1->update(deltaTime);
+    player2->update(deltaTime);
+
     // calculate middlePointXbetweenPlayers
     middlePointXbetweenPlayers = (player1->getPos().x + player2->getPos().x + 32) / 2.f;
 
-    game->gameManager->update(game->deltaTime);  // Update gameObjects (player1 and player2 included)
     game->soundManager->updateBackgroundMusic(); // Update Music}
 }
 

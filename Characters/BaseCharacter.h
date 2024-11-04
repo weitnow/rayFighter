@@ -14,9 +14,8 @@ class BaseCharacter : public BaseGameObject
 {
 public:
     BaseCharacter(AsepriteManager* asepriteManager, float x, float y);
-
     virtual ~BaseCharacter();
-
+    virtual void init() override;
     virtual void update(float deltaTime) override;
     void draw();
     void moveLeft();
@@ -54,7 +53,7 @@ public:
     Vector2 getMoveVector();
     Statemachine& getStatemachine();
 
-    // TODO: refactor this to private
+    // Todo: refactor this to private
     bool canDealDamage;
 
 

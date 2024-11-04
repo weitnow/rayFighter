@@ -38,7 +38,7 @@ void MenuState::Enter()
     aafTitleScreen->setFrameTag("titleScreen-Titlescreen");
 }
 
-void MenuState::Update()
+void MenuState::Update(float deltaTime)
 {
     //game->inputHandler->Update();                // Handle Input //todo: refactor this to inputHandler
     game->soundManager->updateBackgroundMusic(); // Update Music

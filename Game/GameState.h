@@ -14,7 +14,7 @@ public:
     GameState(Game* game);
     virtual ~GameState();
     virtual void Enter() override;
-    virtual void Update() override;
+    virtual void Update(float deltaTime) override;
     virtual void Render() override;
     virtual void Exit() override;
 

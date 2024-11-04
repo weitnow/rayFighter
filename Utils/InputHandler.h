@@ -6,13 +6,13 @@
 
 struct CharacterController
 {
-    bool moveLeft;
-    bool moveRight;
-    bool jump;
-    bool duck;
-    bool punch;
-    bool kick;
-    bool block;
+    bool moveLeft = false;
+    bool moveRight = false;
+    bool jump = false;
+    bool duck = false;
+    bool punch = false;
+    bool kick = false;
+    bool block = false;
 };
 
 

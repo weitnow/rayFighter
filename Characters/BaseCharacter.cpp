@@ -4,13 +4,18 @@
 
 BaseCharacter::BaseCharacter(AsepriteManager* asepriteManager, float x, float y)
     : BaseGameObject(asepriteManager, x, y), isOnGround(false), animFileName("gbFighter"), isLeft(true),
-      playerNumber(-1), statemachine(std::make_unique<Statemachine>(*this)), currentState("Idle"), canDealDamage(true)
+      playerNumber(-1), statemachine(nullptr), currentState("Idle"), canDealDamage(true), controller(nullptr)
 {
-    statemachine->setOwner(this);
 }
 
 BaseCharacter::~BaseCharacter()
 {
+}
+
+void BaseCharacter::init()
+{
+    statemachine = std::make_unique<Statemachine>(*this);
+    statemachine->setOwner(this);
 }
 
 void BaseCharacter::update(float deltaTime)
@@ -166,18 +171,21 @@ int BaseCharacter::getPlayerNumber()
 
 void BaseCharacter::addController(CharacterController* controller)
 {
-    if (controller)
+    if (!controller)
     {
-        this->controller = controller;
+        throw std::runtime_error("Failed to add controller: provided controller is nullptr.");
     }
-    else
-    {
-        throw std::runtime_error("Controller is nullptr");
-    }
+
+    this->controller = controller; // Optionally manage lifecycle if necessary.
 }
 
 CharacterController* BaseCharacter::getController()
 {
+    if (controller == nullptr)
+    {
+        std::cout << "BaseCharacter.cpp - warning: getController() returned a nullptr" << std::endl;
+    }
+
     return controller;
 }
 
