@@ -5,7 +5,6 @@
 #include "../Characters/Statemachine/Statemachine.h"
 #include "../GameObjects/BaseGameObject.h"
 #include "Core.h"
-#include "GameManager.h"
 #include <string>
 
 class DebugInfo

@@ -11,6 +11,14 @@ MenuState::MenuState(Game* game)
 MenuState::~MenuState()
 {
     //deletion of heap memory is in the exit method
+
+    delete aafTitleScreen;
+    aafTitleScreen = nullptr;
+
+    if (Constants::BACKGROUND_MUSIC)
+    {
+        game->soundManager->unloadMusic("stompingrockfourshots.mp3");
+    }
 }
 
 void MenuState::Enter()
@@ -61,7 +69,7 @@ void MenuState::Update()
         {
             // Exit the game
             std::cout << "Exiting the game..." << std::endl;
-            CloseWindow(); //FIXME: memory leak, implement that game closes properly         }
+            game->quit = true;
         }
     }
 
@@ -144,11 +152,4 @@ void MenuState::Render()
 
 void MenuState::Exit()
 {
-    delete aafTitleScreen;
-    aafTitleScreen = nullptr;
-
-    if (Constants::BACKGROUND_MUSIC)
-    {
-        game->soundManager->unloadMusic("stompingrockfourshots.mp3");
-    }
 }

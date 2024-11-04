@@ -1,17 +1,14 @@
 #include "CollisionManager.h"
-#include "GameManager.h"
+#include "../Game/BaseState.h"
 
 // Implementation
 
-CollisionManager::CollisionManager(GameManager& manager) : gameManager(manager)
+CollisionManager::CollisionManager(BaseState& basestate) : basestate(basestate)
 {
-}
 
-void CollisionManager::init()
-{
-    // Get the player objects from the GameManager
-    player1 = gameManager.getBaseCharacter("player1");
-    player2 = gameManager.getBaseCharacter("player2");
+    // Get the player objects from the basestate
+    player1 = basestate.player1;
+    player2 = basestate.player2;
 }
 
 void CollisionManager::update(float deltaTime)

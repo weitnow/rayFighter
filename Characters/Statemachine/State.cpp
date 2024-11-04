@@ -1,10 +1,8 @@
 #include "State.h"
 #include "../../Constants.h"
-#include "../../Utils/GameManager.h"
 #include "../../Utils/InputHandler.h"
 #include "../../Utils/SoundManager.h"
 
-GameManager& gameManager = GameManager::getInstance();
 BaseCharacter* player1 = nullptr; // initialized by first time calling IdleState::Init()
 BaseCharacter* player2 = nullptr; // initialized by first time calling IdleState::Init()
 // each State class has a pointer to the owner BaseCharacter -> owner->getPos() or if(owner->isLeft()) etc.

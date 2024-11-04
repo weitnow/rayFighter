@@ -7,16 +7,13 @@
 #ifndef GBFIGHTER_COLLISIONMANAGER_H
 #define GBFIGHTER_COLLISIONMANAGER_H
 
-class GameManager; // Forward declaration of GameManager to avoid circular dependencies
+class BaseState; // Forward declaration of GameManager to avoid circular dependencies
 
 class CollisionManager
 {
 public:
     // Constructor that takes a reference or pointer to GameManager
-    CollisionManager(GameManager& manager);
-
-    // Initialize the collision manager
-    void init();
+    CollisionManager(BaseState& basestate);
 
     // Check collisions between all collision boxes
     void update(float deltaTime);
@@ -26,7 +23,7 @@ public:
     bool checkCollision(CollisionBox2D* box1ptr, CollisionBox2D* box2ptr);
 
 private:
-    GameManager& gameManager; // Reference to the GameManager instance
+    BaseState& basestate; // Reference to the basestate instance
 
     BaseCharacter* player1;
     BaseCharacter* player2;

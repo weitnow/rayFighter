@@ -15,50 +15,19 @@ InputHandler::~InputHandler()
 
 void InputHandler::Update()
 {
-    /* #region Player 1 and 2 Input */
-
-    // check if player 1 exists
-    if (gameManager->getBaseCharacter("player1") != nullptr)
-    {
-        _resetBoolsToFalse(player1Controller);
-        _handlePlayer1Input();
-    }
+    // player 1
+    _resetBoolsToFalse(player1Controller);
+    _handlePlayer1Input();
 
 
-    // check if player 2 exists
-    if (gameManager->getBaseCharacter("player2") != nullptr)
-    {
-        _resetBoolsToFalse(player2Controller);
-        _handlePlayer2Input();
-    }
+    // player 2
+    _resetBoolsToFalse(player2Controller);
+    _handlePlayer2Input();
 
-
-    /* #endregion */
-
-    /* #region Debug Input */
-    if (IsKeyPressed(KEY_SPACE))
-    {
-        debugInfo->showNextGameObject();
-    }
-    /* #endregion */
-
-    /* #region Game Input */
-    if (IsKeyPressed(KEY_ONE))
-    {
-        gameManager->removeBaseCharacter("player1");
-    }
-    if (IsKeyPressed(KEY_TWO))
-    {
-        gameManager->removeBaseCharacter("player2");
-    }
-    /* #endregion */
+    // game controls
+    _handleGameInput();
 }
 
-
-void InputHandler::addGameManager(GameManager& gameManager)
-{
-    this->gameManager = &gameManager;
-}
 
 void InputHandler::addDebugInfo(DebugInfo& debugInfo)
 {
@@ -165,5 +134,22 @@ void InputHandler::_handlePlayer2Input()
     {
         //gameManager->getBaseCharacter("player2")->block();
         player2Controller->block = true;
+    }
+}
+
+void InputHandler::_handleGameInput()
+{
+    // DebugInput
+    if (IsKeyPressed(KEY_SPACE))
+    {
+        debugInfo->showNextGameObject();
+    }
+
+    if (IsKeyPressed(KEY_Q))
+    {
+        Global::debugMode = !Global::debugMode;
+
+        // Todo: replace this with another method
+        //gameManager->setDebugMode(Global::debugMode);
     }
 }
