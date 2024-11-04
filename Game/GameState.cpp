@@ -1,8 +1,7 @@
 #include "GameState.h"
 #include "../Characters/Fighter1.h"
 #include "../Characters/Fighter2.h"
-#include "../Utils/CollisionManager.h"
-#include "../Utils/HelperFunctions.h" // for getRandomValueOf
+#include "../Utils/HelperFunctions.h"
 #include "Game.h"
 
 
@@ -18,8 +17,6 @@ GameState::GameState(Game* game) : BaseState(game)
 
     player2->addController(game->inputHandler->getPlayer2Controller());
     player2->init();
-
-    collisionManager = new CollisionManager(*this);
 
     camPos = 0;
 
@@ -39,7 +36,7 @@ GameState::GameState(Game* game) : BaseState(game)
                                             "stage-ricefield",
                                             "stage-ring"};
 
-    randomBackground = getRandomValueOf(backgrounds);
+    randomBackground = Utils::getRandomValueOf(backgrounds);
 
     background = asepriteManager->getAnimFile("stage");
 
@@ -96,9 +93,6 @@ void GameState::Update(float deltaTime)
     {
         object->update(deltaTime);
     }
-
-    // Update the collision manager
-    collisionManager->update(deltaTime);
 
     // Update players
     player1->update(deltaTime);
@@ -278,7 +272,7 @@ void GameState::_checkCollisionsBetweenPlayers()
     CollisionBox2D player1PushBox = player1->getPushBoxes()[0];
     CollisionBox2D player2PushBox = player2->getPushBoxes()[0];
 
-    if (collisionManager->checkCollision(player1PushBox, player2PushBox))
+    if (Utils::checkCollision(player1PushBox, player2PushBox))
     {
         // Handle collision (you can define specific collision logic here)
         if (player1->getIsLeft())
@@ -303,7 +297,7 @@ void GameState::_checkHitsBetweenPlayers()
         // loop through all hurtboxes of player2
         for (auto& hurtbox : player2->getHurtBoxes())
         {
-            if (collisionManager->checkCollision(hitbox, hurtbox) && player1->canDealDamage)
+            if (Utils::checkCollision(hitbox, hurtbox) && player1->canDealDamage)
             {
                 // Handle hit (you can define specific hit logic here)
                 player2->takeDamage(1, &hitbox);
@@ -329,7 +323,7 @@ void GameState::_checkHitsBetweenPlayers()
         // loop through all hurtboxes of player1
         for (auto& hurtbox : player1->getHurtBoxes())
         {
-            if (collisionManager->checkCollision(hitbox, hurtbox) && player2->canDealDamage)
+            if (Utils::checkCollision(hitbox, hurtbox) && player2->canDealDamage)
             {
                 // Handle hit (you can define specific hit logic here)
                 player1->takeDamage(1, &hitbox);

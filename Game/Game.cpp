@@ -5,7 +5,8 @@ Game::Game() : quit(false)
 {
 
     // Initialize random seed once
-    initializeRandom(); // defined in HelperFunctions.h, used to seed the random number generator for getRandomValueOf
+    Utils::
+        initializeRandom(); // defined in HelperFunctions.h, used to seed the random number generator for getRandomValueOf
 
     // Managing Global Compontents - which will be used in all game states
     // Initialize screen2DManager and set window size and title, this has to be done first before everything else

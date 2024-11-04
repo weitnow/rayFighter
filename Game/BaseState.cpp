@@ -1,6 +1,6 @@
 #include "BaseState.h"
-#include "../Utils/CollisionManager.h"
 #include "Game.h"
+
 BaseState::BaseState(Game* game) : game(game)
 {
 

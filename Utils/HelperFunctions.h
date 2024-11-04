@@ -7,6 +7,9 @@
 #include <ctime>   // for std::time
 #include <vector>
 
+namespace Utils
+{
+
 //----------------------------------------------------------------------------------
 // Calculate Distance between two GameObjects
 //----------------------------------------------------------------------------------
@@ -52,5 +55,24 @@ inline void initializeRandom()
     std::srand(static_cast<unsigned>(std::time(0)));
 }
 
+//----------------------------------------------------------------------------------
+// Template function to get a random value from any container
+//----------------------------------------------------------------------------------
+
+inline bool checkCollision(CollisionBox2D& box1, CollisionBox2D& box2)
+{
+    // Check collision based on their rectangles
+    return CheckCollisionRecs(box1.getRectangle(),
+                              box2.getRectangle()); // Assuming you are using raylib's CheckCollisionRecs()
+}
+
+inline bool checkCollision(CollisionBox2D* box1ptr, CollisionBox2D* box2ptr)
+{
+    // Check collision based on their rectangles
+    return CheckCollisionRecs(box1ptr->getRectangle(),
+                              box2ptr->getRectangle()); // Assuming you are using raylib's CheckCollisionRecs()
+}
+
+} // namespace Utils
 
 #endif //GBFIGHTER_HELPERFUNCTIONS_H
