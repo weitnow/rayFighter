@@ -139,17 +139,10 @@ void InputHandler::_handlePlayer2Input()
 
 void InputHandler::_handleGameInput()
 {
-    // DebugInput
-    if (IsKeyPressed(KEY_SPACE))
-    {
-        debugInfo->showNextGameObject();
-    }
-
     if (IsKeyPressed(KEY_Q))
     {
         Global::debugMode = !Global::debugMode;
 
-        // Todo: replace this with another method
-        //gameManager->setDebugMode(Global::debugMode);
+        debugInfo->setDebugMode(Global::debugMode);
     }
 }

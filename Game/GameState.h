@@ -25,7 +25,6 @@ protected:
 
     float middlePointXbetweenPlayers = 0.f;
 
-    void setDebugMode(bool debugMode);
     void _updateIsLeftPlayer1and2();
     void _checkCollisionsBetweenPlayers();
     void _checkHitsBetweenPlayers();

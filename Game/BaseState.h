@@ -27,6 +27,10 @@ public:
     virtual void Render() = 0;
     virtual void Exit() = 0;
 
+    // <-- Game.h -->
+    // Global components (pointers to single instances, loaded in Game.cpp)
+    Screen2DManager* screen2DManager;
+
     // <-- GameState.h -->
     BaseCharacter* player1; // is a nullptr, set in GameState (and deleted when GameState is deleted)
     BaseCharacter* player2; // is a nullptr, set in GameState (and deleted when GameState is deleted)
@@ -35,7 +39,6 @@ protected:
     // <-- Game.h -->
     // Global components (pointers to single instances, loaded in Game.cpp)
     Game* game;
-    Screen2DManager* screen2DManager;
     SoundManager* soundManager;
     InputHandler* inputHandler;
     AsepriteManager* asepriteManager;

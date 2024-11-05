@@ -3,26 +3,26 @@
 
 #include "../Characters/BaseCharacter.h"
 #include "../Characters/Statemachine/Statemachine.h"
+#include "../Game/BaseState.h"
 #include "../GameObjects/BaseGameObject.h"
-#include "Core.h"
 #include <string>
 
 class DebugInfo
 {
 public:
-    DebugInfo();
-    virtual ~DebugInfo();
+    DebugInfo(BaseState* baseState);
+    ~DebugInfo();
 
-    void addGameObject(const std::string& name, BaseGameObject* gameObject);
-    void removeGameObject(std::string& name);
-    bool showNextGameObject();
-    void update(float deltaTime);
     void draw();
     void drawGameObjectData(BaseGameObject* gameObject, const std::string& objectName, int x, int y);
 
+    void setDebugMode(bool debugMode);
+
 private:
-    Dictionary<std::string, BaseGameObject*> gameObjects;
     std::string currentGameObjectName;
+    BaseState* baseState;
+    BaseCharacter* player1;
+    BaseCharacter* player2;
     int rectWidth;
     int rectHeight;
     int rectX;

@@ -1,5 +1,6 @@
 #include "DebugInfo.h"
 #include "HelperFunctions.h"
+#include "Screen2DManager.h"
 
 constexpr int RECT_WIDTH = 1520;
 constexpr int RECT_HEIGHT = 400;
@@ -9,9 +10,9 @@ constexpr Color RECT_COLOR = GREEN;
 constexpr int TEXT_SIZE = 20;
 constexpr Color TEXT_COLOR = BLACK;
 
-DebugInfo::DebugInfo()
+DebugInfo::DebugInfo(BaseState* baseState)
     : rectWidth(RECT_WIDTH), rectHeight(RECT_HEIGHT), rectX(RECT_X), rectY(RECT_Y), rectColor(RECT_COLOR),
-      player1InGameObjects(false)
+      player1InGameObjects(false), baseState{baseState}, player1{baseState->player1}, player2{baseState->player2}
 {
 }
 
@@ -19,59 +20,6 @@ DebugInfo::~DebugInfo()
 {
 }
 
-void DebugInfo::addGameObject(const std::string& name, BaseGameObject* gameObject)
-{
-    if (gameObjects.empty())
-    {
-        currentGameObjectName = name;
-    }
-    gameObjects[name] = gameObject;
-
-    if (name == "Player1")
-    {
-        player1InGameObjects = true;
-    }
-}
-
-void DebugInfo::removeGameObject(std::string& name)
-{
-    gameObjects.erase(name);
-
-    if (currentGameObjectName == name && !gameObjects.empty())
-    {
-        currentGameObjectName = gameObjects.begin()->first;
-    }
-
-    std::cout << "currentGameObjectName: " << currentGameObjectName << std::endl;
-}
-
-bool DebugInfo::showNextGameObject()
-{
-    if (gameObjects.size() <= 1)
-    {
-        return false; // No switching possible if we have 0 or 1 object
-    }
-
-    // Move to the next game object in the map
-    auto it = gameObjects.find(currentGameObjectName);
-    if (it != gameObjects.end())
-    {
-        ++it;
-        if (it == gameObjects.end())
-        {
-            it = gameObjects.begin(); // Wrap around to the beginning
-        }
-        currentGameObjectName = it->first;
-        return true;
-    }
-
-    return false;
-}
-
-void DebugInfo::update(float deltaTime)
-{
-    // Placeholder for future updates
-}
 
 // Function to draw data for any game object
 void DebugInfo::drawGameObjectData(BaseGameObject* gameObject, const std::string& objectName, int x, int y)
@@ -85,6 +33,45 @@ void DebugInfo::drawGameObjectData(BaseGameObject* gameObject, const std::string
     else // otherwise character is a nullptr and we have to use gameObject
     {
         _drawGameObjectData(gameObject, objectName, x, y);
+    }
+}
+
+void DebugInfo::setDebugMode(bool debugMode)
+{
+    if ((!player1) || (!player2)) // if either of them is nullptr try to load them from the baseState
+    {
+        player1 = baseState->player1;
+        player2 = baseState->player2;
+
+        if ((!player1) || (!player2))
+        {
+            throw std::runtime_error(
+                "DebugInfo.cpp -> player1 and/or player2 is nullptr"); //if there are still nullptr, because the gamestate has no players throw a runtimeerror
+        }
+    }
+
+    Global::debugMode = debugMode;
+    Global::debugWindow = debugMode;
+    Global::debugSpriteBorder = false; //debugMode;
+    Global::debugCollisionBoxes = debugMode;
+    Global::debugHitboxes = debugMode;
+    Global::debugHurtboxes = debugMode;
+    Global::debugPushboxes = false;  //debugMode;
+    Global::debugThrowboxes = false; //debugMode;
+
+    if (debugMode)
+    {
+
+        std::cout << "DebugMode is set to true" << std::endl;
+
+        // change resolution of the renderTarget
+        baseState->screen2DManager->setResolution(Resolution::R_1120x630);
+    }
+    else
+    {
+        std::cout << "DebugMode is set to false" << std::endl;
+        // change resolution of the renderTarget
+        baseState->screen2DManager->setResolution(Resolution::R_1920x1080);
     }
 }
 
@@ -186,20 +173,10 @@ void DebugInfo::draw()
     DrawFPS(rectX + 10, rectY + 10);
 
     // Draw Player1 data if available
-    if (player1InGameObjects && gameObjects.find("Player1") != gameObjects.end())
-    {
-        drawGameObjectData(gameObjects["Player1"], "Player1", rectX + 10, rectY + 50);
-    }
-    else
-    {
-        DrawText("No Obj named \"Player1\" found", rectX + 800, rectY + 50, TEXT_SIZE, TEXT_COLOR);
-    }
 
-    // Draw other game objects
-    if (gameObjects.find(currentGameObjectName) != gameObjects.end())
-    {
-        drawGameObjectData(gameObjects[currentGameObjectName], currentGameObjectName, rectX + 700, rectY + 50);
-    }
+    drawGameObjectData(player1, "Player1", rectX + 10, rectY + 50);
+
+
     /* #endregion*/
 
     /* #region DRAW RIGHT DEBUG_WINDOW WINDOW*/
@@ -208,49 +185,42 @@ void DebugInfo::draw()
     int windowWidth = 374;
     int windowHeight = 1070;
 
-    // get reference to statemachine of player1
-    // Todo: Refactor the following code
-    /*
-    BaseCharacter* player1 = gameManager.getBaseCharacter("player1");
-    BaseCharacter* player2 = gameManager.getBaseCharacter("player2");
-    if (player1 != nullptr && player2 != nullptr)
-    {
-        Statemachine& statemachine = player1->getStatemachine();
-        DrawText("Statemachine of Player 1", windowX + 10, windowY + 10, TEXT_SIZE, TEXT_COLOR);
-        DrawText(("Current State: " + statemachine.getCurrentStateAsString()).c_str(),
-                 windowX + 10,
-                 windowY + 30,
-                 TEXT_SIZE,
-                 TEXT_COLOR);
-        DrawText(("Previous State: " + statemachine.getPreviousStateAsString()).c_str(),
-                 windowX + 10,
-                 windowY + 50,
-                 TEXT_SIZE,
-                 TEXT_COLOR);
 
-        // Calculate distance
-        float distanceBetweenPlayers = calculateDistance(*player1, *player2);
+    Statemachine& statemachine = player1->getStatemachine();
+    DrawText("Statemachine of Player 1", windowX + 10, windowY + 10, TEXT_SIZE, TEXT_COLOR);
+    DrawText(("Current State: " + statemachine.getCurrentStateAsString()).c_str(),
+             windowX + 10,
+             windowY + 30,
+             TEXT_SIZE,
+             TEXT_COLOR);
+    DrawText(("Previous State: " + statemachine.getPreviousStateAsString()).c_str(),
+             windowX + 10,
+             windowY + 50,
+             TEXT_SIZE,
+             TEXT_COLOR);
 
-        // Use ostringstream to format the distance
-        std::ostringstream oss;
-        oss << std::fixed << std::setprecision(2) << distanceBetweenPlayers; // Set precision to 2 decimal places
-        std::string distanceText = "Distance betw Players: " + oss.str();
+    // Calculate distance
+    float distanceBetweenPlayers = Utils::calculateDistance(*player1, *player2);
 
-        DrawText(distanceText.c_str(), windowX + 10, windowY + 70, TEXT_SIZE, TEXT_COLOR);
+    // Use ostringstream to format the distance
+    std::ostringstream oss;
+    oss << std::fixed << std::setprecision(2) << distanceBetweenPlayers; // Set precision to 2 decimal places
+    std::string distanceText = "Distance betw Players: " + oss.str();
 
-        DrawText(("P1 is flipped: " + std::to_string(player1->getIsFlippedX())).c_str(),
-                 windowX + 10,
-                 windowY + 90,
-                 TEXT_SIZE,
-                 TEXT_COLOR);
+    DrawText(distanceText.c_str(), windowX + 10, windowY + 70, TEXT_SIZE, TEXT_COLOR);
 
-        DrawText(("P2 is flipped: " + std::to_string(player2->getIsFlippedX())).c_str(),
-                 windowX + 10,
-                 windowY + 110,
-                 TEXT_SIZE,
-                 TEXT_COLOR);
-    }
-    */
+    DrawText(("P1 is flipped: " + std::to_string(player1->getIsFlippedX())).c_str(),
+             windowX + 10,
+             windowY + 90,
+             TEXT_SIZE,
+             TEXT_COLOR);
+
+    DrawText(("P2 is flipped: " + std::to_string(player2->getIsFlippedX())).c_str(),
+             windowX + 10,
+             windowY + 110,
+             TEXT_SIZE,
+             TEXT_COLOR);
+
 
     /* #endregion*/
 }

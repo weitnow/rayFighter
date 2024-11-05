@@ -19,8 +19,6 @@ Game::Game() : quit(false)
     soundManager = &SoundManager::getInstance();
     inputHandler = new InputHandler();
     asepriteManager = new AsepriteManager{"Assets/Graphics/"}; // instance of AsepriteManager
-    debugInfo = new DebugInfo();                               // instance of DebugInfo
-    inputHandler->addDebugInfo(*debugInfo);                    // add debugInfo to inputHandler
     asepriteManager->init();                                   // load all aseprite files
     screen2DManager->init();                                   // setFPS and setSize of the renderTarget
     deltaTime = GetFrameTime(); // will be feed in the update method of the different game states
@@ -32,7 +30,6 @@ Game::~Game()
     delete screen2DManager; //deallocate memory on the heap
     delete inputHandler;    //deallocate memory on the heap
     delete asepriteManager; //deallocate memory on the heap
-    delete debugInfo;       //deallocate memory on the heap
 }
 
 void Game::ChangeState(std::unique_ptr<BaseState> newState)

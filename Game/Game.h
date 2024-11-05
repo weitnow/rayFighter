@@ -29,7 +29,6 @@ public:
     SoundManager* soundManager;
     InputHandler* inputHandler;
     AsepriteManager* asepriteManager;
-    DebugInfo* debugInfo;
     GameManager* gameManager;
 
     float deltaTime;

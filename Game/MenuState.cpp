@@ -1,6 +1,6 @@
 #include "MenuState.h"
+#include "CharSelectState.h"
 #include "Game.h"
-#include "GameState.h"
 
 
 MenuState::MenuState(Game* game)
@@ -90,7 +90,7 @@ void MenuState::Update(float deltaTime)
 
         if (timerInMs <= -2.0f)
         {
-            game->ChangeState(std::make_unique<GameState>(game));
+            game->ChangeState(std::make_unique<CharSelectState>(game));
         }
     }
 }

@@ -5,8 +5,12 @@
 #include "Game.h"
 
 
-GameState::GameState(Game* game) : BaseState(game)
+GameState::GameState(Game* game) : BaseState(game), camPos{0}
 {
+    debugInfo = new DebugInfo(this);        // instance of DebugInfo
+    inputHandler->addDebugInfo(*debugInfo); // add debugInfo to inputHandler
+
+
     // Create Player 1 and 2
     player1 = new Fighter1(asepriteManager, Constants::PLAYER1_X, Constants::BASELINE);
     player2 = new Fighter2(asepriteManager, Constants::PLAYER2_X, Constants::BASELINE);
@@ -17,8 +21,6 @@ GameState::GameState(Game* game) : BaseState(game)
 
     player2->addController(game->inputHandler->getPlayer2Controller());
     player2->init();
-
-    camPos = 0;
 
     std::vector<std::string> backgrounds = {"stage-factory",
                                             "stage-desert",
@@ -55,6 +57,8 @@ GameState::~GameState()
     }
 
     // Deleting Global Components
+    delete debugInfo;
+
     delete player1;
     delete player2;
 
@@ -97,6 +101,8 @@ void GameState::Update(float deltaTime)
     // Update players
     player1->update(deltaTime);
     player2->update(deltaTime);
+
+    _checkCollisionsBetweenPlayers();
 
     // calculate middlePointXbetweenPlayers
     middlePointXbetweenPlayers = (player1->getPos().x + player2->getPos().x + 32) / 2.f;
@@ -206,7 +212,7 @@ void GameState::Render()
         // Draw a second black outlined rectangle on the right side of the screen
         DrawRectangleLinesEx(Rectangle{1545, 0, 374, 1070}, 6, BLACK);
 
-        game->debugInfo->draw();
+        debugInfo->draw();
     }
     game->screen2DManager->endDrawToScreen();
 }
@@ -215,40 +221,6 @@ void GameState::Exit()
 {
 }
 
-void GameState::setDebugMode(bool debugMode)
-{
-    Global::debugMode = debugMode;
-    Global::debugWindow = debugMode;
-    Global::debugSpriteBorder = false; //debugMode;
-    Global::debugCollisionBoxes = debugMode;
-    Global::debugHitboxes = debugMode;
-    Global::debugHurtboxes = debugMode;
-    Global::debugPushboxes = false;  //debugMode;
-    Global::debugThrowboxes = false; //debugMode;
-
-    if (debugMode)
-    {
-        if (game == nullptr)
-        {
-            throw std::runtime_error("GameManager::setDebugMode -> Game instance not set.");
-        }
-        std::cout << "DebugMode is set to true" << std::endl;
-
-        // Add gameObjects to the debugInfo
-        game->debugInfo->addGameObject("Player1", player1);
-        game->debugInfo->addGameObject("Player2", player2);
-
-
-        // change resolution of the renderTarget
-        game->screen2DManager->setResolution(Resolution::R_1120x630);
-    }
-    else
-    {
-        std::cout << "DebugMode is set to false" << std::endl;
-        // change resolution of the renderTarget
-        game->screen2DManager->setResolution(Resolution::R_1920x1080);
-    }
-}
 
 void GameState::_updateIsLeftPlayer1and2()
 {
