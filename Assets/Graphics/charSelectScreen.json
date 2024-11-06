@@ -1,0 +1,39 @@
+{ "frames": {
+   "charSelectScreen 0.aseprite": {
+    "frame": { "x": 0, "y": 0, "w": 256, "h": 144 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 256, "h": 144 },
+    "sourceSize": { "w": 256, "h": 144 },
+    "duration": 500
+   },
+   "charSelectScreen 1.aseprite": {
+    "frame": { "x": 256, "y": 0, "w": 256, "h": 144 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 256, "h": 144 },
+    "sourceSize": { "w": 256, "h": 144 },
+    "duration": 500
+   }
+ },
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.3.9.2-x64",
+  "image": "charSelectScreen.png",
+  "format": "RGBA8888",
+  "size": { "w": 512, "h": 144 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "Idle", "from": 0, "to": 1, "direction": "forward", "color": "#000000ff" }
+  ],
+  "layers": [
+   { "name": "Layer 2", "opacity": 255, "blendMode": "normal" },
+   { "name": "Layer 3", "opacity": 255, "blendMode": "normal" },
+   { "name": "1P", "opacity": 255, "blendMode": "normal" },
+   { "name": "2P", "opacity": 255, "blendMode": "normal" },
+   { "name": "Characters", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}

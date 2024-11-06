@@ -11,9 +11,9 @@ int main(void)
 {
     Game* game = new Game(); // will initialize all global components
 
+    game->ChangeState(std::make_unique<MenuState>(game));
+    //game->ChangeState(std::make_unique<CharSelectState>(game));
     //game->ChangeState(std::make_unique<GameState>(game));
-    //game->ChangeState(std::make_unique<MenuState>(game));
-    game->ChangeState(std::make_unique<CharSelectState>(game));
 
 
     // Main game loop
@@ -21,6 +21,12 @@ int main(void)
     {
         game->Update();
         game->Render();
+
+        //Todo: remove this
+        if (IsKeyPressed(KEY_M))
+        {
+            game->screen2DManager->cycleThroughResolutions();
+        }
     }
     //----------------------------------------------------------------------------------
     // De-Initialization

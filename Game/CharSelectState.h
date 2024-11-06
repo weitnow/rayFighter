@@ -17,6 +17,7 @@ public:
     void Exit() override;
 
 private:
+    AsepriteAnimationFile* CharSelectScreen;
 };
 
 #endif

@@ -65,13 +65,13 @@ void DebugInfo::setDebugMode(bool debugMode)
         std::cout << "DebugMode is set to true" << std::endl;
 
         // change resolution of the renderTarget
-        baseState->screen2DManager->setResolution(Resolution::R_1120x630);
+        baseState->screen2DManager->setRenderResolution(RenderResolution::R_1120x630);
     }
     else
     {
         std::cout << "DebugMode is set to false" << std::endl;
         // change resolution of the renderTarget
-        baseState->screen2DManager->setResolution(Resolution::R_1920x1080);
+        baseState->screen2DManager->setRenderResolution(RenderResolution::R_1792x1008);
     }
 }
 

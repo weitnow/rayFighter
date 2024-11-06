@@ -1,21 +1,78 @@
 #include "Screen2DManager.h"
 #include "../Constants.h"
 
-Screen2DManager::Screen2DManager(const int screenWidth,
-                                 const int screenHeight,
-                                 const char* windowTitle,
-                                 const bool windowResizable,
-                                 const Resolution resolution)
 
+int EnumToValue(RenderResolution resolution)
 {
-    if (windowResizable)
+    switch (resolution)
     {
-        // Set the window to be resizable, this needs to be done befor calling InitWindow(), otherwise it has no affect
-        SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+    case RenderResolution::R_256x144:
+        return 1;
+    case RenderResolution::R_512x288:
+        return 2;
+    case RenderResolution::R_768x432:
+        return 3;
+    case RenderResolution::R_1024x576:
+        return 4;
+    case RenderResolution::R_1120x630:
+        return 5;
+    case RenderResolution::R_1280x720:
+        return 5;
+    case RenderResolution::R_1536x864:
+        return 6;
+    case RenderResolution::R_1792x1008:
+        return 7;
+    case RenderResolution::R_2560x1440:
+        return 10;
+    default:
+        return 1;
+    }
+}
+
+Screen2DManager::Screen2DManager(const ScreenResolution screenResolution,
+                                 const char* windowTitle,
+                                 const RenderResolution resolution)
+    : resolution(resolution), screenWidth(0), screenHeight(0), camera{0}, destRec{0}, sourceRec{0}, renderTarget{0},
+      offsetX(0), offsetY(0)
+{
+
+    // Set the screen width and height
+    if (screenResolution == ScreenResolution::S_640x480)
+    {
+        screenWidth = 640;
+        screenHeight = 480;
+    }
+    else if (screenResolution == ScreenResolution::S_800x600)
+    {
+        screenWidth = 800;
+        screenHeight = 600;
+    }
+    else if (screenResolution == ScreenResolution::S_1280x720)
+    {
+        screenWidth = 1280;
+        screenHeight = 720;
+    }
+    else if (screenResolution == ScreenResolution::S_1920x1080)
+    {
+        screenWidth = 1920;
+        screenHeight = 1080;
+    }
+    else if (screenResolution == ScreenResolution::S_2560x1440)
+    {
+        screenWidth = 2560;
+        screenHeight = 1440;
+    }
+    else if (screenResolution == ScreenResolution::S_3440x1440)
+    {
+        screenWidth = 3440;
+        screenHeight = 1440;
     }
 
     // Initialize window
     InitWindow(screenWidth, screenHeight, windowTitle);
+
+    // Set  game to run at X frames-per-second (recommended: 60)
+    SetTargetFPS(Constants::FPS); // Raylib function
 
     // Initialize Camera
     camera.target = Vector2{0.0f, 0.0f};
@@ -28,31 +85,12 @@ Screen2DManager::Screen2DManager(const int screenWidth,
     sourceRec = {0.0f, 0.0f, Constants::RENDERTARGET_WIDTH, -Constants::RENDERTARGET_HEIGHT};
 
     // set Resolution of the destRec (not the screen resolution)
-    this->setResolution(resolution);
+    this->setRenderResolution(resolution);
 }
 
 Screen2DManager::~Screen2DManager()
 {
-}
-
-void Screen2DManager::init()
-{
-    // Set  game to run at X frames-per-second (recommended: 60)
-    SetTargetFPS(Constants::FPS); // Raylib function
-
-    // Set the resolution/size of the of the renderTarget (not the screen resolution), default is 1120x630
-    // setResolution(Resolution::R_1920x1080);
-    // setResolution(Resolution::R_2560x1440);
-}
-
-void Screen2DManager::unloadRenderTarget()
-{
-    std::cout << "Unloading texture with id: " << renderTarget.texture.id << std::endl;
     UnloadRenderTexture(renderTarget); // Raylib function
-}
-
-void Screen2DManager::update(float deltaTime)
-{
 }
 
 void Screen2DManager::beginDrawToScreen()
@@ -80,40 +118,73 @@ void Screen2DManager::endDrawToScreen()
     EndDrawing(); // Raylib function
 }
 
-void Screen2DManager::setResolution(Resolution resolution)
+void Screen2DManager::setRenderResolution(RenderResolution resolution)
 {
     this->resolution = resolution;
 
-    if (resolution == Resolution::R_256x144)
+    if (resolution == RenderResolution::R_256x144)
     {
-        destRec = {0.0f, 0.0f, 256, 144};
+        resolutionWidth = 256;
+        resolutionHeight = 144;
     }
-    else if (resolution == Resolution::R_320x180)
+    else if (resolution == RenderResolution::R_512x288)
     {
-        destRec = {0.0f, 0.0f, 320, 180};
+        resolutionWidth = 512;
+        resolutionHeight = 288;
     }
-    else if (resolution == Resolution::R_480x270)
+    else if (resolution == RenderResolution::R_768x432)
     {
-        destRec = {0.0f, 0.0f, 480, 270};
+        resolutionWidth = 768;
+        resolutionHeight = 432;
     }
-    else if (resolution == Resolution::R_640x360)
+    else if (resolution == RenderResolution::R_1024x576)
     {
-        destRec = {0.0f, 0.0f, 640, 360};
+        resolutionWidth = 1024;
+        resolutionHeight = 576;
     }
-    else if (resolution == Resolution::R_960x540)
+    else if (resolution == RenderResolution::R_1120x630) // DEBUG_DRAW
     {
-        destRec = {0.0f, 0.0f, 960, 540};
+        resolutionWidth = 1120;
+        resolutionHeight = 630;
     }
-    else if (resolution == Resolution::R_1120x630)
+    else if (resolution == RenderResolution::R_1280x720)
     {
-        destRec = {10.0f, 420.0f, 1120, 630};
+        resolutionWidth = 1280;
+        resolutionHeight = 720;
     }
-    else if (resolution == Resolution::R_1920x1080)
+    else if (resolution == RenderResolution::R_1536x864)
     {
-        destRec = {0.0f, 0.0f, 1920, 1080};
+        resolutionWidth = 1536;
+        resolutionHeight = 864;
     }
-    else if (resolution == Resolution::R_2560x1440)
+    else if (resolution == RenderResolution::R_1792x1008)
     {
-        destRec = {0.0f, 0.0f, 2560, 1440};
+        resolutionWidth = 1792;
+        resolutionHeight = 1008;
     }
+    else if (resolution == RenderResolution::R_2560x1440)
+    {
+        resolutionWidth = 2560;
+        resolutionHeight = 1440;
+    }
+
+    offsetX = (screenWidth - resolutionWidth) / 2;
+    offsetY = (screenHeight - resolutionHeight) / 2;
+
+    destRec = {static_cast<float>(offsetX),
+               static_cast<float>(offsetY),
+               static_cast<float>(resolutionWidth),
+               static_cast<float>(resolutionHeight)};
+}
+
+void Screen2DManager::cycleThroughResolutions()
+{
+    int value = EnumToValue(resolution);
+    value++;
+    if (value > 10)
+    {
+        value = 1;
+    }
+    RenderResolution newResolution = static_cast<RenderResolution>(value);
+    setRenderResolution(newResolution);
 }

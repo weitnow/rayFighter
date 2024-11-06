@@ -3,8 +3,10 @@
 #include "GameState.h"
 
 
-CharSelectState::CharSelectState(Game* game) : BaseState(game)
+CharSelectState::CharSelectState(Game* game) : BaseState(game), CharSelectScreen(nullptr)
 {
+    CharSelectScreen = game->asepriteManager->getAnimFile("charSelectScreen");
+    CharSelectScreen->setFrameTag("charSelectScreen-Idle");
 }
 
 CharSelectState::~CharSelectState()
@@ -37,11 +39,8 @@ void CharSelectState::Render()
     ClearBackground(GREEN);
 
 
-    DrawText("CharSelect",
-             Constants::RENDERTARGET_WIDTH / 2 - MeasureText("1P Start", 8) / 2,
-             105,
-             8,
-             Constants::RAYFIGHTER_WHITE);
+    // Draw CharSelectScreen
+    CharSelectScreen->drawCurrentSelectedTag(0, 0);
 
 
     game->screen2DManager->endDrawToRenderTarget();

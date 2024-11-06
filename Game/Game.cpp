@@ -10,23 +10,19 @@ Game::Game() : quit(false)
 
     // Managing Global Compontents - which will be used in all game states
     // Initialize screen2DManager and set window size and title, this has to be done first before everything else
-    screen2DManager = new Screen2DManager(Constants::SCREEN_WIDTH,
-                                          Constants::SCREEN_HEIGHT,
-                                          "C++ gbFighter",
-                                          false,
-                                          Resolution::R_1920x1080);
+    screen2DManager = new Screen2DManager(ScreenResolution::S_1920x1080,
+                                          "C++ RayFighter",
+                                          RenderResolution::R_1792x1008); // instance of Screen2DManager
 
     soundManager = &SoundManager::getInstance();
     inputHandler = new InputHandler();
     asepriteManager = new AsepriteManager{"Assets/Graphics/"}; // instance of AsepriteManager
     asepriteManager->init();                                   // load all aseprite files
-    screen2DManager->init();                                   // setFPS and setSize of the renderTarget
     deltaTime = GetFrameTime(); // will be feed in the update method of the different game states
 }
 
 Game::~Game()
 {
-    screen2DManager->unloadRenderTarget();
     delete screen2DManager; //deallocate memory on the heap
     delete inputHandler;    //deallocate memory on the heap
     delete asepriteManager; //deallocate memory on the heap
