@@ -11,15 +11,27 @@ CharSelectState::CharSelectState(Game* game) : BaseState(game), CharSelectScreen
 
 CharSelectState::~CharSelectState()
 {
+    if (Constants::BACKGROUND_MUSIC)
+    {
+        game->soundManager->unloadMusic("stage1.wav");
+    }
 }
 
 void CharSelectState::Enter()
 {
     BaseState::Enter();
+
+    // Start playing background music
+    if (Constants::BACKGROUND_MUSIC)
+    {
+        game->soundManager->loadMusic("stage1.wav", 1.f);
+        game->soundManager->playBackgroundMusic("stage1.wav");
+    }
 }
 
 void CharSelectState::Update(float deltaTime)
 {
+    game->soundManager->updateBackgroundMusic(); // Update Music
 
     //handle input //todo: refactor this to inputHandler
     if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_SPACE))

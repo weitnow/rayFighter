@@ -53,7 +53,7 @@ GameState::~GameState()
 {
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->unloadMusic("aheroofthe80s.mp3");
+        game->soundManager->unloadMusic("stage3.wav");
     }
 
     // Deleting Global Components
@@ -72,8 +72,8 @@ void GameState::Enter()
     // Start playing random background music
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->loadMusic("aheroofthe80s.mp3", 0.3f);
-        game->soundManager->playBackgroundMusic("aheroofthe80s.mp3");
+        game->soundManager->loadMusic("stage3.wav", 1.f);
+        game->soundManager->playBackgroundMusic("stage3.wav");
     }
 }
 

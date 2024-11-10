@@ -17,7 +17,7 @@ MenuState::~MenuState()
 
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->unloadMusic("stompingrockfourshots.mp3");
+        game->soundManager->unloadMusic("intro.wav");
     }
 }
 
@@ -28,8 +28,8 @@ void MenuState::Enter()
     // Start playing background music
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->loadMusic("stompingrockfourshots.mp3", 0.2f);
-        game->soundManager->playBackgroundMusic("stompingrockfourshots.mp3");
+        game->soundManager->loadMusic("intro.wav", 1.f);
+        game->soundManager->playBackgroundMusic("intro.wav");
     }
     selectedOption = MenuOptions::PLAY;
 
