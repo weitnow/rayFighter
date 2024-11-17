@@ -17,7 +17,7 @@ MenuState::~MenuState()
 
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->unloadMusic("intro.wav");
+        game->soundManager->unloadMusic("intro_alternativ.wav");
     }
 }
 
@@ -28,8 +28,8 @@ void MenuState::Enter()
     // Start playing background music
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->loadMusic("intro.wav", 1.f);
-        game->soundManager->playBackgroundMusic("intro.wav");
+        game->soundManager->loadMusic("intro_alternativ.wav", 1.f);
+        game->soundManager->playBackgroundMusic("intro_alternativ.wav");
     }
     selectedOption = MenuOptions::PLAY;
 
