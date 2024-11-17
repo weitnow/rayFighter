@@ -13,7 +13,7 @@ CharSelectState::~CharSelectState()
 {
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->unloadMusic("sun.wav");
+        game->soundManager->unloadMusic("choices.wav");
     }
 }
 
@@ -24,8 +24,8 @@ void CharSelectState::Enter()
     // Start playing background music
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->loadMusic("sun.wav", 1.f);
-        game->soundManager->playBackgroundMusic("sun.wav");
+        game->soundManager->loadMusic("choices.wav", 1.f);
+        game->soundManager->playBackgroundMusic("choices.wav");
     }
 }
 

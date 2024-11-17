@@ -53,7 +53,7 @@ GameState::~GameState()
 {
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->unloadMusic("ken.wav");
+        game->soundManager->unloadMusic("noiseinthebackground.wav");
     }
 
     // Deleting Global Components
@@ -72,8 +72,8 @@ void GameState::Enter()
     // Start playing random background music
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->loadMusic("ken.wav", 0.8f);
-        game->soundManager->playBackgroundMusic("ken.wav");
+        game->soundManager->loadMusic("noiseinthebackground.wav", 0.8f);
+        game->soundManager->playBackgroundMusic("noiseinthebackground.wav");
     }
 }
 
