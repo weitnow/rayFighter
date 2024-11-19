@@ -13,7 +13,7 @@ CharSelectState::~CharSelectState()
 {
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->unloadMusic("possibilities.wav");
+        game->soundManager->unloadMusic("ninjutsudrums.wav");
     }
 }
 
@@ -24,8 +24,8 @@ void CharSelectState::Enter()
     // Start playing background music
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->loadMusic("possibilities.wav", 1.f);
-        game->soundManager->playBackgroundMusic("possibilities.wav");
+        game->soundManager->loadMusic("ninjutsudrums.wav", 1.f);
+        game->soundManager->playBackgroundMusic("ninjutsudrums.wav");
     }
 }
 
