@@ -197,7 +197,7 @@ void JumpPunchState::Init()
     owner->canDealDamage = true;
 
     // play sound
-    SoundManager::getInstance().playSound("mk2/punchSound.mp3");
+    SoundManager::getInstance().playSound("attack.wav");
 }
 
 void JumpPunchState::Update(float deltaTime)
