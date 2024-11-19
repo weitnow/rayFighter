@@ -15,7 +15,7 @@ SoundManager::SoundManager() : currentBackgroundMusic(nullptr)
     loadSoundEffects("attack.wav", 1.0f);
     loadSoundEffects("ko.mp3");
     loadSoundEffects("bloodSplatter.mp3");
-    loadSoundEffects("scream.mp3");
+    loadSoundEffects("scream.wav");
     loadSoundEffects("laugh.mp3");
     loadSoundEffects("hitSound.wav", 1.5f);
 }

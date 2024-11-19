@@ -82,7 +82,7 @@ void MenuState::Update(float deltaTime)
 
         if (timerInMs <= 1.4f && !deadSoundPlayed)
         {
-            game->soundManager->playSound("scream.mp3");
+            game->soundManager->playSound("scream.wav");
             game->soundManager->playSound("laugh.mp3");
             deadSoundPlayed = true;
         }
