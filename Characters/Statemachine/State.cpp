@@ -197,7 +197,7 @@ void JumpPunchState::Init()
     owner->canDealDamage = true;
 
     // play sound
-    SoundManager::getInstance().playSound("attack.wav");
+    SoundManager::getInstance().playSound("attack1.wav");
 }
 
 void JumpPunchState::Update(float deltaTime)
@@ -254,7 +254,7 @@ void PunchState::Init()
     owner->canDealDamage = true;
 
     // play sound
-    SoundManager::getInstance().playSound("mk2/punchSound.mp3");
+    SoundManager::getInstance().playSound("attack1.wav");
 }
 
 void PunchState::Update(float deltaTime)
@@ -275,7 +275,7 @@ void DuckPunchState::Init()
     owner->canDealDamage = true;
 
     // play sound
-    SoundManager::getInstance().playSound("mk2/punchSound.mp3");
+    SoundManager::getInstance().playSound("attack1.wav");
 }
 
 void DuckPunchState::Update(float deltaTime)
@@ -298,7 +298,7 @@ void KickState::Init()
     owner->canDealDamage = true;
 
     // play sound
-    SoundManager::getInstance().playSound("mk2/punchSound.mp3");
+    SoundManager::getInstance().playSound("attack2.wav");
 }
 
 void KickState::Update(float deltaTime)
@@ -319,7 +319,7 @@ void DuckKickState::Init()
     owner->canDealDamage = true;
 
     // play sound
-    SoundManager::getInstance().playSound("mk2/punchSound.mp3");
+    SoundManager::getInstance().playSound("attack2.wav");
 }
 
 void DuckKickState::Update(float deltaTime)
@@ -383,7 +383,7 @@ void HitState::Init()
     owner->canDealDamage = false;
 
     // play sound
-    SoundManager::getInstance().playSound("hitSound.wav");
+    SoundManager::getInstance().playSound("hit5.wav");
 
     // set timer
     if (owner->getIsAlive())
@@ -448,7 +448,7 @@ void DeathState::Init()
     owner->canDealDamage = false;
 
     // play sound
-    SoundManager::getInstance().playSound("ko.mp3");
+    SoundManager::getInstance().playSound("death3.wav");
 
 
     // change deltaMultiplier

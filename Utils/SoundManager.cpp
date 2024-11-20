@@ -11,13 +11,14 @@ SoundManager::SoundManager() : currentBackgroundMusic(nullptr)
     _setPathToSoundEffects("Assets/Soundeffects/");
 
     // Load sound effects (only the ones that are used everywhere in the game, because the rest is loaded in the game-states for the specific states and characters)
-    loadSoundEffects("mk2/punchSound.mp3", 1.5f);
-    loadSoundEffects("attack.wav", 1.0f);
-    loadSoundEffects("ko.mp3");
-    loadSoundEffects("bloodSplatter.mp3");
-    loadSoundEffects("scream.wav");
-    loadSoundEffects("laugh.mp3");
-    loadSoundEffects("hitSound.wav", 1.5f);
+    loadSoundEffects("attack2.wav", 1.0f);
+    loadSoundEffects("attack1.wav", 1.0f);
+    loadSoundEffects("ko.wav", 1.0f);
+    loadSoundEffects("death3.wav", 1.0f);
+    loadSoundEffects("bloodSplatter.mp3", 1.0f);
+    loadSoundEffects("scream.wav", 1.5f);
+    loadSoundEffects("1bit/manlaughs.wav", 9.0f);
+    loadSoundEffects("hit5.wav", 1.5f);
 }
 
 

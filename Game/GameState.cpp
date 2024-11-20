@@ -53,7 +53,7 @@ GameState::~GameState()
 {
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->unloadMusic("birdsinthejungle.wav");
+        game->soundManager->unloadMusic("/ShortMusic/wardrums1.wav");
     }
 
     // Deleting Global Components
@@ -72,8 +72,8 @@ void GameState::Enter()
     // Start playing random background music
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->loadMusic("birdsinthejungle.wav", 0.8f);
-        game->soundManager->playBackgroundMusic("birdsinthejungle.wav");
+        game->soundManager->loadMusic("/ShortMusic/wardrums1.wav", 0.8f);
+        game->soundManager->playBackgroundMusic("/ShortMusic/wardrums1.wav");
     }
 }
 
