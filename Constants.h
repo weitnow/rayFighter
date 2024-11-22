@@ -5,7 +5,6 @@
 
 namespace Constants
 {
-const int BACKGROUND_WIDTH = 256;
 const int PLAYER_WIDTH = 32;
 
 const int RENDERTARGET_WIDTH = 256;

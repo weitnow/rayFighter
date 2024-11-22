@@ -5,7 +5,7 @@
 DEBUG ?= 1
 ENABLE_WARNINGS ?= 1
 WARNINGS_AS_ERRORS ?= 0
-OS_WINDOWS ?= 1
+OS_WINDOWS ?= 0
 
 BUILD_DIR = build
 
@@ -105,6 +105,9 @@ rebuild: clean build
 
 valgrind: build
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./$(BUILD_DIR)/$(EXECUTABLE_NAME)
+
+valgrind-definite: build
+	valgrind --leak-check=full --errors-for-leak-kinds=definite ./$(BUILD_DIR)/$(EXECUTABLE_NAME)
 
 
 runlimitedcpu:

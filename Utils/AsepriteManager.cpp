@@ -320,8 +320,8 @@ void AsepriteManager::init()
     loadAnimFile("stages"); // asepriteManager.frameTags[stage-temple]
                             // asepriteManager.textures[stage]
 
-    loadAnimFile("bgHUD");
-    //getFrameTag("bgUpperGui-Amazed").loop = false;
+    loadAnimFile("bgUpperGui");
+    getFrameTag("bgUpperGui-Amazed").loop = false;
 
     loadAnimFile("titleScreen");
     getFrameTag("titleScreen-Transition").loop = false;

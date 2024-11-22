@@ -10,6 +10,9 @@ GameState::GameState(Game* game) : BaseState(game), camPos{0}
     debugInfo = new DebugInfo(this);        // instance of DebugInfo
     inputHandler->addDebugInfo(*debugInfo); // add debugInfo to inputHandler
 
+    // Create the HUD
+    gui = new Gui(game);
+
 
     // Create Player 1 and 2
     player1 = new Fighter1(asepriteManager, Constants::PLAYER1_X, Constants::BASELINE);
@@ -22,25 +25,9 @@ GameState::GameState(Game* game) : BaseState(game), camPos{0}
     player2->addController(game->inputHandler->getPlayer2Controller());
     player2->init();
 
-    std::vector<std::string> backgrounds = {"stage-factory",
-                                            "stage-desert",
-                                            "stage-outworld",
-                                            "stage-park",
-                                            "stage-laboratory",
-                                            "stage-temple",
-                                            "stage-shaolin",
-                                            "stage-pyramid",
-                                            "stage-city",
-                                            "stage-boulevard",
-                                            "stage-jungle",
-                                            "stage-wushu",
-                                            "stage-london",
-                                            "stage-ricefield",
-                                            "stage-ring"};
 
-    //randomBackground = Utils::getRandomValueOf(backgrounds);
     randomBackground = "stages-Stage1";
-    //background = asepriteManager->getAnimFile("stage");
+
     background = asepriteManager->getAnimFile("stages");
 
 
@@ -54,7 +41,7 @@ GameState::~GameState()
 {
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->unloadMusic("/ShortMusic/wardrums1.wav");
+        game->soundManager->unloadMusic("asia.mp3");
     }
 
     // Deleting Global Components
@@ -62,6 +49,8 @@ GameState::~GameState()
 
     delete player1;
     delete player2;
+
+    delete gui;
 
     delete background; //deallocate memory on the heap
 }
@@ -73,8 +62,8 @@ void GameState::Enter()
     // Start playing random background music
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->loadMusic("/ShortMusic/wardrums1.wav", 0.8f);
-        game->soundManager->playBackgroundMusic("/ShortMusic/wardrums1.wav");
+        game->soundManager->loadMusic("asia.mp3", 0.8f);
+        game->soundManager->playBackgroundMusic("asia.mp3");
     }
 }
 
@@ -110,6 +99,9 @@ void GameState::Update(float deltaTime)
     // calculate middlePointXbetweenPlayers (needed for _updateCamera)
     middlePointXbetweenPlayers = (player1->getPos().x + player2->getPos().x + 32) / 2.f;
     _updateCamera();
+
+    // Update the HUD
+    gui->update(deltaTime);
 }
 
 void GameState::Render()
@@ -126,10 +118,8 @@ void GameState::Render()
     BeginMode2D(game->screen2DManager->camera);
 
     // draw stage
+    background->drawFrame(randomBackground, -80, 24, 1, WHITE);
 
-    //background->drawFrame(randomBackground, 0 - Constants::BACKGROUND_WIDTH + 5, 40, 1, WHITE);
-    background->drawFrame(randomBackground, 0 + -65, 40 - 17, 1, WHITE);
-    //background->drawFrame(randomBackground, 0 + Constants::BACKGROUND_WIDTH - 5, 40, 1, WHITE);
 
     // End the camera
     EndMode2D();
@@ -157,11 +147,8 @@ void GameState::Render()
     player1->draw();
     player2->draw();
 
-    // Draw a white rectangle for UpperGui
-    DrawRectangle(0, 0, 256, 40, WHITE);
-
-    // Draw the HUD
-    //hud->Draw();
+    // Draw the GUI
+    gui->draw();
 
     if (Global::debugMode)
     {

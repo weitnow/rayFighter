@@ -1,6 +1,7 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
+#include "../Gui/Gui.h"
 #include "BaseState.h"
 #include <raylib.h>
 #include <string>
@@ -22,6 +23,7 @@ protected:
     float camPos;
     AsepriteAnimationFile* background;
     std::string randomBackground;
+    Gui* gui;
 
     float middlePointXbetweenPlayers = 0.f;
 

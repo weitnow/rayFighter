@@ -250,9 +250,9 @@ void BaseCharacter::_keepOnStage()
         // keep player on screen
         this->setPos(0, this->getPos().y);
     }
-    else if (this->getPos().x > Constants::BACKGROUND_WIDTH - Constants::PLAYER_WIDTH)
+    else if (this->getPos().x > Constants::RENDERTARGET_WIDTH - Constants::PLAYER_WIDTH)
     {
         // keep player on screen
-        this->setPos(Constants::BACKGROUND_WIDTH - Constants::PLAYER_WIDTH, this->getPos().y);
+        this->setPos(Constants::RENDERTARGET_WIDTH - Constants::PLAYER_WIDTH, this->getPos().y);
     }
 }

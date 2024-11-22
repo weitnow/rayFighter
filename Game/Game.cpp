@@ -23,9 +23,14 @@ Game::Game() : quit(false)
 
 Game::~Game()
 {
+
+    std::cout << "Game Destructor called, unloading resources" << std::endl;
+
     delete screen2DManager; //deallocate memory on the heap
     delete inputHandler;    //deallocate memory on the heap
     delete asepriteManager; //deallocate memory on the heap
+
+    // soundManager is a singleton and will be deleted automatically
 }
 
 void Game::ChangeState(std::unique_ptr<BaseState> newState)

@@ -17,7 +17,7 @@ MenuState::~MenuState()
 
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->unloadMusic("shaolin.wav");
+        game->soundManager->unloadMusic("shaolin.mp3");
     }
 }
 
@@ -28,8 +28,8 @@ void MenuState::Enter()
     // Start playing background music
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->loadMusic("shaolin.wav", 1.f);
-        game->soundManager->playBackgroundMusic("shaolin.wav");
+        game->soundManager->loadMusic("shaolin.mp3", 1.f);
+        game->soundManager->playBackgroundMusic("shaolin.mp3");
     }
     selectedOption = MenuOptions::PLAY;
 

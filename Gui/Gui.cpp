@@ -1,1 +1,68 @@
 #include "Gui.h"
+#include "../Game/Game.h"
+
+Gui::Gui(Game* game)
+{
+    lifebar1 =
+        new Lifebar(Vector2{22, 26}, 5, 100, 3, Constants::RAYFIGHTER_ROSA, Constants::RAYFIGHTER_DARKBROWN, "Andy", 1);
+    lifebar2 = new Lifebar(Vector2{132, 26},
+                           5,
+                           100,
+                           3,
+                           Constants::RAYFIGHTER_ROSA,
+                           Constants::RAYFIGHTER_DARKBROWN,
+                           "Zangief",
+                           2);
+
+    this->game = game;
+
+
+    //Load the bgUpperGui animation
+    bgUpperGui = game->asepriteManager->getAnimFile("bgUpperGui");
+    bgUpperGui->setFrameTag("bgUpperGui-Idle");
+}
+
+Gui::~Gui()
+{
+    // Clean up resources if necessary
+    delete lifebar1;
+    delete lifebar2;
+    lifebar1 = nullptr;
+    lifebar2 = nullptr;
+
+    delete bgUpperGui;
+}
+
+void Gui::draw()
+{
+    // Draw a white rectangle for UpperGui
+    DrawRectangle(0, 0, 256, 40, WHITE);
+
+    // Draw the lifebars
+    lifebar1->Draw();
+    lifebar2->Draw();
+
+    // Draw the bgUpperGui
+    bgUpperGui->drawCurrentSelectedTag(0, 0, 1, WHITE);
+
+    DrawText("99", 122, 11, 8, Constants::RAYFIGHTER_DARKBROWN);
+
+    // Draw a white rectangle for LowerGui
+    DrawRectangle(0, 136, 256, 8, WHITE);
+}
+
+void Gui::update(float deltaTime)
+{
+    // Update the bgUpperGui
+    bgUpperGui->update(deltaTime);
+}
+
+void Gui::setLife1(int life)
+{
+    lifebar1->Update(life);
+}
+
+void Gui::setLife2(int life)
+{
+    lifebar2->Update(life);
+}

@@ -11,10 +11,16 @@ CharSelectState::CharSelectState(Game* game) : BaseState(game), CharSelectScreen
 
 CharSelectState::~CharSelectState()
 {
+
+    std::cout << "CharSelectState Destructor called, unloading resources" << std::endl;
+
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->unloadMusic("ninjutsudrums.wav");
+        game->soundManager->unloadMusic("choices.mp3");
     }
+
+
+    delete CharSelectScreen;
 }
 
 void CharSelectState::Enter()
@@ -24,8 +30,8 @@ void CharSelectState::Enter()
     // Start playing background music
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->loadMusic("ninjutsudrums.wav", 1.f);
-        game->soundManager->playBackgroundMusic("ninjutsudrums.wav");
+        game->soundManager->loadMusic("choices.mp3", 1.f);
+        game->soundManager->playBackgroundMusic("choices.mp3");
     }
 }
 

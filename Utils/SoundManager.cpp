@@ -10,14 +10,17 @@ SoundManager::SoundManager() : currentBackgroundMusic(nullptr)
     _setPahToMusic("Assets/Music/");
     _setPathToSoundEffects("Assets/Soundeffects/");
 
+    // Todo: move stuff from here in the gamestates
     // Load sound effects (only the ones that are used everywhere in the game, because the rest is loaded in the game-states for the specific states and characters)
+
+
     loadSoundEffects("attack2.wav", 1.0f);
     loadSoundEffects("attack1.wav", 1.0f);
     loadSoundEffects("ko.wav", 1.0f);
     loadSoundEffects("death3.wav", 1.0f);
-    loadSoundEffects("bloodSplatter.mp3", 1.0f);
-    loadSoundEffects("scream.wav", 1.5f);
-    loadSoundEffects("1bit/manlaughs.wav", 9.0f);
+    loadSoundEffects("bloodSplatter.mp3", 1.0f);  //not used everywhere, but in the menu
+    loadSoundEffects("scream.wav", 1.5f);         //not used everywhere, but in the menu
+    loadSoundEffects("1bit/manlaughs.wav", 9.0f); //not used everywhere, but in the menu
     loadSoundEffects("hit5.wav", 1.5f);
 }
 
@@ -55,14 +58,14 @@ void SoundManager::updateBackgroundMusic()
 
 void SoundManager::loadMusic(const std::string& filename, const float volume)
 {
-    // check if music is already in the dictionary
+    // Check if music is already in the dictionary
     if (backgroundMusicDict.find(filename) != backgroundMusicDict.end())
     {
         std::cerr << "Music: " << filename << " is already loaded!" << std::endl;
         return;
     }
 
-    // check if musicpath is set
+    // Check if musicPath is set
     if (musicPath.empty())
     {
         std::cerr << "Music path is not set!" << std::endl;
@@ -72,17 +75,17 @@ void SoundManager::loadMusic(const std::string& filename, const float volume)
     // Load the music from the specified path
     Music music = LoadMusicStream((musicPath + filename).c_str());
 
-    // set Volume
+    // Set volume
     SetMusicVolume(music, volume);
 
-    // check if music was loaded
+    // Check if music was loaded successfully
     if (music.stream.buffer == nullptr)
     {
         std::cerr << "Failed to load music: " << filename << std::endl;
         return;
     }
 
-    // add it to the dictionary
+    // Add it to the dictionary
     backgroundMusicDict[filename] = music;
 }
 
@@ -113,6 +116,8 @@ void SoundManager::unloadAllMusic()
     {
         UnloadMusicStream(music.second);
     }
+
+    backgroundMusicDict.clear();
 }
 
 void SoundManager::playBackgroundMusic(const std::string& filename)
@@ -141,6 +146,7 @@ void SoundManager::stopBackgroundMusic()
     if (currentBackgroundMusic)
     {
         StopMusicStream(*currentBackgroundMusic);
+
         currentBackgroundMusic = nullptr; // Reset the current music pointer
     }
 }
