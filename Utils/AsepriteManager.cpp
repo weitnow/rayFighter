@@ -317,8 +317,8 @@ void AsepriteManager::init()
     loadAnimFile("barrel"); // asepriteManager.frameTags[barrel]
                             // asepriteManager.textures[barrel]
 
-    loadAnimFile("stage"); // asepriteManager.frameTags[stage-temple]
-                           // asepriteManager.textures[stage]
+    loadAnimFile("stages"); // asepriteManager.frameTags[stage-temple]
+                            // asepriteManager.textures[stage]
 
     loadAnimFile("bgHUD");
     //getFrameTag("bgUpperGui-Amazed").loop = false;

@@ -38,9 +38,10 @@ GameState::GameState(Game* game) : BaseState(game), camPos{0}
                                             "stage-ricefield",
                                             "stage-ring"};
 
-    randomBackground = Utils::getRandomValueOf(backgrounds);
-
-    background = asepriteManager->getAnimFile("stage");
+    //randomBackground = Utils::getRandomValueOf(backgrounds);
+    randomBackground = "stages-Stage1";
+    //background = asepriteManager->getAnimFile("stage");
+    background = asepriteManager->getAnimFile("stages");
 
 
     if (player1 == nullptr || player2 == nullptr)
@@ -104,56 +105,31 @@ void GameState::Update(float deltaTime)
 
     _checkCollisionsBetweenPlayers();
 
-    // calculate middlePointXbetweenPlayers
-    middlePointXbetweenPlayers = (player1->getPos().x + player2->getPos().x + 32) / 2.f;
-
     game->soundManager->updateBackgroundMusic(); // Update Music}
+
+    // calculate middlePointXbetweenPlayers (needed for _updateCamera)
+    middlePointXbetweenPlayers = (player1->getPos().x + player2->getPos().x + 32) / 2.f;
+    _updateCamera();
 }
 
 void GameState::Render()
 {
-
     //----------------------------------------------------------------------------------
     // Draw to RenderTexture
     //----------------------------------------------------------------------------------
     // BeginTextureMode(target);
     game->screen2DManager->beginDrawToRenderTarget();
 
-    ClearBackground(RAYWHITE);
-
-
-    if (middlePointXbetweenPlayers < 105.f)
-    {
-        camPos = camPos - 50 * game->deltaTime;
-        player1->setCamVector(Vector2{50.f, 0.f});
-        player2->setCamVector(Vector2{50.f, 0.f});
-    }
-    else if (middlePointXbetweenPlayers > 152.f)
-    {
-        // move background to the left
-        camPos = camPos + 50 * game->deltaTime;
-        player1->setCamVector(Vector2{-50.f, 0.f});
-        player2->setCamVector(Vector2{-50.f, 0.f});
-    }
-    else
-    {
-        // don't move anything
-        player1->resetCamVector();
-        player2->resetCamVector();
-    }
-
-    game->screen2DManager->camera.target.x = camPos;
-
+    ClearBackground(WHITE);
 
     // Begin the camera
     BeginMode2D(game->screen2DManager->camera);
 
     // draw stage
-    float stage_scale = 1.f;
 
-    background->drawFrame(randomBackground, 0 - Constants::BACKGROUND_WIDTH, 40, stage_scale, WHITE);
-    background->drawFrame(randomBackground, 0, 40, stage_scale, WHITE);
-    background->drawFrame(randomBackground, 0 + Constants::BACKGROUND_WIDTH, 40, stage_scale, WHITE);
+    //background->drawFrame(randomBackground, 0 - Constants::BACKGROUND_WIDTH + 5, 40, 1, WHITE);
+    background->drawFrame(randomBackground, 0 + -65, 40 - 17, 1, WHITE);
+    //background->drawFrame(randomBackground, 0 + Constants::BACKGROUND_WIDTH - 5, 40, 1, WHITE);
 
     // End the camera
     EndMode2D();
@@ -305,4 +281,29 @@ void GameState::_checkHitsBetweenPlayers()
             }
         }
     }
+}
+
+void GameState::_updateCamera()
+{
+    if (middlePointXbetweenPlayers < 105.f)
+    {
+        camPos = camPos - 50 * game->deltaTime;
+        player1->setCamVector(Vector2{50.f, 0.f});
+        player2->setCamVector(Vector2{50.f, 0.f});
+    }
+    else if (middlePointXbetweenPlayers > 152.f)
+    {
+        // move background to the left
+        camPos = camPos + 50 * game->deltaTime;
+        player1->setCamVector(Vector2{-50.f, 0.f});
+        player2->setCamVector(Vector2{-50.f, 0.f});
+    }
+    else
+    {
+        // don't move anything
+        player1->resetCamVector();
+        player2->resetCamVector();
+    }
+
+    game->screen2DManager->camera.target.x = camPos;
 }

@@ -28,6 +28,7 @@ protected:
     void _updateIsLeftPlayer1and2();
     void _checkCollisionsBetweenPlayers();
     void _checkHitsBetweenPlayers();
+    void _updateCamera(); // scrools the background
 };
 
 #endif
