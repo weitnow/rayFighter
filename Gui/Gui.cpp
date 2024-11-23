@@ -1,7 +1,7 @@
 #include "Gui.h"
 #include "../Game/Game.h"
 
-Gui::Gui(Game* game)
+Gui::Gui(Game* game) : game(game)
 {
     lifebar1 =
         new Lifebar(Vector2{22, 26}, 5, 100, 3, Constants::RAYFIGHTER_ROSA, Constants::RAYFIGHTER_DARKBROWN, "Andy", 1);
@@ -14,12 +14,14 @@ Gui::Gui(Game* game)
                            "Zangief",
                            2);
 
-    this->game = game;
-
 
     //Load the bgUpperGui animation
     bgUpperGui = game->asepriteManager->getAnimFile("bgUpperGui");
     bgUpperGui->setFrameTag("bgUpperGui-Idle");
+
+    //Load the bgLowerGui animation
+    bgLowerGui = game->asepriteManager->getAnimFile("bgLowerGui");
+    bgLowerGui->setFrameTag("bgLowerGui-Idle");
 }
 
 Gui::~Gui()
@@ -31,6 +33,7 @@ Gui::~Gui()
     lifebar2 = nullptr;
 
     delete bgUpperGui;
+    delete bgLowerGui;
 }
 
 void Gui::draw()
@@ -49,6 +52,9 @@ void Gui::draw()
 
     // Draw a white rectangle for LowerGui
     DrawRectangle(0, 136, 256, 8, WHITE);
+
+    // Draw the bgLowerGui
+    bgLowerGui->drawCurrentSelectedTag(0, 136, 1, WHITE);
 }
 
 void Gui::update(float deltaTime)

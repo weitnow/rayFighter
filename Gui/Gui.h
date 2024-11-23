@@ -21,6 +21,7 @@ private:
     Lifebar* lifebar2;
 
     AsepriteAnimationFile* bgUpperGui;
+    AsepriteAnimationFile* bgLowerGui;
     Game* game;
 };
 

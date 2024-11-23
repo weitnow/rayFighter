@@ -327,6 +327,8 @@ void AsepriteManager::init()
     getFrameTag("titleScreen-Transition").loop = false;
 
     loadAnimFile("charSelectScreen");
+
+    loadAnimFile("bgLowerGui");
 }
 
 nlohmann::json* AsepriteManager::loadJsonFile(const std::string& filename)
