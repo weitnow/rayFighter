@@ -10,6 +10,10 @@ const int PLAYER_PIXELSIZE = 32;
 const int RENDERTARGET_WIDTH = 256;
 const int RENDERTARGET_HEIGHT = 144;
 
+const int STAGE_WIDTH = 416 - 64; // = Stage is 416 pixel wide, but the camera is 64 pixel to the left,
+                                  // 416 - 64 = 352 where 32 pixel are the player
+const int STAGE_OFFSET = -64;
+
 const int BASELINE = 102; //ground level where the player stands
 
 const bool BACKGROUND_MUSIC = false;
@@ -20,8 +24,8 @@ const float INVINCIBLE_TIME = 1.0f; // time in seconds objects are invincible af
 
 const int FPS = 60;
 
-const int PLAYER1_X = 80;
-const int PLAYER2_X = 120;
+const int PLAYER1_X = 64 + 16;
+const int PLAYER2_X = 192 - 16;
 
 const Color GAMEOBJ_COLOR = YELLOW;  // used to specify the color of the debug rectangle
 const Vector2 GAMEOBJ_SIZE = {3, 3}; // used specify the size of the debug rectangle
@@ -44,6 +48,8 @@ namespace Global
 extern float gravity;
 extern float pushReduction;
 
+
+// Debug Variables
 extern bool debugMode;
 extern bool debugWindow;
 extern bool debugSpriteBorder;

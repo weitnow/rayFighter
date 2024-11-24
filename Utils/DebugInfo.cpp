@@ -12,8 +12,11 @@ constexpr Color TEXT_COLOR = BLACK;
 
 DebugInfo::DebugInfo(BaseState* baseState)
     : rectWidth(RECT_WIDTH), rectHeight(RECT_HEIGHT), rectX(RECT_X), rectY(RECT_Y), rectColor(RECT_COLOR),
-      player1InGameObjects(false), baseState{baseState}, player1{baseState->player1}, player2{baseState->player2}
+      player1InGameObjects(false), baseState{baseState}, gameState{nullptr}, player1{baseState->player1},
+      player2{baseState->player2}
 {
+    // try to cast the baseState to a gameState
+    gameState = dynamic_cast<GameState*>(baseState);
 }
 
 DebugInfo::~DebugInfo()
@@ -168,16 +171,19 @@ void DebugInfo::_drawGameObjectData(BaseGameObject* gameObject, const std::strin
 void DebugInfo::draw()
 {
     /* #region DRAW UPPER DEBUG_WINDOW WINDOW*/
+
     // Draw rectangle and FPS
     DrawRectangle(rectX, rectY, rectWidth, rectHeight, rectColor);
     DrawFPS(rectX + 10, rectY + 10);
 
     // Draw Player1 data if available
-
     drawGameObjectData(player1, "Player1", rectX + 10, rectY + 50);
 
+    // Draw Player2 data if available
+    drawGameObjectData(player2, "Player2", rectX + 600, rectY + 50);
 
     /* #endregion*/
+
 
     /* #region DRAW RIGHT DEBUG_WINDOW WINDOW*/
     int windowX = 1545;
@@ -218,6 +224,13 @@ void DebugInfo::draw()
     DrawText(("P2 is flipped: " + std::to_string(player2->getIsFlippedX())).c_str(),
              windowX + 10,
              windowY + 110,
+             TEXT_SIZE,
+             TEXT_COLOR);
+
+    Vector2 middlePoint = gameState->getMiddlePointBetweenPlayers();
+    DrawText(("MiddlePoint: " + std::to_string(middlePoint.x) + ", " + std::to_string(middlePoint.y)).c_str(),
+             windowX + 10,
+             windowY + 130,
              TEXT_SIZE,
              TEXT_COLOR);
 

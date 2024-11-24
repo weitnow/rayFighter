@@ -7,7 +7,7 @@ BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager)
       isActive(true), isAlive(true), isInvincible(false), life(Constants::DEFAULT_LIFE), _invincibleCounter(0.f),
       invincibleTime(Constants::INVINCIBLE_TIME), affectedByGravity(true), moveVector({0, 0}),
       getDurationCurrentFrame(0), currentFrame(0), minFrame(0), maxFrame(0), hasAnimJustFinished(false),
-      currentFrameTag(""), currentFrameAbsolut(0), camVector{0, 0}, spriteOffsetX(0), spriteOffsetY(0)
+      currentFrameTag(""), currentFrameAbsolut(0), spriteOffsetX(0), spriteOffsetY(0)
 {
 
     this->asepriteManagerPtr = asepriteManager;
@@ -39,10 +39,6 @@ void BaseGameObject::update(float deltaTime)
     {
         // TODO: Implement scale function
     }
-
-    // update the position, if affectedByGravity camVector.y will be applied in _applyGravity
-    //this->setPos(this->getPos().x + (moveVector.x + pushVector.x + camVector.x) * deltaTime,
-    //             this->getPos().y + (moveVector.y + pushVector.y + (affectedByGravity ? 0 : camVector.y)) * deltaTime);
 
     this->setPos(this->getPos().x + (moveVector.x + pushVector.x) * deltaTime,
                  this->getPos().y + (moveVector.y + pushVector.y) * deltaTime);
@@ -386,21 +382,6 @@ void BaseGameObject::resetPushVector()
 void BaseGameObject::setMoveVectorY(int yValue)
 {
     moveVector.y = yValue;
-}
-
-void BaseGameObject::setCamVector(Vector2 camVector)
-{
-    this->camVector = camVector;
-}
-
-Vector2 BaseGameObject::getCamVector()
-{
-    return camVector;
-}
-
-void BaseGameObject::resetCamVector()
-{
-    camVector = {0, 0};
 }
 
 void BaseGameObject::_reducePushVector(float deltaTime)

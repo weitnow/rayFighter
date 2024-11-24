@@ -4,8 +4,10 @@
 #include "../Characters/BaseCharacter.h"
 #include "../Characters/Statemachine/Statemachine.h"
 #include "../Game/BaseState.h"
+#include "../Game/GameState.h"
 #include "../GameObjects/BaseGameObject.h"
 #include <string>
+
 
 class DebugInfo
 {
@@ -21,6 +23,7 @@ public:
 private:
     std::string currentGameObjectName;
     BaseState* baseState;
+    GameState* gameState;
     BaseCharacter* player1;
     BaseCharacter* player2;
     int rectWidth;

@@ -63,11 +63,6 @@ public:
     //moveVector
     virtual void setMoveVectorY(int yValue);
 
-    //camVector
-    void setCamVector(Vector2 camVector);
-    Vector2 getCamVector();
-    void resetCamVector();
-
     //gravity
     void setAffectedByGravity(bool affectedByGravity);
 
@@ -101,7 +96,6 @@ protected:
     Vector2 pos;        // calculated in the update method
     Vector2 moveVector; // (x,y) used to walk and jump
     Vector2 pushVector; // (x,y) used by setPushVector and reduced by _reducePushVector in update methode
-    Vector2 camVector;  // (x,y) used by camera if background is scrolled to move baseGameObj with it
     float scale;
     Color color;
     bool isFlippedX;

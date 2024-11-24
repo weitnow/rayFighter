@@ -25,7 +25,6 @@ void BaseCharacter::update(float deltaTime)
         // TODO: Implement scale function
     }
 
-
     // UPDATE THE POSITION
     this->setPos(this->getPos().x + (moveVector.x + pushVector.x) * deltaTime,
                  this->getPos().y + (moveVector.y + pushVector.y) * deltaTime);
@@ -45,7 +44,7 @@ void BaseCharacter::update(float deltaTime)
     statemachine->update(deltaTime);
 
     // KEEP THE CHARACTER ON THE STAGE
-    _keepOnStage();
+    // _keepOnStage();
 
     // UPDATE COLLISION BOXES
     _updateCollisionBoxes(deltaTime);
@@ -245,14 +244,14 @@ void BaseCharacter::_keepOnStage()
 {
     // KEEP THE CHARACTER IN THE WINDOW
     // check if the character is out of bounds
-    if (this->getPos().x < 0)
+    if (this->getPos().x < Constants::STAGE_OFFSET)
     {
         // keep player on screen
-        this->setPos(0, this->getPos().y);
+        this->setPos(Constants::STAGE_OFFSET, this->getPos().y);
     }
-    else if (this->getPos().x > Constants::RENDERTARGET_WIDTH - Constants::PLAYER_PIXELSIZE)
+    else if (this->getPos().x > Constants::STAGE_WIDTH - Constants::PLAYER_PIXELSIZE)
     {
         // keep player on screen
-        this->setPos(Constants::RENDERTARGET_WIDTH - Constants::PLAYER_PIXELSIZE, this->getPos().y);
+        this->setPos(Constants::STAGE_WIDTH - Constants::PLAYER_PIXELSIZE, this->getPos().y);
     }
 }

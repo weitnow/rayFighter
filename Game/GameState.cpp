@@ -6,7 +6,7 @@
 #include "Game.h"
 
 
-GameState::GameState(Game* game) : BaseState(game), camPos{0}
+GameState::GameState(Game* game) : BaseState(game)
 {
     debugInfo = new DebugInfo(this);        // instance of DebugInfo
     inputHandler->addDebugInfo(*debugInfo); // add debugInfo to inputHandler
@@ -90,8 +90,8 @@ void GameState::Update(float deltaTime)
     }
 
     // Update players
-    player1->update(deltaTime);
-    player2->update(deltaTime);
+    player1->update(deltaTime); // _keepOnStage() is called in player update
+    player2->update(deltaTime); // _keepOnStage() is called in player update
 
     _checkCollisionsBetweenPlayers();
 
@@ -99,7 +99,9 @@ void GameState::Update(float deltaTime)
 
     _updateMiddlePointBetweenPlayers(); // (needs to be done befor _updateCamera)
 
-    _updateCamera();
+    _updateCamera(true); //true = camera has restrictions turned on
+
+    _keepPlayersOnStage(); // Keep the players on the stage
 
     // Update the HUD
     gui->update(deltaTime);
@@ -119,7 +121,7 @@ void GameState::Render()
     BeginMode2D(game->screen2DManager->camera);
 
     // draw stage
-    background->drawFrame(randomBackground, -80 + BackgroundOffsetX, 24 + BackgroundOffsetY, 1, WHITE);
+    background->drawFrame(randomBackground, Constants::STAGE_OFFSET, 24, 1, WHITE);
 
 
     // draw gameObjects (player1 and player2 included)
@@ -149,8 +151,13 @@ void GameState::Render()
     {
         // Draw the middlePointXbetweenPlayers
         DrawLine(middlePointXbetweenPlayers, 0, middlePointXbetweenPlayers, 300, RED);
+
         // Draw the middlePointYbetweenPlayers
-        DrawLine(0, middlePointYbetweenPlayers, 256, middlePointYbetweenPlayers, RED);
+        DrawLine(Constants::STAGE_OFFSET,
+                 middlePointYbetweenPlayers,
+                 Constants::STAGE_WIDTH,
+                 middlePointYbetweenPlayers,
+                 RED);
     }
 
     // End the camera
@@ -185,6 +192,11 @@ void GameState::Render()
 
 void GameState::Exit()
 {
+}
+
+Vector2 GameState::getMiddlePointBetweenPlayers() const
+{
+    return Vector2{static_cast<float>(middlePointXbetweenPlayers), static_cast<float>(middlePointYbetweenPlayers)};
 }
 
 
@@ -275,19 +287,69 @@ void GameState::_checkHitsBetweenPlayers()
     }
 }
 
-void GameState::_updateCamera()
+void GameState::_keepPlayersOnStage()
 {
-    // update x position of the camera
-    game->screen2DManager->camera.target.x = middlePointXbetweenPlayers - (Constants::RENDERTARGET_WIDTH / 2);
 
-    // update y position of the camera
-    int cameraY = 0 - (28 - middlePointYbetweenPlayers / 4);
+    std::cout << "Player1: " << player1->getPos().x << std::endl;
+    std::cout << "CameraX: " << cameraX << std::endl;
 
-    // ensures that the camera doenst go to high in Y direction
-    if (cameraY < -7)
+
+    // KEEP THE CHARACTER ON THE STAGE (only X Direction)
+    // check if the character is out of bounds
+    if (player1->getPos().x < Constants::STAGE_OFFSET)
     {
-        cameraY = -7;
+        // keep player on screen
+        player1->setPos(Constants::STAGE_OFFSET, player1->getPos().y);
+    }
+    else if (player1->getPos().x > Constants::STAGE_WIDTH - Constants::PLAYER_PIXELSIZE)
+    {
+        // keep player on screen
+        player1->setPos(Constants::STAGE_WIDTH - Constants::PLAYER_PIXELSIZE, player1->getPos().y);
     }
 
+    // check if the character is out of bounds
+    if (player2->getPos().x < Constants::STAGE_OFFSET)
+    {
+        // keep player on screen
+        player2->setPos(Constants::STAGE_OFFSET, player2->getPos().y);
+    }
+    else if (player2->getPos().x > Constants::STAGE_WIDTH - Constants::PLAYER_PIXELSIZE)
+    {
+        // keep player on screen
+        player2->setPos(Constants::STAGE_WIDTH - Constants::PLAYER_PIXELSIZE, player2->getPos().y);
+    }
+}
+
+void GameState::_updateCamera(bool restriction)
+{
+    cameraX = middlePointXbetweenPlayers - (Constants::RENDERTARGET_WIDTH / 2);
+
+    // calculate y position of the camera
+    cameraY = 0 - (28 - middlePointYbetweenPlayers / 4);
+
+    // ensures that the camera doenst go to high in Y direction
+    if (restriction)
+    {
+        // make sure the camera doesn't go too high if players are jumping
+        if (cameraY < -7)
+        {
+            cameraY = -7;
+        }
+
+        // restrict the camera to the stage
+        if (cameraX < Constants::STAGE_OFFSET)
+        {
+            cameraX = Constants::STAGE_OFFSET;
+        }
+        else if (cameraX > 96)
+        {
+            cameraX = 96;
+        }
+    }
+
+    // update y position of the camera
     game->screen2DManager->camera.target.y = cameraY;
+
+    // update x position of the camera
+    game->screen2DManager->camera.target.x = cameraX;
 }

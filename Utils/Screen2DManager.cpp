@@ -168,8 +168,17 @@ void Screen2DManager::setRenderResolution(RenderResolution resolution)
         resolutionHeight = 1440;
     }
 
-    offsetX = (screenWidth - resolutionWidth) / 2;
-    offsetY = (screenHeight - resolutionHeight) / 2;
+    if (Global::debugMode)
+    {
+        offsetX = 10;
+        offsetY = 410;
+    }
+    else
+    {
+        offsetX = (screenWidth - resolutionWidth) / 2;
+        offsetY = (screenHeight - resolutionHeight) / 2;
+    }
+
 
     destRec = {static_cast<float>(offsetX),
                static_cast<float>(offsetY),
