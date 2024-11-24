@@ -25,16 +25,16 @@ protected:
     std::string randomBackground;
     Gui* gui;
 
-    float middlePointXbetweenPlayers = 0.f;
-    float middlePointYbetweenPlayers = 0.f;
+    int middlePointXbetweenPlayers = 0;
+    int middlePointYbetweenPlayers = 0;
     int BackgroundOffsetX = 0;
     int BackgroundOffsetY = 0;
 
+    void _updateMiddlePointBetweenPlayers();
     void _updateIsLeftPlayer1and2();
     void _checkCollisionsBetweenPlayers();
     void _checkHitsBetweenPlayers();
-    void _updateCamera();     // scrools the background
-    void _updateBackground(); // scrolls background in Y direction
+    void _updateCamera();
 };
 
 #endif

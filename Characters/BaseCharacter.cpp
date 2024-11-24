@@ -27,8 +27,8 @@ void BaseCharacter::update(float deltaTime)
 
 
     // UPDATE THE POSITION
-    this->setPos(this->getPos().x + (moveVector.x + pushVector.x + camVector.x) * deltaTime,
-                 this->getPos().y + (moveVector.y + pushVector.y + camVector.y) * deltaTime);
+    this->setPos(this->getPos().x + (moveVector.x + pushVector.x) * deltaTime,
+                 this->getPos().y + (moveVector.y + pushVector.y) * deltaTime);
 
 
     // REDUCE PUSH VECTOR
@@ -250,9 +250,9 @@ void BaseCharacter::_keepOnStage()
         // keep player on screen
         this->setPos(0, this->getPos().y);
     }
-    else if (this->getPos().x > Constants::RENDERTARGET_WIDTH - Constants::PLAYER_WIDTH)
+    else if (this->getPos().x > Constants::RENDERTARGET_WIDTH - Constants::PLAYER_PIXELSIZE)
     {
         // keep player on screen
-        this->setPos(Constants::RENDERTARGET_WIDTH - Constants::PLAYER_WIDTH, this->getPos().y);
+        this->setPos(Constants::RENDERTARGET_WIDTH - Constants::PLAYER_PIXELSIZE, this->getPos().y);
     }
 }

@@ -97,14 +97,9 @@ void GameState::Update(float deltaTime)
 
     game->soundManager->updateBackgroundMusic(); // Update Music}
 
-    // calculate middlePointXbetweenPlayers (needed for _updateCamera)
-    middlePointXbetweenPlayers = (player1->getPos().x + player2->getPos().x + 32) / 2.f;
-
-    // calculate middlePointYbetweenPlayers (NOT needed for _updateCamera)
-    middlePointYbetweenPlayers = (player1->getPos().y + player2->getPos().y) / 2.f;
+    _updateMiddlePointBetweenPlayers(); // (needs to be done befor _updateCamera)
 
     _updateCamera();
-    _updateBackground();
 
     // Update the HUD
     gui->update(deltaTime);
@@ -126,9 +121,6 @@ void GameState::Render()
     // draw stage
     background->drawFrame(randomBackground, -80 + BackgroundOffsetX, 24 + BackgroundOffsetY, 1, WHITE);
 
-
-    // End the camera
-    EndMode2D();
 
     // draw gameObjects (player1 and player2 included)
     // Draw all gameObjects
@@ -153,9 +145,6 @@ void GameState::Render()
     player1->draw();
     player2->draw();
 
-    // Draw the GUI
-    gui->draw();
-
     if (Global::debugMode)
     {
         // Draw the middlePointXbetweenPlayers
@@ -163,6 +152,12 @@ void GameState::Render()
         // Draw the middlePointYbetweenPlayers
         DrawLine(0, middlePointYbetweenPlayers, 256, middlePointYbetweenPlayers, RED);
     }
+
+    // End the camera
+    EndMode2D();
+
+    // Draw the GUI
+    gui->draw();
 
 
     game->screen2DManager->endDrawToRenderTarget();
@@ -192,6 +187,12 @@ void GameState::Exit()
 {
 }
 
+
+void GameState::_updateMiddlePointBetweenPlayers()
+{
+    middlePointXbetweenPlayers = (player1->getPos().x + player2->getPos().x + 32) / 2.f;
+    middlePointYbetweenPlayers = (player1->getPos().y + player2->getPos().y) / 2.f + Constants::PLAYER_PIXELSIZE / 2;
+}
 
 void GameState::_updateIsLeftPlayer1and2()
 {
@@ -254,8 +255,6 @@ void GameState::_checkHitsBetweenPlayers()
                 }
 
                 player1->canDealDamage = false;
-
-                SoundManager::getInstance().playSound("mk2/punchSound.mp3");
             }
         }
     }
@@ -271,8 +270,6 @@ void GameState::_checkHitsBetweenPlayers()
                 // Handle hit (you can define specific hit logic here)
                 player1->takeDamage(1, &hitbox);
                 player2->canDealDamage = false;
-
-                SoundManager::getInstance().playSound("mk2/punchSound.mp3");
             }
         }
     }
@@ -280,39 +277,17 @@ void GameState::_checkHitsBetweenPlayers()
 
 void GameState::_updateCamera()
 {
-    if (middlePointXbetweenPlayers < 105.f)
+    // update x position of the camera
+    game->screen2DManager->camera.target.x = middlePointXbetweenPlayers - (Constants::RENDERTARGET_WIDTH / 2);
+
+    // update y position of the camera
+    int cameraY = 0 - (28 - middlePointYbetweenPlayers / 4);
+
+    // ensures that the camera doenst go to high in Y direction
+    if (cameraY < -7)
     {
-        camPos = camPos - 50 * game->deltaTime;
-        player1->setCamVector(Vector2{50.f, 0.f});
-        player2->setCamVector(Vector2{50.f, 0.f});
-    }
-    else if (middlePointXbetweenPlayers > 152.f)
-    {
-        // move background to the left
-        camPos = camPos + 50 * game->deltaTime;
-        player1->setCamVector(Vector2{-50.f, 0.f});
-        player2->setCamVector(Vector2{-50.f, 0.f});
-    }
-    else
-    {
-        // don't move anything
-        player1->resetCamVector();
-        player2->resetCamVector();
+        cameraY = -7;
     }
 
-    game->screen2DManager->camera.target.x = camPos;
-}
-
-void GameState::_updateBackground()
-{
-
-    // scroll background in Y direction
-
-    //Baseline is 102 = BackgroundOffsetY is 0 (neutral)
-    //everything less must be negative
-    //everything more must be positive
-
-    BackgroundOffsetY = (102 - middlePointYbetweenPlayers) * 0.2f;
-
-    std::cout << "BackgroundOffsetY: " << BackgroundOffsetY << std::endl;
+    game->screen2DManager->camera.target.y = cameraY;
 }

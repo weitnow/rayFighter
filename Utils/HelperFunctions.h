@@ -2,9 +2,10 @@
 #define GBFIGHTER_HELPERFUNCTIONS_H
 
 #include "../GameObjects/BaseGameObject.h"
-#include <cmath>   // For std::sqrt
-#include <cstdlib> // for std::rand and std::srand
-#include <ctime>   // for std::time
+#include <algorithm> // for std::abs and std::min and std::max and clamp
+#include <cmath>     // For std::sqrt
+#include <cstdlib>   // for std::rand and std::srand
+#include <ctime>     // for std::time
 #include <vector>
 
 namespace Utils

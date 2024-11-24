@@ -41,11 +41,13 @@ void BaseGameObject::update(float deltaTime)
     }
 
     // update the position, if affectedByGravity camVector.y will be applied in _applyGravity
-    this->setPos(this->getPos().x + (moveVector.x + pushVector.x + camVector.x) * deltaTime,
-                 this->getPos().y + (moveVector.y + pushVector.y + (affectedByGravity ? 0 : camVector.y)) * deltaTime);
+    //this->setPos(this->getPos().x + (moveVector.x + pushVector.x + camVector.x) * deltaTime,
+    //             this->getPos().y + (moveVector.y + pushVector.y + (affectedByGravity ? 0 : camVector.y)) * deltaTime);
+
+    this->setPos(this->getPos().x + (moveVector.x + pushVector.x) * deltaTime,
+                 this->getPos().y + (moveVector.y + pushVector.y) * deltaTime);
 
 
-    //Todo: implement camVector.y here and also in the baseCharacter.cpp
     // apply gravity
     if (affectedByGravity)
     {
