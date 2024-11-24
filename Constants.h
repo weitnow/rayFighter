@@ -12,7 +12,7 @@ const int RENDERTARGET_HEIGHT = 144;
 
 const int BASELINE = 102; //ground level where the player stands
 
-const bool BACKGROUND_MUSIC = true;
+const bool BACKGROUND_MUSIC = false;
 
 const int DEFAULT_LIFE = 3;
 
@@ -28,10 +28,13 @@ const Vector2 GAMEOBJ_SIZE = {3, 3}; // used specify the size of the debug recta
 
 
 //RayFighter Colors
+const Color RAYFIGHTER_BLACK = {0, 0, 0, 255};
 const Color RAYFIGHTER_DARKBROWN = {56, 24, 8, 255};
 const Color RAYFIGHTER_LIGHTBROWN = {152, 88, 56, 255};
 const Color RAYFIGHTER_ROSA = {208, 144, 120, 255};
 const Color RAYFIGHTER_WHITE = {248, 248, 248, 255};
+const Color RAYFIGHTER_LIGHTROSA = {209, 191, 184, 255};
+
 
 } // namespace Constants
 

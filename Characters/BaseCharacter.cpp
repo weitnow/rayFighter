@@ -228,13 +228,13 @@ Statemachine& BaseCharacter::getStatemachine()
 void BaseCharacter::_applyGravity(float deltaTime)
 {
     //if character is on the ground, stop falling
-    if (this->getPos().y > Constants::BASELINE || isOnGround)
+    if (this->getPos().y > Constants::BASELINE - 5 || isOnGround)
     {
         this->isOnGround = true;
-        this->setPos(this->getPos().x, Constants::BASELINE);
+        this->setPos(this->getPos().x, Constants::BASELINE - 5);
         this->moveVector.y = 0;
     }
-    else if (this->getPos().y < Constants::BASELINE || !isOnGround)
+    else if (this->getPos().y < Constants::BASELINE - 5 || !isOnGround)
     {
         this->isOnGround = false;
         this->moveVector.y += Global::gravity * deltaTime;

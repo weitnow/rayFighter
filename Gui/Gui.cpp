@@ -4,13 +4,13 @@
 Gui::Gui(Game* game) : game(game)
 {
     lifebar1 =
-        new Lifebar(Vector2{22, 26}, 5, 100, 3, Constants::RAYFIGHTER_ROSA, Constants::RAYFIGHTER_DARKBROWN, "Andy", 1);
+        new Lifebar(Vector2{23, 26}, 5, 100, 3, Constants::RAYFIGHTER_ROSA, Constants::RAYFIGHTER_LIGHTROSA, "Andy", 1);
     lifebar2 = new Lifebar(Vector2{132, 26},
                            5,
                            100,
                            3,
                            Constants::RAYFIGHTER_ROSA,
-                           Constants::RAYFIGHTER_DARKBROWN,
+                           Constants::RAYFIGHTER_LIGHTROSA,
                            "Zangief",
                            2);
 
@@ -39,7 +39,7 @@ Gui::~Gui()
 void Gui::draw()
 {
     // Draw a white rectangle for UpperGui
-    DrawRectangle(0, 0, 256, 40, WHITE);
+    DrawRectangle(0, 0, 256, 40, BLACK);
 
     // Draw the lifebars
     lifebar1->Draw();
@@ -48,10 +48,10 @@ void Gui::draw()
     // Draw the bgUpperGui
     bgUpperGui->drawCurrentSelectedTag(0, 0, 1, WHITE);
 
-    DrawText("99", 122, 11, 8, Constants::RAYFIGHTER_DARKBROWN);
+    DrawText("99", 122, 11, 8, Constants::RAYFIGHTER_LIGHTROSA);
 
     // Draw a white rectangle for LowerGui
-    DrawRectangle(0, 136, 256, 8, WHITE);
+    DrawRectangle(0, 136, 256, 8, BLACK);
 
     // Draw the bgLowerGui
     bgLowerGui->drawCurrentSelectedTag(0, 136, 1, WHITE);
@@ -61,6 +61,9 @@ void Gui::update(float deltaTime)
 {
     // Update the bgUpperGui
     bgUpperGui->update(deltaTime);
+
+    // Update the bgLowerGui
+    bgLowerGui->update(deltaTime);
 }
 
 void Gui::setLife1(int life)

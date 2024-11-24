@@ -26,11 +26,15 @@ protected:
     Gui* gui;
 
     float middlePointXbetweenPlayers = 0.f;
+    float middlePointYbetweenPlayers = 0.f;
+    int BackgroundOffsetX = 0;
+    int BackgroundOffsetY = 0;
 
     void _updateIsLeftPlayer1and2();
     void _checkCollisionsBetweenPlayers();
     void _checkHitsBetweenPlayers();
-    void _updateCamera(); // scrools the background
+    void _updateCamera();     // scrools the background
+    void _updateBackground(); // scrolls background in Y direction
 };
 
 #endif

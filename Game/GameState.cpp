@@ -1,6 +1,7 @@
 #include "GameState.h"
 #include "../Characters/Fighter1.h"
 #include "../Characters/Fighter2.h"
+#include "../Constants.h"
 #include "../Utils/HelperFunctions.h"
 #include "Game.h"
 
@@ -98,7 +99,12 @@ void GameState::Update(float deltaTime)
 
     // calculate middlePointXbetweenPlayers (needed for _updateCamera)
     middlePointXbetweenPlayers = (player1->getPos().x + player2->getPos().x + 32) / 2.f;
+
+    // calculate middlePointYbetweenPlayers (NOT needed for _updateCamera)
+    middlePointYbetweenPlayers = (player1->getPos().y + player2->getPos().y) / 2.f;
+
     _updateCamera();
+    _updateBackground();
 
     // Update the HUD
     gui->update(deltaTime);
@@ -118,7 +124,7 @@ void GameState::Render()
     BeginMode2D(game->screen2DManager->camera);
 
     // draw stage
-    background->drawFrame(randomBackground, -80, 24, 1, WHITE);
+    background->drawFrame(randomBackground, -80 + BackgroundOffsetX, 24 + BackgroundOffsetY, 1, WHITE);
 
 
     // End the camera
@@ -154,6 +160,8 @@ void GameState::Render()
     {
         // Draw the middlePointXbetweenPlayers
         DrawLine(middlePointXbetweenPlayers, 0, middlePointXbetweenPlayers, 300, RED);
+        // Draw the middlePointYbetweenPlayers
+        DrawLine(0, middlePointYbetweenPlayers, 256, middlePointYbetweenPlayers, RED);
     }
 
 
@@ -163,7 +171,7 @@ void GameState::Render()
     //----------------------------------------------------------------------------------
     game->screen2DManager->beginDrawToScreen();
 
-    ClearBackground(GREEN);
+    ClearBackground(Constants::RAYFIGHTER_LIGHTROSA);
 
     // Draw RenderTexture to Screen
     game->screen2DManager->drawRenderTarget();
@@ -293,4 +301,18 @@ void GameState::_updateCamera()
     }
 
     game->screen2DManager->camera.target.x = camPos;
+}
+
+void GameState::_updateBackground()
+{
+
+    // scroll background in Y direction
+
+    //Baseline is 102 = BackgroundOffsetY is 0 (neutral)
+    //everything less must be negative
+    //everything more must be positive
+
+    BackgroundOffsetY = (102 - middlePointYbetweenPlayers) * 0.2f;
+
+    std::cout << "BackgroundOffsetY: " << BackgroundOffsetY << std::endl;
 }
