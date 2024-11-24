@@ -121,7 +121,7 @@ void GameState::Render()
     BeginMode2D(game->screen2DManager->camera);
 
     // draw stage
-    background->drawFrame(randomBackground, Constants::STAGE_OFFSET, 24, 1, WHITE);
+    background->drawFrame(randomBackground, 0, 24, 1, WHITE);
 
 
     // draw gameObjects (player1 and player2 included)
@@ -153,11 +153,7 @@ void GameState::Render()
         DrawLine(middlePointXbetweenPlayers, 0, middlePointXbetweenPlayers, 300, RED);
 
         // Draw the middlePointYbetweenPlayers
-        DrawLine(Constants::STAGE_OFFSET,
-                 middlePointYbetweenPlayers,
-                 Constants::STAGE_WIDTH,
-                 middlePointYbetweenPlayers,
-                 RED);
+        DrawLine(0, middlePointYbetweenPlayers, Constants::STAGE_WIDTH, middlePointYbetweenPlayers, RED);
     }
 
     // End the camera
@@ -199,6 +195,11 @@ Vector2 GameState::getMiddlePointBetweenPlayers() const
     return Vector2{static_cast<float>(middlePointXbetweenPlayers), static_cast<float>(middlePointYbetweenPlayers)};
 }
 
+
+int GameState::_getScreenPosXofObject(BaseGameObject& object)
+{
+    return object.getPos().x - cameraX;
+}
 
 void GameState::_updateMiddlePointBetweenPlayers()
 {
@@ -291,15 +292,15 @@ void GameState::_keepPlayersOnStage()
 {
 
     std::cout << "Player1: " << player1->getPos().x << std::endl;
-    std::cout << "CameraX: " << cameraX << std::endl;
+    std::cout << "Player1 ScrenPosX: " << _getScreenPosXofObject(*player1) << std::endl;
 
 
     // KEEP THE CHARACTER ON THE STAGE (only X Direction)
     // check if the character is out of bounds
-    if (player1->getPos().x < Constants::STAGE_OFFSET)
+    if (player1->getPos().x < 0)
     {
         // keep player on screen
-        player1->setPos(Constants::STAGE_OFFSET, player1->getPos().y);
+        player1->setPos(0, player1->getPos().y);
     }
     else if (player1->getPos().x > Constants::STAGE_WIDTH - Constants::PLAYER_PIXELSIZE)
     {
@@ -307,11 +308,12 @@ void GameState::_keepPlayersOnStage()
         player1->setPos(Constants::STAGE_WIDTH - Constants::PLAYER_PIXELSIZE, player1->getPos().y);
     }
 
+
     // check if the character is out of bounds
-    if (player2->getPos().x < Constants::STAGE_OFFSET)
+    if (player2->getPos().x < 0)
     {
         // keep player on screen
-        player2->setPos(Constants::STAGE_OFFSET, player2->getPos().y);
+        player2->setPos(0, player2->getPos().y);
     }
     else if (player2->getPos().x > Constants::STAGE_WIDTH - Constants::PLAYER_PIXELSIZE)
     {
@@ -337,13 +339,13 @@ void GameState::_updateCamera(bool restriction)
         }
 
         // restrict the camera to the stage
-        if (cameraX < Constants::STAGE_OFFSET)
+        if (cameraX < Constants::CAM_MOST_LEFT) // if the camera is at the most left of the stage, which is 0
         {
-            cameraX = Constants::STAGE_OFFSET;
+            cameraX = Constants::CAM_MOST_LEFT;
         }
-        else if (cameraX > 96)
+        else if (cameraX > Constants::CAM_MOST_RIGHT) // if the camera is at the most right of the stage, which is 160
         {
-            cameraX = 96;
+            cameraX = Constants::CAM_MOST_RIGHT;
         }
     }
 

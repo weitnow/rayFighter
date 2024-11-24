@@ -36,6 +36,7 @@ protected:
     int playerXGlobal = 0;
     int playerYGlobal = 0;
 
+    int _getScreenPosXofObject(BaseGameObject& object);
     void _updateMiddlePointBetweenPlayers();
     void _updateIsLeftPlayer1and2();
     void _checkCollisionsBetweenPlayers();

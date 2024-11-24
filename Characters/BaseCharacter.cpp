@@ -39,12 +39,8 @@ void BaseCharacter::update(float deltaTime)
         _applyGravity(deltaTime);
     }
 
-
     // UPDATE THE STATE
     statemachine->update(deltaTime);
-
-    // KEEP THE CHARACTER ON THE STAGE
-    // _keepOnStage();
 
     // UPDATE COLLISION BOXES
     _updateCollisionBoxes(deltaTime);
@@ -237,21 +233,5 @@ void BaseCharacter::_applyGravity(float deltaTime)
     {
         this->isOnGround = false;
         this->moveVector.y += Global::gravity * deltaTime;
-    }
-}
-
-void BaseCharacter::_keepOnStage()
-{
-    // KEEP THE CHARACTER IN THE WINDOW
-    // check if the character is out of bounds
-    if (this->getPos().x < Constants::STAGE_OFFSET)
-    {
-        // keep player on screen
-        this->setPos(Constants::STAGE_OFFSET, this->getPos().y);
-    }
-    else if (this->getPos().x > Constants::STAGE_WIDTH - Constants::PLAYER_PIXELSIZE)
-    {
-        // keep player on screen
-        this->setPos(Constants::STAGE_WIDTH - Constants::PLAYER_PIXELSIZE, this->getPos().y);
     }
 }
