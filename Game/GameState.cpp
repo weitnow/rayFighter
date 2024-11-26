@@ -27,8 +27,6 @@ GameState::GameState(Game* game) : BaseState(game)
     player2->init();
 
 
-    randomBackground = "stages-Stage1";
-
     background = asepriteManager->getAnimFile("stages");
 
 
@@ -42,7 +40,7 @@ GameState::~GameState()
 {
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->unloadMusic("asia.mp3");
+        game->soundManager->unloadMusic("good/usa.mp3");
     }
 
     // Deleting Global Components
@@ -63,8 +61,8 @@ void GameState::Enter()
     // Start playing random background music
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->loadMusic("asia.mp3", 0.8f);
-        game->soundManager->playBackgroundMusic("asia.mp3");
+        game->soundManager->loadMusic("good/usa.mp3", 0.8f);
+        game->soundManager->playBackgroundMusic("good/usa.mp3");
     }
 }
 
@@ -117,11 +115,17 @@ void GameState::Render()
 
     ClearBackground(WHITE);
 
+    // draw stage background
+    background->drawFrame("stages-moon", 0, 24, 1, WHITE);
+
     // Begin the camera
     BeginMode2D(game->screen2DManager->camera);
 
+
     // draw stage
-    background->drawFrame(randomBackground, 0, 24, 1, WHITE);
+    background->drawFrame("stages-Stage1", 0, 24, 1, WHITE);
+
+    background->drawFrame("stages-deco", 0 + (cameraX / 6), 24 + cameraY / 2, 1, WHITE);
 
 
     // draw gameObjects (player1 and player2 included)
@@ -158,6 +162,7 @@ void GameState::Render()
 
     // End the camera
     EndMode2D();
+
 
     // Draw the GUI
     gui->draw();
@@ -319,6 +324,8 @@ void GameState::_keepPlayersOnStage()
 
 void GameState::_updateCamera(bool restriction)
 {
+
+
     cameraX = middlePointXbetweenPlayers - (Constants::RENDERTARGET_WIDTH / 2);
 
     // calculate y position of the camera

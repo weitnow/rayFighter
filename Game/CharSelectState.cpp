@@ -16,7 +16,7 @@ CharSelectState::~CharSelectState()
 
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->unloadMusic("live/modern.mp3");
+        game->soundManager->unloadMusic("long_options.mp3");
     }
 
 
@@ -30,8 +30,8 @@ void CharSelectState::Enter()
     // Start playing background music
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->loadMusic("live/modern.mp3", 1.f);
-        game->soundManager->playBackgroundMusic("live/modern.mp3");
+        game->soundManager->loadMusic("long_options.mp3", 1.f);
+        game->soundManager->playBackgroundMusic("long_options.mp3");
     }
 }
 
