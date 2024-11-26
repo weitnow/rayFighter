@@ -40,7 +40,7 @@ GameState::~GameState()
 {
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->unloadMusic("good/usa.mp3");
+        game->soundManager->unloadMusic("hero.mp3");
     }
 
     // Deleting Global Components
@@ -61,8 +61,8 @@ void GameState::Enter()
     // Start playing random background music
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->loadMusic("good/usa.mp3", 0.8f);
-        game->soundManager->playBackgroundMusic("good/usa.mp3");
+        game->soundManager->loadMusic("hero.mp3", 1.0f);
+        game->soundManager->playBackgroundMusic("hero.mp3");
     }
 }
 

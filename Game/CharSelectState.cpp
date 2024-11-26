@@ -16,7 +16,7 @@ CharSelectState::~CharSelectState()
 
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->unloadMusic("long_options.mp3");
+        game->soundManager->unloadMusic("warriormonk.mp3");
     }
 
 
@@ -30,8 +30,8 @@ void CharSelectState::Enter()
     // Start playing background music
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->loadMusic("long_options.mp3", 1.f);
-        game->soundManager->playBackgroundMusic("long_options.mp3");
+        game->soundManager->loadMusic("warriormonk.mp3", 1.f);
+        game->soundManager->playBackgroundMusic("warriormonk.mp3");
     }
 }
 
