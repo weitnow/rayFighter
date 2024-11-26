@@ -72,7 +72,6 @@ protected:
 
     // member functions
     virtual void _applyGravity(float deltaTime) override;
-    void _keepOnStage();
 };
 
 
