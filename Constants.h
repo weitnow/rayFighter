@@ -25,8 +25,8 @@ const float INVINCIBLE_TIME = 1.0f; // time in seconds objects are invincible af
 
 const int FPS = 60;
 
-const int PLAYER1_X = 134;
-const int PLAYER2_X = 250;
+const int PLAYER1_X = 134 + 30;
+const int PLAYER2_X = 250 - 30;
 
 const Color GAMEOBJ_COLOR = YELLOW;  // used to specify the color of the debug rectangle
 const Vector2 GAMEOBJ_SIZE = {3, 3}; // used specify the size of the debug rectangle

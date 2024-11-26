@@ -291,10 +291,6 @@ void GameState::_checkHitsBetweenPlayers()
 void GameState::_keepPlayersOnStage()
 {
 
-    std::cout << "Player1: " << player1->getPos().x << std::endl;
-    std::cout << "Player1 ScrenPosX: " << _getScreenPosXofObject(*player1) << std::endl;
-
-
     // KEEP THE CHARACTER ON THE STAGE (only X Direction)
     // check if the character is out of bounds
     if (player1->getPos().x < 0)
@@ -307,7 +303,6 @@ void GameState::_keepPlayersOnStage()
         // keep player on screen
         player1->setPos(Constants::STAGE_WIDTH - Constants::PLAYER_PIXELSIZE, player1->getPos().y);
     }
-
 
     // check if the character is out of bounds
     if (player2->getPos().x < 0)

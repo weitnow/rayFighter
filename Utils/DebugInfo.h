@@ -16,8 +16,6 @@ public:
     ~DebugInfo();
 
     void draw();
-    void drawGameObjectData(BaseGameObject* gameObject, const std::string& objectName, int x, int y);
-
     void setDebugMode(bool debugMode);
 
 private:
@@ -26,6 +24,7 @@ private:
     GameState* gameState;
     BaseCharacter* player1;
     BaseCharacter* player2;
+    Statemachine* statemachine;
     int rectWidth;
     int rectHeight;
     int rectX;
@@ -33,8 +32,10 @@ private:
     Color rectColor;
     bool player1InGameObjects;
 
-    void _drawCharacterData(BaseCharacter* character, const std::string& objectName, int x, int y);
-    void _drawGameObjectData(BaseGameObject* gameObject, const std::string& objectName, int x, int y);
+    void drawGameObjectData(BaseGameObject* gameObject, const std::string& objectName, int x, int y);
+    void _drawCharacterDataInternal(BaseCharacter* character, const std::string& objectName, int x, int y);
+    void _drawGameObjectDataInternal(BaseGameObject* gameObject, const std::string& objectName, int x, int y);
+    void _drawDebugText(const std::string& label, const std::string& value, int x, int y);
 };
 
 #endif //DEBUG_INFO_H
