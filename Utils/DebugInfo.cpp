@@ -90,6 +90,9 @@ void DebugInfo::_drawCharacterDataInternal(BaseCharacter* character, const std::
                    y);
 
     y += LINE_SPACING;
+    _drawDebugText("ScreenPos", std::to_string(gameState->_getScreenPosXofObject(*character)), x, y);
+
+    y += LINE_SPACING;
     _drawDebugText("FrameTag", character->getCurrentFrameTag(), x, y);
 
     y += LINE_SPACING;

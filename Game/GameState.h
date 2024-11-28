@@ -20,7 +20,7 @@ public:
     virtual void Exit() override;
 
     Vector2 getMiddlePointBetweenPlayers() const;
-
+    int _getScreenPosXofObject(BaseGameObject& object);
 
 protected:
     AsepriteAnimationFile* background;
@@ -36,7 +36,7 @@ protected:
     int playerXGlobal = 0;
     int playerYGlobal = 0;
 
-    int _getScreenPosXofObject(BaseGameObject& object);
+
     void _updateMiddlePointBetweenPlayers();
     void _updateIsLeftPlayer1and2();
     void _checkCollisionsBetweenPlayers();
