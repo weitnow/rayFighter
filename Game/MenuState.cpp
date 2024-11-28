@@ -17,7 +17,7 @@ MenuState::~MenuState()
 
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->unloadMusic("warriorarrives.mp3");
+        game->soundManager->unloadMusic("warriortown.mp3");
     }
 }
 
@@ -28,8 +28,8 @@ void MenuState::Enter()
     // Start playing background music
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->loadMusic("warriorarrives.mp3", 1.f);
-        game->soundManager->playBackgroundMusic("warriorarrives.mp3");
+        game->soundManager->loadMusic("warriortown.mp3", 1.f);
+        game->soundManager->playBackgroundMusic("warriortown.mp3");
     }
     selectedOption = MenuOptions::PLAY;
 

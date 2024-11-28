@@ -40,9 +40,11 @@ void BaseGameObject::update(float deltaTime)
         // TODO: Implement scale function
     }
 
+    // update collision boxes
+    _updateCollisionBoxes(deltaTime);
+
     this->setPos(this->getPos().x + (moveVector.x + pushVector.x) * deltaTime,
                  this->getPos().y + (moveVector.y + pushVector.y) * deltaTime);
-
 
     // apply gravity
     if (affectedByGravity)
@@ -52,9 +54,6 @@ void BaseGameObject::update(float deltaTime)
 
     // reduce push vector
     _reducePushVector(deltaTime);
-
-    // update collision boxes
-    _updateCollisionBoxes(deltaTime);
 
     // update the member variables from the animationfile
     _updateMemberVariables();
@@ -481,8 +480,8 @@ void BaseGameObject::_updateCollisionBoxes(float deltaTime)
             // Loop through each CollisionBox2D object and call its update method
             for (auto& collisionBox : collisionBoxList)
             {
-                collisionBox.update(deltaTime, isFlippedX);
                 collisionBox.setObjPos(pos.x, pos.y);
+                collisionBox.update(deltaTime, isFlippedX);
             }
         }
     }

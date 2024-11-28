@@ -25,10 +25,12 @@ void BaseCharacter::update(float deltaTime)
         // TODO: Implement scale function
     }
 
+    // UPDATE COLLISION BOXES
+    _updateCollisionBoxes(deltaTime);
+
     // UPDATE THE POSITION
     this->setPos(this->getPos().x + (moveVector.x + pushVector.x) * deltaTime,
                  this->getPos().y + (moveVector.y + pushVector.y) * deltaTime);
-
 
     // REDUCE PUSH VECTOR
     _reducePushVector(deltaTime);
@@ -41,9 +43,6 @@ void BaseCharacter::update(float deltaTime)
 
     // UPDATE THE STATE
     statemachine->update(deltaTime);
-
-    // UPDATE COLLISION BOXES
-    _updateCollisionBoxes(deltaTime);
 
     // UPDATE THE SPRITE
     if (statemachine->getCurrentStateAsString() == "No current state")

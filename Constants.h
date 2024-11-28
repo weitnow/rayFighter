@@ -17,7 +17,7 @@ const int STAGE_WIDTH = 416;
 
 const int BASELINE = 102; //ground level where the player stands
 
-const bool BACKGROUND_MUSIC = true;
+const bool BACKGROUND_MUSIC = false;
 
 const int DEFAULT_LIFE = 3;
 
@@ -25,8 +25,9 @@ const float INVINCIBLE_TIME = 1.0f; // time in seconds objects are invincible af
 
 const int FPS = 60;
 
-const int PLAYER1_X = 134 + 30;
-const int PLAYER2_X = 250 - 30;
+// 208 = middle of the screen, but x/y of the Fighters is taken in the upperleft Corner of the 32x32 Sprite
+const int PLAYER1_X = 144;
+const int PLAYER2_X = 256;
 
 const Color GAMEOBJ_COLOR = YELLOW;  // used to specify the color of the debug rectangle
 const Vector2 GAMEOBJ_SIZE = {3, 3}; // used specify the size of the debug rectangle
