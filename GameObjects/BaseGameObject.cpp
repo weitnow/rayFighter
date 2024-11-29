@@ -81,7 +81,7 @@ void BaseGameObject::draw()
                                                     isFlippedY,
                                                     spriteOffsetX);
             }
-            else
+            else //if the object is invincible draw it in blue
             {
                 animfilePtr->drawCurrentSelectedTag(getPos().x,
                                                     getPos().y,
@@ -94,11 +94,13 @@ void BaseGameObject::draw()
 
 
             // Draw a small rectangle at the position of the gameobj.
+
             DrawRectangleLines(getPos().x,
                                getPos().y,
                                Constants::GAMEOBJ_SIZE.x,
                                Constants::GAMEOBJ_SIZE.y,
                                Constants::GAMEOBJ_COLOR);
+
 
             // Draw the Spriteborder
             if (Global::debugSpriteBorder)

@@ -55,7 +55,7 @@ void DebugInfo::setDebugMode(bool debugMode)
 
     Global::debugMode = debugMode;
     Global::debugWindow = debugMode;
-    Global::debugSpriteBorder = false; //debugMode;
+    Global::debugSpriteBorder = debugMode;
     Global::debugCollisionBoxes = debugMode;
     Global::debugHitboxes = debugMode;
     Global::debugHurtboxes = debugMode;
@@ -231,6 +231,12 @@ void DebugInfo::draw()
     y += LINE_SPACING;
     _drawDebugText("MiddlePoint",
                    std::to_string(middlePoint.x) + ", " + std::to_string(middlePoint.y),
+                   windowX + startOffset,
+                   y);
+
+    y += LINE_SPACING;
+    _drawDebugText("Camera X/Y",
+                   std::to_string(gameState->cameraX) + "/" + std::to_string(gameState->cameraY),
                    windowX + startOffset,
                    y);
 
