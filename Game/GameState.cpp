@@ -27,7 +27,7 @@ GameState::GameState(Game* game) : BaseState(game)
     player2->init();
 
 
-    background = asepriteManager->getAnimFile("stages");
+    background = asepriteManager->getAnimFile("thepit");
 
 
     if (player1 == nullptr || player2 == nullptr)
@@ -97,6 +97,7 @@ void GameState::Update(float deltaTime)
 
     _updateMiddlePointBetweenPlayers(); // (needs to be done befor _updateCamera)
 
+
     _updateCamera(true); //true = camera has restrictions turned on
 
     _keepPlayersOnStage(); // Keep the players on the stage
@@ -115,17 +116,15 @@ void GameState::Render()
 
     ClearBackground(WHITE);
 
-    // draw stage background
-    background->drawFrame("stages-moon", 0, 24, 1, WHITE);
+    // draw stationary stage background
+    // background->drawFrame("stages-Background", -Constants::CAM_MIDDLE, 24, 1, WHITE);
 
     // Begin the camera
     BeginMode2D(game->screen2DManager->camera);
 
 
     // draw stage
-    background->drawFrame("stages-Stage1", 0, 24, 1, WHITE);
-
-    background->drawFrame("stages-deco", 0 + (cameraX / 6), 24 + cameraY / 2, 1, WHITE);
+    background->drawFrame("thepit-Stage1", 0, 24, 1, WHITE);
 
 
     // draw gameObjects (player1 and player2 included)
@@ -160,9 +159,9 @@ void GameState::Render()
         DrawLine(0, middlePointYbetweenPlayers, Constants::STAGE_WIDTH, middlePointYbetweenPlayers, RED);
     }
 
+
     // End the camera
     EndMode2D();
-
 
     // Draw the GUI
     gui->draw();

@@ -320,6 +320,8 @@ void AsepriteManager::init()
     loadAnimFile("stages"); // asepriteManager.frameTags[stage-temple]
                             // asepriteManager.textures[stage]
 
+    loadAnimFile("thepit");
+
     loadAnimFile("bgUpperGui");
     getFrameTag("bgUpperGui-Amazed").loop = false;
 
