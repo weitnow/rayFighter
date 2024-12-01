@@ -1,5 +1,7 @@
 #include "Screen2DManager.h"
 #include "../Constants.h"
+#include "AsepriteManager.h"
+#include "HelperFunctions.h"
 
 
 int EnumToValue(RenderResolution resolution)
@@ -33,7 +35,7 @@ Screen2DManager::Screen2DManager(const ScreenResolution screenResolution,
                                  const char* windowTitle,
                                  const RenderResolution resolution)
     : resolution(resolution), screenWidth(0), screenHeight(0), camera{0}, destRec{0}, sourceRec{0}, renderTarget{0},
-      offsetX(0), offsetY(0)
+      offsetX(0), offsetY(0), screenGenericEffectsAnimFile{nullptr}, asepriteManager{nullptr}
 {
 
     // Set the screen width and height
@@ -91,6 +93,16 @@ Screen2DManager::Screen2DManager(const ScreenResolution screenResolution,
 Screen2DManager::~Screen2DManager()
 {
     UnloadRenderTexture(renderTarget); // Raylib function
+
+    if (screenGenericEffectsAnimFile != nullptr)
+    {
+        delete screenGenericEffectsAnimFile;
+    }
+}
+
+void Screen2DManager::takeReferenceToAsepriteManager(AsepriteManager* asepriteManager)
+{
+    this->asepriteManager = asepriteManager;
 }
 
 void Screen2DManager::beginDrawToScreen()
@@ -116,6 +128,23 @@ void Screen2DManager::endDrawToRenderTarget()
 void Screen2DManager::endDrawToScreen()
 {
     EndDrawing(); // Raylib function
+}
+
+void Screen2DManager::update(float deltaTime)
+{
+    _updateScreenShake(deltaTime);
+    _updateScreenGenericEffects(deltaTime);
+}
+
+void Screen2DManager::draw()
+{
+    if (screenGenericEffectPlaying)
+    {
+        screenGenericEffectsAnimFile->drawCurrentSelectedTag(0,
+                                                             40,
+                                                             1,
+                                                             WHITE); // y value = 40 because the hud is 40px high
+    }
 }
 
 void Screen2DManager::setRenderResolution(RenderResolution resolution)
@@ -196,4 +225,104 @@ void Screen2DManager::cycleThroughResolutions()
     }
     RenderResolution newResolution = static_cast<RenderResolution>(value);
     setRenderResolution(newResolution);
+}
+
+void Screen2DManager::startScreenShake(float intensity, float duration)
+{
+    shake.isShaking = true;
+    shake.intensity = intensity;
+    shake.duration = duration;
+    shake.elapsedTime = 0.0f;
+    shake.currentOffset = {0.0f, 0.0f};
+}
+
+void Screen2DManager::_updateScreenShake(float deltaTime)
+{
+
+    if (shake.isShaking)
+    {
+        shake.elapsedTime += deltaTime;
+
+        if (shake.elapsedTime < shake.duration)
+        {
+            // Generate random offsets with float precision
+            shake.currentOffset.x = ((rand() / (float)RAND_MAX) * 2.0f - 1.0f) * shake.intensity;
+            shake.currentOffset.y = ((rand() / (float)RAND_MAX) * 2.0f - 1.0f) * shake.intensity;
+        }
+        else
+        {
+            // End shake
+            shake.isShaking = false;
+            shake.currentOffset = {0.0f, 0.0f};
+        }
+    }
+
+    // Apply the shake offset to the camera
+    camera.offset.x = shake.currentOffset.x;
+    camera.offset.y = shake.currentOffset.y;
+}
+
+void Screen2DManager::_updateScreenGenericEffects(float deltaTime)
+{
+    if (screenGenericEffectPlaying)
+    {
+        screenGenericEffectsAnimFile->update(deltaTime);
+
+        if (screenGenericEffectsAnimFile->hasAnimJustFinished())
+        {
+
+            if (_animJustFinished != _previousAnimJustFinished)
+            {
+                counterGenericEffectPlaying++;
+                _previousAnimJustFinished = _animJustFinished;
+            }
+
+            if (screenGenericPlayHowOften != -1 && counterGenericEffectPlaying >= screenGenericPlayHowOften)
+            {
+                screenGenericEffectPlaying = false;
+                screenGenericEffectsAnimFile->resetBools();
+                counterGenericEffectPlaying = 0;
+            }
+        }
+        std::cout << "counterGenericEffectPlaying: " << counterGenericEffectPlaying << std::endl;
+    }
+}
+
+void Screen2DManager::loadScreenGenericEffects(const std::string& nameAnimFile)
+{
+    if (screenGenericEffectsAnimFile != nullptr)
+    {
+        // unload the current screenGenericEffectsAnimFile
+        delete screenGenericEffectsAnimFile;
+        screenGenericEffectsAnimFile = nullptr;
+        // raise a warning
+        std::cout << "Screen2DManager::loadScreenGenericEffects -> screenGenericEffectsAnimFile was already loaded, "
+                     "unloaded existing file and reloaded specified file"
+                  << std::endl;
+    }
+
+    // load file
+    screenGenericEffectsAnimFile = asepriteManager->getAnimFile(nameAnimFile);
+}
+
+void Screen2DManager::setScreenGenericEffects(const std::string& frameTag, int playHowOften)
+{
+    if (screenGenericEffectsAnimFile == nullptr)
+    {
+        throw std::runtime_error("Screen2DManager::setScreenGenericEffects -> screenGenericEffectsAnimFile is nullptr");
+    }
+    screenGenericEffectsAnimFile->resetBools();
+    screenGenericPlayHowOften = playHowOften;
+    counterGenericEffectPlaying = 0;
+    screenGenericEffectPlaying = true;
+    screenGenericEffectsAnimFile->setFrameTag(frameTag);
+}
+
+void Screen2DManager::_unloadScreenGenericEffects()
+{
+    if (screenGenericEffectsAnimFile != nullptr)
+    {
+        delete screenGenericEffectsAnimFile;
+        screenGenericEffectsAnimFile = nullptr;
+    }
 }

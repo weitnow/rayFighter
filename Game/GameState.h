@@ -22,12 +22,12 @@ public:
     Vector2 getMiddlePointBetweenPlayers() const;
     int _getScreenPosXofObject(BaseGameObject& object);
 
+
     int cameraX = 0; // will be updated in _updateCamera
     int cameraY = 0;
 
 protected:
-    AsepriteAnimationFile* background;
-    std::string randomBackground;
+    AsepriteAnimationFile* levelAnimFile;
     Gui* gui;
 
     int middlePointXbetweenPlayers = 0; // will be updated in _updateMiddlePointBetweenPlayers

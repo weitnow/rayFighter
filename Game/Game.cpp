@@ -17,8 +17,12 @@ Game::Game() : quit(false)
     soundManager = &SoundManager::getInstance();
     inputHandler = new InputHandler();
     asepriteManager = new AsepriteManager{"Assets/Graphics/"}; // instance of AsepriteManager
-    asepriteManager->init();                                   // load all aseprite files
+    asepriteManager->init();
+    screen2DManager->takeReferenceToAsepriteManager(asepriteManager); // load all aseprite files
     deltaTime = GetFrameTime(); // will be feed in the update method of the different game states
+
+    screen2DManager->loadScreenGenericEffects(
+        "screenEffects"); // load the screenEffects animation file, the screenManager will unload it in the destructor
 }
 
 Game::~Game()

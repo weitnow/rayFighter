@@ -76,4 +76,21 @@ inline bool checkCollision(CollisionBox2D* box1ptr, CollisionBox2D* box2ptr)
 
 } // namespace Utils
 
+class Timer
+{
+public:
+    Timer();
+    void Start();                          // Start the timer
+    void Stop();                           // Stop the timer
+    void Reset();                          // Reset the timer
+    void Restart();                        // Restart the timer
+    float GetElapsedTime() const;          // Get elapsed time in seconds
+    bool HasElapsed(float duration) const; // Check if a certain duration has elapsed
+
+private:
+    float startTime;
+    float elapsedTime;
+    bool running;
+};
+
 #endif //GBFIGHTER_HELPERFUNCTIONS_H

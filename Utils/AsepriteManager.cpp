@@ -331,6 +331,8 @@ void AsepriteManager::init()
     loadAnimFile("charSelectScreen");
 
     loadAnimFile("bgLowerGui");
+
+    loadAnimFile("screenEffects");
 }
 
 nlohmann::json* AsepriteManager::loadJsonFile(const std::string& filename)

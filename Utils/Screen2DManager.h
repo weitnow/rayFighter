@@ -6,6 +6,8 @@
 #include <iostream>
 #include <map>
 
+class AsepriteAnimationFile; // Forward declaration
+class AsepriteManager;       // Forward declaration
 
 enum class RenderResolution
 {
@@ -30,6 +32,16 @@ enum class ScreenResolution
     S_3440x1440  // 16:9 Ultra Wide
 };
 
+struct ScreenShake
+{
+    bool isShaking = false;
+    float intensity = 0.0f;               // Maximum offset in pixels
+    float duration = 0.0f;                // Total shake duration in seconds
+    float elapsedTime = 0.0f;             // Time passed since shake started
+    Vector2 currentOffset = {0.0f, 0.0f}; // Current shake offset
+};
+
+
 class Screen2DManager
 {
 public:
@@ -39,6 +51,8 @@ public:
 
     ~Screen2DManager();
 
+    void takeReferenceToAsepriteManager(AsepriteManager* asepriteManager);
+
     void beginDrawToRenderTarget();
 
     void endDrawToRenderTarget();
@@ -47,8 +61,19 @@ public:
     void drawRenderTarget();
     void endDrawToScreen();
 
+    void update(float deltaTime);
+    void draw(); // ScreenEffects
+
     void setRenderResolution(RenderResolution resolution);
     void cycleThroughResolutions();
+
+    void startScreenShake(float intensity, float duration);
+
+
+    void loadScreenGenericEffects(const std::string& nameAnimFile);
+    void setScreenGenericEffects(const std::string& frameTag,
+                                 int playHowOften = 1); // if playHowOften is -1, the animation will be looped
+
 
     Camera2D camera;
 
@@ -64,6 +89,22 @@ private:
     int resolutionHeight;         // the height of the renderResolution
     int offsetX;                  // the offset of the rendertarget in relation to screen in x direction
     int offsetY;                  // the offset of the rendertarget in relation to screen in y direction
+
+    ScreenShake shake; // the screen shake object
+
+    AsepriteManager* asepriteManager; // first execute takeReferenceToAsepriteManager otherwise this will be nullptr
+
+    AsepriteAnimationFile* screenGenericEffectsAnimFile;
+    int screenGenericPlayHowOften = 0; //how often the effect should be played, -1 = loop
+    bool screenGenericEffectPlaying = false;
+    int counterGenericEffectPlaying = 0;    // counts how many times the effect has been played in a row
+    bool _animJustFinished = false;         // bool of the animation file
+    bool _previousAnimJustFinished = false; // bool of the animation file
+
+    // Member functions
+    void _updateScreenShake(float deltaTime);          // private, is called in update
+    void _updateScreenGenericEffects(float deltaTime); // private, is called in update
+    void _unloadScreenGenericEffects();                // will be called in the destructor
 };
 
 #endif // GBFIGHTER_SCREEN2DMANAGER_H

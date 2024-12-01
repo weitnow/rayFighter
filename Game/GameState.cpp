@@ -27,8 +27,8 @@ GameState::GameState(Game* game) : BaseState(game)
     player2->init();
 
 
-    background = asepriteManager->getAnimFile("thepit");
-
+    levelAnimFile = asepriteManager->getAnimFile("stages");
+    levelAnimFile->setFrameTag("stages-Level");
 
     if (player1 == nullptr || player2 == nullptr)
     {
@@ -40,7 +40,7 @@ GameState::~GameState()
 {
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->unloadMusic("upprisinghero.mp3");
+        game->soundManager->unloadMusic("darkchurch.mp3");
     }
 
     // Deleting Global Components
@@ -51,7 +51,7 @@ GameState::~GameState()
 
     delete gui;
 
-    delete background; //deallocate memory on the heap
+    delete levelAnimFile;
 }
 
 void GameState::Enter()
@@ -61,8 +61,8 @@ void GameState::Enter()
     // Start playing random background music
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->loadMusic("upprisinghero.mp3", 1.0f);
-        game->soundManager->playBackgroundMusic("upprisinghero.mp3");
+        game->soundManager->loadMusic("darkchurch.mp3", 1.0f);
+        game->soundManager->playBackgroundMusic("darkchurch.mp3");
     }
 }
 
@@ -102,8 +102,22 @@ void GameState::Update(float deltaTime)
 
     _keepPlayersOnStage(); // Keep the players on the stage
 
+    // update levelAnimFile
+    levelAnimFile->update(deltaTime);
+
     // Update the HUD
     gui->update(deltaTime);
+
+    // Update Screenmanager
+    game->screen2DManager->update(deltaTime); // for Screeneffects
+
+    // TODO: remove this
+    if (IsKeyPressed(KEY_Z)) //Z = Y because Swiss Keyboard
+    {
+        soundManager->playSound("earthquake.wav");
+        screen2DManager->setScreenGenericEffects("screenEffects-Earthquake", 5);
+        game->screen2DManager->startScreenShake(0.7f, 0.5f);
+    }
 }
 
 void GameState::Render()
@@ -116,16 +130,14 @@ void GameState::Render()
 
     ClearBackground(WHITE);
 
-    // draw stationary stage background
-    // background->drawFrame("stages-Background", -Constants::CAM_MIDDLE, 24, 1, WHITE);
+    // DRAW STATIONARY BACKGROUND
+    levelAnimFile->drawFrame("stages-Background", -Constants::CAM_MIDDLE, 24, 1, WHITE);
 
     // Begin the camera
     BeginMode2D(game->screen2DManager->camera);
 
-
-    // draw stage
-    background->drawFrame("thepit-Stage1", 0, 24, 1, WHITE);
-
+    // DRAW LEVEL
+    levelAnimFile->drawCurrentSelectedTag(0, 24, 1, WHITE);
 
     // draw gameObjects (player1 and player2 included)
     // Draw all gameObjects
@@ -162,6 +174,9 @@ void GameState::Render()
 
     // End the camera
     EndMode2D();
+
+    // Draw the screenEffects
+    screen2DManager->draw();
 
     // Draw the GUI
     gui->draw();

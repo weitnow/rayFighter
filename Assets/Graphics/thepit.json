@@ -28,8 +28,12 @@
    { "name": "Stage1", "from": 1, "to": 1, "direction": "forward", "color": "#000000ff" }
   ],
   "layers": [
-   { "name": "Level", "opacity": 255, "blendMode": "normal" },
-   { "name": "viewport", "opacity": 255, "blendMode": "normal" }
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" },
+   { "name": "Stones", "opacity": 255, "blendMode": "normal" },
+   { "name": "Floor", "opacity": 255, "blendMode": "normal" },
+   { "name": "Doors", "opacity": 255, "blendMode": "normal" },
+   { "name": "EyesInTheDark", "opacity": 255, "blendMode": "normal" },
+   { "name": "WhitenLayer", "opacity": 38, "blendMode": "normal" }
   ],
   "slices": [
   ]

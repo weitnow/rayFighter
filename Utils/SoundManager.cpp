@@ -22,6 +22,7 @@ SoundManager::SoundManager() : currentBackgroundMusic(nullptr)
     loadSoundEffects("scream.wav", 1.5f);         //not used everywhere, but in the menu
     loadSoundEffects("1bit/manlaughs.wav", 9.0f); //not used everywhere, but in the menu
     loadSoundEffects("hit5.wav", 1.5f);
+    loadSoundEffects("earthquake.wav", 1.0f);
 }
 
 
