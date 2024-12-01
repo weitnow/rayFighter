@@ -266,25 +266,28 @@ void Screen2DManager::_updateScreenGenericEffects(float deltaTime)
 {
     if (screenGenericEffectPlaying)
     {
-        screenGenericEffectsAnimFile->update(deltaTime);
+        _animJustFinished = screenGenericEffectsAnimFile->hasAnimJustFinished();
 
-        if (screenGenericEffectsAnimFile->hasAnimJustFinished())
-        {
-
-            if (_animJustFinished != _previousAnimJustFinished)
-            {
-                counterGenericEffectPlaying++;
-                _previousAnimJustFinished = _animJustFinished;
-            }
-
-            if (screenGenericPlayHowOften != -1 && counterGenericEffectPlaying >= screenGenericPlayHowOften)
-            {
-                screenGenericEffectPlaying = false;
-                screenGenericEffectsAnimFile->resetBools();
-                counterGenericEffectPlaying = 0;
-            }
-        }
+        std::cout << "_animJustFinished: " << _animJustFinished << std::endl;
+        std::cout << "_previousAnimJustFinished: " << _previousAnimJustFinished << std::endl;
         std::cout << "counterGenericEffectPlaying: " << counterGenericEffectPlaying << std::endl;
+
+        if (_animJustFinished != _previousAnimJustFinished)
+        {
+            counterGenericEffectPlaying++;
+            _previousAnimJustFinished = _animJustFinished;
+        }
+
+        if (screenGenericPlayHowOften != -1 && counterGenericEffectPlaying >= screenGenericPlayHowOften)
+        {
+            screenGenericEffectPlaying = false;
+            screenGenericEffectsAnimFile->resetBools();
+            counterGenericEffectPlaying = 0;
+            _animJustFinished = false;
+            _previousAnimJustFinished = false;
+        }
+
+        screenGenericEffectsAnimFile->update(deltaTime);
     }
 }
 
