@@ -69,6 +69,7 @@ public:
     int getCurrentFrame() const;
     int getMinFrame() const;
     int getMaxFrame() const;
+    void setCurrentFrameToMinFrame();
     void _drawFrame(const std::string& filenameTagname,
                     int x,
                     int y,

@@ -69,7 +69,16 @@ void GameState::Enter()
 
 void GameState::Update(float deltaTime)
 {
+
     game->inputHandler->Update(); // Handle Input
+    // TODO: remove this
+    if (IsKeyPressed(KEY_Z)) //Z = Y because Swiss Keyboard
+    {
+        soundManager->playSound("earthquake.wav");
+        screen2DManager->setScreenGenericEffects("screenEffects-Earthquake", 4);
+        game->screen2DManager->startScreenShake(0.7f, 0.5f);
+    }
+
 
     _updateIsLeftPlayer1and2(); // Check if player1 is left of player2
 
@@ -97,7 +106,6 @@ void GameState::Update(float deltaTime)
 
     _updateMiddlePointBetweenPlayers(); // (needs to be done befor _updateCamera)
 
-
     _updateCamera(true); //true = camera has restrictions turned on
 
     _keepPlayersOnStage(); // Keep the players on the stage
@@ -110,14 +118,6 @@ void GameState::Update(float deltaTime)
 
     // Update Screenmanager
     game->screen2DManager->update(deltaTime); // for Screeneffects
-
-    // TODO: remove this
-    if (IsKeyPressed(KEY_Z)) //Z = Y because Swiss Keyboard
-    {
-        soundManager->playSound("earthquake.wav");
-        screen2DManager->setScreenGenericEffects("screenEffects-Earthquake", 2);
-        game->screen2DManager->startScreenShake(0.7f, 0.5f);
-    }
 }
 
 void GameState::Render()
@@ -309,7 +309,6 @@ void GameState::_checkHitsBetweenPlayers()
 
 void GameState::_keepPlayersOnStage()
 {
-
     // KEEP THE CHARACTER ON THE STAGE (only X Direction)
     // check if the character is out of bounds
     if (player1->getPos().x < 0)
@@ -338,8 +337,6 @@ void GameState::_keepPlayersOnStage()
 
 void GameState::_updateCamera(bool restriction)
 {
-
-
     cameraX = middlePointXbetweenPlayers - (Constants::RENDERTARGET_WIDTH / 2);
 
     // calculate y position of the camera

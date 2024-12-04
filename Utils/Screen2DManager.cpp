@@ -267,10 +267,7 @@ void Screen2DManager::_updateScreenGenericEffects(float deltaTime)
     if (screenGenericEffectPlaying)
     {
         _animJustFinished = screenGenericEffectsAnimFile->hasAnimJustFinished();
-
-        std::cout << "_animJustFinished: " << _animJustFinished << std::endl;
-        std::cout << "_previousAnimJustFinished: " << _previousAnimJustFinished << std::endl;
-        std::cout << "counterGenericEffectPlaying: " << counterGenericEffectPlaying << std::endl;
+        std::cout << "_animJustFinished=" << _animJustFinished << std::endl;
 
         if (_animJustFinished != _previousAnimJustFinished)
         {
@@ -278,10 +275,20 @@ void Screen2DManager::_updateScreenGenericEffects(float deltaTime)
             _previousAnimJustFinished = _animJustFinished;
         }
 
-        if (screenGenericPlayHowOften != -1 && counterGenericEffectPlaying >= screenGenericPlayHowOften)
+        std::cout << "screenGenericPlayHOwOften " << screenGenericPlayHowOften << std::endl;
+        std::cout << "counterGenericEffectPlaying " << counterGenericEffectPlaying << std::endl;
+        std::cout << "_animJustFinished " << _animJustFinished << std::endl;
+        std::cout << "if statment value "
+                  << static_cast<bool>(screenGenericPlayHowOften != -1 &&
+                                       counterGenericEffectPlaying >= screenGenericPlayHowOften && _animJustFinished);
+
+        if (screenGenericPlayHowOften != -1 && counterGenericEffectPlaying >= screenGenericPlayHowOften &&
+            _animJustFinished)
         {
             screenGenericEffectPlaying = false;
             screenGenericEffectsAnimFile->resetBools();
+            screenGenericEffectsAnimFile
+                ->setCurrentFrameToMinFrame(); // otherwise the next animation might not start with the startframe
             counterGenericEffectPlaying = 0;
             _animJustFinished = false;
             _previousAnimJustFinished = false;
@@ -314,11 +321,10 @@ void Screen2DManager::setScreenGenericEffects(const std::string& frameTag, int p
     {
         throw std::runtime_error("Screen2DManager::setScreenGenericEffects -> screenGenericEffectsAnimFile is nullptr");
     }
-    screenGenericEffectsAnimFile->resetBools();
+    screenGenericEffectsAnimFile->setFrameTag(frameTag);
     screenGenericPlayHowOften = playHowOften;
     counterGenericEffectPlaying = 0;
     screenGenericEffectPlaying = true;
-    screenGenericEffectsAnimFile->setFrameTag(frameTag);
 }
 
 void Screen2DManager::_unloadScreenGenericEffects()

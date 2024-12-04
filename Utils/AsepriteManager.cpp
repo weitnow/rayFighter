@@ -92,6 +92,11 @@ int AsepriteAnimationFile::getMaxFrame() const
     return max_frame;
 }
 
+void AsepriteAnimationFile::setCurrentFrameToMinFrame()
+{
+    current_frame = min_frame;
+}
+
 void AsepriteAnimationFile::_drawFrame(const std::string& filenameTagname,
                                        int x,
                                        int y,
@@ -264,10 +269,7 @@ bool AsepriteAnimationFile::setFrameTag(const std::string& filenameTagname)
     resetBools();
 
     //set initial values
-    animJustFinished = false;
-
     FrameTag current_FrameTag = this->asepriteManager->getFrameTag(current_filenameTagname);
-
     min_frame = current_FrameTag.from;
     max_frame = current_FrameTag.to;
     spriteSizeX = current_FrameTag.sourceSizeX;
