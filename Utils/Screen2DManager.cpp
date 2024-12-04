@@ -271,16 +271,14 @@ void Screen2DManager::_updateScreenGenericEffects(float deltaTime)
 
         if (_animJustFinished != _previousAnimJustFinished)
         {
-            counterGenericEffectPlaying++;
+            // increase counter only if _animJustFinished returned true
+            if (_animJustFinished)
+            {
+                counterGenericEffectPlaying++;
+            }
+
             _previousAnimJustFinished = _animJustFinished;
         }
-
-        std::cout << "screenGenericPlayHOwOften " << screenGenericPlayHowOften << std::endl;
-        std::cout << "counterGenericEffectPlaying " << counterGenericEffectPlaying << std::endl;
-        std::cout << "_animJustFinished " << _animJustFinished << std::endl;
-        std::cout << "if statment value "
-                  << static_cast<bool>(screenGenericPlayHowOften != -1 &&
-                                       counterGenericEffectPlaying >= screenGenericPlayHowOften && _animJustFinished);
 
         if (screenGenericPlayHowOften != -1 && counterGenericEffectPlaying >= screenGenericPlayHowOften &&
             _animJustFinished)
