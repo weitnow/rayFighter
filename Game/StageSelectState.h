@@ -1,34 +1,33 @@
-#ifndef CHAR_SELECT_STATE_H
-#define CHAR_SELECT_STATE_H
+#ifndef STAGE_SELECT_STATE_H
+#define STAGE_SELECT_STATE_H
 
 #include "../Utils/AsepriteManager.h"
 #include "../Utils/Core.h"
 #include "BaseState.h"
 #include "raylib.h"
 
-struct Option
+struct StageOption
 {
     Rectangle rect;
     std::string name;
 };
 
-class CharSelectState : public BaseState
+class StageSelectState : public BaseState
 {
 public:
-    CharSelectState(Game* game);
-    ~CharSelectState();
+    StageSelectState(Game* game);
+    ~StageSelectState();
     void Enter() override;
     void Update(float deltaTime) override;
     void Render() override;
     void Exit() override;
 
-    void DrawSelectionScreen(int selectedIndex, int playerNumber);
+    void DrawSelectionScreen(int selectedIndex);
 
 private:
-    AsepriteAnimationFile* CharSelectScreen;
-    AsepriteAnimationFile* playerTag;
+    AsepriteAnimationFile* StageSelectScreen;
 
-    List<Option> characters;
+    List<StageOption> characters;
 
 
     int selectedCharacterP1 = 0;

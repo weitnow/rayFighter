@@ -331,6 +331,9 @@ void AsepriteManager::init()
     getFrameTag("titleScreen-Transition").loop = false;
 
     loadAnimFile("charSelectScreen");
+    loadAnimFile("playerTags");
+
+    loadAnimFile("stageSelectScreen");
 
     loadAnimFile("bgLowerGui");
 

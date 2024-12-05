@@ -1,18 +1,16 @@
-#include "CharSelectState.h"
+#include "StageSelectState.h"
 #include "../Constants.h"
 #include "Game.h"
-#include "StageSelectState.h"
+#include "GameState.h"
 
 
-CharSelectState::CharSelectState(Game* game) : BaseState(game), CharSelectScreen(nullptr)
+StageSelectState::StageSelectState(Game* game) : BaseState(game), StageSelectScreen(nullptr)
 {
-    CharSelectScreen = game->asepriteManager->getAnimFile("charSelectScreen");
-    CharSelectScreen->setFrameTag("charSelectScreen-Idle");
-
-    playerTag = game->asepriteManager->getAnimFile("playerTags");
+    StageSelectScreen = game->asepriteManager->getAnimFile("stageSelectScreen");
+    StageSelectScreen->setFrameTag("stageSelectScreen-Idle");
 }
 
-CharSelectState::~CharSelectState()
+StageSelectState::~StageSelectState()
 {
 
     std::cout << "CharSelectState Destructor called, unloading resources" << std::endl;
@@ -23,10 +21,10 @@ CharSelectState::~CharSelectState()
     }
 
 
-    delete CharSelectScreen;
+    delete StageSelectScreen;
 }
 
-void CharSelectState::Enter()
+void StageSelectState::Enter()
 {
     BaseState::Enter();
 
@@ -37,14 +35,14 @@ void CharSelectState::Enter()
         game->soundManager->playBackgroundMusic("choices.mp3");
     }
 
-    // Adding characters
+    // Adding stages
     characters = {{{68, 117, 24, 24}, "Character 1"},
                   {{100, 117, 24, 24}, "Character 2"},
                   {{132, 117, 24, 24}, "Character 3"},
                   {{164, 117, 24, 24}, "Character 4"}};
 }
 
-void CharSelectState::Update(float deltaTime)
+void StageSelectState::Update(float deltaTime)
 {
     game->soundManager->updateBackgroundMusic(); // Update Music
 
@@ -52,7 +50,7 @@ void CharSelectState::Update(float deltaTime)
     if (IsKeyPressed(KEY_ENTER))
     {
 
-        game->ChangeState(std::make_unique<StageSelectState>(game));
+        game->ChangeState(std::make_unique<GameState>(game));
     }
     if (IsKeyPressed(KEY_D))
     {
@@ -89,7 +87,7 @@ void CharSelectState::Update(float deltaTime)
     }
 }
 
-void CharSelectState::Render()
+void StageSelectState::Render()
 {
     //----------------------------------------------------------------------------------
     // Draw to RenderTexture
@@ -98,14 +96,15 @@ void CharSelectState::Render()
 
     ClearBackground(GREEN);
 
-    // Draw CharSelectScreen
-    CharSelectScreen->drawCurrentSelectedTag(0, 0);
+    // Draw StageSelectScreen
+    StageSelectScreen->drawCurrentSelectedTag(0, 0);
 
+    /*
     if (selectingCharacter)
     {
-        DrawSelectionScreen(selectedCharacterP1, 1);
-        DrawSelectionScreen(selectedCharacterP2, 2);
+        DrawSelectionScreen(selectedCharacterP1);
     }
+    */
 
 
     game->screen2DManager->endDrawToRenderTarget();
@@ -124,23 +123,13 @@ void CharSelectState::Render()
 }
 
 
-void CharSelectState::Exit()
+void StageSelectState::Exit()
 {
 }
 
-void CharSelectState::DrawSelectionScreen(int selectedIndex, int playerNumber)
+void StageSelectState::DrawSelectionScreen(int selectedIndex)
 {
     // Draw
 
     DrawRectangleLinesEx(characters[selectedIndex].rect, 1.0f, Constants::RAYFIGHTER_WHITE);
-
-    // Draw player tag
-    if (playerNumber == 1)
-    {
-        playerTag->drawFrame("playerTags-P1", characters[selectedIndex].rect.x, 110, 1, WHITE);
-    }
-    else
-    {
-        playerTag->drawFrame("playerTags-P2", characters[selectedIndex].rect.x + 12, 110, 1, WHITE);
-    }
 }

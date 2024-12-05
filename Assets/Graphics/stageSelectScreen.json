@@ -1,5 +1,5 @@
 { "frames": {
-   "charSelectScreen 0.aseprite": {
+   "stageSelectScreen 0.aseprite": {
     "frame": { "x": 0, "y": 0, "w": 256, "h": 144 },
     "rotated": false,
     "trimmed": false,
@@ -7,7 +7,7 @@
     "sourceSize": { "w": 256, "h": 144 },
     "duration": 500
    },
-   "charSelectScreen 1.aseprite": {
+   "stageSelectScreen 1.aseprite": {
     "frame": { "x": 256, "y": 0, "w": 256, "h": 144 },
     "rotated": false,
     "trimmed": false,
@@ -19,7 +19,7 @@
  "meta": {
   "app": "http://www.aseprite.org/",
   "version": "1.3.10.1-x64",
-  "image": "charSelectScreen.png",
+  "image": "stageSelectScreen.png",
   "format": "RGBA8888",
   "size": { "w": 512, "h": 144 },
   "scale": "1",
@@ -28,13 +28,9 @@
    { "name": "Selected", "from": 1, "to": 1, "direction": "forward", "color": "#000000ff" }
   ],
   "layers": [
-   { "name": "BG", "opacity": 255, "blendMode": "normal" },
-   { "name": "Level", "opacity": 255, "blendMode": "normal" },
-   { "name": "moon", "opacity": 255, "blendMode": "normal" },
-   { "name": "lightenup", "opacity": 18, "blendMode": "normal" },
+   { "name": "Fighter", "opacity": 255, "blendMode": "normal" },
    { "name": "Layer 1", "opacity": 255, "blendMode": "normal" },
-   { "name": "Layer 2", "opacity": 255, "blendMode": "normal" },
-   { "name": "Flattened", "opacity": 255, "blendMode": "normal" }
+   { "name": "Layer 2", "opacity": 255, "blendMode": "normal" }
   ],
   "slices": [
   ]
