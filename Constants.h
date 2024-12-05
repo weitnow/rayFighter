@@ -27,8 +27,8 @@ const float INVINCIBLE_TIME = 1.0f; // time in seconds objects are invincible af
 const int FPS = 60;
 
 // 208 = middle of the screen, but x/y of the Fighters is taken in the upperleft Corner of the 32x32 Sprite
-const int PLAYER1_X = 0;   //128;
-const int PLAYER2_X = 380; //256;
+const int PLAYER1_X = 128; //128;
+const int PLAYER2_X = 256; //256;
 
 const Color GAMEOBJ_COLOR = YELLOW;  // used to specify the color of the debug rectangle
 const Vector2 GAMEOBJ_SIZE = {3, 3}; // used specify the size of the debug rectangle

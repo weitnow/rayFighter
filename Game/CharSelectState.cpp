@@ -9,6 +9,7 @@ CharSelectState::CharSelectState(Game* game) : BaseState(game), CharSelectScreen
     CharSelectScreen = game->asepriteManager->getAnimFile("charSelectScreen");
     CharSelectScreen->setFrameTag("charSelectScreen-Idle");
 
+
     playerTag = game->asepriteManager->getAnimFile("playerTags");
 }
 
@@ -48,6 +49,9 @@ void CharSelectState::Enter()
 void CharSelectState::Update(float deltaTime)
 {
     game->soundManager->updateBackgroundMusic(); // Update Music
+
+    // Update CharSelectScreen
+    CharSelectScreen->update(deltaTime);
 
     //handle input //todo: refactor this to inputHandler
     if (IsKeyPressed(KEY_ENTER))
@@ -115,7 +119,7 @@ void CharSelectState::Render()
     //----------------------------------------------------------------------------------
     // Draw to Screen
     //----------------------------------------------------------------------------------
-    ClearBackground(GREEN);
+    ClearBackground(Constants::RAYFIGHTER_LIGHTROSA);
     game->screen2DManager->beginDrawToScreen();
 
     // Draw RenderTexture to Screen

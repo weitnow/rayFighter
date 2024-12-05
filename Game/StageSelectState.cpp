@@ -113,7 +113,7 @@ void StageSelectState::Render()
     //----------------------------------------------------------------------------------
     // Draw to Screen
     //----------------------------------------------------------------------------------
-    ClearBackground(GREEN);
+    ClearBackground(Constants::RAYFIGHTER_LIGHTROSA);
     game->screen2DManager->beginDrawToScreen();
 
     // Draw RenderTexture to Screen

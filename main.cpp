@@ -2,6 +2,7 @@
 #include "Game/Game.h"
 #include "Game/GameState.h"
 #include "Game/MenuState.h"
+#include "Game/StageSelectState.h"
 
 
 //------------------------------------------------------------------------------------
@@ -13,6 +14,7 @@ int main(void)
 
     game->ChangeState(std::make_unique<MenuState>(game));
     //game->ChangeState(std::make_unique<CharSelectState>(game));
+    //game->ChangeState(std::make_unique<StageSelectState>(game));
     //game->ChangeState(std::make_unique<GameState>(game));
 
 

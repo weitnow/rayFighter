@@ -28,6 +28,8 @@
    { "name": "Selected", "from": 1, "to": 1, "direction": "forward", "color": "#000000ff" }
   ],
   "layers": [
+   { "name": "BG", "opacity": 255, "blendMode": "normal" },
+   { "name": "clouds", "opacity": 255, "blendMode": "normal" },
    { "name": "Fighter", "opacity": 255, "blendMode": "normal" },
    { "name": "Layer 1", "opacity": 255, "blendMode": "normal" },
    { "name": "Layer 2", "opacity": 255, "blendMode": "normal" }
