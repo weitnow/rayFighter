@@ -17,7 +17,7 @@ StageSelectState::~StageSelectState()
 
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->unloadMusic("choices.mp3");
+        game->soundManager->unloadMusic("wingchunacademy.mp3");
     }
 
 
@@ -31,8 +31,8 @@ void StageSelectState::Enter()
     // Start playing background music
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->loadMusic("choices.mp3", 1.f);
-        game->soundManager->playBackgroundMusic("choices.mp3");
+        game->soundManager->loadMusic("wingchunacademy.mp3", 1.f);
+        game->soundManager->playBackgroundMusic("wingchunacademy.mp3");
     }
 
     // Adding stages
