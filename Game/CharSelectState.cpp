@@ -24,6 +24,7 @@ CharSelectState::~CharSelectState()
 
 
     delete CharSelectScreen;
+    delete playerTag;
 }
 
 void CharSelectState::Enter()
