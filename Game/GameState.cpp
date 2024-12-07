@@ -75,7 +75,7 @@ void GameState::Update(float deltaTime)
     if (IsKeyPressed(KEY_Z)) //Z = Y because Swiss Keyboard
     {
         soundManager->playSound("earthquake.wav");
-        screen2DManager->setScreenGenericEffects("screenEffects-Earthquake", 1);
+        screen2DManager->setScreenGenericEffects("screenEffects-Leafs", 1);
         game->screen2DManager->startScreenShake(0.7f, 0.5f);
     }
 

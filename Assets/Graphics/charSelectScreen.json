@@ -69,9 +69,12 @@
   ],
   "layers": [
    { "name": "BG", "opacity": 255, "blendMode": "normal" },
+   { "name": "Ground", "opacity": 168, "blendMode": "normal" },
    { "name": "Bridge", "opacity": 255, "blendMode": "normal" },
    { "name": "moon", "opacity": 255, "blendMode": "normal" },
+   { "name": "moon Copy", "opacity": 255, "blendMode": "normal" },
    { "name": "cloud1", "opacity": 255, "blendMode": "normal" },
+   { "name": "chains", "opacity": 255, "blendMode": "normal" },
    { "name": "cloud2", "opacity": 255, "blendMode": "normal" },
    { "name": "stars", "opacity": 255, "blendMode": "normal" },
    { "name": "Fighter", "opacity": 255, "blendMode": "normal" },
