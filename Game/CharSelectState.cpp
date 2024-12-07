@@ -92,6 +92,12 @@ void CharSelectState::Update(float deltaTime)
             selectedCharacterP2 = (selectedCharacterP2 - 1 + characters.size()) % characters.size();
         }
     }
+
+
+    if (CharSelectScreen->getCurrentFrame() == 4 || CharSelectScreen->getCurrentFrame() == 12)
+    {
+        SoundManager::getInstance().playSound("thunder.wav");
+    }
 }
 
 void CharSelectState::Render()

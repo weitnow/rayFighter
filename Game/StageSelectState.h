@@ -27,11 +27,11 @@ public:
 private:
     AsepriteAnimationFile* StageSelectScreen;
 
-    List<StageOption> characters;
+    List<StageOption> stages;
 
 
-    int selectedCharacterP1 = 0;
-    int selectedCharacterP2 = 3;
+    int selectedStage = 0;
+
 
     bool selectingCharacter = true;
 };

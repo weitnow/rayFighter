@@ -23,6 +23,7 @@ SoundManager::SoundManager() : currentBackgroundMusic(nullptr)
     loadSoundEffects("1bit/manlaughs.wav", 9.0f); //not used everywhere, but in the menu
     loadSoundEffects("hit5.wav", 1.5f);
     loadSoundEffects("earthquake.wav", 1.0f);
+    loadSoundEffects("thunder.wav", 0.4f); //not used everywhere, but in the char select state
 }
 
 

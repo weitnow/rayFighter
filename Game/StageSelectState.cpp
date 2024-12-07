@@ -17,7 +17,7 @@ StageSelectState::~StageSelectState()
 
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->unloadMusic("wingchunacademy.mp3");
+        game->soundManager->unloadMusic("sunburn.mp3");
     }
 
 
@@ -31,20 +31,23 @@ void StageSelectState::Enter()
     // Start playing background music
     if (Constants::BACKGROUND_MUSIC)
     {
-        game->soundManager->loadMusic("wingchunacademy.mp3", 1.f);
-        game->soundManager->playBackgroundMusic("wingchunacademy.mp3");
+        game->soundManager->loadMusic("sunburn.mp3", 1.f);
+        game->soundManager->playBackgroundMusic("sunburn.mp3");
     }
 
     // Adding stages
-    characters = {{{68, 117, 24, 24}, "Character 1"},
-                  {{100, 117, 24, 24}, "Character 2"},
-                  {{132, 117, 24, 24}, "Character 3"},
-                  {{164, 117, 24, 24}, "Character 4"}};
+    stages = {{{68, 117, 24, 24}, "Stage 1"},
+              {{100, 117, 24, 24}, "Stage 2"},
+              {{132, 117, 24, 24}, "Stage 3"},
+              {{164, 117, 24, 24}, "Stage 4"}};
 }
 
 void StageSelectState::Update(float deltaTime)
 {
     game->soundManager->updateBackgroundMusic(); // Update Music
+
+    // Update StageSelectScreen
+    StageSelectScreen->update(deltaTime);
 
     //handle input //todo: refactor this to inputHandler
     if (IsKeyPressed(KEY_ENTER))
@@ -56,34 +59,19 @@ void StageSelectState::Update(float deltaTime)
     {
         if (selectingCharacter)
         {
-            selectedCharacterP1 = (selectedCharacterP1 + 1) % characters.size();
+            selectedStage = (selectedStage + 1) % stages.size();
         }
     }
     else if (IsKeyPressed(KEY_A))
     {
         if (selectingCharacter)
         {
-            selectedCharacterP1 = (selectedCharacterP1 - 1 + characters.size()) % characters.size();
+            selectedStage = (selectedStage - 1 + stages.size()) % stages.size();
         }
     }
     else if (IsKeyPressed(KEY_SPACE))
     {
         selectingCharacter = !selectingCharacter; // Toggle between character and stage
-    }
-
-    if (IsKeyPressed(KEY_RIGHT))
-    {
-        if (selectingCharacter)
-        {
-            selectedCharacterP2 = (selectedCharacterP2 + 1) % characters.size();
-        }
-    }
-    else if (IsKeyPressed(KEY_LEFT))
-    {
-        if (selectingCharacter)
-        {
-            selectedCharacterP2 = (selectedCharacterP2 - 1 + characters.size()) % characters.size();
-        }
     }
 }
 
@@ -99,12 +87,7 @@ void StageSelectState::Render()
     // Draw StageSelectScreen
     StageSelectScreen->drawCurrentSelectedTag(0, 0);
 
-    /*
-    if (selectingCharacter)
-    {
-        DrawSelectionScreen(selectedCharacterP1);
-    }
-    */
+    DrawSelectionScreen(selectedStage);
 
 
     game->screen2DManager->endDrawToRenderTarget();
@@ -131,5 +114,5 @@ void StageSelectState::DrawSelectionScreen(int selectedIndex)
 {
     // Draw
 
-    DrawRectangleLinesEx(characters[selectedIndex].rect, 1.0f, Constants::RAYFIGHTER_WHITE);
+    DrawRectangleLinesEx(stages[selectedIndex].rect, 1.0f, Constants::RAYFIGHTER_WHITE);
 }

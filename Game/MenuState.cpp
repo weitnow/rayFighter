@@ -10,7 +10,6 @@ MenuState::MenuState(Game* game)
 
 MenuState::~MenuState()
 {
-    //deletion of heap memory is in the exit method
 
     delete aafTitleScreen;
     aafTitleScreen = nullptr;
@@ -111,8 +110,8 @@ void MenuState::Render()
     // draw options
     if (selectedOption == PLAY)
     {
-        DrawText("1P Start",
-                 Constants::RENDERTARGET_WIDTH / 2 - MeasureText("1P Start", 8) / 2,
+        DrawText("Play",
+                 Constants::RENDERTARGET_WIDTH / 2 - MeasureText("Play", 8) / 2,
                  105,
                  8,
                  Constants::RAYFIGHTER_WHITE);
