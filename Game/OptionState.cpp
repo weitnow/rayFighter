@@ -1,16 +1,16 @@
-#include "StageSelectState.h"
+#include "OptionState.h"
 #include "../Constants.h"
 #include "Game.h"
 #include "GameState.h"
 
 
-StageSelectState::StageSelectState(Game* game) : BaseState(game), StageSelectScreen(nullptr)
+OptionSelectState::OptionSelectState(Game* game) : BaseState(game), OptionSelectScreen(nullptr)
 {
-    StageSelectScreen = game->asepriteManager->getAnimFile("stageSelectScreen");
-    StageSelectScreen->setFrameTag("stageSelectScreen-Idle");
+    OptionSelectScreen = game->asepriteManager->getAnimFile("OptionSelectScreen");
+    OptionSelectScreen->setFrameTag("OptionSelectScreen-Idle");
 }
 
-StageSelectState::~StageSelectState()
+OptionSelectState::~OptionSelectState()
 {
 
     std::cout << "CharSelectState Destructor called, unloading resources" << std::endl;
@@ -21,10 +21,10 @@ StageSelectState::~StageSelectState()
     }
 
 
-    delete StageSelectScreen;
+    delete OptionSelectScreen;
 }
 
-void StageSelectState::Enter()
+void OptionSelectState::Enter()
 {
     BaseState::Enter();
 
@@ -34,20 +34,14 @@ void StageSelectState::Enter()
         game->soundManager->loadMusic("sunburn.mp3", 1.f);
         game->soundManager->playBackgroundMusic("sunburn.mp3");
     }
-
-    // Adding stages
-    stages = {{{68, 117, 24, 24}, "Stage 1"},
-              {{100, 117, 24, 24}, "Stage 2"},
-              {{132, 117, 24, 24}, "Stage 3"},
-              {{164, 117, 24, 24}, "Stage 4"}};
 }
 
-void StageSelectState::Update(float deltaTime)
+void OptionSelectState::Update(float deltaTime)
 {
     game->soundManager->updateBackgroundMusic(); // Update Music
 
-    // Update StageSelectScreen
-    StageSelectScreen->update(deltaTime);
+    // Update OptionSelectScreen
+    OptionSelectScreen->update(deltaTime);
 
     //handle input //todo: refactor this to inputHandler
     if (IsKeyPressed(KEY_ENTER))
@@ -55,27 +49,9 @@ void StageSelectState::Update(float deltaTime)
 
         game->ChangeState(std::make_unique<GameState>(game));
     }
-    if (IsKeyPressed(KEY_D))
-    {
-        if (selectingCharacter)
-        {
-            selectedStage = (selectedStage + 1) % stages.size();
-        }
-    }
-    else if (IsKeyPressed(KEY_A))
-    {
-        if (selectingCharacter)
-        {
-            selectedStage = (selectedStage - 1 + stages.size()) % stages.size();
-        }
-    }
-    else if (IsKeyPressed(KEY_SPACE))
-    {
-        selectingCharacter = !selectingCharacter; // Toggle between character and stage
-    }
 }
 
-void StageSelectState::Render()
+void OptionSelectState::Render()
 {
     //----------------------------------------------------------------------------------
     // Draw to RenderTexture
@@ -84,10 +60,8 @@ void StageSelectState::Render()
 
     ClearBackground(GREEN);
 
-    // Draw StageSelectScreen
-    StageSelectScreen->drawCurrentSelectedTag(0, 0);
-
-    DrawSelectionScreen(selectedStage);
+    // Draw OptionSelectScreen
+    OptionSelectScreen->drawCurrentSelectedTag(0, 0);
 
 
     game->screen2DManager->endDrawToRenderTarget();
@@ -96,7 +70,7 @@ void StageSelectState::Render()
     //----------------------------------------------------------------------------------
     // Draw to Screen
     //----------------------------------------------------------------------------------
-    ClearBackground(BLACK);
+    ClearBackground(Constants::RAYFIGHTER_LIGHTROSA);
     game->screen2DManager->beginDrawToScreen();
 
     // Draw RenderTexture to Screen
@@ -109,13 +83,6 @@ void StageSelectState::Render()
 }
 
 
-void StageSelectState::Exit()
+void OptionSelectState::Exit()
 {
-}
-
-void StageSelectState::DrawSelectionScreen(int selectedIndex)
-{
-    // Draw
-
-    DrawRectangleLinesEx(stages[selectedIndex].rect, 1.0f, Constants::RAYFIGHTER_WHITE);
 }

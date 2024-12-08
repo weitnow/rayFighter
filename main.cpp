@@ -1,6 +1,7 @@
 #include "Game/CharSelectState.h"
 #include "Game/Game.h"
 #include "Game/GameState.h"
+#include "Game/IntroState.h"
 #include "Game/MenuState.h"
 #include "Game/StageSelectState.h"
 
@@ -12,7 +13,8 @@ int main(void)
 {
     Game* game = new Game(); // will initialize all global components
 
-    game->ChangeState(std::make_unique<MenuState>(game));
+    game->ChangeState(std::make_unique<IntroState>(game));
+    //game->ChangeState(std::make_unique<MenuState>(game));
     //game->ChangeState(std::make_unique<CharSelectState>(game));
     //game->ChangeState(std::make_unique<StageSelectState>(game));
     //game->ChangeState(std::make_unique<GameState>(game));

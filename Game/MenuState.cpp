@@ -140,7 +140,7 @@ void MenuState::Render()
     //----------------------------------------------------------------------------------
     game->screen2DManager->beginDrawToScreen();
 
-    ClearBackground(Constants::RAYFIGHTER_LIGHTROSA);
+    ClearBackground(BLACK);
 
     // Draw RenderTexture to Screen
     game->screen2DManager->drawRenderTarget();

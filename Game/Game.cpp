@@ -15,7 +15,7 @@ Game::Game() : quit(false)
                                           RenderResolution::R_1280x720); // instance of Screen2DManager
 
 
-    screen2DManager->changeScreenResolution(ScreenResolution::S_800x600); // set the screen resolution
+    screen2DManager->changeScreenResolution(ScreenResolution::S_1920x1080); // set the screen resolution
 
     soundManager = &SoundManager::getInstance();
     inputHandler = new InputHandler();

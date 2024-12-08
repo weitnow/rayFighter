@@ -338,6 +338,9 @@ void AsepriteManager::init()
     loadAnimFile("bgLowerGui");
 
     loadAnimFile("screenEffects");
+
+    loadAnimFile("gbIntro");
+    getFrameTag("gbIntro-Intro").loop = false;
 }
 
 nlohmann::json* AsepriteManager::loadJsonFile(const std::string& filename)
