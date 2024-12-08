@@ -65,7 +65,8 @@ public:
     void draw();        // ScreenEffects
     void drawOverlay(); // draw the gameboy Overlay
 
-    void setRenderResolution(RenderResolution resolution);
+    void _setRenderResolution(RenderResolution resolution);
+    void changeScreenResolution(ScreenResolution resolution);
     void cycleThroughResolutions();
 
     void startScreenShake(float intensity, float duration);
@@ -111,7 +112,7 @@ private:
 
     // Member functions
     void _calculateOverlaySize();
-
+    void _setScreenResolution(ScreenResolution resolution);
     void _updateScreenShake(float deltaTime);          // private, is called in update
     void _updateScreenGenericEffects(float deltaTime); // private, is called in update
     void _unloadScreenGenericEffects();                // will be called in the destructor

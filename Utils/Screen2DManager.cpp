@@ -39,36 +39,7 @@ Screen2DManager::Screen2DManager(const ScreenResolution screenResolution,
 {
 
     // Set the screen width and height
-    if (screenResolution == ScreenResolution::S_640x480)
-    {
-        screenWidth = 640;
-        screenHeight = 480;
-    }
-    else if (screenResolution == ScreenResolution::S_800x600)
-    {
-        screenWidth = 800;
-        screenHeight = 600;
-    }
-    else if (screenResolution == ScreenResolution::S_1280x720)
-    {
-        screenWidth = 1280;
-        screenHeight = 720;
-    }
-    else if (screenResolution == ScreenResolution::S_1920x1080)
-    {
-        screenWidth = 1920;
-        screenHeight = 1080;
-    }
-    else if (screenResolution == ScreenResolution::S_2560x1440)
-    {
-        screenWidth = 2560;
-        screenHeight = 1440;
-    }
-    else if (screenResolution == ScreenResolution::S_3440x1440)
-    {
-        screenWidth = 3440;
-        screenHeight = 1440;
-    }
+    _setScreenResolution(screenResolution);
 
     // Initialize window
     InitWindow(screenWidth, screenHeight, windowTitle);
@@ -93,7 +64,7 @@ Screen2DManager::Screen2DManager(const ScreenResolution screenResolution,
     _calculateOverlaySize();
 
     // set Resolution of the destRec (not the screen resolution)
-    this->setRenderResolution(resolution);
+    this->_setRenderResolution(resolution);
 }
 
 Screen2DManager::~Screen2DManager()
@@ -160,7 +131,7 @@ void Screen2DManager::drawOverlay()
     DrawTextureEx(gameboyOverlay, (Vector2){_overlayOffsetX, _overlayOffsetY}, 0.0f, _scaleFactorOverlay, WHITE);
 }
 
-void Screen2DManager::setRenderResolution(RenderResolution resolution)
+void Screen2DManager::_setRenderResolution(RenderResolution resolution)
 {
     this->resolution = resolution;
 
@@ -169,12 +140,12 @@ void Screen2DManager::setRenderResolution(RenderResolution resolution)
         resolutionWidth = 256;
         resolutionHeight = 144;
     }
-    else if (resolution == RenderResolution::R_512x288)
+    else if (resolution == RenderResolution::R_512x288) // used for 640x480 with GB Overlay
     {
         resolutionWidth = 512;
         resolutionHeight = 288;
     }
-    else if (resolution == RenderResolution::R_768x432)
+    else if (resolution == RenderResolution::R_768x432) // used for 1280x720 and 800 x 600 with GB overlay
     {
         resolutionWidth = 768;
         resolutionHeight = 432;
@@ -189,7 +160,7 @@ void Screen2DManager::setRenderResolution(RenderResolution resolution)
         resolutionWidth = 1120;
         resolutionHeight = 630;
     }
-    else if (resolution == RenderResolution::R_1280x720)
+    else if (resolution == RenderResolution::R_1280x720) // used for 1920 x 1080 with GB overlay
     {
         resolutionWidth = 1280;
         resolutionHeight = 720;
@@ -199,7 +170,7 @@ void Screen2DManager::setRenderResolution(RenderResolution resolution)
         resolutionWidth = 1536;
         resolutionHeight = 864;
     }
-    else if (resolution == RenderResolution::R_1792x1008)
+    else if (resolution == RenderResolution::R_1792x1008) // used for 2560 x 1440 and 3440 x 1440 with GB overlay
     {
         resolutionWidth = 1792;
         resolutionHeight = 1008;
@@ -228,6 +199,42 @@ void Screen2DManager::setRenderResolution(RenderResolution resolution)
                static_cast<float>(resolutionHeight)};
 }
 
+void Screen2DManager::changeScreenResolution(ScreenResolution resolution)
+{
+    // set Screen Resolution
+    _setScreenResolution(resolution);
+
+
+    // set Resolution of the renderTarget
+    switch (resolution)
+    {
+    case ScreenResolution::S_640x480:
+        _setRenderResolution(RenderResolution::R_512x288);
+        break;
+    case ScreenResolution::S_800x600:
+        _setRenderResolution(RenderResolution::R_768x432);
+        break;
+    case ScreenResolution::S_1280x720:
+        _setRenderResolution(RenderResolution::R_768x432);
+        break;
+    case ScreenResolution::S_1920x1080:
+        _setRenderResolution(RenderResolution::R_1280x720);
+        break;
+    case ScreenResolution::S_2560x1440:
+        _setRenderResolution(RenderResolution::R_1792x1008);
+        break;
+    case ScreenResolution::S_3440x1440:
+        _setRenderResolution(RenderResolution::R_1792x1008);
+        break;
+    }
+
+    // change screen height and width
+    SetWindowSize(screenWidth, screenHeight); // Raylib function
+
+    // calculate the gameboy overlay size
+    _calculateOverlaySize();
+}
+
 void Screen2DManager::cycleThroughResolutions()
 {
     int value = EnumToValue(resolution);
@@ -237,7 +244,7 @@ void Screen2DManager::cycleThroughResolutions()
         value = 1;
     }
     RenderResolution newResolution = static_cast<RenderResolution>(value);
-    setRenderResolution(newResolution);
+    _setRenderResolution(newResolution);
 }
 
 void Screen2DManager::startScreenShake(float intensity, float duration)
@@ -261,6 +268,40 @@ void Screen2DManager::_calculateOverlaySize()
     // Calculate the X position to center the texture
     _overlayOffsetX = (screenWidth - _scaledOverlayWidth) / 2.0f;
     _overlayOffsetY = 0.0f; // Always start at the top of the screen
+}
+
+void Screen2DManager::_setScreenResolution(ScreenResolution resolution)
+{
+    if (resolution == ScreenResolution::S_640x480)
+    {
+        screenWidth = 640;
+        screenHeight = 480;
+    }
+    else if (resolution == ScreenResolution::S_800x600)
+    {
+        screenWidth = 800;
+        screenHeight = 600;
+    }
+    else if (resolution == ScreenResolution::S_1280x720)
+    {
+        screenWidth = 1280;
+        screenHeight = 720;
+    }
+    else if (resolution == ScreenResolution::S_1920x1080)
+    {
+        screenWidth = 1920;
+        screenHeight = 1080;
+    }
+    else if (resolution == ScreenResolution::S_2560x1440)
+    {
+        screenWidth = 2560;
+        screenHeight = 1440;
+    }
+    else if (resolution == ScreenResolution::S_3440x1440)
+    {
+        screenWidth = 3440;
+        screenHeight = 1440;
+    }
 }
 
 void Screen2DManager::_updateScreenShake(float deltaTime)

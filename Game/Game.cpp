@@ -12,7 +12,10 @@ Game::Game() : quit(false)
     // Initialize screen2DManager and set window size and title, this has to be done first before everything else
     screen2DManager = new Screen2DManager(ScreenResolution::S_1920x1080,
                                           "C++ RayFighter",
-                                          RenderResolution::R_1792x1008); // instance of Screen2DManager
+                                          RenderResolution::R_1280x720); // instance of Screen2DManager
+
+
+    screen2DManager->changeScreenResolution(ScreenResolution::S_800x600); // set the screen resolution
 
     soundManager = &SoundManager::getInstance();
     inputHandler = new InputHandler();
