@@ -102,6 +102,9 @@ void StageSelectState::Render()
     // Draw RenderTexture to Screen
     game->screen2DManager->drawRenderTarget();
 
+    // render overlay
+    game->screen2DManager->drawOverlay();
+
     game->screen2DManager->endDrawToScreen();
 }
 

@@ -86,6 +86,12 @@ Screen2DManager::Screen2DManager(const ScreenResolution screenResolution,
     renderTarget = LoadRenderTexture(Constants::RENDERTARGET_WIDTH, Constants::RENDERTARGET_HEIGHT);
     sourceRec = {0.0f, 0.0f, Constants::RENDERTARGET_WIDTH, -Constants::RENDERTARGET_HEIGHT};
 
+    // load the gameboy overlay
+    gameboyOverlay = LoadTexture("Assets/Graphics/overlay.png");
+
+    // calculate the gameboy overlay size
+    _calculateOverlaySize();
+
     // set Resolution of the destRec (not the screen resolution)
     this->setRenderResolution(resolution);
 }
@@ -93,6 +99,8 @@ Screen2DManager::Screen2DManager(const ScreenResolution screenResolution,
 Screen2DManager::~Screen2DManager()
 {
     UnloadRenderTexture(renderTarget); // Raylib function
+
+    UnloadTexture(gameboyOverlay); // Raylib function
 
     if (screenGenericEffectsAnimFile != nullptr)
     {
@@ -145,6 +153,11 @@ void Screen2DManager::draw()
                                                              1,
                                                              WHITE); // y value = 40 because the hud is 40px high
     }
+}
+
+void Screen2DManager::drawOverlay()
+{
+    DrawTextureEx(gameboyOverlay, (Vector2){_overlayOffsetX, _overlayOffsetY}, 0.0f, _scaleFactorOverlay, WHITE);
 }
 
 void Screen2DManager::setRenderResolution(RenderResolution resolution)
@@ -234,6 +247,20 @@ void Screen2DManager::startScreenShake(float intensity, float duration)
     shake.duration = duration;
     shake.elapsedTime = 0.0f;
     shake.currentOffset = {0.0f, 0.0f};
+}
+
+void Screen2DManager::_calculateOverlaySize()
+{
+    // calculate scaleFactor of the gameboyOverlayTexture to fit the height of the screen
+    _scaleFactorOverlay = (float)screenHeight / gameboyOverlay.height;
+
+    // calculate the scaled height and width of the overlay
+    _scaledOverlayWidth = gameboyOverlay.width * _scaleFactorOverlay;
+    _scaledOverlayHeight = gameboyOverlay.height * _scaleFactorOverlay;
+
+    // Calculate the X position to center the texture
+    _overlayOffsetX = (screenWidth - _scaledOverlayWidth) / 2.0f;
+    _overlayOffsetY = 0.0f; // Always start at the top of the screen
 }
 
 void Screen2DManager::_updateScreenShake(float deltaTime)

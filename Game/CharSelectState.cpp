@@ -53,6 +53,11 @@ void CharSelectState::Update(float deltaTime)
     // Update CharSelectScreen
     CharSelectScreen->update(deltaTime);
 
+    if (CharSelectScreen->getCurrentFrame() == 4 || CharSelectScreen->getCurrentFrame() == 12)
+    {
+        SoundManager::getInstance().playSound("thunder.wav");
+    }
+
     //handle input //todo: refactor this to inputHandler
     if (IsKeyPressed(KEY_ENTER))
     {
@@ -92,12 +97,6 @@ void CharSelectState::Update(float deltaTime)
             selectedCharacterP2 = (selectedCharacterP2 - 1 + characters.size()) % characters.size();
         }
     }
-
-
-    if (CharSelectScreen->getCurrentFrame() == 4 || CharSelectScreen->getCurrentFrame() == 12)
-    {
-        SoundManager::getInstance().playSound("thunder.wav");
-    }
 }
 
 void CharSelectState::Render()
@@ -130,6 +129,9 @@ void CharSelectState::Render()
 
     // Draw RenderTexture to Screen
     game->screen2DManager->drawRenderTarget();
+
+    // render overlay
+    game->screen2DManager->drawOverlay();
 
     game->screen2DManager->endDrawToScreen();
 }

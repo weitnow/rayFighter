@@ -202,6 +202,13 @@ void GameState::Render()
 
         debugInfo->draw();
     }
+
+    // render overlay only if not in debug mode
+    if (!Global::debugMode)
+    {
+        game->screen2DManager->drawOverlay();
+    }
+
     game->screen2DManager->endDrawToScreen();
 }
 

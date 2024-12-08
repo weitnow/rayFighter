@@ -24,6 +24,7 @@ int main(void)
         game->Update();
         game->Render();
 
+
         //Todo: remove this
         if (IsKeyPressed(KEY_M))
         {

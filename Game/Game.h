@@ -31,6 +31,7 @@ public:
     AsepriteManager* asepriteManager;
     GameManager* gameManager;
 
+
     float deltaTime;
 };
 

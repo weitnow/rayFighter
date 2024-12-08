@@ -62,7 +62,8 @@ public:
     void endDrawToScreen();
 
     void update(float deltaTime);
-    void draw(); // ScreenEffects
+    void draw();        // ScreenEffects
+    void drawOverlay(); // draw the gameboy Overlay
 
     void setRenderResolution(RenderResolution resolution);
     void cycleThroughResolutions();
@@ -79,6 +80,13 @@ public:
 
 private:
     // Member variables
+    Texture2D gameboyOverlay;       // the overlay texture
+    float _scaleFactorOverlay = 0;  // calculated in _calculateOverlaySize
+    float _scaledOverlayHeight = 0; // calculated in _calculateOverlaySize
+    float _scaledOverlayWidth = 0;  // calculated in _calculateOverlaySize
+    float _overlayOffsetX = 0;      // calculated in _calculateOverlaySize
+    float _overlayOffsetY = 0;      // calculated in _calculateOverlaySize
+
     RenderTexture2D renderTarget; // the renderTarget to draw to, which is 256x144 and will be scaled up
     Rectangle destRec;            // the destination rectangle for the renderTarget (size of the renderTarget)
     Rectangle sourceRec;          // the source rectangle (256x144)
@@ -102,6 +110,8 @@ private:
     bool _previousAnimJustFinished = false; // bool of the animation file
 
     // Member functions
+    void _calculateOverlaySize();
+
     void _updateScreenShake(float deltaTime);          // private, is called in update
     void _updateScreenGenericEffects(float deltaTime); // private, is called in update
     void _unloadScreenGenericEffects();                // will be called in the destructor
