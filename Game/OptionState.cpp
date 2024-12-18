@@ -6,8 +6,8 @@
 
 OptionSelectState::OptionSelectState(Game* game) : BaseState(game), OptionSelectScreen(nullptr)
 {
-    OptionSelectScreen = game->asepriteManager->getAnimFile("OptionSelectScreen");
-    OptionSelectScreen->setFrameTag("OptionSelectScreen-Idle");
+    OptionSelectScreen = game->asepriteManager->getAnimFile("optionSelectScreen");
+    OptionSelectScreen->setFrameTag("optionSelectScreen-Idle");
 }
 
 OptionSelectState::~OptionSelectState()

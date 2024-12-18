@@ -341,6 +341,8 @@ void AsepriteManager::init()
 
     loadAnimFile("gbIntro");
     getFrameTag("gbIntro-Intro").loop = false;
+
+    loadAnimFile("optionSelectScreen");
 }
 
 nlohmann::json* AsepriteManager::loadJsonFile(const std::string& filename)

@@ -1,6 +1,7 @@
 #include "MenuState.h"
 #include "CharSelectState.h"
 #include "Game.h"
+#include "OptionState.h"
 
 
 MenuState::MenuState(Game* game)
@@ -42,6 +43,8 @@ void MenuState::Update(float deltaTime)
     //game->inputHandler->Update();                // Handle Input //todo: refactor this to inputHandler
     game->soundManager->updateBackgroundMusic(); // Update Music
 
+    aafTitleScreen->update(game->deltaTime);
+
     //handle input //todo: refactor this to inputHandler
 
     if (IsKeyPressed(KEY_DOWN))
@@ -63,6 +66,7 @@ void MenuState::Update(float deltaTime)
         {
             // Handle options (e.g., open options menu)
             std::cout << "Opening options..." << std::endl;
+            game->ChangeState(std::make_unique<OptionSelectState>(game));
         }
         else if (selectedOption == EXIT)
         {
@@ -71,8 +75,6 @@ void MenuState::Update(float deltaTime)
             game->quit = true;
         }
     }
-
-    aafTitleScreen->update(game->deltaTime);
 
     if (gameAboutToStart)
 
