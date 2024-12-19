@@ -22,3 +22,7 @@ BaseState::~BaseState()
 void BaseState::Enter()
 {
 }
+
+void BaseState::Pause()
+{
+}

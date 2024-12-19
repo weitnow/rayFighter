@@ -7,7 +7,7 @@
 OptionSelectState::OptionSelectState(Game* game) : BaseState(game), OptionSelectScreen(nullptr)
 {
     OptionSelectScreen = game->asepriteManager->getAnimFile("optionSelectScreen");
-    OptionSelectScreen->setFrameTag("optionSelectScreen-Idle");
+    OptionSelectScreen->setFrameTag("optionSelectScreen-Intro");
 }
 
 OptionSelectState::~OptionSelectState()
@@ -43,11 +43,23 @@ void OptionSelectState::Update(float deltaTime)
     // Update OptionSelectScreen
     OptionSelectScreen->update(deltaTime);
 
+    if (OptionSelectScreen->getCurrentFrame() == OptionSelectScreen->getMaxFrame())
+    {
+        OptionSelectScreen->setFrameTag("optionSelectScreen-Idle");
+    }
+
     //handle input //todo: refactor this to inputHandler
     if (IsKeyPressed(KEY_ENTER))
     {
 
         game->ChangeState(std::make_unique<GameState>(game));
+    }
+
+    // check if ESC key is pressed or windows close button is clicked
+    if (IsKeyPressed(KEY_ESCAPE) || WindowShouldClose())
+    {
+        //pop this state and return to menu
+        game->PopState();
     }
 }
 

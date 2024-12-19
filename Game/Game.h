@@ -7,6 +7,7 @@
 #include "../Utils/SoundManager.h"
 #include "BaseState.h"
 #include <memory>
+#include <stack>
 
 
 class Game
@@ -17,22 +18,28 @@ public:
     ~Game();
 
     void ChangeState(std::unique_ptr<BaseState> newState);
+    void PushState(std::unique_ptr<BaseState> newState);
+    void PopState();
+
     void Update();
     void Render();
     bool quit;
 
-    //private:
-    std::unique_ptr<BaseState> currentState;
-
+public:
     // Global components
     Screen2DManager* screen2DManager;
     SoundManager* soundManager;
     InputHandler* inputHandler;
     AsepriteManager* asepriteManager;
     GameManager* gameManager;
-
-
     float deltaTime;
+
+private:
+    using StateStack = std::stack<std::unique_ptr<BaseState>>;
+
+private:
+    std::unique_ptr<BaseState> currentState;
+    StateStack stateStack;
 };
 
 #endif

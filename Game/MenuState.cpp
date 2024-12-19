@@ -47,6 +47,12 @@ void MenuState::Update(float deltaTime)
 
     //handle input //todo: refactor this to inputHandler
 
+    // check if ESC key is pressed or windows close button is clicked
+    if (IsKeyPressed(KEY_ESCAPE) || WindowShouldClose())
+    {
+        game->quit = true;
+    }
+
     if (IsKeyPressed(KEY_DOWN))
         selectedOption = (selectedOption + 1) % NUM_OPTIONS;
     if (IsKeyPressed(KEY_UP))
@@ -66,7 +72,9 @@ void MenuState::Update(float deltaTime)
         {
             // Handle options (e.g., open options menu)
             std::cout << "Opening options..." << std::endl;
-            game->ChangeState(std::make_unique<OptionSelectState>(game));
+            //game->ChangeState(std::make_unique<OptionSelectState>(game));
+
+            game->PushState(std::make_unique<OptionSelectState>(game));
         }
         else if (selectedOption == EXIT)
         {

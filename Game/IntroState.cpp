@@ -38,11 +38,16 @@ void IntroState::Enter()
 
 void IntroState::Update(float deltaTime)
 {
-    //game->inputHandler->Update();                // Handle Input //todo: refactor this to inputHandler
+    //game->inputHandler->Update();                // Handle Input
     //game->soundManager->updateBackgroundMusic(); // Update Music
 
-    //handle input //todo: refactor this to inputHandler
+    //handle input
 
+    // check if ESC key is pressed or windows close button is clicked
+    if (IsKeyPressed(KEY_ESCAPE) || WindowShouldClose())
+    {
+        game->quit = true;
+    }
 
     IntroScreen->update(game->deltaTime);
 

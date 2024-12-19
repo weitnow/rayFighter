@@ -21,7 +21,7 @@ int main(void)
 
 
     // Main game loop
-    while (!WindowShouldClose() && !game->quit) // Detect window close button or ESC key
+    while (!game->quit)
     {
         game->Update();
         game->Render();

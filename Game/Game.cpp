@@ -37,36 +37,63 @@ Game::~Game()
     delete inputHandler;    //deallocate memory on the heap
     delete asepriteManager; //deallocate memory on the heap
 
+    // Ensure the stack is cleard
+    while (!stateStack.empty())
+    {
+        stateStack.top()->Exit();
+        stateStack.pop();
+    }
+
     // soundManager is a singleton and will be deleted automatically
 }
 
 void Game::ChangeState(std::unique_ptr<BaseState> newState)
 {
-    if (currentState)
+    if (!stateStack.empty())
     {
-        currentState->Exit();
+        stateStack.top()->Exit(); // Finalize the current state
+        stateStack.pop();         // Remove it from the stack
     }
-    currentState = std::move(newState);
-    currentState->Enter();
+    stateStack.push(std::move(newState));
+    stateStack.top()->Enter(); // Initialize the new state
+}
+
+void Game::PushState(std::unique_ptr<BaseState> newState)
+{
+    if (!stateStack.empty())
+    {
+        stateStack.top()->Exit(); // Todo: Replace with Pause
+    }
+    stateStack.push(std::move(newState));
+    stateStack.top()->Enter(); // Initialize the new state
+}
+
+void Game::PopState()
+{
+    if (!stateStack.empty())
+    {
+        stateStack.top()->Exit(); // Finalize the current state
+        stateStack.pop();         // Remove it from the stack
+    }
+    if (!stateStack.empty())
+    {
+        stateStack.top()->Enter(); // Todo: Replace with Resume
+    }
 }
 
 void Game::Update()
 {
     deltaTime = GetFrameTime();
-    if (currentState)
+    if (!stateStack.empty())
     {
-        currentState->Update(deltaTime);
-    }
-    else
-    {
-        throw std::runtime_error("Game.cpp: currentState is nullptr");
+        stateStack.top()->Update(deltaTime);
     }
 }
 
 void Game::Render()
 {
-    if (currentState)
+    if (!stateStack.empty())
     {
-        currentState->Render();
+        stateStack.top()->Render();
     }
 }
