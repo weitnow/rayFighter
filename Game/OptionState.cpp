@@ -70,7 +70,7 @@ void OptionSelectState::Render()
     //----------------------------------------------------------------------------------
     // Draw to Screen
     //----------------------------------------------------------------------------------
-    ClearBackground(Constants::RAYFIGHTER_LIGHTROSA);
+    ClearBackground(BLACK);
     game->screen2DManager->beginDrawToScreen();
 
     // Draw RenderTexture to Screen
