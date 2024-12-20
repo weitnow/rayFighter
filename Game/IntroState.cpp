@@ -92,6 +92,14 @@ void IntroState::Render()
     game->screen2DManager->endDrawToScreen();
 }
 
+void IntroState::Pause()
+{
+}
+
+void IntroState::Resume()
+{
+}
+
 
 void IntroState::Exit()
 {

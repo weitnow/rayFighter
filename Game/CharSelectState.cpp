@@ -44,11 +44,17 @@ void CharSelectState::Enter()
                   {{100, 117, 24, 24}, "Character 2"},
                   {{132, 117, 24, 24}, "Character 3"},
                   {{164, 117, 24, 24}, "Character 4"}};
+
+    // fade in
+    //screen2DManager->fadeIn(1.0f);
+    screen2DManager->slideEffect(7.0f, 0);
 }
 
 void CharSelectState::Update(float deltaTime)
 {
     game->soundManager->updateBackgroundMusic(); // Update Music
+
+    screen2DManager->update(game->deltaTime);
 
     // Update CharSelectScreen
     CharSelectScreen->update(deltaTime);
@@ -59,6 +65,13 @@ void CharSelectState::Update(float deltaTime)
     }
 
     //handle input //todo: refactor this to inputHandler
+    // check if ESC key is pressed or windows close button is clicked
+    if (IsKeyPressed(KEY_ESCAPE) || WindowShouldClose())
+    {
+        //pop this state and return to menu
+        game->PopState();
+    }
+
     if (IsKeyPressed(KEY_ENTER))
     {
 
@@ -117,6 +130,7 @@ void CharSelectState::Render()
         DrawSelectionScreen(selectedCharacterP2, 2);
     }
 
+    screen2DManager->draw();
 
     game->screen2DManager->endDrawToRenderTarget();
 
@@ -134,6 +148,16 @@ void CharSelectState::Render()
     game->screen2DManager->drawOverlay();
 
     game->screen2DManager->endDrawToScreen();
+}
+
+void CharSelectState::Pause()
+{
+    PauseMusic();
+}
+
+void CharSelectState::Resume()
+{
+    ResumeMusic();
 }
 
 
@@ -156,4 +180,14 @@ void CharSelectState::DrawSelectionScreen(int selectedIndex, int playerNumber)
     {
         playerTag->drawFrame("playerTags-P2", characters[selectedIndex].rect.x + 12, 110, 1, WHITE);
     }
+}
+
+void CharSelectState::PauseMusic()
+{
+    game->soundManager->stopBackgroundMusic();
+}
+
+void CharSelectState::ResumeMusic()
+{
+    game->soundManager->playBackgroundMusic("choices.mp3");
 }

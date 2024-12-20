@@ -476,7 +476,6 @@ FrameTag& AsepriteManager::getFrameTag(const std::string& filenameTagname)
     }
 }
 
-
 AsepriteAnimationFile* AsepriteManager::getAnimFile(const std::string& filename)
 {
     auto it = this->textures.find(filename);

@@ -74,6 +74,12 @@ inline bool checkCollision(CollisionBox2D* box1ptr, CollisionBox2D* box2ptr)
                               box2ptr->getRectangle()); // Assuming you are using raylib's CheckCollisionRecs()
 }
 
+template <typename T>
+T clamp(T value, T min, T max)
+{
+    return std::max(min, std::min(value, max));
+}
+
 } // namespace Utils
 
 class Timer

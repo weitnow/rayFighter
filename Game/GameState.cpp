@@ -69,8 +69,15 @@ void GameState::Enter()
 
 void GameState::Update(float deltaTime)
 {
+    // check if ESC key is pressed or windows close button is clicked
+    if (IsKeyPressed(KEY_ESCAPE) || WindowShouldClose())
+    {
+        //pop this state and return to menu
+        game->PopState();
+    }
 
     game->inputHandler->Update(); // Handle Input
+
     // TODO: remove this
     if (IsKeyPressed(KEY_Z)) //Z = Y because Swiss Keyboard
     {
@@ -79,6 +86,7 @@ void GameState::Update(float deltaTime)
         game->screen2DManager->startScreenShake(0.7f, 0.5f);
     }
 
+    screen2DManager->update(game->deltaTime);
 
     _updateIsLeftPlayer1and2(); // Check if player1 is left of player2
 
@@ -115,9 +123,6 @@ void GameState::Update(float deltaTime)
 
     // Update the HUD
     gui->update(deltaTime);
-
-    // Update Screenmanager
-    game->screen2DManager->update(deltaTime); // for Screeneffects
 }
 
 void GameState::Render()
@@ -210,6 +215,14 @@ void GameState::Render()
     }
 
     game->screen2DManager->endDrawToScreen();
+}
+
+void GameState::Pause()
+{
+}
+
+void GameState::Resume()
+{
 }
 
 void GameState::Exit()

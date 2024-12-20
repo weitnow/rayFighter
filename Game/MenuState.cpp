@@ -40,10 +40,12 @@ void MenuState::Enter()
 
 void MenuState::Update(float deltaTime)
 {
-    //game->inputHandler->Update();                // Handle Input //todo: refactor this to inputHandler
     game->soundManager->updateBackgroundMusic(); // Update Music
 
     aafTitleScreen->update(game->deltaTime);
+
+    screen2DManager->update(game->deltaTime);
+
 
     //handle input //todo: refactor this to inputHandler
 
@@ -65,14 +67,18 @@ void MenuState::Update(float deltaTime)
             // Start the game
             std::cout << "Starting the game..." << std::endl;
             gameAboutToStart = true;
-            game->soundManager->playSound("bloodSplatter.mp3");
+            if (!deadSoundPlayed)
+            {
+                game->soundManager->playSound("bloodSplatter.mp3");
+            }
+
+
             aafTitleScreen->setFrameTag("titleScreen-Transition");
         }
         else if (selectedOption == OPTIONS)
         {
             // Handle options (e.g., open options menu)
             std::cout << "Opening options..." << std::endl;
-            //game->ChangeState(std::make_unique<OptionSelectState>(game));
 
             game->PushState(std::make_unique<OptionSelectState>(game));
         }
@@ -84,22 +90,29 @@ void MenuState::Update(float deltaTime)
         }
     }
 
-    if (gameAboutToStart)
 
+    if (gameAboutToStart)
     {
         timerInMs -= game->deltaTime;
 
-        if (timerInMs <= 1.4f && !deadSoundPlayed)
+        if (timerInMs <= 1.4f)
         {
-            game->soundManager->playSound("scream.wav");
-            game->soundManager->playSound("1bit/manlaughs.wav");
-            deadSoundPlayed = true;
-        }
+            //screen2DManager->fadeOut(0.6f);
+            screen2DManager->slideEffect(7.0f, 75);
 
+
+            if (!deadSoundPlayed)
+            {
+                game->soundManager->playSound("scream.wav");
+                game->soundManager->playSound("1bit/manlaughs.wav");
+                deadSoundPlayed = true;
+            }
+        }
 
         if (timerInMs <= -2.0f)
         {
-            game->ChangeState(std::make_unique<CharSelectState>(game));
+            //game->ChangeState(std::make_unique<CharSelectState>(game));
+            game->PushState(std::make_unique<CharSelectState>(game));
         }
     }
 }
@@ -143,6 +156,8 @@ void MenuState::Render()
                  Constants::RAYFIGHTER_WHITE);
     }
 
+    screen2DManager->draw();
+
 
     game->screen2DManager->endDrawToRenderTarget();
     //----------------------------------------------------------------------------------
@@ -161,7 +176,33 @@ void MenuState::Render()
     game->screen2DManager->endDrawToScreen();
 }
 
+void MenuState::Pause()
+{
+    PauseMusic();
+}
+
+void MenuState::Resume()
+{
+    gameAboutToStart = false;
+    timerInMs = 1.5f;
+    ResumeMusic();
+}
+
 
 void MenuState::Exit()
 {
+}
+
+void MenuState::PauseMusic()
+{
+    game->soundManager->stopBackgroundMusic();
+}
+
+void MenuState::ResumeMusic()
+{
+
+    if (Constants::BACKGROUND_MUSIC)
+    {
+        game->soundManager->playBackgroundMusic("decisions.mp3");
+    }
 }

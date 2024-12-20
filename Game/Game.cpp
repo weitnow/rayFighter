@@ -62,7 +62,7 @@ void Game::PushState(std::unique_ptr<BaseState> newState)
 {
     if (!stateStack.empty())
     {
-        stateStack.top()->Exit(); // Todo: Replace with Pause
+        stateStack.top()->Pause();
     }
     stateStack.push(std::move(newState));
     stateStack.top()->Enter(); // Initialize the new state
@@ -77,7 +77,7 @@ void Game::PopState()
     }
     if (!stateStack.empty())
     {
-        stateStack.top()->Enter(); // Todo: Replace with Resume
+        stateStack.top()->Resume();
     }
 }
 

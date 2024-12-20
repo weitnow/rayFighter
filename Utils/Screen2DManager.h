@@ -69,15 +69,26 @@ public:
     void changeScreenResolution(ScreenResolution resolution);
     void cycleThroughResolutions();
 
+
+    // Effects
     void startScreenShake(float intensity, float duration);
+
+    void fadeIn(float speed);
+    void fadeOut(float speed);
+    bool isFadeOut() const
+    {
+        return !_fadeIn;
+    }
+
+    void slideEffect(float speed, int slideOffset);
 
 
     void loadScreenGenericEffects(const std::string& nameAnimFile);
     void setScreenGenericEffects(const std::string& frameTag,
                                  int playHowOften = 1); // if playHowOften is -1, the animation will be looped
 
-
     Camera2D camera;
+
 
 private:
     // Member variables
@@ -109,6 +120,21 @@ private:
     int counterGenericEffectPlaying = 0;    // counts how many times the effect has been played in a row
     bool _animJustFinished = false;         // bool of the animation file
     bool _previousAnimJustFinished = false; // bool of the animation file
+
+    // Fade Effect
+    void _updateFadeEffect(float deltaTime);
+    bool _fadeEffectPlaying = false; // is the fadeIn or Out effect playing
+    float _fadeSpeed = 0.0f;
+    float _alpha = 0.0f;
+    bool _fadeIn = true;
+
+    // Slide Effect
+    void _updateSlideEffect(float deltaTime);
+    bool _slideEffectPlaying = false;
+    float _slideSpeed = 0.0f;
+    int _current_slideOffset = 0;
+    int _target_slideOffset = 0;
+
 
     // Member functions
     void _calculateOverlaySize();

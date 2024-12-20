@@ -17,6 +17,8 @@ public:
     virtual void Enter() override;
     virtual void Update(float deltaTime) override;
     virtual void Render() override;
+    void Pause() override;
+    void Resume() override;
     virtual void Exit() override;
 
     Vector2 getMiddlePointBetweenPlayers() const;

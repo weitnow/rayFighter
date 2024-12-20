@@ -25,7 +25,8 @@ public:
     virtual void Enter();
     virtual void Update(float deltaTime) = 0;
     virtual void Render() = 0;
-    virtual void Pause();
+    virtual void Pause() = 0;
+    virtual void Resume() = 0;
     virtual void Exit() = 0;
 
     // <-- Game.h -->

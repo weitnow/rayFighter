@@ -22,6 +22,8 @@ public:
     void Enter() override;
     void Update(float deltaTime) override;
     void Render() override;
+    void Pause() override;
+    void Resume() override;
     void Exit() override;
 
 private:
@@ -30,6 +32,10 @@ private:
     AsepriteAnimationFile* aafTitleScreen;
     float timerInMs;
     bool deadSoundPlayed;
+
+private:
+    void PauseMusic();
+    void ResumeMusic();
 };
 
 #endif

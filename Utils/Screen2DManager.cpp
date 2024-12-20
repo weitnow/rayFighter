@@ -113,6 +113,8 @@ void Screen2DManager::update(float deltaTime)
 {
     _updateScreenShake(deltaTime);
     _updateScreenGenericEffects(deltaTime);
+    _updateFadeEffect(deltaTime);
+    _updateSlideEffect(deltaTime);
 }
 
 void Screen2DManager::draw()
@@ -124,6 +126,18 @@ void Screen2DManager::draw()
                                                              1,
                                                              WHITE); // y value = 40 because the hud is 40px high
     }
+    // Draw fade effect rectangle
+    DrawRectangle(0, 0, Constants::RENDERTARGET_WIDTH, Constants::RENDERTARGET_HEIGHT, Fade(BLACK, _alpha));
+
+
+    // Draw slide effect rectangle top
+    DrawRectangle(0, 0, Constants::RENDERTARGET_WIDTH, _current_slideOffset, BLACK);
+    // Draw slide effect rectangle bottom
+    DrawRectangle(0,
+                  Constants::RENDERTARGET_HEIGHT - _current_slideOffset,
+                  Constants::RENDERTARGET_WIDTH,
+                  _current_slideOffset,
+                  BLACK);
 }
 
 void Screen2DManager::drawOverlay()
@@ -256,6 +270,54 @@ void Screen2DManager::startScreenShake(float intensity, float duration)
     shake.currentOffset = {0.0f, 0.0f};
 }
 
+void Screen2DManager::fadeIn(float speed)
+{
+    _fadeIn = true;
+    _fadeEffectPlaying = true;
+    _fadeSpeed = speed;
+}
+
+void Screen2DManager::fadeOut(float speed)
+{
+    _fadeIn = false;
+    _fadeEffectPlaying = true;
+    _fadeSpeed = speed;
+}
+
+
+void Screen2DManager::_updateSlideEffect(float deltaTime)
+{
+    if (!_slideEffectPlaying)
+    {
+        return;
+    }
+
+    // check if target and current slide offset are the same
+    if (_current_slideOffset == _target_slideOffset)
+    {
+        _slideEffectPlaying = false;
+        return;
+    }
+
+    // otherwise move the slide
+    if (_current_slideOffset < _target_slideOffset)
+    {
+        _current_slideOffset += _slideSpeed * deltaTime;
+        if (_current_slideOffset > _target_slideOffset)
+        {
+            _current_slideOffset = _target_slideOffset;
+        }
+    }
+    else
+    {
+        _current_slideOffset -= _slideSpeed * deltaTime;
+        if (_current_slideOffset < _target_slideOffset)
+        {
+            _current_slideOffset = _target_slideOffset;
+        }
+    }
+}
+
 void Screen2DManager::_calculateOverlaySize()
 {
     // calculate scaleFactor of the gameboyOverlayTexture to fit the height of the screen
@@ -364,6 +426,14 @@ void Screen2DManager::_updateScreenGenericEffects(float deltaTime)
     }
 }
 
+
+void Screen2DManager::slideEffect(float speed, int slideOffset)
+{
+    _slideEffectPlaying = true;
+    _slideSpeed = speed * 20;
+    _target_slideOffset = slideOffset;
+}
+
 void Screen2DManager::loadScreenGenericEffects(const std::string& nameAnimFile)
 {
     if (screenGenericEffectsAnimFile != nullptr)
@@ -391,6 +461,22 @@ void Screen2DManager::setScreenGenericEffects(const std::string& frameTag, int p
     screenGenericPlayHowOften = playHowOften;
     counterGenericEffectPlaying = 0;
     screenGenericEffectPlaying = true;
+}
+
+void Screen2DManager::_updateFadeEffect(float deltaTime)
+{
+    if (!_fadeEffectPlaying)
+    {
+        return;
+    }
+
+    _alpha += (_fadeIn ? -1 : +1) * _fadeSpeed * deltaTime;
+    _alpha = Utils::clamp(_alpha, 0.0f, 1.0f); // Ensure alpha is between 0 and 1
+
+    if (_alpha == 0.0f || _alpha == 1.0f)
+    {
+        _fadeEffectPlaying = false;
+    }
 }
 
 void Screen2DManager::_unloadScreenGenericEffects()

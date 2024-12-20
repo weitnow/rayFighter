@@ -20,6 +20,8 @@ public:
     void Enter() override;
     void Update(float deltaTime) override;
     void Render() override;
+    void Pause() override;
+    void Resume() override;
     void Exit() override;
 
     void DrawSelectionScreen(int selectedIndex);

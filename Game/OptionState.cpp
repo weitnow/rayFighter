@@ -40,6 +40,8 @@ void OptionSelectState::Update(float deltaTime)
 {
     game->soundManager->updateBackgroundMusic(); // Update Music
 
+    screen2DManager->update(game->deltaTime);
+
     // Update OptionSelectScreen
     OptionSelectScreen->update(deltaTime);
 
@@ -75,6 +77,7 @@ void OptionSelectState::Render()
     // Draw OptionSelectScreen
     OptionSelectScreen->drawCurrentSelectedTag(0, 0);
 
+    screen2DManager->draw();
 
     game->screen2DManager->endDrawToRenderTarget();
 
@@ -92,6 +95,14 @@ void OptionSelectState::Render()
     game->screen2DManager->drawOverlay();
 
     game->screen2DManager->endDrawToScreen();
+}
+
+void OptionSelectState::Pause()
+{
+}
+
+void OptionSelectState::Resume()
+{
 }
 
 
