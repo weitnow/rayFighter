@@ -127,7 +127,7 @@ void Screen2DManager::draw()
                                                              WHITE); // y value = 40 because the hud is 40px high
     }
     // Draw fade effect rectangle
-    DrawRectangle(0, 0, Constants::RENDERTARGET_WIDTH, Constants::RENDERTARGET_HEIGHT, Fade(BLACK, _alpha));
+    DrawRectangle(0, 0, Constants::RENDERTARGET_WIDTH, Constants::RENDERTARGET_HEIGHT, Fade(BLACK, _currentAlpha));
 
 
     // Draw slide effect rectangle top
@@ -270,20 +270,12 @@ void Screen2DManager::startScreenShake(float intensity, float duration)
     shake.currentOffset = {0.0f, 0.0f};
 }
 
-void Screen2DManager::fadeIn(float speed)
+void Screen2DManager::fadeEffect(float speed, float targetAlpha)
 {
-    _fadeIn = true;
     _fadeEffectPlaying = true;
     _fadeSpeed = speed;
+    _targetAlpha = targetAlpha;
 }
-
-void Screen2DManager::fadeOut(float speed)
-{
-    _fadeIn = false;
-    _fadeEffectPlaying = true;
-    _fadeSpeed = speed;
-}
-
 
 void Screen2DManager::_updateSlideEffect(float deltaTime)
 {
@@ -431,7 +423,7 @@ void Screen2DManager::slideEffect(float speed, int slideOffset)
 {
     _slideEffectPlaying = true;
     _slideSpeed = speed * 20;
-    _target_slideOffset = slideOffset;
+    _target_slideOffset = Utils::clamp(slideOffset, 0, 72); // 72 is full black screen
 }
 
 void Screen2DManager::loadScreenGenericEffects(const std::string& nameAnimFile)
@@ -470,13 +462,17 @@ void Screen2DManager::_updateFadeEffect(float deltaTime)
         return;
     }
 
-    _alpha += (_fadeIn ? -1 : +1) * _fadeSpeed * deltaTime;
-    _alpha = Utils::clamp(_alpha, 0.0f, 1.0f); // Ensure alpha is between 0 and 1
-
-    if (_alpha == 0.0f || _alpha == 1.0f)
+    if (_currentAlpha == _targetAlpha)
     {
         _fadeEffectPlaying = false;
+        return;
     }
+
+    // Otherwise, update the alpha value
+    _currentAlpha += (_targetAlpha > _currentAlpha ? 1 : -1) * _fadeSpeed * deltaTime;
+
+    // Clamp the alpha value between 0 and 1
+    _currentAlpha = Utils::clamp(_currentAlpha, 0.0f, 1.0f); // Ensure alpha is between 0 and 1
 }
 
 void Screen2DManager::_unloadScreenGenericEffects()

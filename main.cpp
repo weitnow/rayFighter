@@ -14,10 +14,10 @@ int main(void)
     Game* game = new Game(); // will initialize all global components
 
     //game->ChangeState(std::make_unique<IntroState>(game));
-    game->ChangeState(std::make_unique<MenuState>(game));
+    //game->ChangeState(std::make_unique<MenuState>(game));
     //game->ChangeState(std::make_unique<CharSelectState>(game));
     //game->ChangeState(std::make_unique<StageSelectState>(game));
-    //game->ChangeState(std::make_unique<GameState>(game));
+    game->ChangeState(std::make_unique<GameState>(game));
 
 
     // Main game loop

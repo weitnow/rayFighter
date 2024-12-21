@@ -97,8 +97,8 @@ void MenuState::Update(float deltaTime)
 
         if (timerInMs <= 1.4f)
         {
-            //screen2DManager->fadeOut(0.6f);
-            screen2DManager->slideEffect(7.0f, 75);
+            screen2DManager->fadeEffect(0.6f, 1.0f);
+            //screen2DManager->slideEffect(7.0f, 75);
 
 
             if (!deadSoundPlayed)

@@ -70,17 +70,21 @@ public:
     void cycleThroughResolutions();
 
 
-    // Effects
+    // ===== Effects ======
+    // Screen Shake
     void startScreenShake(float intensity, float duration);
-
-    void fadeIn(float speed);
-    void fadeOut(float speed);
-    bool isFadeOut() const
+    // Fade Effect
+    void fadeEffect(float speed, float targetAlpha);
+    float getFadeAlpha() const
     {
-        return !_fadeIn;
+        return _currentAlpha;
     }
-
+    // Slide Effect
     void slideEffect(float speed, int slideOffset);
+    int getSlideOffset() const
+    {
+        return _current_slideOffset;
+    }
 
 
     void loadScreenGenericEffects(const std::string& nameAnimFile);
@@ -123,10 +127,10 @@ private:
 
     // Fade Effect
     void _updateFadeEffect(float deltaTime);
-    bool _fadeEffectPlaying = false; // is the fadeIn or Out effect playing
+    bool _fadeEffectPlaying = false;
     float _fadeSpeed = 0.0f;
-    float _alpha = 0.0f;
-    bool _fadeIn = true;
+    float _currentAlpha = 0.0f;
+    float _targetAlpha = 0.0f;
 
     // Slide Effect
     void _updateSlideEffect(float deltaTime);
@@ -134,7 +138,6 @@ private:
     float _slideSpeed = 0.0f;
     int _current_slideOffset = 0;
     int _target_slideOffset = 0;
-
 
     // Member functions
     void _calculateOverlaySize();

@@ -46,8 +46,8 @@ void CharSelectState::Enter()
                   {{164, 117, 24, 24}, "Character 4"}};
 
     // fade in
-    //screen2DManager->fadeIn(1.0f);
-    screen2DManager->slideEffect(7.0f, 0);
+    screen2DManager->fadeEffect(1.0f, 0.0f);
+    //screen2DManager->slideEffect(7.0f, 0);
 }
 
 void CharSelectState::Update(float deltaTime)
