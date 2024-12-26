@@ -104,3 +104,7 @@ void IntroState::Resume()
 void IntroState::Exit()
 {
 }
+
+void IntroState::HandleInput()
+{
+}

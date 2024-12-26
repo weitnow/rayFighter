@@ -109,3 +109,7 @@ void OptionSelectState::Resume()
 void OptionSelectState::Exit()
 {
 }
+
+void OptionSelectState::HandleInput()
+{
+}

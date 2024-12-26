@@ -13,6 +13,8 @@ BaseState::BaseState(Game* game) : game(game)
     player1 = nullptr;
     player2 = nullptr;
     collisionManager = nullptr;
+    player1Controller = game->inputHandler->getPlayer1Controller();
+    player2Controller = game->inputHandler->getPlayer2Controller();
 }
 
 BaseState::~BaseState()

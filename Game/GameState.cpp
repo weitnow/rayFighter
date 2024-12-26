@@ -229,6 +229,10 @@ void GameState::Exit()
 {
 }
 
+void GameState::HandleInput()
+{
+}
+
 Vector2 GameState::getMiddlePointBetweenPlayers() const
 {
     return Vector2{static_cast<float>(middlePointXbetweenPlayers), static_cast<float>(middlePointYbetweenPlayers)};

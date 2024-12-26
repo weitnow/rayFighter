@@ -124,6 +124,10 @@ void StageSelectState::Exit()
 {
 }
 
+void StageSelectState::HandleInput()
+{
+}
+
 void StageSelectState::DrawSelectionScreen(int selectedIndex)
 {
     // Draw

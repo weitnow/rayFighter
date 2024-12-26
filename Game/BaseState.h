@@ -15,6 +15,7 @@ class GameManager;
 class BaseCharacter;
 class BaseGameObject;
 class BaseSpriteObject;
+class CharacterController;
 
 
 class BaseState
@@ -28,6 +29,7 @@ public:
     virtual void Pause() = 0;
     virtual void Resume() = 0;
     virtual void Exit() = 0;
+    virtual void HandleInput() = 0;
 
     // <-- Game.h -->
     // Global components (pointers to single instances, loaded in Game.cpp)
@@ -53,6 +55,8 @@ protected:
     List<unique<BaseCharacter>> baseCharacters;
     List<unique<BaseGameObject>> gameObjects;
     List<unique<BaseSpriteObject>> baseSpriteObjects;
+    CharacterController* player1Controller;
+    CharacterController* player2Controller;
 
     // <-- GameState.h -->
     // Game Objects

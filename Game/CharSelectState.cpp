@@ -165,6 +165,10 @@ void CharSelectState::Exit()
 {
 }
 
+void CharSelectState::HandleInput()
+{
+}
+
 void CharSelectState::DrawSelectionScreen(int selectedIndex, int playerNumber)
 {
     // Draw

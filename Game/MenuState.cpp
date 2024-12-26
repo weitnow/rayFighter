@@ -193,6 +193,10 @@ void MenuState::Exit()
 {
 }
 
+void MenuState::HandleInput()
+{
+}
+
 void MenuState::PauseMusic()
 {
     game->soundManager->stopBackgroundMusic();

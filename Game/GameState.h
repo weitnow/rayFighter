@@ -20,6 +20,7 @@ public:
     void Pause() override;
     void Resume() override;
     virtual void Exit() override;
+    void HandleInput() override;
 
     Vector2 getMiddlePointBetweenPlayers() const;
     int _getScreenPosXofObject(BaseGameObject& object);

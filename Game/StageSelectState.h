@@ -23,6 +23,7 @@ public:
     void Pause() override;
     void Resume() override;
     void Exit() override;
+    void HandleInput() override;
 
     void DrawSelectionScreen(int selectedIndex);
 
