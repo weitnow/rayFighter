@@ -9,11 +9,6 @@
 #include <deque>
 
 
-InputDirection mapDirectionInput();
-InputAction mapActionInput();
-void updateInputBuffer(InputBuffer& buffer);
-void checkSpecialMoves(InputBuffer& buffer);
-
 class InputHandler
 {
 public:
@@ -36,6 +31,11 @@ private:
     void _handlePlayer1Input();
     void _handlePlayer2Input();
     void _handleGameInput();
+
+    InputDirection mapDirectionInput();
+    InputAction mapActionInput();
+    void updateInputBuffer(InputBuffer& buffer);
+    void checkSpecialMoves(InputBuffer& buffer);
 
     CharacterController* player1Controller;
     CharacterController* player2Controller;
