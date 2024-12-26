@@ -2,7 +2,7 @@
 #define GAME_H
 
 #include "../Utils/AsepriteManager.h"
-#include "../Utils/InputHandler.h"
+#include "../Utils/Input/InputHandler.h"
 #include "../Utils/Screen2DManager.h"
 #include "../Utils/SoundManager.h"
 #include "BaseState.h"

@@ -1,5 +1,5 @@
 #include "Fighter1.h"
-#include "../Utils/InputHandler.h"
+#include "../Utils/Input/InputHandler.h"
 #include "Statemachine/Statemachine.h"
 
 

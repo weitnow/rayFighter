@@ -1,5 +1,107 @@
 #include "InputHandler.h"
 
+InputDirection mapDirectionInput()
+{
+    if (IsKeyDown(KEY_S))
+    {
+        if (IsKeyDown(KEY_D))
+            return InputDirection::DownForward;
+        if (IsKeyDown(KEY_A))
+            return InputDirection::DownBackward;
+        return InputDirection::Down;
+    }
+    if (IsKeyDown(KEY_W))
+    {
+        if (IsKeyDown(KEY_D))
+            return InputDirection::UpForward;
+        if (IsKeyDown(KEY_A))
+            return InputDirection::UpBackward;
+        return InputDirection::Up;
+    }
+    if (IsKeyDown(KEY_D))
+        return InputDirection::Forward;
+    if (IsKeyDown(KEY_A))
+        return InputDirection::Backward;
+    return InputDirection::Neutral;
+}
+
+InputAction mapActionInput()
+{
+    if (IsKeyPressed(KEY_J))
+    {
+        return InputAction::Attack;
+    }
+
+
+    return InputAction::None;
+}
+
+void updateInputBuffer(InputBuffer& buffer)
+{
+    InputDirection direction = mapDirectionInput();
+    InputAction action = mapActionInput();
+
+    // Print the detected input direction and action in a readable format
+    std::cout << "Direction: " << directionToString(direction) << ", Action: " << actionToString(action) << std::endl;
+
+    buffer.addInput(direction, action);
+
+
+    buffer.addInput(mapDirectionInput(), mapActionInput());
+}
+
+void checkSpecialMoves(InputBuffer& buffer)
+{
+    if (buffer.matchSequence(Fireball))
+    {
+        std::cout << "Fireball executed!" << std::endl;
+    }
+}
+
+std::string directionToString(InputDirection direction)
+{
+    switch (direction)
+    {
+    case InputDirection::Neutral:
+        return "Neutral";
+    case InputDirection::Down:
+        return "Down";
+    case InputDirection::DownForward:
+        return "DownForward";
+    case InputDirection::Forward:
+        return "Forward";
+    case InputDirection::UpForward:
+        return "UpForward";
+    case InputDirection::Up:
+        return "Up";
+    case InputDirection::UpBackward:
+        return "UpBackward";
+    case InputDirection::Backward:
+        return "Backward";
+    case InputDirection::DownBackward:
+        return "DownBackward";
+    default:
+        return "Unknown";
+    }
+}
+
+std::string actionToString(InputAction action)
+{
+    switch (action)
+    {
+    case InputAction::None:
+        return "None";
+    case InputAction::Attack:
+        return "Attack";
+    case InputAction::Special:
+        return "Special";
+    default:
+        return "Unknown";
+    }
+}
+
+
+// ========================================
 
 InputHandler::InputHandler()
 {
@@ -15,6 +117,11 @@ InputHandler::~InputHandler()
 
 void InputHandler::Update()
 {
+
+    updateInputBuffer(inputBuffer);
+    checkSpecialMoves(inputBuffer);
+
+
     // player 1
     _resetBoolsToFalse(player1Controller);
     _handlePlayer1Input();
