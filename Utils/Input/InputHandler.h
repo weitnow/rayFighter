@@ -7,7 +7,23 @@
 #include "InputTypes.h"
 #include "raylib.h"
 #include <deque>
+#include <unordered_map>
 
+
+enum class InputCheckType
+{
+    Pressed,
+    Down
+};
+
+struct InputCommand
+{
+    InputCheckType checkType;
+    std::function<void()> command;
+};
+
+// Define a type alias for the key-command map
+using KeyCommandMap = std::unordered_map<int, InputCommand>;
 
 class InputHandler
 {
@@ -28,8 +44,6 @@ public:
 
 private:
     void _resetBoolsToFalse(CharacterController* controller);
-    void _handlePlayer1Input();
-    void _handlePlayer2Input();
     void _handleGameInput();
 
     InputDirection mapDirectionInput();
@@ -40,8 +54,9 @@ private:
     CharacterController* player1Controller;
     CharacterController* player2Controller;
     DebugInfo* debugInfo;
-
     InputBuffer inputBuffer;
+
+    KeyCommandMap keyCommandMap;
 };
 
 #endif // INPUT_HANDLER_H
