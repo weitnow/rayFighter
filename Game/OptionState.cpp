@@ -49,6 +49,7 @@ void OptionSelectState::Update(float deltaTime)
     {
         OptionSelectScreen->setFrameTag("optionSelectScreen-Idle");
     }
+
     HandleInput();
 }
 

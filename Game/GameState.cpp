@@ -69,8 +69,6 @@ void GameState::Enter()
 
 void GameState::Update(float deltaTime)
 {
-    HandleInput();
-
     screen2DManager->update(game->deltaTime);
 
     _updateIsLeftPlayer1and2(); // Check if player1 is left of player2
@@ -108,6 +106,8 @@ void GameState::Update(float deltaTime)
 
     // Update the HUD
     gui->update(deltaTime);
+
+    HandleInput();
 }
 
 void GameState::Render()
