@@ -11,6 +11,10 @@ struct CharacterController
     bool punch = false;
     bool kick = false;
     bool block = false;
+    // general input
+    bool key_esc = false;
+    bool key_enter = false;
+    bool key_q = false;
 };
 
 #endif // CHARACTER_CONTROLLER_H

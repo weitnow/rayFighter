@@ -69,22 +69,7 @@ void GameState::Enter()
 
 void GameState::Update(float deltaTime)
 {
-    // check if ESC key is pressed or windows close button is clicked
-    if (IsKeyPressed(KEY_ESCAPE) || WindowShouldClose())
-    {
-        //pop this state and return to menu
-        game->PopState();
-    }
-
-    game->inputHandler->Update(); // Handle Input
-
-    // TODO: remove this
-    if (IsKeyPressed(KEY_Z)) //Z = Y because Swiss Keyboard
-    {
-        soundManager->playSound("earthquake.wav");
-        screen2DManager->setScreenGenericEffects("screenEffects-Leafs", 1);
-        game->screen2DManager->startScreenShake(0.7f, 0.5f);
-    }
+    HandleInput();
 
     screen2DManager->update(game->deltaTime);
 
@@ -231,6 +216,29 @@ void GameState::Exit()
 
 void GameState::HandleInput()
 {
+    game->inputHandler->Update();
+
+    // debug mode
+    if (player1Controller->key_q)
+    {
+        Global::debugMode = !Global::debugMode;
+        debugInfo->setDebugMode(Global::debugMode);
+    }
+
+    // TODO: remove this
+    if (IsKeyPressed(KEY_Z)) //Z = Y because Swiss Keyboard
+    {
+        soundManager->playSound("earthquake.wav");
+        screen2DManager->setScreenGenericEffects("screenEffects-Leafs", 1);
+        game->screen2DManager->startScreenShake(0.7f, 0.5f);
+    }
+
+    // check if ESC key is pressed or windows close button is clicked
+    if (player1Controller->key_esc || WindowShouldClose())
+    {
+        //pop this state and return to menu
+        game->PopState();
+    }
 }
 
 Vector2 GameState::getMiddlePointBetweenPlayers() const

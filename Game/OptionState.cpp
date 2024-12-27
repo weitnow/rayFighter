@@ -49,20 +49,7 @@ void OptionSelectState::Update(float deltaTime)
     {
         OptionSelectScreen->setFrameTag("optionSelectScreen-Idle");
     }
-
-    //handle input //todo: refactor this to inputHandler
-    if (IsKeyPressed(KEY_ENTER))
-    {
-
-        game->ChangeState(std::make_unique<GameState>(game));
-    }
-
-    // check if ESC key is pressed or windows close button is clicked
-    if (IsKeyPressed(KEY_ESCAPE) || WindowShouldClose())
-    {
-        //pop this state and return to menu
-        game->PopState();
-    }
+    HandleInput();
 }
 
 void OptionSelectState::Render()
@@ -112,4 +99,23 @@ void OptionSelectState::Exit()
 
 void OptionSelectState::HandleInput()
 {
+    game->inputHandler->Update(); //update player1Controller/player2Controller
+
+    if (player1Controller->key_enter)
+    {
+        game->ChangeState(std::make_unique<GameState>(game));
+    }
+
+    if (player1Controller->punch || player2Controller->punch)
+    {
+        std::cout << "player 1 or 2 punching " << std::endl;
+    }
+
+
+    // check if ESC key is pressed or windows close button is clicked
+    if (player1Controller->key_esc || WindowShouldClose())
+    {
+        //pop this state and return to menu
+        game->PopState();
+    }
 }

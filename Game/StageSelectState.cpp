@@ -55,7 +55,7 @@ void StageSelectState::Update(float deltaTime)
     if (IsKeyPressed(KEY_ENTER))
     {
 
-        game->ChangeState(std::make_unique<GameState>(game));
+        game->PushState(std::make_unique<GameState>(game));
     }
     if (IsKeyPressed(KEY_D))
     {

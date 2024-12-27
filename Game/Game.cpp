@@ -26,6 +26,8 @@ Game::Game() : quit(false)
 
     screen2DManager->loadScreenGenericEffects(
         "screenEffects"); // load the screenEffects animation file, the screenManager will unload it in the destructor
+
+    HideCursor(); // Raylibfunction to hide the Mousecursor
 }
 
 Game::~Game()
