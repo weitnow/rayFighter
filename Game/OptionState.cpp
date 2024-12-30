@@ -4,7 +4,7 @@
 #include "GameState.h"
 
 
-OptionSelectState::OptionSelectState(Game* game) : BaseState(game), OptionSelectScreen(nullptr)
+OptionSelectState::OptionSelectState(Game* game) : BaseState(game), OptionSelectScreen(nullptr), selectedOption(0)
 {
     OptionSelectScreen = game->asepriteManager->getAnimFile("optionSelectScreen");
     OptionSelectScreen->setFrameTag("optionSelectScreen-Intro");
@@ -50,6 +50,7 @@ void OptionSelectState::Update(float deltaTime)
         OptionSelectScreen->setFrameTag("optionSelectScreen-Idle");
     }
 
+
     HandleInput();
 }
 
@@ -66,6 +67,8 @@ void OptionSelectState::Render()
     OptionSelectScreen->drawCurrentSelectedTag(0, 0);
 
     screen2DManager->draw();
+
+    // Draw availabe Screenresolution
 
     game->screen2DManager->endDrawToRenderTarget();
 

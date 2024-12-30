@@ -24,9 +24,7 @@ public:
 private:
     AsepriteAnimationFile* OptionSelectScreen;
 
-    int selectedStage = 0;
-
-    bool selectingCharacter = true;
+    int selectedOption; // tracks which resolution is currently highlighted
 };
 
 #endif

@@ -261,6 +261,37 @@ void Screen2DManager::cycleThroughResolutions()
     _setRenderResolution(newResolution);
 }
 
+std::string Screen2DManager::_screenResolutionToString(ScreenResolution resolution)
+{
+    switch (resolution)
+    {
+    case ScreenResolution::S_640x480:
+        return "640x480";
+    case ScreenResolution::S_800x600:
+        return "800x600";
+    case ScreenResolution::S_1280x720:
+        return "1280x720";
+    case ScreenResolution::S_1920x1080:
+        return "1920x1080";
+    case ScreenResolution::S_2560x1440:
+        return "2560x1440";
+    case ScreenResolution::S_3440x1440:
+        return "3440x1440";
+    default:
+        return "Unknown";
+    }
+}
+
+std::array<ScreenResolution, 6> Screen2DManager::GetAllScreenResolutionEnums()
+{
+    return {ScreenResolution::S_640x480,
+            ScreenResolution::S_800x600,
+            ScreenResolution::S_1280x720,
+            ScreenResolution::S_1920x1080,
+            ScreenResolution::S_2560x1440,
+            ScreenResolution::S_3440x1440};
+}
+
 void Screen2DManager::startScreenShake(float intensity, float duration)
 {
     shake.isShaking = true;
