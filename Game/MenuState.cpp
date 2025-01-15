@@ -5,7 +5,7 @@
 
 
 MenuState::MenuState(Game* game)
-    : BaseState(game), aafTitleScreen(nullptr), gameAboutToStart(false), timerInMs{3.0f}, deadSoundPlayed(false)
+    : BaseState(game), aafTitleScreen(nullptr), gameAboutToStart(false), deadSoundPlayed(false)
 {
 }
 
@@ -40,6 +40,7 @@ void MenuState::Enter()
     // testing
     screen2DManager->saveScreenResolution();
     screen2DManager->loadScreenResolution();
+    screen2DManager->getScreenResolution();
 }
 
 void MenuState::Update(float deltaTime)
@@ -52,9 +53,9 @@ void MenuState::Update(float deltaTime)
 
     if (gameAboutToStart)
     {
-        timerInMs -= game->deltaTime;
+        timer.Start();
 
-        if (timerInMs <= 1.4f)
+        if (timer.HasElapsed(1.4f))
         {
             screen2DManager->fadeEffect(0.6f, 1.0f);
             //screen2DManager->slideEffect(7.0f, 75);
@@ -68,7 +69,7 @@ void MenuState::Update(float deltaTime)
             }
         }
 
-        if (timerInMs <= -2.0f)
+        if (timer.HasElapsed(3.4f))
         {
             //game->ChangeState(std::make_unique<CharSelectState>(game));
             game->PushState(std::make_unique<CharSelectState>(game));
@@ -145,7 +146,7 @@ void MenuState::Pause()
 void MenuState::Resume()
 {
     gameAboutToStart = false;
-    timerInMs = 1.5f;
+    timer.Restart();
     ResumeMusic();
 }
 

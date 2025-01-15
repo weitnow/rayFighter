@@ -34,6 +34,8 @@ void OptionSelectState::Enter()
         game->soundManager->loadMusic("sunburn.mp3", 1.f);
         game->soundManager->playBackgroundMusic("sunburn.mp3");
     }
+
+    screen2DManager->fadeEffect(0.6f, 0.f);
 }
 
 void OptionSelectState::Update(float deltaTime)

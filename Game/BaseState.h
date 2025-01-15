@@ -1,6 +1,7 @@
 #ifndef GB_BASE_STATE_H
 #define GB_BASE_STATE_H
 
+#include "../Utils/HelperFunctions.h"
 #include "Core.h"
 
 //forward declarations

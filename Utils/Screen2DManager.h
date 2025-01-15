@@ -72,6 +72,7 @@ public:
     std::array<ScreenResolution, 6> GetAllScreenResolutionEnums();
     void saveScreenResolution();
     bool loadScreenResolution();
+    ScreenResolution getScreenResolution();
 
 
     // ===== Effects ======

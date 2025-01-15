@@ -31,8 +31,8 @@ private:
     int selectedOption;
     bool gameAboutToStart;
     AsepriteAnimationFile* aafTitleScreen;
-    float timerInMs;
     bool deadSoundPlayed;
+    Timer timer;
 
 private:
     void PauseMusic();

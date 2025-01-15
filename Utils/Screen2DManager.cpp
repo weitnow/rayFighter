@@ -326,6 +326,22 @@ bool Screen2DManager::loadScreenResolution()
     }
 }
 
+ScreenResolution Screen2DManager::getScreenResolution()
+{
+    // set initiale value
+    int screenHeight = 480;
+    int screenWidth = 640;
+
+    // try to get actual screen width and height
+    screenHeight = GetMonitorHeight(0);
+    screenWidth = GetMonitorWidth(0);
+
+    std::cout << "getScreenResolution: " << screenWidth << " x " << screenHeight << std::endl;
+
+
+    return ScreenResolution::S_2560x1440;
+}
+
 void Screen2DManager::startScreenShake(float intensity, float duration)
 {
     shake.isShaking = true;
