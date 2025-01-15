@@ -292,6 +292,40 @@ std::array<ScreenResolution, 6> Screen2DManager::GetAllScreenResolutionEnums()
             ScreenResolution::S_3440x1440};
 }
 
+void Screen2DManager::saveScreenResolution()
+{
+    std::ofstream outFile("Data/resolution.txt");
+    if (outFile.is_open())
+    {
+        outFile << screenWidth << " " << screenHeight << std::endl;
+        outFile.close();
+        std::cout << "Resolution saved" << std::endl;
+    }
+    else
+    {
+        std::cout << "Error saving resolution" << std::endl;
+    }
+}
+
+bool Screen2DManager::loadScreenResolution()
+{
+    std::ifstream inFile("Data/resolution.txt");
+    if (inFile.is_open())
+    {
+        int width, height;
+        inFile >> width >> height;
+        std::cout << "Loaded resolution: " << width << "x" << height << std::endl;
+        inFile.close();
+        std::cout << "Resolution loaded" << std::endl;
+        return true;
+    }
+    else
+    {
+        std::cout << "Error loading resolution" << std::endl;
+        return false;
+    }
+}
+
 void Screen2DManager::startScreenShake(float intensity, float duration)
 {
     shake.isShaking = true;

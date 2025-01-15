@@ -70,18 +70,28 @@ public:
     void cycleThroughResolutions();
     std::string _screenResolutionToString(ScreenResolution resolution);
     std::array<ScreenResolution, 6> GetAllScreenResolutionEnums();
+    void saveScreenResolution();
+    bool loadScreenResolution();
 
 
     // ===== Effects ======
     // Screen Shake
     void startScreenShake(float intensity, float duration);
     // Fade Effect
+    bool isFadeEffectPlaying() const
+    {
+        return _fadeEffectPlaying;
+    }
     void fadeEffect(float speed, float targetAlpha);
     float getFadeAlpha() const
     {
         return _currentAlpha;
     }
     // Slide Effect
+    bool isSlideEffectPlaying() const
+    {
+        return _slideEffectPlaying;
+    }
     void slideEffect(float speed, int slideOffset);
     int getSlideOffset() const
     {

@@ -36,6 +36,10 @@ void MenuState::Enter()
     // load TitleScreen
     aafTitleScreen = game->asepriteManager->getAnimFile("titleScreen");
     aafTitleScreen->setFrameTag("titleScreen-Titlescreen");
+
+    // testing
+    screen2DManager->saveScreenResolution();
+    screen2DManager->loadScreenResolution();
 }
 
 void MenuState::Update(float deltaTime)
@@ -45,51 +49,6 @@ void MenuState::Update(float deltaTime)
     aafTitleScreen->update(game->deltaTime);
 
     screen2DManager->update(game->deltaTime);
-
-
-    //handle input //todo: refactor this to inputHandler
-
-    // check if ESC key is pressed or windows close button is clicked
-    if (IsKeyPressed(KEY_ESCAPE) || WindowShouldClose())
-    {
-        game->quit = true;
-    }
-
-    if (IsKeyPressed(KEY_DOWN))
-        selectedOption = (selectedOption + 1) % NUM_OPTIONS;
-    if (IsKeyPressed(KEY_UP))
-        selectedOption = (selectedOption - 1 + NUM_OPTIONS) % NUM_OPTIONS;
-
-    if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_SPACE))
-    {
-        if (selectedOption == PLAY)
-        {
-            // Start the game
-            std::cout << "Starting the game..." << std::endl;
-            gameAboutToStart = true;
-            if (!deadSoundPlayed)
-            {
-                game->soundManager->playSound("bloodSplatter.mp3");
-            }
-
-
-            aafTitleScreen->setFrameTag("titleScreen-Transition");
-        }
-        else if (selectedOption == OPTIONS)
-        {
-            // Handle options (e.g., open options menu)
-            std::cout << "Opening options..." << std::endl;
-
-            game->PushState(std::make_unique<OptionSelectState>(game));
-        }
-        else if (selectedOption == EXIT)
-        {
-            // Exit the game
-            std::cout << "Exiting the game..." << std::endl;
-            game->quit = true;
-        }
-    }
-
 
     if (gameAboutToStart)
     {
@@ -115,6 +74,8 @@ void MenuState::Update(float deltaTime)
             game->PushState(std::make_unique<CharSelectState>(game));
         }
     }
+
+    HandleInput();
 }
 
 void MenuState::Render()
@@ -195,6 +156,52 @@ void MenuState::Exit()
 
 void MenuState::HandleInput()
 {
+    game->inputHandler->Update(); //update player1Controller/player2Controller
+
+
+    // check if ESC key is pressed or windows close button is clicked
+    if (player1Controller->key_esc || WindowShouldClose())
+    {
+        game->quit = true;
+    }
+
+    if (player1Controller->duck && inputHandler->isKeyJustPressed(*player1Controller))
+        selectedOption = (selectedOption + 1) % NUM_OPTIONS;
+    if (player1Controller->jump && inputHandler->isKeyJustPressed(*player1Controller))
+        selectedOption = (selectedOption - 1 + NUM_OPTIONS) % NUM_OPTIONS;
+
+    if (IsKeyPressed(KEY_ENTER) || player1Controller->punch)
+    {
+        if (selectedOption == PLAY)
+        {
+            // Start the game
+            std::cout << "Starting the game..." << std::endl;
+            gameAboutToStart = true;
+            if (!deadSoundPlayed)
+            {
+                game->soundManager->playSound("bloodSplatter.mp3");
+            }
+
+
+            aafTitleScreen->setFrameTag("titleScreen-Transition");
+        }
+        else if (selectedOption == OPTIONS)
+        {
+            // Handle options (e.g., open options menu)
+            std::cout << "Opening options..." << std::endl;
+
+            // fadeout screen
+            screen2DManager->fadeEffect(0.6f, 1.0f);
+
+            game->PushState(std::make_unique<OptionSelectState>(game));
+        }
+        else if (selectedOption == EXIT)
+        {
+            // Exit the game
+            std::cout << "Exiting the game..." << std::endl;
+            game->quit = true;
+        }
+    }
 }
 
 void MenuState::PauseMusic()

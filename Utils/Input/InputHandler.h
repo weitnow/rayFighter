@@ -42,6 +42,10 @@ public:
     CharacterController* const getPlayer1Controller();
     CharacterController* const getPlayer2Controller();
 
+    // Check if a specific key was just pressed
+    bool isKeyJustPressed(const CharacterController& current);
+
+
 private:
     void _resetBoolsToFalse(CharacterController* controller);
     void _handleGameInput();
@@ -53,6 +57,11 @@ private:
 
     CharacterController* player1Controller;
     CharacterController* player2Controller;
+    // previous controller state from last frame for comparison
+    CharacterController prevPlayer1Controller;
+    CharacterController prevPlayer2Controller;
+
+
     DebugInfo* debugInfo;
     InputBuffer inputBuffer;
 

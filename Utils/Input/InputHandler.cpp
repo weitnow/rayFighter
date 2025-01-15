@@ -47,6 +47,10 @@ InputHandler::~InputHandler()
 
 void InputHandler::Update()
 {
+    // Store the current state as the previous state, note that it is not a pointer
+    prevPlayer1Controller = *player1Controller;
+    prevPlayer2Controller = *player2Controller;
+
     //Todo: uncomment this
     //updateInputBuffer(inputBuffer);
     //checkSpecialMoves(inputBuffer);
@@ -65,6 +69,21 @@ void InputHandler::addDebugInfo(DebugInfo& debugInfo)
 CharacterController* const InputHandler::getPlayer2Controller()
 {
     return player2Controller;
+}
+
+bool InputHandler::isKeyJustPressed(const CharacterController& current)
+{
+
+    // if the current CharacterController is player1Controller, then compare with prevPlayer1Controller otherwise with prevPlayer2Controller
+    const CharacterController& previous =
+        (&current == player1Controller) ? prevPlayer1Controller : prevPlayer2Controller;
+
+    if (!previous.moveLeft && current.moveLeft || !previous.moveRight && current.moveRight ||
+        !previous.jump && current.jump || !previous.duck && current.duck)
+    {
+        return true;
+    }
+    return false;
 }
 
 CharacterController* const InputHandler::getPlayer1Controller()
