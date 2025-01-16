@@ -24,6 +24,8 @@ public:
 private:
     AsepriteAnimationFile* OptionSelectScreen;
 
+    void _renderOptionMenu();
+
     int selectedOption; // tracks which resolution is currently highlighted
 };
 

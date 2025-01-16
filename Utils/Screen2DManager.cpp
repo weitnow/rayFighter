@@ -249,7 +249,7 @@ void Screen2DManager::changeScreenResolution(ScreenResolution resolution)
     _calculateOverlaySize();
 }
 
-void Screen2DManager::cycleThroughResolutions()
+void Screen2DManager::cycleThroughRenderResolutions()
 {
     int value = EnumToValue(resolution);
     value++;

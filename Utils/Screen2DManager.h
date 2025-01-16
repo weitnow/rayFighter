@@ -67,7 +67,7 @@ public:
 
     void _setRenderResolution(RenderResolution resolution);
     void changeScreenResolution(ScreenResolution resolution);
-    void cycleThroughResolutions();
+    void cycleThroughRenderResolutions();
     std::string _screenResolutionToString(ScreenResolution resolution);
     std::array<ScreenResolution, 6> GetAllScreenResolutionEnums();
     void saveScreenResolution();

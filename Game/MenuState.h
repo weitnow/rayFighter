@@ -30,6 +30,7 @@ public:
 private:
     int selectedOption;
     bool gameAboutToStart;
+    bool optionAboutToStart;
     AsepriteAnimationFile* aafTitleScreen;
     bool deadSoundPlayed;
     Timer timer;

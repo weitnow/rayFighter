@@ -5,7 +5,8 @@
 
 
 MenuState::MenuState(Game* game)
-    : BaseState(game), aafTitleScreen(nullptr), gameAboutToStart(false), deadSoundPlayed(false)
+    : BaseState(game), aafTitleScreen(nullptr), gameAboutToStart(false), deadSoundPlayed(false),
+      optionAboutToStart{false}
 {
 }
 
@@ -37,7 +38,7 @@ void MenuState::Enter()
     aafTitleScreen = game->asepriteManager->getAnimFile("titleScreen");
     aafTitleScreen->setFrameTag("titleScreen-Titlescreen");
 
-    // testing
+    // testing //Todo: get rid of this
     screen2DManager->saveScreenResolution();
     screen2DManager->loadScreenResolution();
     screen2DManager->getScreenResolution();
@@ -74,6 +75,16 @@ void MenuState::Update(float deltaTime)
             //game->ChangeState(std::make_unique<CharSelectState>(game));
             game->PushState(std::make_unique<CharSelectState>(game));
         }
+    }
+
+    if (optionAboutToStart)
+    {
+        timer.Start();
+        // fadeout screen
+        screen2DManager->fadeEffect(0.6f, 1.0f);
+
+        if (timer.HasElapsed(2.0f))
+            game->PushState(std::make_unique<OptionSelectState>(game));
     }
 
     HandleInput();
@@ -146,7 +157,8 @@ void MenuState::Pause()
 void MenuState::Resume()
 {
     gameAboutToStart = false;
-    timer.Restart();
+    optionAboutToStart = false;
+    timer.Reset();
     ResumeMusic();
 }
 
@@ -190,11 +202,7 @@ void MenuState::HandleInput()
         {
             // Handle options (e.g., open options menu)
             std::cout << "Opening options..." << std::endl;
-
-            // fadeout screen
-            screen2DManager->fadeEffect(0.6f, 1.0f);
-
-            game->PushState(std::make_unique<OptionSelectState>(game));
+            optionAboutToStart = true;
         }
         else if (selectedOption == EXIT)
         {

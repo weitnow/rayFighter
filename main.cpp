@@ -30,7 +30,7 @@ int main(void)
         //Todo: remove this
         if (IsKeyPressed(KEY_M))
         {
-            game->screen2DManager->cycleThroughResolutions();
+            game->screen2DManager->cycleThroughRenderResolutions();
         }
     }
     //----------------------------------------------------------------------------------

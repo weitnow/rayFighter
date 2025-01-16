@@ -67,9 +67,10 @@ void OptionSelectState::Render()
     // Draw OptionSelectScreen
     OptionSelectScreen->drawCurrentSelectedTag(0, 0);
 
-    screen2DManager->draw();
-
     // Draw availabe Screenresolution
+    _renderOptionMenu();
+
+    screen2DManager->draw();
 
     game->screen2DManager->endDrawToRenderTarget();
 
@@ -123,4 +124,13 @@ void OptionSelectState::HandleInput()
         //pop this state and return to menu
         game->PopState();
     }
+}
+
+void OptionSelectState::_renderOptionMenu()
+{
+    DrawText("Resolution",
+             Constants::RENDERTARGET_WIDTH / 2 - MeasureText("Resolution", 8) / 2,
+             60,
+             8,
+             Constants::RAYFIGHTER_WHITE);
 }
