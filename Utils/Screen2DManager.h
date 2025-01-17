@@ -9,6 +9,7 @@
 class AsepriteAnimationFile; // Forward declaration
 class AsepriteManager;       // Forward declaration
 
+
 enum class RenderResolution
 {
     R_256x144,   // orginal resolution 16:9
@@ -31,6 +32,42 @@ enum class ScreenResolution
     S_2560x1440, // 16:9 2K
     S_3440x1440  // 16:9 Ultra Wide
 };
+
+inline int EnumToValue(RenderResolution resolution)
+{
+    switch (resolution)
+    {
+    case RenderResolution::R_256x144:
+        std::cout << "1 R_256x144->";
+        return 1;
+    case RenderResolution::R_512x288:
+        std::cout << "2 R_512x288->";
+        return 2;
+    case RenderResolution::R_768x432:
+        std::cout << "3 R_768x432->";
+        return 3;
+    case RenderResolution::R_1024x576:
+        std::cout << "4 R_1024x576->";
+        return 4;
+    case RenderResolution::R_1120x630: // DEBUG_DRAW
+        std::cout << "5 R_1120x630->";
+        return 5;
+    case RenderResolution::R_1280x720:
+        std::cout << "6 R_1280x720->";
+        return 6;
+    case RenderResolution::R_1536x864:
+        std::cout << "7 R_1536x864->";
+        return 7;
+    case RenderResolution::R_1792x1008:
+        std::cout << "8 R_1792x1008->";
+        return 8;
+    case RenderResolution::R_2560x1440:
+        std::cout << "9 R_2560x1440->";
+        return 9;
+    default:
+        return 1;
+    }
+}
 
 struct ScreenShake
 {
@@ -65,11 +102,9 @@ public:
     void draw();        // ScreenEffects
     void drawOverlay(); // draw the gameboy Overlay
 
-    void _setRenderResolution(RenderResolution resolution);
-    void changeScreenResolution(ScreenResolution resolution);
+
+    void changeScreenResolution(ScreenResolution resolution); // will also adjust RenderResolution to the best fit
     void cycleThroughRenderResolutions();
-    std::string _screenResolutionToString(ScreenResolution resolution);
-    std::array<ScreenResolution, 6> GetAllScreenResolutionEnums();
     void saveScreenResolution();
     bool loadScreenResolution();
     ScreenResolution getScreenResolution();
@@ -106,6 +141,8 @@ public:
 
     Camera2D camera;
 
+    // declare DebugInfo as friendclass, because it calls _setRenderResolution
+    friend class DebugInfo;
 
 private:
     // Member variables
@@ -154,6 +191,7 @@ private:
 
     // Member functions
     void _calculateOverlaySize();
+    void _setRenderResolution(RenderResolution resolution);
     void _setScreenResolution(ScreenResolution resolution);
     void _updateScreenShake(float deltaTime);          // private, is called in update
     void _updateScreenGenericEffects(float deltaTime); // private, is called in update

@@ -4,33 +4,6 @@
 #include "HelperFunctions.h"
 
 
-int EnumToValue(RenderResolution resolution)
-{
-    switch (resolution)
-    {
-    case RenderResolution::R_256x144:
-        return 1;
-    case RenderResolution::R_512x288:
-        return 2;
-    case RenderResolution::R_768x432:
-        return 3;
-    case RenderResolution::R_1024x576:
-        return 4;
-    case RenderResolution::R_1120x630:
-        return 5;
-    case RenderResolution::R_1280x720:
-        return 5;
-    case RenderResolution::R_1536x864:
-        return 6;
-    case RenderResolution::R_1792x1008:
-        return 7;
-    case RenderResolution::R_2560x1440:
-        return 10;
-    default:
-        return 1;
-    }
-}
-
 Screen2DManager::Screen2DManager(const ScreenResolution screenResolution,
                                  const char* windowTitle,
                                  const RenderResolution resolution)
@@ -218,7 +191,6 @@ void Screen2DManager::changeScreenResolution(ScreenResolution resolution)
     // set Screen Resolution
     _setScreenResolution(resolution);
 
-
     // set Resolution of the renderTarget
     switch (resolution)
     {
@@ -251,45 +223,20 @@ void Screen2DManager::changeScreenResolution(ScreenResolution resolution)
 
 void Screen2DManager::cycleThroughRenderResolutions()
 {
+
     int value = EnumToValue(resolution);
     value++;
-    if (value > 10)
+    if (value > 9)
     {
         value = 1;
     }
-    RenderResolution newResolution = static_cast<RenderResolution>(value);
+    RenderResolution newResolution = static_cast<RenderResolution>(
+        value - 1); // -1 because the first value in RenderResolution starts with 1 and not 0
+
+    std::cout << "EnumToValue: " << EnumToValue(newResolution) << std::endl;
+    std::cout << "value: " << value << std::endl;
+
     _setRenderResolution(newResolution);
-}
-
-std::string Screen2DManager::_screenResolutionToString(ScreenResolution resolution)
-{
-    switch (resolution)
-    {
-    case ScreenResolution::S_640x480:
-        return "640x480";
-    case ScreenResolution::S_800x600:
-        return "800x600";
-    case ScreenResolution::S_1280x720:
-        return "1280x720";
-    case ScreenResolution::S_1920x1080:
-        return "1920x1080";
-    case ScreenResolution::S_2560x1440:
-        return "2560x1440";
-    case ScreenResolution::S_3440x1440:
-        return "3440x1440";
-    default:
-        return "Unknown";
-    }
-}
-
-std::array<ScreenResolution, 6> Screen2DManager::GetAllScreenResolutionEnums()
-{
-    return {ScreenResolution::S_640x480,
-            ScreenResolution::S_800x600,
-            ScreenResolution::S_1280x720,
-            ScreenResolution::S_1920x1080,
-            ScreenResolution::S_2560x1440,
-            ScreenResolution::S_3440x1440};
 }
 
 void Screen2DManager::saveScreenResolution()
