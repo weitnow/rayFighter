@@ -46,11 +46,7 @@ void MenuState::Enter()
 
 void MenuState::Update(float deltaTime)
 {
-    game->soundManager->updateBackgroundMusic(); // Update Music
-
     aafTitleScreen->update(game->deltaTime);
-
-    screen2DManager->update(game->deltaTime);
 
     if (gameAboutToStart)
     {
@@ -169,15 +165,6 @@ void MenuState::Exit()
 
 void MenuState::HandleInput()
 {
-    game->inputHandler->Update(); //update player1Controller/player2Controller
-
-
-    // check if ESC key is pressed or windows close button is clicked
-    if (player1Controller->key_esc || WindowShouldClose())
-    {
-        game->quit = true;
-    }
-
     if (player1Controller->duck && inputHandler->isKeyJustPressed(*player1Controller))
         selectedOption = (selectedOption + 1) % NUM_OPTIONS;
     if (player1Controller->jump && inputHandler->isKeyJustPressed(*player1Controller))

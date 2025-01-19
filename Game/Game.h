@@ -22,6 +22,7 @@ public:
     void PopState();
 
     void Update();
+    void HandleInput(); // used for general input handling valid in every state
     void Render();
     bool quit;
 

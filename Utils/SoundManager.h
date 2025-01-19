@@ -3,6 +3,7 @@
 
 #include "Core.h"
 #include "raylib.h"
+#include <string>
 
 class SoundManager
 {

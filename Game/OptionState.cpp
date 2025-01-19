@@ -3,8 +3,9 @@
 #include "Game.h"
 #include "GameState.h"
 
+const char* resolutionOptions[] = {"640x480", "800x600", "1280x720", "1920x1080", "2560x1440", "3440x1440", "Auto"};
 
-OptionSelectState::OptionSelectState(Game* game) : BaseState(game), OptionSelectScreen(nullptr), selectedOption(0)
+OptionSelectState::OptionSelectState(Game* game) : BaseState(game), OptionSelectScreen(nullptr), selectedOption{6}
 {
     OptionSelectScreen = game->asepriteManager->getAnimFile("optionSelectScreen");
     OptionSelectScreen->setFrameTag("optionSelectScreen-Intro");
@@ -40,9 +41,6 @@ void OptionSelectState::Enter()
 
 void OptionSelectState::Update(float deltaTime)
 {
-    game->soundManager->updateBackgroundMusic(); // Update Music
-
-    screen2DManager->update(game->deltaTime);
 
     // Update OptionSelectScreen
     OptionSelectScreen->update(deltaTime);
@@ -51,6 +49,7 @@ void OptionSelectState::Update(float deltaTime)
     {
         OptionSelectScreen->setFrameTag("optionSelectScreen-Idle");
     }
+
 
     HandleInput();
 }
@@ -105,24 +104,15 @@ void OptionSelectState::Exit()
 
 void OptionSelectState::HandleInput()
 {
-    game->inputHandler->Update(); //update player1Controller/player2Controller
-
-    if (player1Controller->key_enter)
+    if (player1Controller->kick)
     {
-        game->ChangeState(std::make_unique<GameState>(game));
+        //pop this state and return to menu
+        game->PopState();
     }
 
     if (player1Controller->punch || player2Controller->punch)
     {
         std::cout << "player 1 or 2 punching " << std::endl;
-    }
-
-
-    // check if ESC key is pressed or windows close button is clicked
-    if (player1Controller->key_esc || WindowShouldClose())
-    {
-        //pop this state and return to menu
-        game->PopState();
     }
 }
 
@@ -130,7 +120,17 @@ void OptionSelectState::_renderOptionMenu()
 {
     DrawText("Resolution",
              Constants::RENDERTARGET_WIDTH / 2 - MeasureText("Resolution", 8) / 2,
-             60,
+             50,
              8,
              Constants::RAYFIGHTER_WHITE);
+
+    for (int i = 0; i < 7; i++)
+    {
+        Color color = (i == selectedOption) ? Constants::RAYFIGHTER_WHITE : Constants::RAYFIGHTER_BLACK;
+        DrawText(resolutionOptions[i],
+                 Constants::RENDERTARGET_WIDTH / 2 - MeasureText(resolutionOptions[i], 8) / 2,
+                 65 + i * 10,
+                 8,
+                 color);
+    }
 }

@@ -38,22 +38,11 @@ void IntroState::Enter()
 
 void IntroState::Update(float deltaTime)
 {
-    //game->inputHandler->Update();                // Handle Input
-    //game->soundManager->updateBackgroundMusic(); // Update Music
-
-    //handle input
-
-    // check if ESC key is pressed or windows close button is clicked
-    if (IsKeyPressed(KEY_ESCAPE) || WindowShouldClose())
-    {
-        game->quit = true;
-    }
-
     IntroScreen->update(game->deltaTime);
-
 
     timerInMs -= game->deltaTime;
 
+    HandleInput();
 
     if (timerInMs <= 0.0f)
     {
@@ -107,4 +96,8 @@ void IntroState::Exit()
 
 void IntroState::HandleInput()
 {
+    if (player1Controller->punch || player1Controller->key_enter)
+    {
+        game->ChangeState(std::make_unique<MenuState>(game));
+    }
 }

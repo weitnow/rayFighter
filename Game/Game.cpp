@@ -86,9 +86,28 @@ void Game::PopState()
 void Game::Update()
 {
     deltaTime = GetFrameTime();
+
+    inputHandler->Update(); //update player1Controller/player2Controller
+
+    soundManager->updateBackgroundMusic(); // Update the background music
+
+    screen2DManager->update(deltaTime); // Update the screen2DManager
+
     if (!stateStack.empty())
     {
         stateStack.top()->Update(deltaTime);
+    }
+
+    HandleInput(); // Handle general input
+}
+
+void Game::HandleInput()
+{
+    // Handle general input, valid in every state
+
+    if (WindowShouldClose()) // Check if the window close button is clicked or 1 is pressed
+    {
+        quit = true;
     }
 }
 

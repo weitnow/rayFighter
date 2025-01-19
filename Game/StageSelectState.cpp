@@ -44,37 +44,10 @@ void StageSelectState::Enter()
 
 void StageSelectState::Update(float deltaTime)
 {
-    game->soundManager->updateBackgroundMusic(); // Update Music
-
-    screen2DManager->update(game->deltaTime);
-
     // Update StageSelectScreen
     StageSelectScreen->update(deltaTime);
 
-    //handle input //todo: refactor this to inputHandler
-    if (IsKeyPressed(KEY_ENTER))
-    {
-
-        game->PushState(std::make_unique<GameState>(game));
-    }
-    if (IsKeyPressed(KEY_D))
-    {
-        if (selectingCharacter)
-        {
-            selectedStage = (selectedStage + 1) % stages.size();
-        }
-    }
-    else if (IsKeyPressed(KEY_A))
-    {
-        if (selectingCharacter)
-        {
-            selectedStage = (selectedStage - 1 + stages.size()) % stages.size();
-        }
-    }
-    else if (IsKeyPressed(KEY_SPACE))
-    {
-        selectingCharacter = !selectingCharacter; // Toggle between character and stage
-    }
+    HandleInput();
 }
 
 void StageSelectState::Render()
@@ -126,6 +99,33 @@ void StageSelectState::Exit()
 
 void StageSelectState::HandleInput()
 {
+    if (player1Controller->kick)
+    {
+        game->PopState();
+    }
+
+    if (IsKeyPressed(KEY_ENTER) || player1Controller->punch)
+    {
+        game->PushState(std::make_unique<GameState>(game));
+    }
+    if (IsKeyPressed(KEY_D))
+    {
+        if (selectingCharacter)
+        {
+            selectedStage = (selectedStage + 1) % stages.size();
+        }
+    }
+    else if (IsKeyPressed(KEY_A))
+    {
+        if (selectingCharacter)
+        {
+            selectedStage = (selectedStage - 1 + stages.size()) % stages.size();
+        }
+    }
+    else if (IsKeyPressed(KEY_SPACE))
+    {
+        selectingCharacter = !selectingCharacter; // Toggle between character and stage
+    }
 }
 
 void StageSelectState::DrawSelectionScreen(int selectedIndex)

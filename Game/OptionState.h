@@ -6,7 +6,6 @@
 #include "BaseState.h"
 #include "raylib.h"
 
-
 class OptionSelectState : public BaseState
 {
 public:

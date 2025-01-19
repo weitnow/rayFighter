@@ -69,8 +69,6 @@ void GameState::Enter()
 
 void GameState::Update(float deltaTime)
 {
-    screen2DManager->update(game->deltaTime);
-
     _updateIsLeftPlayer1and2(); // Check if player1 is left of player2
 
     _checkHitsBetweenPlayers(); // Check if player1 and player2 are hitting each other
@@ -92,8 +90,6 @@ void GameState::Update(float deltaTime)
     player2->update(deltaTime); // _keepOnStage() is called in player update
 
     _checkCollisionsBetweenPlayers();
-
-    game->soundManager->updateBackgroundMusic(); // Update Music}
 
     _updateMiddlePointBetweenPlayers(); // (needs to be done befor _updateCamera)
 
@@ -216,8 +212,6 @@ void GameState::Exit()
 
 void GameState::HandleInput()
 {
-    game->inputHandler->Update();
-
     // debug mode
     if (player1Controller->key_q)
     {
@@ -234,7 +228,7 @@ void GameState::HandleInput()
     }
 
     // check if ESC key is pressed or windows close button is clicked
-    if (player1Controller->key_esc || WindowShouldClose())
+    if (player1Controller->key_enter)
     {
         //pop this state and return to menu
         game->PopState();

@@ -52,10 +52,6 @@ void CharSelectState::Enter()
 
 void CharSelectState::Update(float deltaTime)
 {
-    game->soundManager->updateBackgroundMusic(); // Update Music
-
-    screen2DManager->update(game->deltaTime);
-
     // Update CharSelectScreen
     CharSelectScreen->update(deltaTime);
 
@@ -64,52 +60,7 @@ void CharSelectState::Update(float deltaTime)
         SoundManager::getInstance().playSound("thunder.wav");
     }
 
-    //handle input //todo: refactor this to inputHandler
-    // check if ESC key is pressed or windows close button is clicked
-    if (IsKeyPressed(KEY_ESCAPE) || WindowShouldClose())
-    {
-        //pop this state and return to menu
-        game->PopState();
-    }
-
-    if (IsKeyPressed(KEY_ENTER))
-    {
-
-        game->ChangeState(std::make_unique<StageSelectState>(game));
-    }
-    if (IsKeyPressed(KEY_D))
-    {
-        if (selectingCharacter)
-        {
-            selectedCharacterP1 = (selectedCharacterP1 + 1) % characters.size();
-        }
-    }
-    else if (IsKeyPressed(KEY_A))
-    {
-        if (selectingCharacter)
-        {
-            selectedCharacterP1 = (selectedCharacterP1 - 1 + characters.size()) % characters.size();
-        }
-    }
-    else if (IsKeyPressed(KEY_SPACE))
-    {
-        selectingCharacter = !selectingCharacter; // Toggle between character and stage
-    }
-
-    if (IsKeyPressed(KEY_RIGHT))
-    {
-        if (selectingCharacter)
-        {
-            selectedCharacterP2 = (selectedCharacterP2 + 1) % characters.size();
-        }
-    }
-    else if (IsKeyPressed(KEY_LEFT))
-    {
-        if (selectingCharacter)
-        {
-            selectedCharacterP2 = (selectedCharacterP2 - 1 + characters.size()) % characters.size();
-        }
-    }
+    HandleInput();
 }
 
 void CharSelectState::Render()
@@ -167,6 +118,50 @@ void CharSelectState::Exit()
 
 void CharSelectState::HandleInput()
 {
+
+    if (player1Controller->kick)
+    {
+        //pop this state and return to menu
+        game->PopState();
+    }
+
+    if (IsKeyPressed(KEY_ENTER) || player1Controller->punch)
+    {
+        game->ChangeState(std::make_unique<StageSelectState>(game));
+    }
+    if (IsKeyPressed(KEY_D))
+    {
+        if (selectingCharacter)
+        {
+            selectedCharacterP1 = (selectedCharacterP1 + 1) % characters.size();
+        }
+    }
+    else if (IsKeyPressed(KEY_A))
+    {
+        if (selectingCharacter)
+        {
+            selectedCharacterP1 = (selectedCharacterP1 - 1 + characters.size()) % characters.size();
+        }
+    }
+    else if (IsKeyPressed(KEY_SPACE))
+    {
+        selectingCharacter = !selectingCharacter; // Toggle between character and stage
+    }
+
+    if (IsKeyPressed(KEY_RIGHT))
+    {
+        if (selectingCharacter)
+        {
+            selectedCharacterP2 = (selectedCharacterP2 + 1) % characters.size();
+        }
+    }
+    else if (IsKeyPressed(KEY_LEFT))
+    {
+        if (selectingCharacter)
+        {
+            selectedCharacterP2 = (selectedCharacterP2 - 1 + characters.size()) % characters.size();
+        }
+    }
 }
 
 void CharSelectState::DrawSelectionScreen(int selectedIndex, int playerNumber)
