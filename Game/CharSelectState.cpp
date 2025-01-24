@@ -18,10 +18,7 @@ CharSelectState::~CharSelectState()
 
     std::cout << "CharSelectState Destructor called, unloading resources" << std::endl;
 
-    if (Constants::BACKGROUND_MUSIC)
-    {
-        game->soundManager->unloadMusic("choices.mp3");
-    }
+    game->soundManager->unloadMusic("choices.mp3");
 
 
     delete CharSelectScreen;
@@ -33,11 +30,9 @@ void CharSelectState::Enter()
     BaseState::Enter();
 
     // Start playing background music
-    if (Constants::BACKGROUND_MUSIC)
-    {
-        game->soundManager->loadMusic("choices.mp3", 1.f);
-        game->soundManager->playBackgroundMusic("choices.mp3");
-    }
+    game->soundManager->loadMusic("choices.mp3", 1.f);
+    game->soundManager->playBackgroundMusic("choices.mp3");
+
 
     // Adding characters
     characters = {{{68, 117, 24, 24}, "Character 1"},

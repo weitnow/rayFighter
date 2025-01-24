@@ -13,10 +13,8 @@ IntroState::~IntroState()
     delete IntroScreen;
     IntroScreen = nullptr;
 
-    if (Constants::BACKGROUND_MUSIC)
-    {
-        //game->soundManager->unloadMusic("decisions.mp3");
-    }
+
+    //game->soundManager->unloadMusic("decisions.mp3");
 }
 
 void IntroState::Enter()
@@ -24,12 +22,8 @@ void IntroState::Enter()
     BaseState::Enter();
 
     // Start playing background music
-    if (Constants::BACKGROUND_MUSIC)
-    {
-        //game->soundManager->loadMusic("decisions.mp3", 1.f);
-        //game->soundManager->playBackgroundMusic("decisions.mp3");
-    }
-
+    //game->soundManager->loadMusic("decisions.mp3", 1.f);
+    //game->soundManager->playBackgroundMusic("decisions.mp3");
 
     // load TitleScreen
     IntroScreen = game->asepriteManager->getAnimFile("gbIntro");

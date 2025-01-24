@@ -80,6 +80,23 @@ T clamp(T value, T min, T max)
     return std::max(min, std::min(value, max));
 }
 
+
+class CircularCounter
+{
+public:
+    CircularCounter(int min_value, int max_value);
+    int increment();
+    int decrement();
+    int get_value() const;
+
+private:
+    int min_value_;
+    int max_value_;
+    int current_value_;
+};
+
+int calculate_circular_counter(int current_value, int increment, int min_value, int max_value);
+
 } // namespace Utils
 
 class Timer
@@ -98,5 +115,6 @@ private:
     float elapsedTime;
     bool running;
 };
+
 
 #endif //GBFIGHTER_HELPERFUNCTIONS_H

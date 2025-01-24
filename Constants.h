@@ -17,9 +17,6 @@ const int STAGE_WIDTH = 416;
 
 const int BASELINE = 102; //ground level where the player stands
 
-
-const bool BACKGROUND_MUSIC = true;
-
 const int DEFAULT_LIFE = 3;
 
 const float INVINCIBLE_TIME = 1.0f; // time in seconds objects are invincible after taking damage
@@ -50,7 +47,6 @@ namespace Global
 // Global Variables
 extern float gravity;
 extern float pushReduction;
-
 
 // Debug Variables
 extern bool debugMode;

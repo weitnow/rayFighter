@@ -19,6 +19,13 @@ public:
     // needs to be called in the main loop
     void updateBackgroundMusic();
 
+    float getMasterVolume();
+    float setMasterVolume(float volume);
+    float increaseMasterVolume();
+    float decreaseMasterVolume();
+    bool getBgMusicOn();
+    void setBgMusicOn(bool musicOn);
+
     // <-- Background Music -->
     // Loading and unloading music and setting volume
     void loadMusic(const std::string& filename, const float volume = 1.f);
@@ -35,6 +42,9 @@ public:
     void unloadAllSoundEffects();
     // Playing sound effects
     void playSound(const std::string& filename);
+
+    void saveSoundConfig();
+    bool loadSoundConfig();
 
 
 private:
@@ -58,6 +68,10 @@ private:
 
     std::string musicPath;
     std::string soundEffectsPath;
+
+    // Master volume (0.0f to 1.0f), if mastervolume changes, a restart of the game is required to take affect
+    float masterVolume = 1.0f;
+    bool bgMusicOn = true;
 };
 
 #endif //GBFIGHTER_SOUNDMANAGER_H

@@ -51,4 +51,50 @@ bool Timer::HasElapsed(float duration) const
     return GetElapsedTime() >= duration;
 }
 
+
+/* #region ---CircularCounter class--- */
+Utils::CircularCounter::CircularCounter(int min_value, int max_value)
+    : min_value_{min_value}, max_value_{max_value}, current_value_{min_value}
+{
+}
+
+int Utils::CircularCounter::increment()
+{
+    current_value_ = (current_value_ + 1) % (max_value_ - min_value_ + 1) + min_value_;
+    return current_value_;
+}
+
+int Utils::CircularCounter::decrement()
+{
+    current_value_ = (current_value_ - 1 + max_value_ - min_value_ + 1) % (max_value_ - min_value_ + 1) + min_value_;
+    return current_value_;
+}
+
+int Utils::CircularCounter::get_value() const
+{
+    return current_value_;
+}
+
+
 /* #endregion */
+
+int Utils::calculate_circular_counter(int current_value, int increment, int min_value, int max_value)
+{
+    int new_value = current_value + increment;
+
+    // Handle underflow
+    if (new_value < min_value)
+    {
+        int range = max_value - min_value + 1;
+        new_value = (new_value + range) % range + min_value;
+    }
+
+    // Handle overflow
+    if (new_value > max_value)
+    {
+        int range = max_value - min_value + 1;
+        new_value = (new_value - range) % range + min_value;
+    }
+
+    return new_value;
+}

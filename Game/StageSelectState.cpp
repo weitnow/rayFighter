@@ -12,14 +12,9 @@ StageSelectState::StageSelectState(Game* game) : BaseState(game), StageSelectScr
 
 StageSelectState::~StageSelectState()
 {
-
     std::cout << "CharSelectState Destructor called, unloading resources" << std::endl;
 
-    if (Constants::BACKGROUND_MUSIC)
-    {
-        game->soundManager->unloadMusic("sunburn.mp3");
-    }
-
+    game->soundManager->unloadMusic("sunburn.mp3");
 
     delete StageSelectScreen;
 }
@@ -29,11 +24,9 @@ void StageSelectState::Enter()
     BaseState::Enter();
 
     // Start playing background music
-    if (Constants::BACKGROUND_MUSIC)
-    {
-        game->soundManager->loadMusic("sunburn.mp3", 1.f);
-        game->soundManager->playBackgroundMusic("sunburn.mp3");
-    }
+    game->soundManager->loadMusic("sunburn.mp3", 1.f);
+    game->soundManager->playBackgroundMusic("sunburn.mp3");
+
 
     // Adding stages
     stages = {{{68, 117, 24, 24}, "Stage 1"},

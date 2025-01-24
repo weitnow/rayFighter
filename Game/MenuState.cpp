@@ -12,14 +12,10 @@ MenuState::MenuState(Game* game)
 
 MenuState::~MenuState()
 {
-
     delete aafTitleScreen;
     aafTitleScreen = nullptr;
 
-    if (Constants::BACKGROUND_MUSIC)
-    {
-        game->soundManager->unloadMusic("decisions.mp3");
-    }
+    game->soundManager->unloadMusic("decisions.mp3");
 }
 
 void MenuState::Enter()
@@ -27,21 +23,14 @@ void MenuState::Enter()
     BaseState::Enter();
 
     // Start playing background music
-    if (Constants::BACKGROUND_MUSIC)
-    {
-        game->soundManager->loadMusic("decisions.mp3", 1.f);
-        game->soundManager->playBackgroundMusic("decisions.mp3");
-    }
+    game->soundManager->loadMusic("decisions.mp3", 1.f);
+    game->soundManager->playBackgroundMusic("decisions.mp3");
+
     selectedOption = MenuOptions::PLAY;
 
     // load TitleScreen
     aafTitleScreen = game->asepriteManager->getAnimFile("titleScreen");
     aafTitleScreen->setFrameTag("titleScreen-Titlescreen");
-
-    // testing //Todo: get rid of this
-    screen2DManager->saveScreenResolution();
-    screen2DManager->loadScreenResolution();
-    screen2DManager->getScreenResolution();
 }
 
 void MenuState::Update(float deltaTime)
@@ -207,9 +196,5 @@ void MenuState::PauseMusic()
 
 void MenuState::ResumeMusic()
 {
-
-    if (Constants::BACKGROUND_MUSIC)
-    {
-        game->soundManager->playBackgroundMusic("decisions.mp3");
-    }
+    game->soundManager->playBackgroundMusic("decisions.mp3");
 }

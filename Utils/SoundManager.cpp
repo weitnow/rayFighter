@@ -1,5 +1,7 @@
 #include "SoundManager.h"
-
+#include <fstream>
+#include <iostream>
+#include <sstream>
 
 SoundManager::SoundManager() : currentBackgroundMusic(nullptr)
 {
@@ -58,6 +60,55 @@ void SoundManager::updateBackgroundMusic()
     }
 }
 
+float SoundManager::getMasterVolume()
+{
+    return masterVolume;
+}
+
+float SoundManager::setMasterVolume(float volume)
+{
+    if (volume > 1.0f)
+    {
+        masterVolume = 1.0f;
+    }
+    else if (volume < 0.0f)
+    {
+        masterVolume = 0.0f;
+    }
+    else
+    {
+        masterVolume = volume;
+    }
+    return masterVolume;
+}
+
+float SoundManager::increaseMasterVolume()
+{
+    float newVolume = getMasterVolume();
+    newVolume += 0.10;
+    return setMasterVolume(newVolume);
+}
+
+float SoundManager::decreaseMasterVolume()
+{
+    float newVolume = getMasterVolume();
+    newVolume -= 0.10;
+    return setMasterVolume(newVolume);
+}
+
+bool SoundManager::getBgMusicOn()
+{
+    return bgMusicOn;
+}
+
+void SoundManager::setBgMusicOn(bool musicOn)
+{
+    if (!musicOn)
+        stopBackgroundMusic();
+
+    bgMusicOn = musicOn;
+}
+
 void SoundManager::loadMusic(const std::string& filename, const float volume)
 {
     // Check if music is already in the dictionary
@@ -78,7 +129,7 @@ void SoundManager::loadMusic(const std::string& filename, const float volume)
     Music music = LoadMusicStream((musicPath + filename).c_str());
 
     // Set volume
-    SetMusicVolume(music, volume);
+    SetMusicVolume(music, volume * masterVolume);
 
     // Check if music was loaded successfully
     if (music.stream.buffer == nullptr)
@@ -124,6 +175,10 @@ void SoundManager::unloadAllMusic()
 
 void SoundManager::playBackgroundMusic(const std::string& filename)
 {
+    // check if bgMusicOn is true, otherwise return and don't play the music
+    if (!bgMusicOn)
+        return;
+
     // check if music is already loaded
     if (backgroundMusicDict.find(filename) == backgroundMusicDict.end())
     {
@@ -219,4 +274,55 @@ void SoundManager::playSound(const std::string& filename)
     }
 
     PlaySound(soundEffectsDict[filename]); // Play the sound effect
+}
+
+void SoundManager::saveSoundConfig()
+{
+    std::ofstream outFile("Data/soundconfig");
+    if (outFile.is_open())
+    {
+        outFile << bgMusicOn << " " << masterVolume << std::endl;
+        outFile.close();
+        std::cout << "Soundconfig saved" << std::endl;
+    }
+    else
+    {
+        std::cout << "Error saving soundconfig" << std::endl;
+    }
+}
+
+bool SoundManager::loadSoundConfig()
+{
+    std::ifstream inFile("Data/soundconfig");
+    if (inFile.is_open())
+    {
+        if (inFile >> bgMusicOn >> masterVolume)
+        {
+            bgMusicOn = (bgMusicOn != 0); // Convert int to bool
+            if (inFile.fail())
+            {
+                std::cerr << "Error parsing masterVolume in soundconfig file. Using default values." << std::endl;
+                bgMusicOn = true;
+                masterVolume = 1.0f;
+                return false;
+            }
+            inFile.close();
+            std::cout << "Soundconfig loaded" << std::endl;
+            return true;
+        }
+        else
+        {
+            std::cerr << "Error parsing bgMusicOn in soundconfig file. Using default values." << std::endl;
+            bgMusicOn = true;
+            masterVolume = 1.0f;
+            return false;
+        }
+    }
+    else
+    {
+        std::cerr << "Error opening soundconfig file. Using default values." << std::endl;
+        bgMusicOn = true;
+        masterVolume = 1.0f;
+        return false;
+    }
 }

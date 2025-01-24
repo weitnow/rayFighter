@@ -22,10 +22,16 @@ public:
 
 private:
     AsepriteAnimationFile* OptionSelectScreen;
+    Utils::CircularCounter selectedRow{
+        0,
+        4};             // 0 = Resolution, 1 = Music on/off, 2 = Sound Master Volume, 3 = Input P1, 4 = Input P2
+    int selectedOption; // is initialized with 0 and changed in _selectOption()
+
+
+    void _selectOption(int changeVal);
+    int _getMaxValOfSelectedOption(); //depends on the selectedRow
 
     void _renderOptionMenu();
-
-    int selectedOption; // tracks which resolution is currently highlighted
 };
 
 #endif

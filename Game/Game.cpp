@@ -3,21 +3,26 @@
 
 Game::Game() : quit(false)
 {
-
     // Initialize random seed once
     Utils::
         initializeRandom(); // defined in HelperFunctions.h, used to seed the random number generator for getRandomValueOf
 
     // Managing Global Compontents - which will be used in all game states
     // Initialize screen2DManager and set window size and title, this has to be done first before everything else
-    screen2DManager = new Screen2DManager(ScreenResolution::S_1920x1080,
-                                          "C++ RayFighter",
-                                          RenderResolution::R_1280x720); // instance of Screen2DManager
+    screen2DManager = new Screen2DManager("C++ RayFighter"); // instance of Screen2DManager
 
-
-    screen2DManager->changeScreenResolution(ScreenResolution::S_1920x1080); // set the screen resolution
-
+    if (!screen2DManager->loadScreenResolution()) //load screenresolution from file
+    {
+        // if it could not have been loaded use 1280 x 720 resolution as default
+        screen2DManager->changeScreenResolution(ScreenResolution::S_1280x720); // set the screen resolution
+    }
     soundManager = &SoundManager::getInstance();
+
+
+    soundManager->setMasterVolume(0.8f);
+    soundManager->saveSoundConfig();
+    soundManager->loadSoundConfig();
+
     inputHandler = new InputHandler();
     asepriteManager = new AsepriteManager{"Assets/Graphics/"}; // instance of AsepriteManager
     asepriteManager->init();
@@ -104,12 +109,12 @@ void Game::Update()
 void Game::HandleInput()
 {
     // Handle general input, valid in every state
-
     if (WindowShouldClose()) // Check if the window close button is clicked or 1 is pressed
     {
         quit = true;
     }
 }
+
 
 void Game::Render()
 {

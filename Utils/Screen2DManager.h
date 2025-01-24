@@ -25,12 +25,12 @@ enum class RenderResolution
 
 enum class ScreenResolution
 {
-    S_640x480,   // 4:3
-    S_800x600,   // 4:3
-    S_1280x720,  // 16:9 HD
-    S_1920x1080, // 16:9 Full HD
-    S_2560x1440, // 16:9 2K
-    S_3440x1440  // 16:9 Ultra Wide
+    S_640x480,   // 4:3                 // enum 0
+    S_800x600,   // 4:3                 // enum 1
+    S_1280x720,  // 16:9 HD             // enum 2
+    S_1920x1080, // 16:9 Full HD        // enum 3
+    S_2560x1440, // 16:9 2K             // enum 4
+    S_3440x1440  // 16:9 Ultra Wide     // enum 5
 };
 
 inline int EnumToValue(RenderResolution resolution)
@@ -82,9 +82,7 @@ struct ScreenShake
 class Screen2DManager
 {
 public:
-    Screen2DManager(const ScreenResolution screenResolution,
-                    const char* windowTitle,
-                    const RenderResolution resolution);
+    Screen2DManager(const char* windowTitle);
 
     ~Screen2DManager();
 
@@ -107,8 +105,6 @@ public:
     void cycleThroughRenderResolutions();
     void saveScreenResolution();
     bool loadScreenResolution();
-    ScreenResolution getScreenResolution();
-
 
     // ===== Effects ======
     // Screen Shake
@@ -153,16 +149,17 @@ private:
     float _overlayOffsetX = 0;      // calculated in _calculateOverlaySize
     float _overlayOffsetY = 0;      // calculated in _calculateOverlaySize
 
-    RenderTexture2D renderTarget; // the renderTarget to draw to, which is 256x144 and will be scaled up
-    Rectangle destRec;            // the destination rectangle for the renderTarget (size of the renderTarget)
-    Rectangle sourceRec;          // the source rectangle (256x144)
-    RenderResolution resolution;  // the resolution the destRec gets set to
-    int screenWidth;              // the width of the screen
-    int screenHeight;             // the height of the screen
-    int resolutionWidth;          // the width of the renderResolution
-    int resolutionHeight;         // the height of the renderResolution
-    int offsetX;                  // the offset of the rendertarget in relation to screen in x direction
-    int offsetY;                  // the offset of the rendertarget in relation to screen in y direction
+    RenderTexture2D renderTarget;      // the renderTarget to draw to, which is 256x144 and will be scaled up
+    Rectangle destRec;                 // the destination rectangle for the renderTarget (size of the renderTarget)
+    Rectangle sourceRec;               // the source rectangle (256x144)
+    RenderResolution renderResolution; // the resolution the destRec gets set to
+    ScreenResolution screenResolution; // the screenresolution (screenWidth/screenHeight)
+    int screenWidth;                   // the width of the screen
+    int screenHeight;                  // the height of the screen
+    int resolutionWidth;               // the width of the renderResolution
+    int resolutionHeight;              // the height of the renderResolution
+    int offsetX;                       // the offset of the rendertarget in relation to screen in x direction
+    int offsetY;                       // the offset of the rendertarget in relation to screen in y direction
 
     ScreenShake shake; // the screen shake object
 

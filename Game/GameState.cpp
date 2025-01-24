@@ -38,10 +38,8 @@ GameState::GameState(Game* game) : BaseState(game)
 
 GameState::~GameState()
 {
-    if (Constants::BACKGROUND_MUSIC)
-    {
-        game->soundManager->unloadMusic("darkchurch.mp3");
-    }
+
+    game->soundManager->unloadMusic("darkchurch.mp3");
 
     // Deleting Global Components
     delete debugInfo;
@@ -57,13 +55,9 @@ GameState::~GameState()
 void GameState::Enter()
 {
     BaseState::Enter();
-
     // Start playing random background music
-    if (Constants::BACKGROUND_MUSIC)
-    {
-        game->soundManager->loadMusic("darkchurch.mp3", 1.0f);
-        game->soundManager->playBackgroundMusic("darkchurch.mp3");
-    }
+    game->soundManager->loadMusic("darkchurch.mp3", 1.0f);
+    game->soundManager->playBackgroundMusic("darkchurch.mp3");
 }
 
 

@@ -4,15 +4,14 @@
 #include "HelperFunctions.h"
 
 
-Screen2DManager::Screen2DManager(const ScreenResolution screenResolution,
-                                 const char* windowTitle,
-                                 const RenderResolution resolution)
-    : resolution(resolution), screenWidth(0), screenHeight(0), camera{0}, destRec{0}, sourceRec{0}, renderTarget{0},
-      offsetX(0), offsetY(0), screenGenericEffectsAnimFile{nullptr}, asepriteManager{nullptr}
+Screen2DManager::Screen2DManager(const char* windowTitle)
+    : renderResolution(RenderResolution::R_256x144), screenResolution(ScreenResolution::S_640x480), screenWidth(0),
+      screenHeight(0), camera{0}, destRec{0}, sourceRec{0}, renderTarget{0}, offsetX(0), offsetY(0),
+      screenGenericEffectsAnimFile{nullptr}, asepriteManager{nullptr}
 {
 
     // Set the screen width and height
-    _setScreenResolution(screenResolution);
+    _setScreenResolution(ScreenResolution::S_640x480);
 
     // Initialize window
     InitWindow(screenWidth, screenHeight, windowTitle);
@@ -37,7 +36,7 @@ Screen2DManager::Screen2DManager(const ScreenResolution screenResolution,
     _calculateOverlaySize();
 
     // set Resolution of the destRec (not the screen resolution)
-    this->_setRenderResolution(resolution);
+    this->_setRenderResolution(renderResolution);
 }
 
 Screen2DManager::~Screen2DManager()
@@ -120,7 +119,7 @@ void Screen2DManager::drawOverlay()
 
 void Screen2DManager::_setRenderResolution(RenderResolution resolution)
 {
-    this->resolution = resolution;
+    this->renderResolution = resolution;
 
     if (resolution == RenderResolution::R_256x144)
     {
@@ -219,12 +218,22 @@ void Screen2DManager::changeScreenResolution(ScreenResolution resolution)
 
     // calculate the gameboy overlay size
     _calculateOverlaySize();
+
+    // center the window on the screen
+    // Get the monitor's width and height
+    int monitorWidth = GetMonitorWidth(GetCurrentMonitor());
+    int monitorHeight = GetMonitorHeight(GetCurrentMonitor());
+
+    // Center the window on the screen
+    int newPosX = (monitorWidth - screenWidth) / 2;
+    int newPosY = (monitorHeight - screenHeight) / 2;
+    SetWindowPosition(newPosX, newPosY);
 }
 
 void Screen2DManager::cycleThroughRenderResolutions()
 {
 
-    int value = EnumToValue(resolution);
+    int value = EnumToValue(renderResolution);
     value++;
     if (value > 9)
     {
@@ -241,10 +250,10 @@ void Screen2DManager::cycleThroughRenderResolutions()
 
 void Screen2DManager::saveScreenResolution()
 {
-    std::ofstream outFile("Data/resolution.txt");
+    std::ofstream outFile("Data/resolution");
     if (outFile.is_open())
     {
-        outFile << screenWidth << " " << screenHeight << std::endl;
+        outFile << static_cast<int>(screenResolution) << std::endl;
         outFile.close();
         std::cout << "Resolution saved" << std::endl;
     }
@@ -256,37 +265,37 @@ void Screen2DManager::saveScreenResolution()
 
 bool Screen2DManager::loadScreenResolution()
 {
-    std::ifstream inFile("Data/resolution.txt");
+    std::ifstream inFile("Data/resolution");
     if (inFile.is_open())
     {
-        int width, height;
-        inFile >> width >> height;
-        std::cout << "Loaded resolution: " << width << "x" << height << std::endl;
+        int resValue;
+        inFile >> resValue;
+
+        if (resValue >= static_cast<int>(ScreenResolution::S_640x480) &&
+            resValue <= static_cast<int>(ScreenResolution::S_3440x1440))
+        {
+            screenResolution = static_cast<ScreenResolution>(resValue);
+            std::cout << "Loaded resolution: " << resValue << std::endl;
+            inFile.close();
+
+            std::cout << "calling Screen2DManager->changeResolution(screenResolution)" << std::endl;
+            changeScreenResolution(screenResolution);
+
+            return true;
+        }
+        else
+        {
+            std::cout << "Invalid resolution value in file" << std::endl;
+        }
+
         inFile.close();
-        std::cout << "Resolution loaded" << std::endl;
-        return true;
     }
     else
     {
         std::cout << "Error loading resolution" << std::endl;
-        return false;
     }
-}
 
-ScreenResolution Screen2DManager::getScreenResolution()
-{
-    // set initiale value
-    int screenHeight = 480;
-    int screenWidth = 640;
-
-    // try to get actual screen width and height
-    screenHeight = GetMonitorHeight(0);
-    screenWidth = GetMonitorWidth(0);
-
-    std::cout << "getScreenResolution: " << screenWidth << " x " << screenHeight << std::endl;
-
-
-    return ScreenResolution::S_2560x1440;
+    return false;
 }
 
 void Screen2DManager::startScreenShake(float intensity, float duration)
@@ -354,6 +363,8 @@ void Screen2DManager::_calculateOverlaySize()
 
 void Screen2DManager::_setScreenResolution(ScreenResolution resolution)
 {
+    screenResolution = resolution;
+
     if (resolution == ScreenResolution::S_640x480)
     {
         screenWidth = 640;
