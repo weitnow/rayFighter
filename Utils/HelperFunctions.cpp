@@ -75,26 +75,18 @@ int Utils::CircularCounter::get_value() const
     return current_value_;
 }
 
+bool Utils::CircularCounter::set_value(int value)
+{
+    if (value < min_value_ || value > max_value_)
+    {
+        std::cout << "Error Utils::CircularCounter::set_value, value is outside min or max values" << std::endl;
+        return false;
+    }
+    else
+    {
+        current_value_ = value;
+        return true;
+    }
+}
 
 /* #endregion */
-
-int Utils::calculate_circular_counter(int current_value, int increment, int min_value, int max_value)
-{
-    int new_value = current_value + increment;
-
-    // Handle underflow
-    if (new_value < min_value)
-    {
-        int range = max_value - min_value + 1;
-        new_value = (new_value + range) % range + min_value;
-    }
-
-    // Handle overflow
-    if (new_value > max_value)
-    {
-        int range = max_value - min_value + 1;
-        new_value = (new_value - range) % range + min_value;
-    }
-
-    return new_value;
-}

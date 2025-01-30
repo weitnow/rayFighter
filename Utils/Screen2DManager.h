@@ -100,7 +100,7 @@ public:
     void draw();        // ScreenEffects
     void drawOverlay(); // draw the gameboy Overlay
 
-
+    int getScreenResolution();                                // returns and int (not a enum)
     void changeScreenResolution(ScreenResolution resolution); // will also adjust RenderResolution to the best fit
     void cycleThroughRenderResolutions();
     void saveScreenResolution();

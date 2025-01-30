@@ -17,9 +17,9 @@ int main(void)
     //game->ChangeState(std::make_unique<IntroState>(game));
     //game->ChangeState(std::make_unique<MenuState>(game));
 
-    game->ChangeState(std::make_unique<OptionSelectState>(game));
+    //game->ChangeState(std::make_unique<OptionSelectState>(game));
 
-    //game->ChangeState(std::make_unique<CharSelectState>(game));
+    game->ChangeState(std::make_unique<CharSelectState>(game));
     //game->ChangeState(std::make_unique<StageSelectState>(game));
     //game->ChangeState(std::make_unique<GameState>(game));
 
@@ -29,13 +29,6 @@ int main(void)
     {
         game->Update();
         game->Render();
-
-
-        //Todo: remove this
-        if (IsKeyPressed(KEY_M))
-        {
-            game->screen2DManager->cycleThroughRenderResolutions();
-        }
     }
     //----------------------------------------------------------------------------------
     // De-Initialization

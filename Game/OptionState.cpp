@@ -5,7 +5,9 @@
 
 const char* resolutionOptions[] = {"640x480", "800x600", "1280x720", "1920x1080", "2560x1440", "3440x1440"};
 
-OptionSelectState::OptionSelectState(Game* game) : BaseState(game), OptionSelectScreen(nullptr), selectedOption{0}
+OptionSelectState::OptionSelectState(Game* game)
+    : BaseState(game), OptionSelectScreen(nullptr), selectedResolution{screen2DManager->getScreenResolution()},
+      musicOn{soundManager->getBgMusicOn()}, soundMasterVolume{soundManager->getMasterVolume()}
 {
     OptionSelectScreen = game->asepriteManager->getAnimFile("optionSelectScreen");
     OptionSelectScreen->setFrameTag("optionSelectScreen-Intro");
@@ -13,7 +15,6 @@ OptionSelectState::OptionSelectState(Game* game) : BaseState(game), OptionSelect
 
 OptionSelectState::~OptionSelectState()
 {
-
     std::cout << "CharSelectState Destructor called, unloading resources" << std::endl;
 
     game->soundManager->unloadMusic("sunburn.mp3");
@@ -42,9 +43,6 @@ void OptionSelectState::Update(float deltaTime)
     {
         OptionSelectScreen->setFrameTag("optionSelectScreen-Idle");
     }
-
-    // Update Variables (Resolution, Music on/off, Mastervolume etc)
-
 
     HandleInput();
 }
@@ -110,11 +108,11 @@ void OptionSelectState::HandleInput()
 
     if (player1Controller->moveRight && inputHandler->isKeyJustPressed(*player1Controller)) // right
     {
-        _selectOption(1);
+        calculate_circular_counter_fixed_param(1);
     }
     else if (player1Controller->moveLeft && inputHandler->isKeyJustPressed(*player1Controller)) // left
     {
-        _selectOption(-1);
+        calculate_circular_counter_fixed_param(-1);
     }
 
 
@@ -125,14 +123,55 @@ void OptionSelectState::HandleInput()
     }
     else if (player1Controller->punch || player2Controller->punch)
     {
-        /* code */
+
+        if (selectedRow.get_value() != 5)
+        {
+            selectedRow.set_value(5);
+        }
+        else
+        {
+            soundManager->setBgMusicOn(musicOn);
+            soundManager->setMasterVolume(soundMasterVolume);
+
+            ScreenResolution res = static_cast<ScreenResolution>(selectedResolution);
+            screen2DManager->changeScreenResolution(res);
+
+            saveConfigToFile();
+        }
     }
 }
 
-void OptionSelectState::_selectOption(int changeVal)
+void OptionSelectState::calculate_circular_counter_fixed_param(int increment)
 {
-    // this function changes the value of selectedOption and makes sure that the value keeps between valid values
-    selectedOption = Utils::calculate_circular_counter(selectedOption, changeVal, 0, _getMaxValOfSelectedOption());
+
+    switch (selectedRow.get_value())
+    {
+    case 0: //0 = Resolution
+        selectedResolution =
+            Utils::calculate_circular_counter<int>(selectedResolution, increment, 0, _getMaxValOfSelectedOption());
+        break;
+    case 1: // 1 = Music on/off,
+        musicOn = Utils::calculate_circular_counter<int>(musicOn, increment, 0, _getMaxValOfSelectedOption());
+        break;
+    case 2: // 2 = Sound Master Volume
+    {
+        float incrementf = static_cast<float>(increment) / 10;
+        incrementf = std::round(incrementf * 10) /
+                     10; // this rounds everything to onDecimal after . -> for example 0.10001 is 0.1
+        soundMasterVolume = Utils::calculate_circular_counter<float>(soundMasterVolume,
+                                                                     incrementf,
+                                                                     0,
+                                                                     _getMaxValOfSelectedOption(),
+                                                                     true); // true = limit bounds
+        break;
+    }
+    case 3: // 3 = Input P1
+        break;
+    case 4: // 4 = Input P2
+        break;
+    default:
+        break;
+    }
 }
 
 int OptionSelectState::_getMaxValOfSelectedOption() //depends on the selectedRow
@@ -144,7 +183,7 @@ int OptionSelectState::_getMaxValOfSelectedOption() //depends on the selectedRow
     case 1: // 1 = Music on/off,
         return 1;
     case 2: // 2 = Sound Master Volume
-        return 9;
+        return 1;
     case 3: // 3 = Input P1
         return 0;
     case 4: // 4 = Input P2
@@ -154,24 +193,49 @@ int OptionSelectState::_getMaxValOfSelectedOption() //depends on the selectedRow
     }
 }
 
+void OptionSelectState::saveConfigToFile()
+{
+    screen2DManager->saveScreenResolution();
+    soundManager->saveSoundConfig();
+}
+
 void OptionSelectState::_renderOptionMenu()
 {
-    const int indentcol1 = 40;
-    const int indentcol2 = 100;
+    static const int indentcol1 = 40;
+    static const int indentcol2 = 120;
+    int xValueFirstElement = 60;
+    static const int spacer = 10;
+    static const int volumebarLenght = 50;
 
     Color color = (selectedRow.get_value() == 0) ? Constants::RAYFIGHTER_WHITE : Constants::RAYFIGHTER_BLACK;
-    DrawText("Resolution", indentcol1, 50, 8, color);
-    DrawText(resolutionOptions[selectedOption], indentcol2, 50, 8, color);
+    DrawText("Resolution", indentcol1, xValueFirstElement, 8, color);
+    DrawText(resolutionOptions[selectedResolution], indentcol2, xValueFirstElement, 8, color);
 
     color = (selectedRow.get_value() == 1) ? Constants::RAYFIGHTER_WHITE : Constants::RAYFIGHTER_BLACK;
-    DrawText("Music", indentcol1, 60, 8, color);
+    DrawText("Music", indentcol1, xValueFirstElement += spacer, 8, color);
+    DrawText((musicOn) ? "on" : "off", indentcol2, xValueFirstElement, 8, color);
 
     color = (selectedRow.get_value() == 2) ? Constants::RAYFIGHTER_WHITE : Constants::RAYFIGHTER_BLACK;
-    DrawText("Mastervolume", indentcol1, 70, 8, color);
+    DrawText("Mastervolume", indentcol1, xValueFirstElement += spacer, 8, color);
+    // Draw the background of the volume bar
+    static const Rectangle volumeBar = {indentcol2,
+                                        xValueFirstElement + 1,
+                                        volumebarLenght,
+                                        8}; // Pos and Size of the volumebar
+    DrawRectangleRec(volumeBar, Constants::RAYFIGHTER_LIGHTBROWN);
+    // Draw the filled portion representing the current volume level
+    DrawRectangle(volumeBar.x,
+                  volumeBar.y,
+                  volumeBar.width * soundMasterVolume,
+                  volumeBar.height,
+                  Constants::RAYFIGHTER_DARKBROWN);
 
     color = (selectedRow.get_value() == 3) ? Constants::RAYFIGHTER_WHITE : Constants::RAYFIGHTER_BLACK;
-    DrawText("P1 Input", indentcol1, 80, 8, color);
+    DrawText("P1 Input", indentcol1, xValueFirstElement += spacer, 8, color);
 
     color = (selectedRow.get_value() == 4) ? Constants::RAYFIGHTER_WHITE : Constants::RAYFIGHTER_BLACK;
-    DrawText("P2 Input", indentcol1, 90, 8, color);
+    DrawText("P2 Input", indentcol1, xValueFirstElement += spacer, 8, color);
+
+    color = (selectedRow.get_value() == 5) ? Constants::RAYFIGHTER_WHITE : Constants::RAYFIGHTER_BLACK;
+    DrawText("Save", indentcol1, xValueFirstElement += spacer, 8, color);
 }

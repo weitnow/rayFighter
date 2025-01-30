@@ -18,9 +18,8 @@ Game::Game() : quit(false)
     }
     soundManager = &SoundManager::getInstance();
 
-
-    soundManager->setMasterVolume(0.8f);
-    soundManager->saveSoundConfig();
+    // Load Configuration from file /Data/*
+    screen2DManager->loadScreenResolution();
     soundManager->loadSoundConfig();
 
     inputHandler = new InputHandler();

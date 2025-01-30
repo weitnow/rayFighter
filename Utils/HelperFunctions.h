@@ -57,7 +57,7 @@ inline void initializeRandom()
 }
 
 //----------------------------------------------------------------------------------
-// Template function to get a random value from any container
+// checkCollsion-Function
 //----------------------------------------------------------------------------------
 
 inline bool checkCollision(CollisionBox2D& box1, CollisionBox2D& box2)
@@ -74,6 +74,11 @@ inline bool checkCollision(CollisionBox2D* box1ptr, CollisionBox2D* box2ptr)
                               box2ptr->getRectangle()); // Assuming you are using raylib's CheckCollisionRecs()
 }
 
+//----------------------------------------------------------------------------------
+// Template function for clamping a value
+//----------------------------------------------------------------------------------
+
+
 template <typename T>
 T clamp(T value, T min, T max)
 {
@@ -88,6 +93,7 @@ public:
     int increment();
     int decrement();
     int get_value() const;
+    bool set_value(int value);
 
 private:
     int min_value_;
@@ -95,7 +101,37 @@ private:
     int current_value_;
 };
 
-int calculate_circular_counter(int current_value, int increment, int min_value, int max_value);
+//----------------------------------------------------------------------------------
+// Template for making a circular_counter
+//----------------------------------------------------------------------------------
+
+template <typename T>
+T calculate_circular_counter(T current_value, T increment, T min_value, T max_value, bool limit_bounds = false)
+{
+    if (limit_bounds)
+    {
+        if (current_value + increment < min_value)
+            return min_value;
+        if (current_value + increment > max_value)
+            return max_value;
+    }
+
+    T range = max_value - min_value;
+    T new_value = current_value + increment;
+
+    // Handle underflow
+    if (new_value < min_value)
+    {
+        new_value = std::fmod(new_value - min_value, range) + max_value;
+    }
+    // Handle overflow
+    if (new_value > max_value)
+    {
+        new_value = std::fmod(new_value - min_value, range) + min_value;
+    }
+
+    return new_value;
+}
 
 } // namespace Utils
 

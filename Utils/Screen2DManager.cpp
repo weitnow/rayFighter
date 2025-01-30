@@ -185,6 +185,11 @@ void Screen2DManager::_setRenderResolution(RenderResolution resolution)
                static_cast<float>(resolutionHeight)};
 }
 
+int Screen2DManager::getScreenResolution()
+{
+    return static_cast<int>(screenResolution);
+}
+
 void Screen2DManager::changeScreenResolution(ScreenResolution resolution)
 {
     // set Screen Resolution
