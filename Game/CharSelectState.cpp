@@ -4,13 +4,16 @@
 #include "StageSelectState.h"
 
 
-CharSelectState::CharSelectState(Game* game) : BaseState(game), CharSelectScreen(nullptr)
+CharSelectState::CharSelectState(Game* game)
+    : BaseState(game), CharSelectScreen(nullptr), selectedCharacterP1{0}, selectedCharacterP2{3}
 {
     CharSelectScreen = game->asepriteManager->getAnimFile("charSelectScreen");
     CharSelectScreen->setFrameTag("charSelectScreen-Idle");
 
-
     playerTag = game->asepriteManager->getAnimFile("playerTags");
+
+    //Todo: Get rid of this
+    myTest = std::make_unique<BaseGameObject>(asepriteManager);
 }
 
 CharSelectState::~CharSelectState()
@@ -76,8 +79,9 @@ void CharSelectState::Render()
         DrawSelectionScreen(selectedCharacterP2, 2);
     }
 
-    screen2DManager->draw();
+    DrawPlayer();
 
+    screen2DManager->draw();
     game->screen2DManager->endDrawToRenderTarget();
 
 
@@ -162,18 +166,29 @@ void CharSelectState::HandleInput()
 void CharSelectState::DrawSelectionScreen(int selectedIndex, int playerNumber)
 {
     // Draw
-
     DrawRectangleLinesEx(characters[selectedIndex].rect, 1.0f, Constants::RAYFIGHTER_WHITE);
 
-    // Draw player tag
     if (playerNumber == 1)
     {
+        // Draw player tag
         playerTag->drawFrame("playerTags-P1", characters[selectedIndex].rect.x, 110, 1, WHITE);
+
+        // Draw player name
+        DrawText((characters[selectedIndex].name).c_str(), 10, 10, 8, WHITE);
     }
     else
     {
+        // Draw player tag
         playerTag->drawFrame("playerTags-P2", characters[selectedIndex].rect.x + 12, 110, 1, WHITE);
+
+        // Draw player name
+        DrawText((characters[selectedIndex].name).c_str(), 182, 10, 8, WHITE);
     }
+}
+
+void CharSelectState::DrawPlayer()
+{
+    myTest->draw();
 }
 
 void CharSelectState::PauseMusic()

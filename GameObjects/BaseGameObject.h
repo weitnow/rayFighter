@@ -18,7 +18,7 @@ public:
     BaseGameObject(AsepriteManager* asepriteManager, float x, float y);
     virtual ~BaseGameObject();
 
-    virtual void init() = 0;
+    virtual void init();
 
     virtual void update(float deltaTime);
     virtual void draw();

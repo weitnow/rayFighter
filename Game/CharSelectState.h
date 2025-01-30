@@ -26,6 +26,7 @@ public:
     void HandleInput() override;
 
     void DrawSelectionScreen(int selectedIndex, int playerNumber);
+    void DrawPlayer();
 
 private:
     AsepriteAnimationFile* CharSelectScreen;
@@ -33,10 +34,14 @@ private:
 
     List<Option> characters;
 
-    int selectedCharacterP1 = 0;
-    int selectedCharacterP2 = 3;
+    int selectedCharacterP1;
+    int selectedCharacterP2;
 
     bool selectingCharacter = true;
+
+
+    //TESTS //todo: delete this
+    unique<BaseGameObject> myTest;
 
 private:
     void PauseMusic();
