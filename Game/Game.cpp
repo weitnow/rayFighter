@@ -39,10 +39,6 @@ Game::~Game()
 
     std::cout << "Game Destructor called, unloading resources" << std::endl;
 
-    delete screen2DManager; //deallocate memory on the heap
-    delete inputHandler;    //deallocate memory on the heap
-    delete asepriteManager; //deallocate memory on the heap
-
     // Ensure the stack is cleard
     while (!stateStack.empty())
     {
@@ -50,6 +46,9 @@ Game::~Game()
         stateStack.pop();
     }
 
+    delete screen2DManager; //deallocate memory on the heap
+    delete inputHandler;    //deallocate memory on the heap
+    delete asepriteManager; //deallocate memory on the heap <--Ensure no state is using this when deleting
     // soundManager is a singleton and will be deleted automatically
 }
 
@@ -111,6 +110,13 @@ void Game::HandleInput()
     if (WindowShouldClose()) // Check if the window close button is clicked or 1 is pressed
     {
         quit = true;
+
+        // Ensure all states exit properly
+        while (!stateStack.empty())
+        {
+            stateStack.top()->Exit();
+            stateStack.pop();
+        }
     }
 }
 

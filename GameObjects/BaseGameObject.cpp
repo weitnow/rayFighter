@@ -9,7 +9,11 @@ BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager)
       getDurationCurrentFrame(0), currentFrame(0), minFrame(0), maxFrame(0), hasAnimJustFinished(false),
       currentFrameTag(""), currentFrameAbsolut(0), spriteOffsetX(0), spriteOffsetY(0)
 {
-
+    if (!asepriteManager)
+    {
+        std::cerr << "Error: BaseGameObject received null AsepriteManager!" << std::endl;
+        return;
+    }
     this->asepriteManagerPtr = asepriteManager;
     this->animfilePtr = this->asepriteManagerPtr->getAnimFile("gbFighter");
     this->currentFrameTag = "gbFighter-Idle";
