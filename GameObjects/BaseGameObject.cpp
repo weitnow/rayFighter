@@ -7,7 +7,7 @@ BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager)
       isActive(true), isAlive(true), isInvincible(false), life(Constants::DEFAULT_LIFE), _invincibleCounter(0.f),
       invincibleTime(Constants::INVINCIBLE_TIME), affectedByGravity(true), moveVector({0, 0}),
       getDurationCurrentFrame(0), currentFrame(0), minFrame(0), maxFrame(0), hasAnimJustFinished(false),
-      currentFrameTag(""), currentFrameAbsolut(0), spriteOffsetX(0), spriteOffsetY(0)
+      currentFrameTag(""), currentFrameAbsolut(0), spriteOffsetX(0), spriteOffsetY(0), drawShadow(false)
 {
     if (!asepriteManager)
     {
@@ -71,8 +71,16 @@ void BaseGameObject::update(float deltaTime)
 
 void BaseGameObject::draw()
 {
+
     if (animfilePtr != nullptr)
     {
+
+        // Draw the shadow
+        if (drawShadow)
+        {
+            _drawShadow();
+        }
+
         if (Global::debugMode)
         {
             if (!isInvincible)
@@ -235,6 +243,16 @@ bool BaseGameObject::setCurrentFrameTag(std::string tag)
 std::string BaseGameObject::getCurrentFrameTag()
 {
     return currentFrameTag;
+}
+
+void BaseGameObject::setDrawShadow(bool drawShadow)
+{
+    this->drawShadow = drawShadow;
+}
+
+void BaseGameObject::setIsFlippedX(bool isFlippedX)
+{
+    this->isFlippedX = isFlippedX;
 }
 
 bool BaseGameObject::getIsFlippedX()
@@ -624,6 +642,12 @@ void BaseGameObject::_updateMemberVariables()
     maxFrame = animfilePtr->getMaxFrame();
     hasAnimJustFinished = animfilePtr->hasAnimJustFinished();
     currentFrameAbsolut = currentFrame - minFrame;
+}
+
+void BaseGameObject::_drawShadow()
+{
+    // Draw the shadow
+    DrawRectangle(pos.x + 5, Constants::BASELINE + 18, 20, 10, Fade(BLACK, 0.2f));
 }
 
 List<CollisionBox2D> BaseGameObject::_checkIfCollisionMapHasCollisionBoxesAndReturnList(

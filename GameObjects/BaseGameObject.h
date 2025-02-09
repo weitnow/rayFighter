@@ -41,6 +41,9 @@ public:
     virtual bool setCurrentFrameTag(std::string tag);
     std::string getCurrentFrameTag();
 
+
+    void setDrawShadow(bool drawShadow);
+    void setIsFlippedX(bool isFlippedX);
     bool getIsFlippedX();
     void setSpriteOffsetX(int spriteOffsetX);
 
@@ -98,6 +101,7 @@ protected:
     Vector2 pushVector; // (x,y) used by setPushVector and reduced by _reducePushVector in update methode
     float scale;
     Color color;
+    bool drawShadow;
     bool isFlippedX;
     bool isFlippedY;
     int spriteOffsetX;
@@ -132,6 +136,7 @@ protected:
     virtual void _reducePushVector(float deltaTime);
     virtual void _applyGravity(float deltaTime);
     void _updateMemberVariables(); // update member variables from the animationfile
+    void _drawShadow();
     void _updateCollisionBoxes(float deltaTime);
     void _drawCollisionBoxes();
     void _addCollisionBoxForFrameInternal(std::string frameTagName,

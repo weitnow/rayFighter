@@ -19,9 +19,9 @@ int main(void)
 
     //game->ChangeState(std::make_unique<OptionSelectState>(game));
 
-    game->ChangeState(std::make_unique<CharSelectState>(game));
+    //game->ChangeState(std::make_unique<CharSelectState>(game));
     //game->ChangeState(std::make_unique<StageSelectState>(game));
-    //game->ChangeState(std::make_unique<GameState>(game));
+    game->ChangeState(std::make_unique<GameState>(game));
 
 
     // Main game loop

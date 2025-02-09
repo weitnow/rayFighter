@@ -26,7 +26,9 @@ public:
     void HandleInput() override;
 
     void DrawSelectionScreen(int selectedIndex, int playerNumber);
-    void DrawPlayer();
+
+    void UpdatePlayers(float deltaTime);
+    void DrawPlayers();
 
 private:
     AsepriteAnimationFile* CharSelectScreen;
@@ -41,7 +43,8 @@ private:
 
 
     //TESTS //todo: delete this
-    unique<BaseGameObject> myTest;
+    unique<BaseGameObject> p1;
+    unique<BaseGameObject> p2;
 
 private:
     void PauseMusic();

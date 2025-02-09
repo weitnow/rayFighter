@@ -24,4 +24,7 @@ void Fighter1::init()
     addCollisionBoxForFrame("gbFighter-JumpPunch", 0, CollisionBoxType::HITBOX, true, 24, 20, 5, 5);
     addCollisionBoxForFrame("gbFighter-Idle", -2, CollisionBoxType::HURTBOX, HurtboxType::BODY, true, 10, 4, 12, 26);
     getStatemachine().changeState("Walk");
+
+    // draw shadow
+    setDrawShadow(true);
 }

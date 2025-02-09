@@ -13,7 +13,9 @@ CharSelectState::CharSelectState(Game* game)
     playerTag = game->asepriteManager->getAnimFile("playerTags");
 
     //Todo: Get rid of this
-    myTest = std::make_unique<BaseGameObject>(asepriteManager);
+    p1 = std::make_unique<BaseGameObject>(asepriteManager, 45, 68);
+    p2 = std::make_unique<BaseGameObject>(asepriteManager, 170, 68);
+    p2->setIsFlippedX(true);
 }
 
 CharSelectState::~CharSelectState()
@@ -58,6 +60,8 @@ void CharSelectState::Update(float deltaTime)
         SoundManager::getInstance().playSound("thunder.wav");
     }
 
+    UpdatePlayers(deltaTime);
+
     HandleInput();
 }
 
@@ -79,7 +83,7 @@ void CharSelectState::Render()
         DrawSelectionScreen(selectedCharacterP2, 2);
     }
 
-    DrawPlayer();
+    DrawPlayers();
 
     screen2DManager->draw();
     game->screen2DManager->endDrawToRenderTarget();
@@ -186,9 +190,16 @@ void CharSelectState::DrawSelectionScreen(int selectedIndex, int playerNumber)
     }
 }
 
-void CharSelectState::DrawPlayer()
+void CharSelectState::UpdatePlayers(float deltaTime)
 {
-    myTest->draw();
+    p1->update(deltaTime);
+    p2->update(deltaTime);
+}
+
+void CharSelectState::DrawPlayers()
+{
+    p1->draw();
+    p2->draw();
 }
 
 void CharSelectState::PauseMusic()
