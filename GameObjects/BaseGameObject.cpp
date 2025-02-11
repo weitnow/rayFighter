@@ -646,8 +646,12 @@ void BaseGameObject::_updateMemberVariables()
 
 void BaseGameObject::_drawShadow()
 {
-    // Draw the shadow
-    DrawRectangle(pos.x + 5, Constants::BASELINE + 18, 20, 10, Fade(BLACK, 0.2f));
+    const float x1 = 97, y1 = 1.0f;
+    const float x2 = 40, y2 = 0.7f;
+
+    float shadowSize = y1 + ((pos.y - x1) * (y2 - y1)) / (x2 - x1);
+
+    DrawEllipse(pos.x + 16, Constants::BASELINE + 23, 13 * shadowSize, 7 * shadowSize, Fade(BLACK, 0.2f));
 }
 
 List<CollisionBox2D> BaseGameObject::_checkIfCollisionMapHasCollisionBoxesAndReturnList(

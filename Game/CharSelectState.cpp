@@ -16,6 +16,8 @@ CharSelectState::CharSelectState(Game* game)
     p1 = std::make_unique<BaseGameObject>(asepriteManager, 45, 68);
     p2 = std::make_unique<BaseGameObject>(asepriteManager, 170, 68);
     p2->setIsFlippedX(true);
+    p1->setDrawShadow(true);
+    p2->setDrawShadow(true);
 }
 
 CharSelectState::~CharSelectState()
