@@ -18,9 +18,9 @@ public:
     virtual void init() override;
     virtual void update(float deltaTime) override;
     void draw();
-    void moveLeft();
-    void moveRight();
-    void stop();
+    //void moveLeft();  // implemented in BaseGameObject
+    //void moveRight(); // implemented in BaseGameObject
+    //void stop();      // implemented in BaseGameObject
     void jump();
     void duck();
     void punch();
@@ -61,7 +61,7 @@ protected:
     // member variables
     bool isOnGround;
     float jumpForce = 300.f;
-    float walkingSpeed = 60.f;
+    // BaseGameObject::moveSpeed = 60.f
     unique<Statemachine> statemachine;
     std::string animFileName;
     bool isLeft;      // true if the character is left of the other character, only vallid for player1 or player2

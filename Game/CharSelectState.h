@@ -25,10 +25,6 @@ public:
     void Exit() override;
     void HandleInput() override;
 
-    void DrawSelectionScreen(int selectedIndex, int playerNumber);
-
-    void UpdatePlayers(float deltaTime);
-    void DrawPlayers();
 
 private:
     AsepriteAnimationFile* CharSelectScreen;
@@ -36,19 +32,26 @@ private:
 
     List<Option> characters;
 
-    int selectedCharacterP1;
-    int selectedCharacterP2;
+    int previousSelectedCharacterP1;
+    int currentSelectedCharacterP1;
+    int previousSelectedCharacterP2;
+    int currentSelectedCharacterP2;
 
     bool selectingCharacter = true;
 
-
-    //TESTS //todo: delete this
     unique<BaseGameObject> p1;
     unique<BaseGameObject> p2;
+
 
 private:
     void PauseMusic();
     void ResumeMusic();
+    void DrawSelectionScreen(int selectedIndex, int playerNumber);
+
+    // Players
+    void UpdatePlayers(float deltaTime);
+    void DrawPlayers();
+    void changePlayerCharacter(int playerNumber);
 };
 
 #endif

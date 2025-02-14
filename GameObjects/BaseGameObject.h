@@ -41,8 +41,12 @@ public:
     virtual bool setCurrentFrameTag(std::string tag);
     std::string getCurrentFrameTag();
 
-
     void setDrawShadow(bool drawShadow);
+    void setShadowGroundLevel(int groundlevel);
+    void setShadowSize(float size);
+    void setShadowColor(Color color);
+    void setShadowOpacity(float opacity);
+
     void setIsFlippedX(bool isFlippedX);
     bool getIsFlippedX();
     void setSpriteOffsetX(int spriteOffsetX);
@@ -57,6 +61,7 @@ public:
     void setPos(float x, float y);
     void setPos(Vector2 pos);
     virtual Vector2 getPos() const;
+    void resetPos(); // sets the object to the orginal position where it was instantiated
 
     //pushVector
     void setPushVector(Vector2 pushVector);
@@ -64,7 +69,16 @@ public:
     void resetPushVector();
 
     //moveVector
+    virtual void setMoveVector(Vector2 moveVector);
     virtual void setMoveVectorY(int yValue);
+    virtual void setMoveVectorX(int xValue);
+
+    //move object indirectly by set Speed
+    virtual void moveLeft();
+    virtual void moveRight();
+    virtual void moveUp();
+    virtual void moveDown();
+    virtual void stop();
 
     //gravity
     void setAffectedByGravity(bool affectedByGravity);
@@ -99,9 +113,9 @@ protected:
     Vector2 pos;        // calculated in the update method
     Vector2 moveVector; // (x,y) used to walk and jump
     Vector2 pushVector; // (x,y) used by setPushVector and reduced by _reducePushVector in update methode
+    float moveSpeed = 60.f;
     float scale;
     Color color;
-    bool drawShadow;
     bool isFlippedX;
     bool isFlippedY;
     int spriteOffsetX;
@@ -118,6 +132,13 @@ protected:
     bool hasAnimJustFinished;    // true if the animation has just finished
     int currentFrameAbsolut;     // current frame number of the animation - min frame
     int life;
+
+    // shadow
+    bool drawShadow;
+    int shadowGroundLevel = 125;
+    float shadowSize = 1.f;
+    Color shadowColor = BLACK;
+    float shadowOpacity = 0.2f;
 
     float _invincibleCounter;
     float invincibleTime;
@@ -136,7 +157,10 @@ protected:
     virtual void _reducePushVector(float deltaTime);
     virtual void _applyGravity(float deltaTime);
     void _updateMemberVariables(); // update member variables from the animationfile
-    void _drawShadow();
+    void _drawShadow(int groundLevel = Constants::BASELINE + 23,
+                     float shadowSize = 1,
+                     Color color = BLACK,
+                     float shadowOpacity = 0.2f);
     void _updateCollisionBoxes(float deltaTime);
     void _drawCollisionBoxes();
     void _addCollisionBoxForFrameInternal(std::string frameTagName,

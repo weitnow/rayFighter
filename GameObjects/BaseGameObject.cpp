@@ -5,7 +5,7 @@
 BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager)
     : ObjName(""), pushVector({0, 0}), scale(1.f), pos{0.f, 0.f}, color(WHITE), isFlippedX(false), isFlippedY(false),
       isActive(true), isAlive(true), isInvincible(false), life(Constants::DEFAULT_LIFE), _invincibleCounter(0.f),
-      invincibleTime(Constants::INVINCIBLE_TIME), affectedByGravity(true), moveVector({0, 0}),
+      invincibleTime(Constants::INVINCIBLE_TIME), affectedByGravity(false), moveVector({0, 0}),
       getDurationCurrentFrame(0), currentFrame(0), minFrame(0), maxFrame(0), hasAnimJustFinished(false),
       currentFrameTag(""), currentFrameAbsolut(0), spriteOffsetX(0), spriteOffsetY(0), drawShadow(false)
 {
@@ -50,6 +50,7 @@ void BaseGameObject::update(float deltaTime)
     this->setPos(this->getPos().x + (moveVector.x + pushVector.x) * deltaTime,
                  this->getPos().y + (moveVector.y + pushVector.y) * deltaTime);
 
+
     // apply gravity
     if (affectedByGravity)
     {
@@ -78,7 +79,7 @@ void BaseGameObject::draw()
         // Draw the shadow
         if (drawShadow)
         {
-            _drawShadow();
+            _drawShadow(shadowGroundLevel, shadowSize, shadowColor, shadowOpacity);
         }
 
         if (Global::debugMode)
@@ -204,6 +205,12 @@ Vector2 BaseGameObject::getPos() const
     return pos;
 }
 
+void BaseGameObject::resetPos()
+{
+
+    pos = orginalPos;
+}
+
 void BaseGameObject::setAffectedByGravity(bool affectedByGravity)
 {
     this->affectedByGravity = affectedByGravity;
@@ -248,6 +255,26 @@ std::string BaseGameObject::getCurrentFrameTag()
 void BaseGameObject::setDrawShadow(bool drawShadow)
 {
     this->drawShadow = drawShadow;
+}
+
+void BaseGameObject::setShadowGroundLevel(int groundlevel)
+{
+    shadowGroundLevel = groundlevel;
+}
+
+void BaseGameObject::setShadowSize(float size)
+{
+    shadowSize = size;
+}
+
+void BaseGameObject::setShadowColor(Color color)
+{
+    shadowColor = color;
+}
+
+void BaseGameObject::setShadowOpacity(float opacity)
+{
+    shadowOpacity = opacity;
 }
 
 void BaseGameObject::setIsFlippedX(bool isFlippedX)
@@ -402,9 +429,44 @@ void BaseGameObject::resetPushVector()
     pushVector = {0, 0};
 }
 
+void BaseGameObject::setMoveVector(Vector2 moveVector)
+{
+    this->moveVector = moveVector;
+}
+
 void BaseGameObject::setMoveVectorY(int yValue)
 {
     moveVector.y = yValue;
+}
+
+void BaseGameObject::setMoveVectorX(int xValue)
+{
+    moveVector.x = xValue;
+}
+
+void BaseGameObject::moveLeft()
+{
+    this->moveVector.x = -moveSpeed;
+}
+
+void BaseGameObject::moveRight()
+{
+    this->moveVector.x = +moveSpeed;
+}
+
+void BaseGameObject::moveUp()
+{
+    this->moveVector.y = -moveSpeed;
+}
+
+void BaseGameObject::moveDown()
+{
+    this->moveVector.y = +moveSpeed;
+}
+
+void BaseGameObject::stop()
+{
+    this->moveVector.x = 0;
 }
 
 void BaseGameObject::_reducePushVector(float deltaTime)
@@ -644,14 +706,18 @@ void BaseGameObject::_updateMemberVariables()
     currentFrameAbsolut = currentFrame - minFrame;
 }
 
-void BaseGameObject::_drawShadow()
+void BaseGameObject::_drawShadow(int groundLevel, float shadowSize, Color color, float shadowOpacity)
 {
     const float x1 = 97, y1 = 1.0f;
     const float x2 = 40, y2 = 0.7f;
 
-    float shadowSize = y1 + ((pos.y - x1) * (y2 - y1)) / (x2 - x1);
+    float shadowSizeAdjustment = y1 + ((pos.y - x1) * (y2 - y1)) / (x2 - x1);
 
-    DrawEllipse(pos.x + 16, Constants::BASELINE + 23, 13 * shadowSize, 7 * shadowSize, Fade(BLACK, 0.2f));
+    DrawEllipse(pos.x + 16,
+                groundLevel,
+                13 * shadowSizeAdjustment * shadowSize,
+                7 * shadowSizeAdjustment * shadowSize,
+                Fade(color, shadowOpacity));
 }
 
 List<CollisionBox2D> BaseGameObject::_checkIfCollisionMapHasCollisionBoxesAndReturnList(

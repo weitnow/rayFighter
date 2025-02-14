@@ -6,6 +6,8 @@ BaseCharacter::BaseCharacter(AsepriteManager* asepriteManager, float x, float y)
     : BaseGameObject(asepriteManager, x, y), isOnGround(false), animFileName("gbFighter"), isLeft(true),
       playerNumber(-1), statemachine(nullptr), currentState("Idle"), canDealDamage(true), controller(nullptr)
 {
+    affectedByGravity =
+        true; // needs to be set here, because in the initializer list of basegameobject it is set to false
 }
 
 BaseCharacter::~BaseCharacter()
@@ -69,23 +71,6 @@ void BaseCharacter::draw()
 {
 
     BaseGameObject::draw();
-}
-
-void BaseCharacter::moveLeft()
-{
-
-    this->moveVector.x = -walkingSpeed;
-}
-
-void BaseCharacter::moveRight()
-{
-
-    this->moveVector.x = +walkingSpeed;
-}
-
-void BaseCharacter::stop()
-{
-    this->moveVector.x = 0;
 }
 
 void BaseCharacter::jump()
