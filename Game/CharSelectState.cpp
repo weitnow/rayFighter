@@ -215,9 +215,8 @@ void CharSelectState::UpdatePlayers(float deltaTime)
     p1->update(deltaTime);
     p2->update(deltaTime);
 
-    if (activeCharacterP1 != selectedCharacterP1)
-    {
-    }
+    CharacterMoveControllerUpdate(1); // Player 1
+    CharacterMoveControllerUpdate(2); // Player 2
 }
 
 void CharSelectState::DrawPlayers()
@@ -226,8 +225,83 @@ void CharSelectState::DrawPlayers()
     p2->draw();
 }
 
+void CharSelectState::CharacterMoveControllerUpdate(int playerNumber)
+{
 
-void CharSelectState::moveCharacterOffScreen(BaseGameObject& player)
+
+    std::cout << "activeCharacterP1: " << activeCharacterP1 << std::endl;
+    std::cout << "selectedCharacterP1: " << selectedCharacterP1 << std::endl;
+
+    int& activeCharacter = (playerNumber == 1) ? activeCharacterP1 : activeCharacterP2;
+    int& selectedCharacter = (playerNumber == 1) ? selectedCharacterP1 : selectedCharacterP2;
+
+    BaseGameObject& player = (playerNumber == 1) ? *p1 : *p2;
+
+    auto& status = (playerNumber == 1) ? p1status : p2status;
+
+    bool& onOrgPos = std::get<0>(status);
+    bool& outsideScreen = std::get<1>(status);
+    bool& movingIn = std::get<2>(status);
+    bool& movingOut = std::get<3>(status);
+
+
+    if (activeCharacter != selectedCharacter)
+    {
+        // move character off screen
+        if (onOrgPos)
+        {
+            _moveCharacterOffScreen(player);
+            onOrgPos = false;
+            movingOut = true;
+        }
+    }
+    else // activeCharacter == selectedCharacter
+    {
+        if (outsideScreen)
+        {
+
+            _moveCharacterOnScreen(player);
+            outsideScreen = false;
+            movingIn = true;
+        }
+    }
+
+    if (movingOut)
+    {
+        if (player.getPos().x < -50 || player.getPos().x > 320)
+        {
+            movingOut = false;
+            outsideScreen = true;
+            player.setPos(player.getPos().x < -50 ? -50 : 320, player.getPos().y);
+            _stopCharacterMovement(player);
+            activeCharacter = selectedCharacter;
+        }
+    }
+    else if (movingIn)
+    {
+        if (playerNumber == 1)
+        {
+            if (player.getPos().x > p1posX)
+            {
+                movingIn = false;
+                onOrgPos = true;
+                _stopCharacterMovement(player);
+            }
+        }
+        else
+        {
+            if (player.getPos().x < p2posX)
+            {
+                movingIn = false;
+                onOrgPos = true;
+                _stopCharacterMovement(player);
+            }
+        }
+    }
+}
+
+
+void CharSelectState::_moveCharacterOffScreen(BaseGameObject& player)
 {
 
     // move player 2 right out of screen
@@ -243,7 +317,7 @@ void CharSelectState::moveCharacterOffScreen(BaseGameObject& player)
     }
 }
 
-void CharSelectState::moveCharacterOnScreen(BaseGameObject& player)
+void CharSelectState::_moveCharacterOnScreen(BaseGameObject& player)
 {
     // move player 2 right on of screen
     if (player.getIsFlippedX()) // means = player2
@@ -258,7 +332,7 @@ void CharSelectState::moveCharacterOnScreen(BaseGameObject& player)
     }
 }
 
-void CharSelectState::stopCharacterMovement(BaseGameObject& player)
+void CharSelectState::_stopCharacterMovement(BaseGameObject& player)
 {
     // move player 2 right on of screen
     if (player.getIsFlippedX()) // means = player2
@@ -277,10 +351,10 @@ std::string CharSelectState::getFrameTagStrOf(int playerNumber, std::string acti
 {
     if (playerNumber == 1)
     {
-        return characters[selectedCharacterP1].spritename + "-" + action;
+        return characters[activeCharacterP1].spritename + "-" + action;
     }
 
-    return characters[selectedCharacterP2].spritename + "-" + action;
+    return characters[activeCharacterP2].spritename + "-" + action;
 }
 
 

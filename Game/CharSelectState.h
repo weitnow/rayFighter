@@ -62,10 +62,11 @@ private:
     // Players
     void UpdatePlayers(float deltaTime);
     void DrawPlayers();
-    void moveCharacterOffScreen(BaseGameObject& player);
-    void moveCharacterOnScreen(BaseGameObject& player);
-    void stopCharacterMovement(BaseGameObject& player);
+    void CharacterMoveControllerUpdate(int playerNumber);
+
+    void _moveCharacterOffScreen(BaseGameObject& player);
+    void _moveCharacterOnScreen(BaseGameObject& player);
+    void _stopCharacterMovement(BaseGameObject& player);
     std::string getFrameTagStrOf(int playerNumber, std::string action);
 };
-
 #endif
