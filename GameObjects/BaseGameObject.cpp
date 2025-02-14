@@ -469,6 +469,11 @@ void BaseGameObject::stop()
     this->moveVector.x = 0;
 }
 
+void BaseGameObject::setMoveSpeed(int speed)
+{
+    moveSpeed = speed;
+}
+
 void BaseGameObject::_reducePushVector(float deltaTime)
 {
     if (abs(pushVector.x) == 0 && abs(pushVector.y) == 0)

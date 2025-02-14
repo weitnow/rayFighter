@@ -2,33 +2,16 @@
 #include "../Constants.h"
 #include "Game.h"
 #include "StageSelectState.h"
-#include <stdexcept> // Include for std::invalid_argument
 
 
 CharSelectState::CharSelectState(Game* game)
-    : BaseState(game), CharSelectScreen(nullptr), currentSelectedCharacterP1{0}, previousSelectedCharacterP1{0},
-      currentSelectedCharacterP2{3}, previousSelectedCharacterP2{3}
+    : BaseState(game), CharSelectScreen(nullptr), selectedCharacterP1{0}, activeCharacterP1{0}, selectedCharacterP2{3},
+      activeCharacterP2{3}
 {
     CharSelectScreen = game->asepriteManager->getAnimFile("charSelectScreen");
     CharSelectScreen->setFrameTag("charSelectScreen-Idle");
 
     playerTag = game->asepriteManager->getAnimFile("playerTags");
-
-    // Init of Charactersprites as GameObjects
-    p1 = std::make_unique<BaseGameObject>(asepriteManager, 45, 68);
-    p1->setDrawShadow(true);
-    p1->setShadowGroundLevel(100);
-    p1->setShadowColor(Constants::RAYFIGHTER_LIGHTBROWN);
-    p1->setShadowOpacity(1.0f);
-
-
-    p2 = std::make_unique<BaseGameObject>(asepriteManager, 170, 68);
-    p2->setIsFlippedX(true);
-    p2->setCurrentFrameTag("nesFighter-Idle");
-    p2->setDrawShadow(true);
-    p2->setShadowGroundLevel(100);
-    p2->setShadowColor(Constants::RAYFIGHTER_LIGHTBROWN);
-    p2->setShadowOpacity(1.0f);
 }
 
 CharSelectState::~CharSelectState()
@@ -53,14 +36,36 @@ void CharSelectState::Enter()
 
 
     // Adding characters
-    characters = {{{68, 117, 24, 24}, "Character 1"},
-                  {{100, 117, 24, 24}, "Character 2"},
-                  {{132, 117, 24, 24}, "Character 3"},
-                  {{164, 117, 24, 24}, "Character 4"}};
+    characters = {{{68, 117, 24, 24}, "Character 1", "gbFighter"},
+                  {{100, 117, 24, 24}, "Character 2", "nesFighter"},
+                  {{132, 117, 24, 24}, "Character 3", "gbFighter"},
+                  {{164, 117, 24, 24}, "Character 4", "nesFighter"}};
 
     // fade in
     screen2DManager->fadeEffect(1.0f, 0.0f);
     //screen2DManager->slideEffect(7.0f, 0);
+
+    // Init of Charactersprites as GameObjects
+    p1 = std::make_unique<BaseGameObject>(asepriteManager, p1posX, 68);
+    p1->setIsFlippedX(false);
+    p1->setCurrentFrameTag(getFrameTagStrOf(1, "Idle")); // playernumber and action
+    p1->setDrawShadow(true);
+    p1->setShadowGroundLevel(100);
+    p1->setShadowColor(Constants::RAYFIGHTER_LIGHTBROWN);
+    p1->setShadowOpacity(1.0f);
+    p1->setMoveSpeed(50);
+    p1status = {true, false, false, false}; // onOrgPos, outsideScreen, movingIn, movingOut
+
+
+    p2 = std::make_unique<BaseGameObject>(asepriteManager, 170, 68);
+    p2->setIsFlippedX(true);
+    p2->setCurrentFrameTag(getFrameTagStrOf(2, "Idle")); // playernumber and action
+    p2->setDrawShadow(true);
+    p2->setShadowGroundLevel(100);
+    p2->setShadowColor(Constants::RAYFIGHTER_LIGHTBROWN);
+    p2->setShadowOpacity(1.0f);
+    p2->setMoveSpeed(50);
+    p2status = {true, false, false, false}; // onOrgPos, outsideScreen, movingIn, movingOut
 }
 
 void CharSelectState::Update(float deltaTime)
@@ -72,6 +77,7 @@ void CharSelectState::Update(float deltaTime)
     {
         SoundManager::getInstance().playSound("thunder.wav");
     }
+
 
     UpdatePlayers(deltaTime);
 
@@ -92,8 +98,8 @@ void CharSelectState::Render()
 
     if (selectingCharacter)
     {
-        DrawSelectionScreen(currentSelectedCharacterP1, 1);
-        DrawSelectionScreen(currentSelectedCharacterP2, 2);
+        DrawSelectionScreen(selectedCharacterP1, 1);
+        DrawSelectionScreen(selectedCharacterP2, 2);
     }
 
     DrawPlayers();
@@ -130,6 +136,7 @@ void CharSelectState::Resume()
 
 void CharSelectState::Exit()
 {
+    std::cout << "CharSelectState::Exit() was called" << std::endl;
 }
 
 void CharSelectState::HandleInput()
@@ -149,18 +156,14 @@ void CharSelectState::HandleInput()
     {
         if (selectingCharacter)
         {
-            previousSelectedCharacterP1 = currentSelectedCharacterP1;
-            currentSelectedCharacterP1 = (currentSelectedCharacterP1 + 1) % characters.size();
-            changePlayerCharacter(1);
+            selectedCharacterP1 = (selectedCharacterP1 + 1) % characters.size();
         }
     }
     else if (IsKeyPressed(KEY_A))
     {
         if (selectingCharacter)
         {
-            previousSelectedCharacterP1 = currentSelectedCharacterP1;
-            currentSelectedCharacterP1 = (currentSelectedCharacterP1 - 1 + characters.size()) % characters.size();
-            changePlayerCharacter(1);
+            selectedCharacterP1 = (selectedCharacterP1 - 1 + characters.size()) % characters.size();
         }
     }
     else if (IsKeyPressed(KEY_SPACE))
@@ -172,18 +175,14 @@ void CharSelectState::HandleInput()
     {
         if (selectingCharacter)
         {
-            previousSelectedCharacterP2 = currentSelectedCharacterP2;
-            currentSelectedCharacterP2 = (currentSelectedCharacterP2 + 1) % characters.size();
-            changePlayerCharacter(2);
+            selectedCharacterP2 = (selectedCharacterP2 + 1) % characters.size();
         }
     }
     else if (IsKeyPressed(KEY_LEFT))
     {
         if (selectingCharacter)
         {
-            previousSelectedCharacterP2 = currentSelectedCharacterP2;
-            currentSelectedCharacterP2 = (currentSelectedCharacterP2 - 1 + characters.size()) % characters.size();
-            changePlayerCharacter(2);
+            selectedCharacterP2 = (selectedCharacterP2 - 1 + characters.size()) % characters.size();
         }
     }
 }
@@ -215,6 +214,10 @@ void CharSelectState::UpdatePlayers(float deltaTime)
 {
     p1->update(deltaTime);
     p2->update(deltaTime);
+
+    if (activeCharacterP1 != selectedCharacterP1)
+    {
+    }
 }
 
 void CharSelectState::DrawPlayers()
@@ -223,44 +226,63 @@ void CharSelectState::DrawPlayers()
     p2->draw();
 }
 
-void CharSelectState::changePlayerCharacter(int playerNumber)
+
+void CharSelectState::moveCharacterOffScreen(BaseGameObject& player)
+{
+
+    // move player 2 right out of screen
+    if (player.getIsFlippedX()) // means = player2
+    {
+        player.moveRight();
+        player.setCurrentFrameTag(getFrameTagStrOf(2, "Walk"));
+    }
+    else // move player 1 left out of screen
+    {
+        player.moveLeft();
+        player.setCurrentFrameTag(getFrameTagStrOf(1, "Walk"));
+    }
+}
+
+void CharSelectState::moveCharacterOnScreen(BaseGameObject& player)
+{
+    // move player 2 right on of screen
+    if (player.getIsFlippedX()) // means = player2
+    {
+        player.moveLeft();
+        player.setCurrentFrameTag(getFrameTagStrOf(2, "Walk"));
+    }
+    else // move player 1 left out of screen
+    {
+        player.moveRight();
+        player.setCurrentFrameTag(getFrameTagStrOf(1, "Walk"));
+    }
+}
+
+void CharSelectState::stopCharacterMovement(BaseGameObject& player)
+{
+    // move player 2 right on of screen
+    if (player.getIsFlippedX()) // means = player2
+    {
+        player.stop();
+        player.setCurrentFrameTag(getFrameTagStrOf(2, "Idle"));
+    }
+    else // move player 1 left out of screen
+    {
+        player.stop();
+        player.setCurrentFrameTag(getFrameTagStrOf(1, "Idle"));
+    }
+}
+
+std::string CharSelectState::getFrameTagStrOf(int playerNumber, std::string action)
 {
     if (playerNumber == 1)
     {
-        // Player 1
-
-        if (currentSelectedCharacterP1 == 0) // Character 0
-            p1->setCurrentFrameTag("nesFighter-Idle");
-
-        else if (currentSelectedCharacterP1 == 1) // Character 1
-            p1->setCurrentFrameTag("gbFighter-Idle");
-
-        else if (currentSelectedCharacterP1 == 2) // Character 2
-            p1->setCurrentFrameTag("gbFighter-Idle");
-
-        else if (currentSelectedCharacterP1 == 3) // Character 3
-            p1->setCurrentFrameTag("gbFighter-Idle");
+        return characters[selectedCharacterP1].spritename + "-" + action;
     }
-    else if (playerNumber == 2)
-    {
-        // Player 2
-        if (currentSelectedCharacterP2 == 0) // Character 0
-            p2->setCurrentFrameTag("nesFighter-Idle");
 
-        else if (currentSelectedCharacterP2 == 1) // Character 1
-            p2->setCurrentFrameTag("gbFighter-Idle");
-
-        else if (currentSelectedCharacterP2 == 2) // Character 2
-            p2->setCurrentFrameTag("gbFighter-Idle");
-
-        else if (currentSelectedCharacterP2 == 3) // Character 3
-            p2->setCurrentFrameTag("gbFighter-Idle");
-    }
-    else
-    {
-        throw std::invalid_argument("Invalid parameter: Must be 1 or 2.");
-    }
+    return characters[selectedCharacterP2].spritename + "-" + action;
 }
+
 
 void CharSelectState::PauseMusic()
 {

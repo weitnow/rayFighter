@@ -5,12 +5,16 @@
 #include "../Utils/Core.h"
 #include "BaseState.h"
 #include "raylib.h"
+#include <tuple>
 
 struct Option
 {
     Rectangle rect;
-    std::string name;
+    std::string name;       // for example Andy
+    std::string spritename; //for example gbFighter, nesFighter
 };
+
+using PlayerStatus = std::tuple<bool, bool, bool, bool>; // onOrgPos, outsideScreen, movingIn, movingOut
 
 class CharSelectState : public BaseState
 {
@@ -32,15 +36,22 @@ private:
 
     List<Option> characters;
 
-    int previousSelectedCharacterP1;
-    int currentSelectedCharacterP1;
-    int previousSelectedCharacterP2;
-    int currentSelectedCharacterP2;
+    int selectedCharacterP1;
+    int selectedCharacterP2;
+
+    int activeCharacterP1; // which Character is currently seen on Screen
+    int activeCharacterP2; // which Character is currently seen on Screen
+
+    PlayerStatus p1status; // onOrgPos, outsideScreen, movingIn, movingOut
+    PlayerStatus p2status; // onOrgPos, outsideScreen, movingIn, movingOut
 
     bool selectingCharacter = true;
 
     unique<BaseGameObject> p1;
     unique<BaseGameObject> p2;
+
+    int p1posX = 45;  //x Position of P1
+    int p2posX = 170; //x Position of P2
 
 
 private:
@@ -51,7 +62,10 @@ private:
     // Players
     void UpdatePlayers(float deltaTime);
     void DrawPlayers();
-    void changePlayerCharacter(int playerNumber);
+    void moveCharacterOffScreen(BaseGameObject& player);
+    void moveCharacterOnScreen(BaseGameObject& player);
+    void stopCharacterMovement(BaseGameObject& player);
+    std::string getFrameTagStrOf(int playerNumber, std::string action);
 };
 
 #endif

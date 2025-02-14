@@ -79,6 +79,7 @@ public:
     virtual void moveUp();
     virtual void moveDown();
     virtual void stop();
+    virtual void setMoveSpeed(int speed);
 
     //gravity
     void setAffectedByGravity(bool affectedByGravity);

@@ -31,6 +31,8 @@ public:
     bool getIsLeft();
 
     virtual void setMoveVectorY(int yValue) override;
+    //void setMoveVectorX   // implemented in BaseGameObject
+    //void setMoveVector    // implemented in BaseGameObject
 
     void setPlayerNumber(int playerNumber);
     int getPlayerNumber();
