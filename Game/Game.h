@@ -20,7 +20,6 @@ public:
     void ChangeState(std::unique_ptr<BaseState> newState);
     void PushState(std::unique_ptr<BaseState> newState);
     void PopState();
-
     void Update();
     void HandleInput(); // used for general input handling valid in every state
     void Render();
@@ -32,7 +31,6 @@ public:
     SoundManager* soundManager;
     InputHandler* inputHandler;
     AsepriteManager* asepriteManager;
-    GameManager* gameManager;
     float deltaTime;
 
 private:

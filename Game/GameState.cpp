@@ -175,11 +175,6 @@ void GameState::Render()
 
     if (Global::debugWindow)
     {
-        // Draw a black outlined rectangle around the mainView
-        DrawRectangleLinesEx(Rectangle{0, 0, 1540, 1070}, 6, BLACK);
-        // Draw a second black outlined rectangle on the right side of the screen
-        DrawRectangleLinesEx(Rectangle{1545, 0, 374, 1070}, 6, BLACK);
-
         debugInfo->draw();
     }
 

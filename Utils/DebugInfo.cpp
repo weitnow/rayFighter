@@ -6,15 +6,14 @@ constexpr int RECT_WIDTH = 1520;
 constexpr int RECT_HEIGHT = 400;
 constexpr int RECT_X = 10;
 constexpr int RECT_Y = 10;
-constexpr Color RECT_COLOR = GREEN;
 constexpr int TEXT_SIZE = 20;
-constexpr Color TEXT_COLOR = BLACK;
+constexpr Color TEXT_COLOR = GREEN;
 constexpr int LINE_SPACING = 20;
 
 DebugInfo::DebugInfo(BaseState* baseState)
-    : rectWidth(RECT_WIDTH), rectHeight(RECT_HEIGHT), rectX(RECT_X), rectY(RECT_Y), rectColor(RECT_COLOR),
-      player1InGameObjects(false), baseState{baseState}, gameState{nullptr}, player1{baseState->player1},
-      player2{baseState->player2}, statemachine{nullptr}
+    : rectWidth(RECT_WIDTH), rectHeight(RECT_HEIGHT), rectX(RECT_X), rectY(RECT_Y), player1InGameObjects(false),
+      baseState{baseState}, gameState{nullptr}, player1{baseState->player1}, player2{baseState->player2},
+      statemachine{nullptr}
 {
     // try to cast the baseState to a gameState
     gameState = dynamic_cast<GameState*>(baseState);
@@ -67,14 +66,18 @@ void DebugInfo::setDebugMode(bool debugMode)
 
         std::cout << "DebugMode is set to true" << std::endl;
 
+        // change screenResolution to fullHD
+        baseState->screen2DManager->changeScreenResolution(ScreenResolution::S_1920x1080);
+
         // change resolution of the renderTarget
         baseState->screen2DManager->_setRenderResolution(RenderResolution::R_1120x630);
     }
     else
     {
         std::cout << "DebugMode is set to false" << std::endl;
-        // change resolution of the renderTarget
-        baseState->screen2DManager->_setRenderResolution(RenderResolution::R_1792x1008);
+
+        // load the saved screenResolution
+        baseState->screen2DManager->loadScreenResolution();
     }
 }
 
@@ -180,8 +183,7 @@ void DebugInfo::draw()
 {
     /* #region DRAW UPPER DEBUG_WINDOW WINDOW*/
 
-    // Draw rectangle and FPS
-    DrawRectangle(rectX, rectY, rectWidth, rectHeight, rectColor);
+    // FPS
     DrawFPS(rectX + 10, rectY + 10);
 
     // Draw Player1 data if available
@@ -205,6 +207,7 @@ void DebugInfo::draw()
     {
         statemachine = &player1->getStatemachine();
     }
+
 
     // draw title "Statemachine of Player 1"
     DrawText("Statemachine of Player 1", windowX + startOffset, y, TEXT_SIZE, TEXT_COLOR);

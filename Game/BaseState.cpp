@@ -9,7 +9,6 @@ BaseState::BaseState(Game* game) : game(game)
     inputHandler = game->inputHandler;
     asepriteManager = game->asepriteManager;
     debugInfo = nullptr;
-    gameManager = game->gameManager;
     player1 = nullptr;
     player2 = nullptr;
     collisionManager = nullptr;

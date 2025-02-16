@@ -48,7 +48,6 @@ protected:
     InputHandler* inputHandler;
     AsepriteManager* asepriteManager;
     DebugInfo* debugInfo;
-    GameManager* gameManager;
     CollisionManager* collisionManager; // is a nullptr, set in GameState (and deleted when GameState is deleted)
     float deltaTime;
 

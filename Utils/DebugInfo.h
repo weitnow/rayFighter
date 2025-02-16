@@ -29,7 +29,6 @@ private:
     int rectHeight;
     int rectX;
     int rectY;
-    Color rectColor;
     bool player1InGameObjects;
 
     void drawGameObjectData(BaseGameObject* gameObject, const std::string& objectName, int x, int y);
