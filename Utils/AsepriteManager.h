@@ -180,6 +180,7 @@ struct FrameTag
     bool loop;
     int from;
     int to;
+    // Todo: get rid of spriteOffsetX and spriteOffsetY
     int spriteOffsetX;
     int spriteOffsetY;
     Dictionary<int, int> frameNumberDuration;
