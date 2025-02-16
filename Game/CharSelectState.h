@@ -12,7 +12,6 @@ struct Option
     Rectangle rect;
     std::string name;       // for example Andy
     std::string spritename; //for example gbFighter, nesFighter
-    int spriteOffsetX = 0;
 };
 
 using PlayerStatus = std::tuple<bool, bool, bool, bool>; // onOrgPos, outsideScreen, movingIn, movingOut

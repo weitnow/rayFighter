@@ -7,7 +7,7 @@ BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager)
       isActive(true), isAlive(true), isInvincible(false), life(Constants::DEFAULT_LIFE), _invincibleCounter(0.f),
       invincibleTime(Constants::INVINCIBLE_TIME), affectedByGravity(false), moveVector({0, 0}),
       getDurationCurrentFrame(0), currentFrame(0), minFrame(0), maxFrame(0), hasAnimJustFinished(false),
-      currentFrameTag(""), currentFrameAbsolut(0), spriteOffsetX(0), spriteOffsetY(0), drawShadow(false)
+      currentFrameTag(""), currentFrameAbsolut(0), drawShadow(false)
 {
     if (!asepriteManager)
     {
@@ -86,25 +86,11 @@ void BaseGameObject::draw()
         {
             if (!isInvincible)
             {
-                animfilePtr->drawCurrentSelectedTag(getPos().x,
-                                                    getPos().y,
-                                                    scale,
-                                                    color,
-                                                    isFlippedX,
-                                                    isFlippedY,
-                                                    spriteOffsetX,
-                                                    spriteOffsetY);
+                animfilePtr->drawCurrentSelectedTag(getPos().x, getPos().y, scale, color, isFlippedX, isFlippedY);
             }
             else //if the object is invincible draw it in blue
             {
-                animfilePtr->drawCurrentSelectedTag(getPos().x,
-                                                    getPos().y,
-                                                    scale,
-                                                    BLUE,
-                                                    isFlippedX,
-                                                    isFlippedY,
-                                                    spriteOffsetX,
-                                                    spriteOffsetY);
+                animfilePtr->drawCurrentSelectedTag(getPos().x, getPos().y, scale, BLUE, isFlippedX, isFlippedY);
             }
 
 
@@ -135,14 +121,7 @@ void BaseGameObject::draw()
         else
         {
 
-            animfilePtr->drawCurrentSelectedTag(getPos().x,
-                                                getPos().y,
-                                                scale,
-                                                color,
-                                                isFlippedX,
-                                                isFlippedY,
-                                                spriteOffsetX,
-                                                spriteOffsetY);
+            animfilePtr->drawCurrentSelectedTag(getPos().x, getPos().y, scale, color, isFlippedX, isFlippedY);
         }
     }
 }
@@ -293,16 +272,6 @@ void BaseGameObject::setIsFlippedX(bool isFlippedX)
 bool BaseGameObject::getIsFlippedX()
 {
     return isFlippedX;
-}
-
-void BaseGameObject::setSpriteOffsetX(int spriteOffsetX)
-{
-    this->spriteOffsetX = spriteOffsetX;
-}
-
-void BaseGameObject::setSpriteOffsetY(int spriteOffsetY)
-{
-    this->spriteOffsetY = spriteOffsetY;
 }
 
 // TODO: refactor this method to return a reference to the list and not a copy

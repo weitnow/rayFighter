@@ -49,8 +49,6 @@ public:
 
     void setIsFlippedX(bool isFlippedX);
     bool getIsFlippedX();
-    void setSpriteOffsetX(int spriteOffsetX);
-    void setSpriteOffsetY(int spriteOffsetY);
 
     // collision boxes
     List<CollisionBox2D> getPushBoxes();
@@ -120,8 +118,6 @@ protected:
     Color color;
     bool isFlippedX;
     bool isFlippedY;
-    int spriteOffsetX;
-    int spriteOffsetY;
     std::string currentFrameTag; // for example "gbFighter-Idle"
     std::string ObjName;         // for example "Andy"
     bool isActive;

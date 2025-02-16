@@ -22,7 +22,6 @@ void Fighter2::init()
     addCollisionBoxForFrame("nesFighter-Punch", 0, CollisionBoxType::HITBOX, true, 30, 15, 5, 5);
     addCollisionBoxForFrame("nesFighter-Idle", -2, CollisionBoxType::HURTBOX, HurtboxType::BODY, true, 10, 4, 12, 26);
     getStatemachine().changeState("Idle");
-    setSpriteOffsetX(5);
 
     // draw shadow
     setDrawShadow(true);

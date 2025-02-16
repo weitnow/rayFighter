@@ -40,6 +40,10 @@ private:
     bool animJustFinishedPlusLastFrameDuration;
     bool animJustFinished;
     bool loop;
+    int spriteOffsetX; // this will be apllied for all frames of the animationFile (stored in FrameTag object in every frame)
+    int spriteOffsetY; // this will be apllied for all frames of the animationFile (stored in FrameTag object in every frame)
+    int frameOffsetX; // this will be apllied only for all frames of specific frameTag (stored in FrameTag object in specific frame)
+    int frameOffsetY; // this will be apllied only for all frames of specific frameTag (stored in FrameTag object in specific frame)
 
     void _drawFrame(const std::string& filenameTagname,
                     int x,
@@ -47,9 +51,7 @@ private:
                     float scale = 1.0f,
                     Color tint = WHITE,
                     bool flipX = false,
-                    bool flipY = false,
-                    int spriteOffsetX = 0,
-                    int spriteOffsetY = 0);
+                    bool flipY = false);
 
 public:
     explicit AsepriteAnimationFile(std::string filename,
@@ -89,36 +91,10 @@ public:
                    bool flipX = false,
                    bool flipY = false);
     void drawCurrentSelectedTag(int x, int y, float scale = 1.0f, Color tint = WHITE);
-    void drawCurrentSelectedTag(int x,
-                                int y,
-                                float scale,
-                                Color tint,
-                                bool flipX,
-                                bool flipY,
-                                int offsetFlippedX,
-                                int offsetFlippedY);
+    void drawCurrentSelectedTag(int x, int y, float scale, Color tint, bool flipX, bool flipY);
     void resetBools();
-
-    /**
-     * @brief the update methode calls frequently the nextFrame() which switches to the next picture of the animation
-     *
-     * @param deltaTime
-     */
     void update(float deltaTime);
-
-    /**
-     * @brief checks if the current_frame < max_frame and if so, switches to the next frame otherwise it goes back to the first frame of the animation
-     *
-     */
     void nextFrame();
-
-    /**
-     * @brief Set the Frame Tag object. If a invalid tagname is given, a runtime-error will be thrown. If the tagname is valid, the animation will be set to the first picture of the animation.
-     * if the animation with the provided tag is already playing  the function returns false, otherwise it returns true.
-     *
-     * @param tagname
-     * @return
-     */
     bool setFrameTag(const std::string& tagname);
 };
 
@@ -139,7 +115,7 @@ public:
 
     void init();
 
-    void loadAnimFile(const std::string& filename);
+    void loadAnimFile(const std::string& filename, const int spriteOffsetX = 0, const int spriteOffsetY = 0);
 
     FrameTag& getFrameTag(const std::string& filenameTagname);
 
@@ -181,7 +157,9 @@ struct FrameTag
     int from;
     int to;
     // Todo: get rid of spriteOffsetX and spriteOffsetY
-    int spriteOffsetX;
+    int frameOffsetX; // this will be apllied only for all frames of specific frameTag (ex. gbFighter-Idle)
+    int frameOffsetY;
+    int spriteOffsetX; // this will be apllied for all frames (ex. gbFighter)
     int spriteOffsetY;
     Dictionary<int, int> frameNumberDuration;
 };

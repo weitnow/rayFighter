@@ -24,6 +24,10 @@ AsepriteAnimationFile::AsepriteAnimationFile(std::string filename,
     animJustFinishedPlusLastFrameDuration = false;
     animJustFinished = false;
     loop = true;
+    spriteOffsetX = 0; // this will be apllied for all frames of the animationFile (ex. all files of gbFighter)
+    spriteOffsetY = 0; // this will be apllied for all frames of the animationFile (ex. all files of gbFighter)
+    frameOffsetX = 0;  // this will be apllied only for all frames of specific frameTag (ex. only for gbFighter-Idle)
+    frameOffsetY = 0;  // this will be apllied only for all frames of specific frameTag (ex. only for gbFighter-Idle)
 }
 
 AsepriteAnimationFile::~AsepriteAnimationFile()
@@ -103,9 +107,7 @@ void AsepriteAnimationFile::_drawFrame(const std::string& filenameTagname,
                                        float scale,
                                        Color tint,
                                        bool flipX,
-                                       bool flipY,
-                                       int offsetFlipX,
-                                       int offsetFlipY)
+                                       bool flipY)
 {
 
     // Determine source rectangle (which part of the texture to draw)
@@ -126,8 +128,9 @@ void AsepriteAnimationFile::_drawFrame(const std::string& filenameTagname,
 
     // Adjust the origin point for flipping
     Vector2 origin = {
-        (flipX ? offsetFlipX : -offsetFlipX), // Flip point adjusted by offsetFlipX
-        (flipY ? offsetFlipY : -offsetFlipY)  // Flip point adjusted by offsetFlipY
+        (flipX ? (spriteOffsetX + frameOffsetX)
+               : -(spriteOffsetX + frameOffsetX)),                                 // Flip point adjusted by offsetFlipX
+        (flipY ? (spriteOffsetY + frameOffsetY) : -(spriteOffsetY + frameOffsetY)) // Flip point adjusted by offsetFlipY
     };
 
     // Draw the texture with the specified scaling and tint
@@ -169,20 +172,14 @@ void AsepriteAnimationFile::drawFrame(const std::string& filenameTagname,
 
 void AsepriteAnimationFile::drawCurrentSelectedTag(int x, int y, float scale, Color tint)
 {
-    _drawFrame(current_filenameTagname, x, y, scale, tint, false, false, 0);
+    _drawFrame(current_filenameTagname, x, y, scale, tint, false, false);
 }
 
-void AsepriteAnimationFile::drawCurrentSelectedTag(int x,
-                                                   int y,
-                                                   float scale,
-                                                   Color tint,
-                                                   bool flipX,
-                                                   bool flipY,
-                                                   int spriteOffsetX,
-                                                   int spriteOffsetY)
+void AsepriteAnimationFile::drawCurrentSelectedTag(int x, int y, float scale, Color tint, bool flipX, bool flipY)
+
 {
 
-    _drawFrame(current_filenameTagname, x, y, scale, tint, flipX, flipY, spriteOffsetX, spriteOffsetY);
+    _drawFrame(current_filenameTagname, x, y, scale, tint, flipX, flipY);
 }
 
 void AsepriteAnimationFile::update(float deltaTime)
@@ -278,6 +275,11 @@ bool AsepriteAnimationFile::setFrameTag(const std::string& filenameTagname)
     spriteSizeX = current_FrameTag.sourceSizeX;
     spriteSizeY = current_FrameTag.sourceSizeY;
     loop = current_FrameTag.loop;
+    spriteOffsetX = current_FrameTag.spriteOffsetX;
+    spriteOffsetY = current_FrameTag.spriteOffsetY;
+    frameOffsetX = current_FrameTag.frameOffsetX;
+    frameOffsetY = current_FrameTag.frameOffsetY;
+
 
     if (this->filename != current_FrameTag.texturename)
     {
@@ -307,16 +309,20 @@ AsepriteManager::~AsepriteManager()
 void AsepriteManager::init()
 {
     // load all aseprite files in the folder
+
+    // Spriteoffsets for the whole animationFile has to be set in loadAnimFile,
+    // spriteOffsets for specific frames has to be set like this: getFrameTag("gbFighter-Punch").frameOffsetX = 5
+
     loadAnimFile("gbFighter"); // asepriteManager.frameTags[gbFighter-Idle]
                                // asepriteManager.textures[gbFighter]
 
-    getFrameTag("gbFighter-Punch").spriteOffsetX = 5; // set the spriteOffsetX for the punch animation
+    getFrameTag("gbFighter-Punch").frameOffsetX = 5; // set the spriteOffsetX for the punch animation
 
     getFrameTag("gbFighter-Death").loop = false; // set loop to false for the death animation
 
 
-    loadAnimFile("nesFighter"); // asepriteManager.frameTags[nesFighter-Idle]
-                                // asepriteManager.textures[nesFighter]
+    loadAnimFile("nesFighter", 6); // asepriteManager.frameTags[nesFighter-Idle] (5 is the spriteOffsetX)
+                                   // asepriteManager.textures[nesFighter]
 
     getFrameTag("nesFighter-Death").loop = false; // set loop to false for the death animation
 
@@ -382,7 +388,7 @@ nlohmann::json* AsepriteManager::loadJsonFile(const std::string& filename)
     return jsondata;
 }
 
-void AsepriteManager::loadAnimFile(const std::string& filename)
+void AsepriteManager::loadAnimFile(const std::string& filename, const int spriteOffsetX, const int spriteOffsetY)
 {
 
     // --ADD FRAMETAG TO FRAMETAGS MEMBER VARIABLE--
@@ -424,8 +430,11 @@ void AsepriteManager::loadAnimFile(const std::string& filename)
             frameTag.loop = true;
             frameTag.from = (*jsonfile)["meta"]["frameTags"][i]["from"];
             frameTag.to = (*jsonfile)["meta"]["frameTags"][i]["to"];
-            frameTag.spriteOffsetX = 0;
-            frameTag.spriteOffsetY = 0;
+            frameTag.frameOffsetX =
+                0; // this will be apllied only for all frames of specific frameTag (ex. gbFighter-Idle)
+            frameTag.frameOffsetY = 0;
+            frameTag.spriteOffsetX = spriteOffsetX; // this will be apllied for all frames (ex. gbFighter)
+            frameTag.spriteOffsetY = spriteOffsetY;
 
             // add the frameNumber and the duration of the frame to the frameNumberDuration map
             for (int j = frameTag.from; j <= frameTag.to; ++j)
@@ -451,7 +460,9 @@ void AsepriteManager::loadAnimFile(const std::string& filename)
         frameTag.loop = false;
         frameTag.from = 0;
         frameTag.to = frameSize - 1;
-        frameTag.spriteOffsetX = 0;
+        frameTag.frameOffsetX = 0; // this will be apllied only for all frames of specific frameTag (ex. gbFighter-Idle)
+        frameTag.frameOffsetY = 0;
+        frameTag.spriteOffsetX = 0; // this will be apllied for all frames (ex. gbFighter)
         frameTag.spriteOffsetY = 0;
 
         // add the frameNumber and the duration of the frame to the frameNumberDuration map
