@@ -36,10 +36,10 @@ void CharSelectState::Enter()
 
 
     // Adding characters
-    characters = {{{68, 117, 24, 24}, "Character 1", "gbFighter"},
-                  {{100, 117, 24, 24}, "Character 2", "nesFighter"},
-                  {{132, 117, 24, 24}, "Character 3", "gbFighter"},
-                  {{164, 117, 24, 24}, "Character 4", "nesFighter"}};
+    characters = {{{68, 117, 24, 24}, "Character 1", "gbFighter", 0},
+                  {{100, 117, 24, 24}, "Character 2", "nesFighter", 6}, // 5 is the spriteOffsetX
+                  {{132, 117, 24, 24}, "Character 3", "gbFighter", 0},
+                  {{164, 117, 24, 24}, "Character 4", "nesFighter", 6}}; // 5 is the spriteOffsetX
 
     // fade in
     screen2DManager->fadeEffect(1.0f, 0.0f);
@@ -54,6 +54,7 @@ void CharSelectState::Enter()
     p1->setShadowColor(Constants::RAYFIGHTER_LIGHTBROWN);
     p1->setShadowOpacity(1.0f);
     p1->setMoveSpeed(50);
+    p1->setSpriteOffsetX(characters[activeCharacterP1].spriteOffsetX);
     p1status = {true, false, false, false}; // onOrgPos, outsideScreen, movingIn, movingOut
 
 
@@ -65,6 +66,7 @@ void CharSelectState::Enter()
     p2->setShadowColor(Constants::RAYFIGHTER_LIGHTBROWN);
     p2->setShadowOpacity(1.0f);
     p2->setMoveSpeed(50);
+    p2->setSpriteOffsetX(characters[activeCharacterP2].spriteOffsetX);
     p2status = {true, false, false, false}; // onOrgPos, outsideScreen, movingIn, movingOut
 }
 
@@ -229,9 +231,6 @@ void CharSelectState::CharacterMoveControllerUpdate(int playerNumber)
 {
 
 
-    std::cout << "activeCharacterP1: " << activeCharacterP1 << std::endl;
-    std::cout << "selectedCharacterP1: " << selectedCharacterP1 << std::endl;
-
     int& activeCharacter = (playerNumber == 1) ? activeCharacterP1 : activeCharacterP2;
     int& selectedCharacter = (playerNumber == 1) ? selectedCharacterP1 : selectedCharacterP2;
 
@@ -275,6 +274,16 @@ void CharSelectState::CharacterMoveControllerUpdate(int playerNumber)
             player.setPos(player.getPos().x < -50 ? -50 : 320, player.getPos().y);
             _stopCharacterMovement(player);
             activeCharacter = selectedCharacter;
+
+            // check spriteOffsetX and set it
+            if (playerNumber == 1)
+            {
+                player.setSpriteOffsetX(characters[activeCharacter].spriteOffsetX);
+            }
+            else
+            {
+                player.setSpriteOffsetX(characters[activeCharacter].spriteOffsetX);
+            }
         }
     }
     else if (movingIn)

@@ -50,6 +50,7 @@ public:
     void setIsFlippedX(bool isFlippedX);
     bool getIsFlippedX();
     void setSpriteOffsetX(int spriteOffsetX);
+    void setSpriteOffsetY(int spriteOffsetY);
 
     // collision boxes
     List<CollisionBox2D> getPushBoxes();

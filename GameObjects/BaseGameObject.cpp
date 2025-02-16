@@ -92,7 +92,8 @@ void BaseGameObject::draw()
                                                     color,
                                                     isFlippedX,
                                                     isFlippedY,
-                                                    spriteOffsetX);
+                                                    spriteOffsetX,
+                                                    spriteOffsetY);
             }
             else //if the object is invincible draw it in blue
             {
@@ -102,7 +103,8 @@ void BaseGameObject::draw()
                                                     BLUE,
                                                     isFlippedX,
                                                     isFlippedY,
-                                                    spriteOffsetX);
+                                                    spriteOffsetX,
+                                                    spriteOffsetY);
             }
 
 
@@ -133,8 +135,14 @@ void BaseGameObject::draw()
         else
         {
 
-            animfilePtr
-                ->drawCurrentSelectedTag(getPos().x, getPos().y, scale, color, isFlippedX, isFlippedY, spriteOffsetX);
+            animfilePtr->drawCurrentSelectedTag(getPos().x,
+                                                getPos().y,
+                                                scale,
+                                                color,
+                                                isFlippedX,
+                                                isFlippedY,
+                                                spriteOffsetX,
+                                                spriteOffsetY);
         }
     }
 }
@@ -287,9 +295,14 @@ bool BaseGameObject::getIsFlippedX()
     return isFlippedX;
 }
 
-void BaseGameObject::setSpriteOffsetX(int offsetFlippedX)
+void BaseGameObject::setSpriteOffsetX(int spriteOffsetX)
 {
-    this->spriteOffsetX = offsetFlippedX;
+    this->spriteOffsetX = spriteOffsetX;
+}
+
+void BaseGameObject::setSpriteOffsetY(int spriteOffsetY)
+{
+    this->spriteOffsetY = spriteOffsetY;
 }
 
 // TODO: refactor this method to return a reference to the list and not a copy

@@ -41,6 +41,16 @@ private:
     bool animJustFinished;
     bool loop;
 
+    void _drawFrame(const std::string& filenameTagname,
+                    int x,
+                    int y,
+                    float scale = 1.0f,
+                    Color tint = WHITE,
+                    bool flipX = false,
+                    bool flipY = false,
+                    int spriteOffsetX = 0,
+                    int spriteOffsetY = 0);
+
 public:
     explicit AsepriteAnimationFile(std::string filename,
                                    std::string foldername,
@@ -70,14 +80,7 @@ public:
     int getMinFrame() const;
     int getMaxFrame() const;
     void setCurrentFrameToMinFrame();
-    void _drawFrame(const std::string& filenameTagname,
-                    int x,
-                    int y,
-                    float scale = 1.0f,
-                    Color tint = WHITE,
-                    bool flipX = false,
-                    bool flipY = false,
-                    int offsetFlipX = 0);
+
     void drawFrame(const std::string& filenameTagname,
                    int x,
                    int y,
@@ -86,7 +89,14 @@ public:
                    bool flipX = false,
                    bool flipY = false);
     void drawCurrentSelectedTag(int x, int y, float scale = 1.0f, Color tint = WHITE);
-    void drawCurrentSelectedTag(int x, int y, float scale, Color tint, bool flipX, bool flipY, int offsetFlippedX);
+    void drawCurrentSelectedTag(int x,
+                                int y,
+                                float scale,
+                                Color tint,
+                                bool flipX,
+                                bool flipY,
+                                int offsetFlippedX,
+                                int offsetFlippedY);
     void resetBools();
 
     /**
@@ -170,6 +180,8 @@ struct FrameTag
     bool loop;
     int from;
     int to;
+    int spriteOffsetX;
+    int spriteOffsetY;
     Dictionary<int, int> frameNumberDuration;
 };
 

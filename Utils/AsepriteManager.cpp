@@ -104,7 +104,8 @@ void AsepriteAnimationFile::_drawFrame(const std::string& filenameTagname,
                                        Color tint,
                                        bool flipX,
                                        bool flipY,
-                                       int offsetFlipX)
+                                       int offsetFlipX,
+                                       int offsetFlipY)
 {
 
     // Determine source rectangle (which part of the texture to draw)
@@ -126,7 +127,7 @@ void AsepriteAnimationFile::_drawFrame(const std::string& filenameTagname,
     // Adjust the origin point for flipping
     Vector2 origin = {
         (flipX ? offsetFlipX : -offsetFlipX), // Flip point adjusted by offsetFlipX
-        0                                     // Y origin point remains unchanged
+        (flipY ? offsetFlipY : -offsetFlipY)  // Flip point adjusted by offsetFlipY
     };
 
     // Draw the texture with the specified scaling and tint
@@ -177,9 +178,11 @@ void AsepriteAnimationFile::drawCurrentSelectedTag(int x,
                                                    Color tint,
                                                    bool flipX,
                                                    bool flipY,
-                                                   int offsetFlippedX)
+                                                   int spriteOffsetX,
+                                                   int spriteOffsetY)
 {
-    _drawFrame(current_filenameTagname, x, y, scale, tint, flipX, flipY, offsetFlippedX);
+
+    _drawFrame(current_filenameTagname, x, y, scale, tint, flipX, flipY, spriteOffsetX, spriteOffsetY);
 }
 
 void AsepriteAnimationFile::update(float deltaTime)
@@ -307,6 +310,8 @@ void AsepriteManager::init()
     loadAnimFile("gbFighter"); // asepriteManager.frameTags[gbFighter-Idle]
                                // asepriteManager.textures[gbFighter]
 
+    getFrameTag("gbFighter-Punch").spriteOffsetX = 5; // set the spriteOffsetX for the punch animation
+
     getFrameTag("gbFighter-Death").loop = false; // set loop to false for the death animation
 
 
@@ -419,6 +424,8 @@ void AsepriteManager::loadAnimFile(const std::string& filename)
             frameTag.loop = true;
             frameTag.from = (*jsonfile)["meta"]["frameTags"][i]["from"];
             frameTag.to = (*jsonfile)["meta"]["frameTags"][i]["to"];
+            frameTag.spriteOffsetX = 0;
+            frameTag.spriteOffsetY = 0;
 
             // add the frameNumber and the duration of the frame to the frameNumberDuration map
             for (int j = frameTag.from; j <= frameTag.to; ++j)
@@ -438,12 +445,14 @@ void AsepriteManager::loadAnimFile(const std::string& filename)
         frameTag.tagname = filename;
         frameTag.texturename = filename;
         frameTag.filenameTagname = filename;
-        frameTag.from = 0;
-        frameTag.to = frameSize - 1;
         frameTag.direction = "forward";
-        frameTag.loop = false;
         frameTag.sourceSizeX = (*jsonfile)["frames"][filename + " 0.aseprite"]["spriteSourceSize"]["w"];
         frameTag.sourceSizeY = (*jsonfile)["frames"][filename + " 0.aseprite"]["spriteSourceSize"]["h"];
+        frameTag.loop = false;
+        frameTag.from = 0;
+        frameTag.to = frameSize - 1;
+        frameTag.spriteOffsetX = 0;
+        frameTag.spriteOffsetY = 0;
 
         // add the frameNumber and the duration of the frame to the frameNumberDuration map
         for (int j = frameTag.from; j <= frameTag.to; ++j)
