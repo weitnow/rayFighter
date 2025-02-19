@@ -21,7 +21,9 @@ enum class InputDirection
 enum class InputAction
 {
     None,
-    Attack,
+    Punch,
+    Kick,
+    Block,
     Special
 };
 

@@ -50,10 +50,10 @@ private:
     void _resetBoolsToFalse(CharacterController* controller);
     void _handleGameInput();
 
-    InputDirection mapDirectionInput();
-    InputAction mapActionInput();
-    void updateInputBuffer(InputBuffer& buffer);
-    void checkSpecialMoves(InputBuffer& buffer);
+    InputDirection _mapDirectionInput(CharacterController* controller);
+    InputAction _mapActionInput(CharacterController* controller);
+    void updateInputBuffer(InputBuffer& buffer, CharacterController* controller);
+    void checkSpecialMoves(InputBuffer& buffer, CharacterController* controller);
 
     CharacterController* player1Controller;
     CharacterController* player2Controller;
@@ -61,9 +61,15 @@ private:
     CharacterController prevPlayer1Controller;
     CharacterController prevPlayer2Controller;
 
+    void checkIfGamepadIsConnected();
+
+    int GamepadCheckConnectionDone; // Required for gamepad connection checking
+    bool Gamepad0Connected;
+    bool Gamepad1Connected;
 
     DebugInfo* debugInfo;
-    InputBuffer inputBuffer;
+    InputBuffer player1InputBuffer;
+    InputBuffer player2InputBuffer;
 
     KeyCommandMap keyCommandMap;
 };

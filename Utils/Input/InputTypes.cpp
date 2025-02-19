@@ -33,8 +33,12 @@ std::string actionToString(InputAction action)
     {
     case InputAction::None:
         return "None";
-    case InputAction::Attack:
-        return "Attack";
+    case InputAction::Punch:
+        return "Punch";
+    case InputAction::Kick:
+        return "Kick";
+    case InputAction::Block:
+        return "Block";
     case InputAction::Special:
         return "Special";
     default:
