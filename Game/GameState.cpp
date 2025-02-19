@@ -1,6 +1,7 @@
 #include "GameState.h"
 #include "../Characters/Fighter1.h"
 #include "../Characters/Fighter2.h"
+#include "../Characters/Fighter3.h"
 #include "../Constants.h"
 #include "../Utils/HelperFunctions.h"
 #include "Game.h"
@@ -16,7 +17,9 @@ GameState::GameState(Game* game) : BaseState(game)
 
 
     // Create Player 1 and 2
+    //player1 = new Fighter1(asepriteManager, Constants::PLAYER1_X, Constants::BASELINE);
     player1 = new Fighter1(asepriteManager, Constants::PLAYER1_X, Constants::BASELINE);
+
     player2 = new Fighter2(asepriteManager, Constants::PLAYER2_X, Constants::BASELINE);
 
 

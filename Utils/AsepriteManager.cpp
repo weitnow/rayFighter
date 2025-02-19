@@ -313,15 +313,17 @@ void AsepriteManager::init()
     // Spriteoffsets for the whole animationFile has to be set in loadAnimFile,
     // spriteOffsets for specific frames has to be set like this: getFrameTag("gbFighter-Punch").frameOffsetX = 5
 
-    loadAnimFile("gbFighter"); // asepriteManager.frameTags[gbFighter-Idle]
-                               // asepriteManager.textures[gbFighter]
+    loadAnimFile("gbFighter", 0); // asepriteManager.frameTags[gbFighter-Idle] (0 is the spriteOffsetX)
+                                  // asepriteManager.textures[gbFighter]
 
-    getFrameTag("gbFighter-Punch").frameOffsetX = 5; // set the spriteOffsetX for the punch animation
+    getFrameTag("gbFighter-Punch").frameOffsetX = 6; // set the spriteOffsetX for the punch animation
+    getFrameTag("gbFighter-DuckPunch").frameOffsetX = 6;
+    getFrameTag("gbFighter-DuckBlock").frameOffsetX = -2;
 
     getFrameTag("gbFighter-Death").loop = false; // set loop to false for the death animation
 
 
-    loadAnimFile("nesFighter", 6); // asepriteManager.frameTags[nesFighter-Idle] (5 is the spriteOffsetX)
+    loadAnimFile("nesFighter", 6); // asepriteManager.frameTags[nesFighter-Idle] (6 is the spriteOffsetX)
                                    // asepriteManager.textures[nesFighter]
 
     getFrameTag("nesFighter-Death").loop = false; // set loop to false for the death animation
