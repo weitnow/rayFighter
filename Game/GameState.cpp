@@ -100,6 +100,10 @@ void GameState::Update(float deltaTime)
     // Update the HUD
     gui->update(deltaTime);
 
+    //Todo: get rid of this
+    gui->setLife1(player1->getCurrentLife());
+    gui->setLife2(player2->getCurrentLife());
+
     HandleInput();
 }
 

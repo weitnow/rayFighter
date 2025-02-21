@@ -208,11 +208,13 @@ void InputHandler::checkSpecialMoves(InputBuffer& buffer, CharacterController* c
         // clear buffer
         //otherwise the player can keep holding down the last needed input and the specialmove is executed again and again
         buffer.clearBuffer();
+        controller->fireball = true;
     }
     else if (buffer.matchSequence(Spear))
     {
         std::cout << "Spear executed!" << std::endl;
         buffer.clearBuffer();
+        controller->spear = true;
     }
 }
 
