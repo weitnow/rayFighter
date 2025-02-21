@@ -51,3 +51,9 @@ const SpecialMove Fireball = {"Fireball",
                                {InputDirection::DownForward, InputAction::None},
                                {InputDirection::Forward, InputAction::None},
                                {InputDirection::Neutral, InputAction::Punch}}};
+
+const SpecialMove Spear = {"Spear",
+                           {{InputDirection::Backward, InputAction::None},
+                            {InputDirection::Down, InputAction::None},
+                            {InputDirection::Forward, InputAction::None},
+                            {InputDirection::Neutral, InputAction::Punch}}};

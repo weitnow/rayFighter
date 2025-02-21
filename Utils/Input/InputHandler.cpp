@@ -103,6 +103,12 @@ void InputHandler::_resetBoolsToFalse(CharacterController* controller)
     controller->punch = false;
     controller->kick = false;
     controller->block = false;
+    // specialmoves
+    controller->fireball = false;
+    controller->spear = false;
+    // overriden by BaseCharacter (if CharacterController is added as Composition to a BaseCharacter)
+    controller->isLeft =
+        false; // true if the character is left of the other character, only valid for player1 or player2
     // general input
     controller->key_esc = false;
     controller->key_enter = false;
@@ -126,28 +132,32 @@ void InputHandler::_handleGameInput()
 InputDirection InputHandler::_mapDirectionInput(CharacterController* controller)
 {
 
+    // Determine forward and backward based on character position
+    bool forward = controller->isLeft ? controller->moveRight : controller->moveLeft;
+    bool backward = controller->isLeft ? controller->moveLeft : controller->moveRight;
+
     if (controller->duck)
     {
-        if (controller->moveRight)
+        if (forward)
             return InputDirection::DownForward;
-        if (controller->moveLeft)
+        if (backward)
             return InputDirection::DownBackward;
         return InputDirection::Down;
     }
 
     if (controller->jump)
     {
-        if (controller->moveRight)
+        if (forward)
             return InputDirection::UpForward;
-        if (controller->moveLeft)
+        if (backward)
             return InputDirection::UpBackward;
         return InputDirection::Up;
     }
 
-    if (controller->moveRight)
+    if (forward)
         return InputDirection::Forward;
 
-    if (controller->moveLeft)
+    if (backward)
         return InputDirection::Backward;
 
     return InputDirection::Neutral; // No input
@@ -197,6 +207,11 @@ void InputHandler::checkSpecialMoves(InputBuffer& buffer, CharacterController* c
 
         // clear buffer
         //otherwise the player can keep holding down the last needed input and the specialmove is executed again and again
+        buffer.clearBuffer();
+    }
+    else if (buffer.matchSequence(Spear))
+    {
+        std::cout << "Spear executed!" << std::endl;
         buffer.clearBuffer();
     }
 }

@@ -1,5 +1,6 @@
 #include "BaseCharacter.h"
 #include "../Constants.h"
+#include "../Utils/Input/CharacterController.h"
 #include "Statemachine/Statemachine.h"
 
 BaseCharacter::BaseCharacter(AsepriteManager* asepriteManager, float x, float y)
@@ -58,6 +59,7 @@ void BaseCharacter::update(float deltaTime)
     }
     // update the member variables from the animationfile
     _updateMemberVariables();
+    _updateCharacterController();
 
     // check if this->animfileptr is not nullptr - if its not, then update the animation
     if (animfilePtr != nullptr)
@@ -218,4 +220,12 @@ void BaseCharacter::_applyGravity(float deltaTime)
         this->isOnGround = false;
         this->moveVector.y += Global::gravity * deltaTime;
     }
+}
+
+void BaseCharacter::_updateCharacterController()
+{
+    if (controller == nullptr)
+        return;
+
+    controller->isLeft = isLeft;
 }

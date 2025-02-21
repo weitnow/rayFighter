@@ -11,6 +11,11 @@ struct CharacterController
     bool punch = false;
     bool kick = false;
     bool block = false;
+    // specialmoves
+    bool fireball = false;
+    bool spear = false;
+    // overriden by BaseCharacter (if CharacterController is added as Composition to a BaseCharacter)
+    bool isLeft = false; // true if the character is left of the other character, only valid for player1 or player2
     // general input
     bool key_esc = false;
     bool key_enter = false;
