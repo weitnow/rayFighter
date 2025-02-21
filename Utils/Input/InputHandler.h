@@ -58,8 +58,8 @@ private:
     CharacterController* player1Controller;
     CharacterController* player2Controller;
     // previous controller state from last frame for comparison
-    CharacterController prevPlayer1Controller;
-    CharacterController prevPlayer2Controller;
+    CharacterController prevPlayer1Controller; //used in InputHandler::isKeyJustPressed for checking if key just pressed
+    CharacterController prevPlayer2Controller; //used in InputHandler::isKeyJustPressed for checking if key just pressed
 
     void checkIfGamepadIsConnected();
 

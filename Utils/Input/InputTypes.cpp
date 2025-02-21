@@ -49,4 +49,5 @@ std::string actionToString(InputAction action)
 const SpecialMove Fireball = {"Fireball",
                               {{InputDirection::Down, InputAction::None},
                                {InputDirection::DownForward, InputAction::None},
-                               {InputDirection::Forward, InputAction::None}}};
+                               {InputDirection::Forward, InputAction::None},
+                               {InputDirection::Neutral, InputAction::Punch}}};

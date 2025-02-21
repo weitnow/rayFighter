@@ -1,4 +1,5 @@
 #include "InputBuffer.h"
+#include <iostream>
 
 void InputBuffer::addInput(InputDirection direction, InputAction action)
 {
@@ -16,7 +17,7 @@ void InputBuffer::addInput(InputDirection direction, InputAction action)
     // Keep buffer size manageable
     if (buffer.size() > BUFFER_SIZE)
     {
-        buffer.erase(buffer.begin());
+        buffer.erase(buffer.begin()); // clears only the first elements, so that 59 remains if BUFFERSIZE is 60
     }
 }
 
@@ -44,4 +45,10 @@ bool InputBuffer::matchSequence(const SpecialMove& move)
     }
 
     return moveIndex < 0; // Did we match all required inputs?
+}
+
+void InputBuffer::clearBuffer()
+{
+    buffer.clear();
+    std::cout << "InputBuffer cleared" << std::endl;
 }

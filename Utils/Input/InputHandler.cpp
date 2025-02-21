@@ -52,7 +52,6 @@ void InputHandler::Update()
     prevPlayer1Controller = *player1Controller;
     prevPlayer2Controller = *player2Controller;
 
-    //Todo: uncomment this
     updateInputBuffer(player1InputBuffer, player1Controller);
     checkSpecialMoves(player1InputBuffer, player1Controller);
 
@@ -179,16 +178,15 @@ InputAction InputHandler::_mapActionInput(CharacterController* controller)
 
 void InputHandler::updateInputBuffer(InputBuffer& buffer, CharacterController* controller)
 {
-    InputDirection direction = _mapDirectionInput(controller);
-    InputAction action = _mapActionInput(controller);
+    InputDirection direction = _mapDirectionInput(controller); // returns ex. InputDirection::DownForward
+    InputAction action = _mapActionInput(controller);          // returns ex. InputAction::Punch
 
     // Print the detected input direction and action in a readable format
-    std::cout << "Direction: " << directionToString(direction) << ", Action: " << actionToString(action) << std::endl;
+    // std::cout << "Direction: " << directionToString(direction) << ", Action: " << actionToString(action) << std::endl;
 
-    buffer.addInput(direction, action);
+    buffer.addInput(direction, action); // this adds ex. [InputDirection::DownForward, InputAction::Punch] to the buffer
 
-
-    buffer.addInput(_mapDirectionInput(controller), _mapActionInput(controller));
+    //buffer.addInput(_mapDirectionInput(controller), _mapActionInput(controller));
 }
 
 void InputHandler::checkSpecialMoves(InputBuffer& buffer, CharacterController* controller)
@@ -196,6 +194,10 @@ void InputHandler::checkSpecialMoves(InputBuffer& buffer, CharacterController* c
     if (buffer.matchSequence(Fireball))
     {
         std::cout << "Fireball executed!" << std::endl;
+
+        // clear buffer
+        //otherwise the player can keep holding down the last needed input and the specialmove is executed again and again
+        buffer.clearBuffer();
     }
 }
 

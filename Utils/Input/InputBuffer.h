@@ -10,6 +10,7 @@ class InputBuffer
 public:
     void addInput(InputDirection direction, InputAction action);
     bool matchSequence(const SpecialMove& move);
+    void clearBuffer(); // usually used after a SpecialMove was executed
 
 private:
     struct Input
