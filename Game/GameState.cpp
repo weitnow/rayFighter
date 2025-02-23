@@ -20,7 +20,7 @@ GameState::GameState(Game* game) : BaseState(game)
     //player1 = new Fighter1(asepriteManager, Constants::PLAYER1_X, Constants::BASELINE);
     player1 = new Fighter1(asepriteManager, Constants::PLAYER1_X, Constants::BASELINE);
 
-    player2 = new Fighter2(asepriteManager, Constants::PLAYER2_X, Constants::BASELINE);
+    player2 = new Fighter1(asepriteManager, Constants::PLAYER2_X, Constants::BASELINE);
 
 
     player1->addController(game->inputHandler->getPlayer1Controller());

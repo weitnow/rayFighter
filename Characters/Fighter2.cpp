@@ -14,7 +14,6 @@ Fighter2::~Fighter2()
 void Fighter2::init()
 {
     BaseCharacter::init();
-    setLife(2);                            // Todo: get rid of setLife
     setCurrentFrameTag("nesFighter-Idle"); // using nesFighter-Graphics
     setObjName("Ken");
     setPlayerNumber(2);
