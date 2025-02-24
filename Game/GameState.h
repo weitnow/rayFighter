@@ -8,10 +8,9 @@
 
 // forward declarations
 class AsepriteAnimationFile;
-
 class GameState : public BaseState
 {
-public:
+public: // METHODES
     GameState(Game* game);
     virtual ~GameState();
     virtual void Enter() override;
@@ -25,23 +24,46 @@ public:
     Vector2 getMiddlePointBetweenPlayers() const;
     int _getScreenPosXofObject(BaseGameObject& object);
 
+public: // VARIABLES
+    // <-- BaseState.h -->
+    // Screen2DManager* screen2DManager;
+    // BaseCharacter* player1;
+    // BaseCharacter* player2;
 
-    int cameraX = 0; // will be updated in _updateCamera
+    // <-- GameState.h -->
+    int cameraX = 0; // will be updated in GameState::_updateCamera
     int cameraY = 0;
 
-protected:
-    AsepriteAnimationFile* levelAnimFile;
-    Gui* gui;
-
-    int middlePointXbetweenPlayers = 0; // will be updated in _updateMiddlePointBetweenPlayers
-    int middlePointYbetweenPlayers = 0;
-
+protected: // METHODES
     void _updateMiddlePointBetweenPlayers();
     void _updateIsLeftPlayer1and2();
     void _checkCollisionsBetweenPlayers();
     void _checkHitsBetweenPlayers();
     void _keepPlayersOnStage();
     void _updateCamera(bool restriction = true); // if restriction is true, the camera is restricted to the stage
+
+protected: // VARIABLES
+    /* <-- Game.h -->
+    Game* game;
+    SoundManager* soundManager;
+    InputHandler* inputHandler;
+    AsepriteManager* asepriteManager;
+    DebugInfo* debugInfo;
+    float deltaTime;
+
+    // <-- BaseState.h -->
+    List<unique<BaseCharacter>> baseCharacters;
+    List<unique<BaseGameObject>> gameObjects;
+    CharacterController* player1Controller;
+    CharacterController* player2Controller;
+    */
+
+    // <-- GameState.h -->
+    AsepriteAnimationFile* levelAnimFile;
+    Gui* gui;
+
+    int middlePointXbetweenPlayers = 0; // will be updated in _updateMiddlePointBetweenPlayers
+    int middlePointYbetweenPlayers = 0;
 };
 
 #endif

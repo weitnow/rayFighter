@@ -6,7 +6,6 @@
 #include "../Utils/HelperFunctions.h"
 #include "Game.h"
 
-
 GameState::GameState(Game* game) : BaseState(game)
 {
     debugInfo = new DebugInfo(this);        // instance of DebugInfo
@@ -15,13 +14,10 @@ GameState::GameState(Game* game) : BaseState(game)
     // Create the HUD
     gui = new Gui(game);
 
-
     // Create Player 1 and 2
-    //player1 = new Fighter1(asepriteManager, Constants::PLAYER1_X, Constants::BASELINE);
     player1 = new Fighter1(asepriteManager, Constants::PLAYER1_X, Constants::BASELINE);
 
     player2 = new Fighter1(asepriteManager, Constants::PLAYER2_X, Constants::BASELINE);
-
 
     player1->addController(game->inputHandler->getPlayer1Controller());
     player1->init();
@@ -41,7 +37,6 @@ GameState::GameState(Game* game) : BaseState(game)
 
 GameState::~GameState()
 {
-
     game->soundManager->unloadMusic("darkchurch.mp3");
 
     // Deleting Global Components
@@ -62,7 +57,6 @@ void GameState::Enter()
     game->soundManager->loadMusic("darkchurch.mp3", 1.0f);
     game->soundManager->playBackgroundMusic("darkchurch.mp3");
 }
-
 
 void GameState::Update(float deltaTime)
 {
@@ -129,12 +123,6 @@ void GameState::Render()
     // draw gameObjects (player1 and player2 included)
     // Draw all gameObjects
     for (auto& object : gameObjects)
-    {
-        object->draw();
-    }
-
-    // Draw all baseSpriteObjects
-    for (auto& object : baseSpriteObjects)
     {
         object->draw();
     }

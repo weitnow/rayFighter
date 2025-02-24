@@ -21,7 +21,7 @@ class CharacterController;
 
 class BaseState
 {
-public:
+public: // member methods
     BaseState(Game* game);
     virtual ~BaseState();
     virtual void Enter();
@@ -32,15 +32,16 @@ public:
     virtual void Exit() = 0;
     virtual void HandleInput() = 0;
 
+public: // member variables
     // <-- Game.h -->
     // Global components (pointers to single instances, loaded in Game.cpp)
-    Screen2DManager* screen2DManager;
 
-    // <-- GameState.h -->
+    // <-- BaseState.h -->
+    Screen2DManager* screen2DManager;
     BaseCharacter* player1; // is a nullptr, set in GameState (and deleted when GameState is deleted)
     BaseCharacter* player2; // is a nullptr, set in GameState (and deleted when GameState is deleted)
 
-protected:
+protected: // member variables
     // <-- Game.h -->
     // Global components (pointers to single instances, loaded in Game.cpp)
     Game* game;
@@ -48,18 +49,15 @@ protected:
     InputHandler* inputHandler;
     AsepriteManager* asepriteManager;
     DebugInfo* debugInfo;
-    CollisionManager* collisionManager; // is a nullptr, set in GameState (and deleted when GameState is deleted)
     float deltaTime;
 
     // <-- BaseState.h -->
     List<unique<BaseCharacter>> baseCharacters;
     List<unique<BaseGameObject>> gameObjects;
-    List<unique<BaseSpriteObject>> baseSpriteObjects;
     CharacterController* player1Controller;
     CharacterController* player2Controller;
 
     // <-- GameState.h -->
-    // Game Objects
     // float camPos;
     // AsepriteAnimationFile* background;
     // std::string randomBackground;
