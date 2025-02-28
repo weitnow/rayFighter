@@ -3,8 +3,7 @@
 #include <string>
 
 
-Statemachine::Statemachine(BaseCharacter& characterRef)
-    : character(characterRef), currentState(nullptr), previousState(nullptr), nextState(nullptr)
+Statemachine::Statemachine() : previousState(nullptr), currentState(nullptr)
 {
 }
 
@@ -16,7 +15,6 @@ void Statemachine::_changeStateInternal(shared<State> newState)
         // if it is the same, do nothing and return
         return;
     }
-
 
     // Finalize the current state if it exists
     if (currentState)

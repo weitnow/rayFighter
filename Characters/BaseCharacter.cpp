@@ -17,7 +17,7 @@ BaseCharacter::~BaseCharacter()
 
 void BaseCharacter::init()
 {
-    statemachine = std::make_unique<Statemachine>(*this);
+    statemachine = std::make_unique<Statemachine>();
     statemachine->setOwner(this);
 }
 
@@ -99,8 +99,6 @@ void BaseCharacter::takeDamage(float damage, CollisionBox2D* hitbox)
     BaseGameObject::takeDamage(damage, hitbox);
 
     statemachine->changeState("Hit");
-
-    
 }
 
 void BaseCharacter::setIsLeft(bool isLeft)
