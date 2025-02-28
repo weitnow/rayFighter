@@ -18,6 +18,7 @@ BaseCharacter::~BaseCharacter()
 void BaseCharacter::init()
 {
     statemachine = std::make_unique<Statemachine>();
+    //statemachine->populateStateMap();
     statemachine->setOwner(this);
 }
 
