@@ -56,6 +56,10 @@ void GameState::Enter()
     // Start playing random background music
     game->soundManager->loadMusic("darkchurch.mp3", 1.0f);
     game->soundManager->playBackgroundMusic("darkchurch.mp3");
+
+    // Todo: get rid of this
+    gui->setWinningPoint1(1);
+    gui->setWinningPoint2(1);
 }
 
 void GameState::Update(float deltaTime)
@@ -97,6 +101,8 @@ void GameState::Update(float deltaTime)
     //Todo: get rid of this
     gui->setLife1(player1->getCurrentLife());
     gui->setLife2(player2->getCurrentLife());
+    gui->setPower1(1);
+    gui->setPower2(4);
 
     HandleInput();
 }
