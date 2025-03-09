@@ -51,6 +51,9 @@ public:
     // Todo: refactor this to private
     bool canDealDamage;
 
+    void setPowerLevel(int powerLevel);
+    int getPowerLevel();
+
 
 protected:
     // member variables
@@ -64,6 +67,8 @@ protected:
     std::string currentState;
 
     CharacterController* controller;
+
+    int powerLevel;
 
     // member functions
     virtual void _applyGravity(float deltaTime) override;

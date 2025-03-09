@@ -11,11 +11,8 @@ GameState::GameState(Game* game) : BaseState(game)
     debugInfo = new DebugInfo(this);        // instance of DebugInfo
     inputHandler->addDebugInfo(*debugInfo); // add debugInfo to inputHandler
 
-    // Create the HUD
-    gui = new Gui(game);
-
     // Create Player 1 and 2
-    player1 = new Fighter1(asepriteManager, Constants::PLAYER1_X, Constants::BASELINE);
+    player1 = new Fighter2(asepriteManager, Constants::PLAYER1_X, Constants::BASELINE);
 
     player2 = new Fighter1(asepriteManager, Constants::PLAYER2_X, Constants::BASELINE);
 
@@ -25,6 +22,9 @@ GameState::GameState(Game* game) : BaseState(game)
     player2->addController(game->inputHandler->getPlayer2Controller());
     player2->init();
 
+    // Create the HUD
+    gui = new Gui(game);
+    gui->init(this);
 
     levelAnimFile = asepriteManager->getAnimFile("stages");
     levelAnimFile->setFrameTag("stages-Level");
@@ -97,12 +97,6 @@ void GameState::Update(float deltaTime)
 
     // Update the HUD
     gui->update(deltaTime);
-
-    //Todo: get rid of this
-    gui->setLife1(player1->getCurrentLife());
-    gui->setLife2(player2->getCurrentLife());
-    gui->setPower1(1);
-    gui->setPower2(4);
 
     HandleInput();
 }

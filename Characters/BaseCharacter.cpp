@@ -5,7 +5,8 @@
 
 BaseCharacter::BaseCharacter(AsepriteManager* asepriteManager, float x, float y)
     : BaseGameObject(asepriteManager, x, y), isOnGround(false), animFileName("gbFighter"), isLeft(true),
-      playerNumber(-1), statemachine(nullptr), currentState("Idle"), canDealDamage(true), controller(nullptr)
+      playerNumber(-1), statemachine(nullptr), currentState("Idle"), canDealDamage(true), controller(nullptr),
+      powerLevel(0)
 {
     affectedByGravity =
         true; // needs to be set here, because in the initializer list of basegameobject it is set to false
@@ -205,6 +206,16 @@ Statemachine& BaseCharacter::getStatemachine()
     {
         throw std::runtime_error("Statemachine is nullptr");
     }
+}
+
+void BaseCharacter::setPowerLevel(int powerLevel)
+{
+    this->powerLevel = powerLevel;
+}
+
+int BaseCharacter::getPowerLevel()
+{
+    return powerLevel;
 }
 
 void BaseCharacter::_applyGravity(float deltaTime)

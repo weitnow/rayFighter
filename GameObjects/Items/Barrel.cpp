@@ -29,7 +29,7 @@ void Barrel::update(float deltaTime)
         _invincibleCounter = 0.f;
     }
 
-    if (life <= 0 && isAlive)
+    if (currentLife <= 0 && isAlive)
     {
         isAlive = false;
         setPushVector({300, -150});
@@ -44,7 +44,7 @@ void Barrel::takeDamage(float damage)
         setPushVector({150, -50});
         setCurrentFrameTag("barrel-Hit");
         std::cout << "Barrel::takeDamage -> " << ObjName << " took " << damage << " damage." << std::endl;
-        life -= damage;
+        currentLife -= damage;
         isInvincible = true;
         _invincibleCounter = invincibleTime;
     }

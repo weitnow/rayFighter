@@ -17,8 +17,6 @@ const int STAGE_WIDTH = 416;
 
 const int BASELINE = 102; //ground level where the player stands
 
-const int DEFAULT_LIFE = 3;
-
 const float INVINCIBLE_TIME = 1.0f; // time in seconds objects are invincible after taking damage
 
 const int FPS = 60;

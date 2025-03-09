@@ -4,7 +4,7 @@
 
 BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager)
     : ObjName(""), pushVector({0, 0}), scale(1.f), pos{0.f, 0.f}, color(WHITE), isFlippedX(false), isFlippedY(false),
-      isActive(true), isAlive(true), isInvincible(false), life(Constants::DEFAULT_LIFE), _invincibleCounter(0.f),
+      isActive(true), isAlive(true), isInvincible(false), maxLife(1), currentLife(maxLife), _invincibleCounter(0.f),
       invincibleTime(Constants::INVINCIBLE_TIME), affectedByGravity(false), moveVector({0, 0}),
       getDurationCurrentFrame(0), currentFrame(0), minFrame(0), maxFrame(0), hasAnimJustFinished(false),
       currentFrameTag(""), currentFrameAbsolut(0), drawShadow(false)
@@ -129,11 +129,11 @@ void BaseGameObject::draw()
 void BaseGameObject::takeDamage(float damage)
 {
 
-    life -= damage;
+    currentLife -= damage;
 
-    if (life <= 0)
+    if (currentLife <= 0)
     {
-        life = 0;
+        currentLife = 0;
         isAlive = false;
     }
 }
@@ -146,9 +146,20 @@ void BaseGameObject::takeDamage(float damage, CollisionBox2D* hitbox)
 }
 
 
-int& BaseGameObject::getCurrentLife()
+int BaseGameObject::getMaxLife() // use only for initialization
 {
-    return life;
+    return maxLife;
+}
+
+void BaseGameObject::setMaxLife(int maxLife) // use only for initialization
+{
+    this->maxLife = maxLife;
+    this->setCurrentLife(maxLife);
+}
+
+int BaseGameObject::getCurrentLife()
+{
+    return currentLife;
 }
 
 bool BaseGameObject::getIsAlive()
@@ -161,9 +172,9 @@ bool BaseGameObject::getIsActive()
     return isActive;
 }
 
-void BaseGameObject::setLife(int currentLife)
+void BaseGameObject::setCurrentLife(int currentLife)
 {
-    life = currentLife;
+    this->currentLife = currentLife;
 }
 
 void BaseGameObject::setObjName(std::string name)

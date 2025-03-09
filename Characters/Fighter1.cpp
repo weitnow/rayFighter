@@ -34,7 +34,12 @@ void Fighter1::init()
 
     getStatemachine().changeState("Walk");
 
-
     // draw shadow
     setDrawShadow(true);
+
+    // set the life of the character
+    setMaxLife(6);
+
+    // set the power level of the character
+    setPowerLevel(2);
 }

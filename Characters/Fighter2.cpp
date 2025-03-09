@@ -24,4 +24,10 @@ void Fighter2::init()
 
     // draw shadow
     setDrawShadow(true);
+
+    // set the life of the character
+    setMaxLife(10);
+
+    // set the power level of the character
+    setPowerLevel(1);
 }

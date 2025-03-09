@@ -1,6 +1,7 @@
 #ifndef GBFIGHTER_GUI_H
 #define GBFIGHTER_GUI_H
 
+#include "../Game/BaseState.h"
 #include "../Utils/AsepriteManager.h"
 #include "Powerbar.h"
 
@@ -11,6 +12,7 @@ class Gui
 public:
     Gui(Game* game);
     ~Gui();
+    void init(BaseState* state);
     void draw();
     void update(float deltaTime);
     void setLife1(int life);
@@ -38,6 +40,9 @@ private:
     AsepriteAnimationFile* bgLowerGui;
     AsepriteAnimationFile* winningPoint;
     Game* game;
+    BaseState* state;
+    bool initDone;
+
 
     int timer;
     double lastUpdateTime;

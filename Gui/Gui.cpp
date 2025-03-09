@@ -1,13 +1,9 @@
 #include "Gui.h"
 #include "../Game/Game.h"
 
-Gui::Gui(Game* game) : game(game), timer(99), winningPoint1(0), winningPoint2(0), power1(0), power2(0)
+Gui::Gui(Game* game)
+    : game(game), timer(99), winningPoint1(0), winningPoint2(0), power1(0), power2(0), state(nullptr), initDone(false)
 {
-    lifebar1 = new Powerbar(Vector2{23, 26}, 5, 100, 10, Constants::RAYFIGHTER_ROSA, 1, false, "Andy");
-    lifebar2 = new Powerbar(Vector2{132, 26}, 5, 100, 10, Constants::RAYFIGHTER_ROSA, 2, false, "Zangief");
-
-    powerbar1 = new Powerbar(Vector2{23, 138}, 5, 50, 3, Constants::RAYFIGHTER_ROSA, 1, true);
-    powerbar2 = new Powerbar(Vector2{182, 138}, 5, 50, 3, Constants::RAYFIGHTER_ROSA, 2, true);
 
 
     //Load the bgUpperGui animation
@@ -27,23 +23,65 @@ Gui::Gui(Game* game) : game(game), timer(99), winningPoint1(0), winningPoint2(0)
 Gui::~Gui()
 {
     // Clean up resources if necessary
-    delete lifebar1;
-    delete lifebar2;
-    lifebar1 = nullptr;
-    lifebar2 = nullptr;
 
-    delete powerbar1;
-    powerbar1 = nullptr;
-    delete powerbar2;
-    powerbar2 = nullptr;
+    if (initDone)
+    {
+        delete lifebar1;
+        delete lifebar2;
+        lifebar1 = nullptr;
+        lifebar2 = nullptr;
+
+        delete powerbar1;
+        powerbar1 = nullptr;
+        delete powerbar2;
+        powerbar2 = nullptr;
+    }
 
     delete bgUpperGui;
     delete bgLowerGui;
     delete winningPoint;
+
+    bgUpperGui = nullptr;
+    bgLowerGui = nullptr;
+    winningPoint = nullptr;
+    this->game = nullptr;
+    this->state = nullptr;
+}
+
+void Gui::init(BaseState* state)
+{
+    this->state = state;
+
+    lifebar1 = new Powerbar(Vector2{23, 26},
+                            5,
+                            100,
+                            state->player1->getMaxLife(),
+                            Constants::RAYFIGHTER_ROSA,
+                            1,
+                            false,
+                            "Andy");
+    lifebar2 = new Powerbar(Vector2{132, 26},
+                            5,
+                            100,
+                            state->player2->getMaxLife(),
+                            Constants::RAYFIGHTER_ROSA,
+                            2,
+                            false,
+                            "Zangief");
+
+    powerbar1 = new Powerbar(Vector2{23, 138}, 5, 50, 3, Constants::RAYFIGHTER_ROSA, 1, true);
+    powerbar2 = new Powerbar(Vector2{182, 138}, 5, 50, 3, Constants::RAYFIGHTER_ROSA, 2, true);
+
+    initDone = true;
 }
 
 void Gui::draw()
 {
+    if (!initDone)
+    {
+        return;
+    }
+
     // Draw a white rectangle for UpperGui
     DrawRectangle(0, 0, 256, 40, BLACK);
 
@@ -70,6 +108,11 @@ void Gui::draw()
 
 void Gui::update(float deltaTime)
 {
+    if (!initDone)
+    {
+        return;
+    }
+
     // Update the bgUpperGui
     bgUpperGui->update(deltaTime);
 
@@ -82,6 +125,14 @@ void Gui::update(float deltaTime)
         timer--;
         lastUpdateTime = GetTime();
     }
+
+    // Update the lifebars
+    setLife1(state->player1->getCurrentLife());
+    setLife2(state->player2->getCurrentLife());
+
+    // Update the powerbars
+    setPower1(state->player1->getPowerLevel());
+    setPower2(state->player2->getPowerLevel());
 }
 
 void Gui::setLife1(int life)

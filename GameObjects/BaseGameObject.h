@@ -26,8 +26,11 @@ public:
     virtual void takeDamage(float damage = 1.f);
     virtual void takeDamage(float damage, CollisionBox2D* hitbox);
 
-    int& getCurrentLife();
-    void setLife(int currentLife);
+    int getMaxLife();
+    void setMaxLife(int maxLife);
+
+    int getCurrentLife();
+    void setCurrentLife(int currentLife);
 
     bool getIsAlive();
     bool getIsActive();
@@ -129,7 +132,9 @@ protected:
     int maxFrame;                // max frame of the animation
     bool hasAnimJustFinished;    // true if the animation has just finished
     int currentFrameAbsolut;     // current frame number of the animation - min frame
-    int life;
+
+    int maxLife;
+    int currentLife;
 
     // shadow
     bool drawShadow;
