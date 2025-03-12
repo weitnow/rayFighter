@@ -24,7 +24,7 @@ void Fighter2::init()
                                                                       {"DuckKick", std::make_shared<DuckKickState>()},
                                                                       {"DuckBlock", std::make_shared<DuckBlockState>()},
                                                                       {"Punch", std::make_shared<PunchState>()},
-                                                                      {"Kick", std::make_shared<KickState>()},
+                                                                      {"Kick", std::make_shared<PunchState>()},
                                                                       {"Block", std::make_shared<BlockState>()},
                                                                       {"Hit", std::make_shared<HitState>()},
                                                                       {"Hurt", std::make_shared<HurtState>()},
