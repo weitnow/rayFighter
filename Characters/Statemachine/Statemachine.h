@@ -2,7 +2,7 @@
 #define GBFIGHTER_STATEMACHINE_H
 
 #include "../../Utils/Core.h"
-#include "State.h"
+#include "States/State.h"
 
 
 // forward declaration of BaseCharacter to avoid circular dependency
@@ -21,15 +21,16 @@ private:
 
 
 public:
-    Statemachine();
+    Statemachine(BaseCharacter* owner);
+    void init(const Dictionary<std::string, std::shared_ptr<State>>& customStateMap);
     void changeState(std::string newStateName);
     void update(float deltaTime); // Update the current state (calls State::Update)
     State& getCurrentState();
     std::string getCurrentStateAsString();
     std::string getPreviousStateAsString();
-    void setOwner(BaseCharacter* owner); // Set the owner of this Statemachine (BaseCharacter, for example Player 1)
+    void setOwnerForStates(); // Set the owner of this Statemachine (BaseCharacter, for example Player 1)
 
-    void populateStateMap();
+    void populateStateMap(const Dictionary<std::string, std::shared_ptr<State>>& customStateMap);
 };
 
 

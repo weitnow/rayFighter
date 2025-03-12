@@ -2,7 +2,7 @@
 #define GBFIGHTER_STATE_H
 
 
-#include "../BaseCharacter.h"
+#include "../../BaseCharacter.h"
 #include <iostream>
 
 // Forward declaration of InputHandler (CharacterController)

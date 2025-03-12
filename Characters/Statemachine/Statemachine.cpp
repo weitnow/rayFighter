@@ -3,37 +3,28 @@
 #include <string>
 
 
-Statemachine::Statemachine() : previousState(nullptr), currentState(nullptr), owner(nullptr)
+Statemachine::Statemachine(BaseCharacter* owner) : previousState(nullptr), currentState(nullptr), owner(nullptr)
 {
-    populateStateMap();
+
+    if (owner == nullptr)
+    {
+        //raise exception
+        throw std::runtime_error("Statemachine::setOwner() -> Owner is nullptr");
+    }
+
+
+    this->owner = owner;
 }
 
-void Statemachine::populateStateMap()
+void Statemachine::init(const Dictionary<std::string, std::shared_ptr<State>>& customStateMap)
 {
-    // Check if the StateFactory has an owner
-    /*
-    if (!owner)
-    {
-        throw std::runtime_error("StateFactory::getState() -> Owner is not set.");
-    }
-    */
-    stateMap = {{"Idle", std::make_shared<IdleState>()},
-                {"Walk", std::make_shared<WalkState>()},
-                {"Jump", std::make_shared<JumpState>()},
-                {"JumpPunch", std::make_shared<JumpPunchState>()},
-                {"Duck", std::make_shared<DuckState>()},
-                {"DuckPunch", std::make_shared<DuckPunchState>()},
-                {"DuckKick", std::make_shared<DuckKickState>()},
-                {"DuckBlock", std::make_shared<DuckBlockState>()},
-                {"Punch", std::make_shared<PunchState>()},
-                {"Kick", std::make_shared<KickState>()},
-                {"Block", std::make_shared<BlockState>()},
-                {"Hit", std::make_shared<HitState>()},
-                {"Hurt", std::make_shared<HurtState>()},
-                {"Death", std::make_shared<DeathState>()}};
+    populateStateMap(customStateMap);
+    setOwnerForStates();
+}
 
-    //std::shared_ptr<State> myState = stateMap["Walk"];
-    //std::cout << myState->stateName << std::endl;
+void Statemachine::populateStateMap(const Dictionary<std::string, std::shared_ptr<State>>& customStateMap)
+{
+    stateMap = customStateMap;
 }
 
 
@@ -109,10 +100,8 @@ std::string Statemachine::getPreviousStateAsString()
     }
 }
 
-void Statemachine::setOwner(BaseCharacter* owner)
+void Statemachine::setOwnerForStates()
 {
-    this->owner = owner;
-
     // setting owner for each state-obj in statemap
     for (auto& [name, state] : stateMap)
     {
