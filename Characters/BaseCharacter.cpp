@@ -6,7 +6,7 @@
 BaseCharacter::BaseCharacter(AsepriteManager* asepriteManager, float x, float y)
     : BaseGameObject(asepriteManager, x, y), isOnGround(false), animFileName("gbFighter"), isLeft(true),
       playerNumber(-1), statemachine(nullptr), currentState("Idle"), canDealDamage(true), controller(nullptr),
-      powerLevel(0)
+      powerLevel(0), maxPowerLevel(0)
 {
     affectedByGravity =
         true; // needs to be set here, because in the initializer list of basegameobject it is set to false
@@ -208,8 +208,22 @@ Statemachine& BaseCharacter::getStatemachine()
     }
 }
 
+void BaseCharacter::setMaxPowerLevel(int maxPowerLevel)
+{
+    this->maxPowerLevel = maxPowerLevel;
+}
+
+int BaseCharacter::getMaxPowerLevel()
+{
+    return maxPowerLevel;
+}
+
 void BaseCharacter::setPowerLevel(int powerLevel)
 {
+    if (powerLevel < 0 || powerLevel > maxPowerLevel)
+    {
+        throw std::invalid_argument("Power level must be between 0 and maxPowerLevel");
+    }
     this->powerLevel = powerLevel;
 }
 

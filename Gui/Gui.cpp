@@ -69,8 +69,10 @@ void Gui::init(BaseState* state)
                             false,
                             "Zangief");
 
-    powerbar1 = new Powerbar(Vector2{23, 138}, 5, 50, 3, Constants::RAYFIGHTER_ROSA, 1, true);
-    powerbar2 = new Powerbar(Vector2{182, 138}, 5, 50, 3, Constants::RAYFIGHTER_ROSA, 2, true);
+    powerbar1 =
+        new Powerbar(Vector2{23, 138}, 5, 50, state->player1->getMaxPowerLevel(), Constants::RAYFIGHTER_ROSA, 1, true);
+    powerbar2 =
+        new Powerbar(Vector2{182, 138}, 5, 50, state->player2->getMaxPowerLevel(), Constants::RAYFIGHTER_ROSA, 2, true);
 
     initDone = true;
 }
@@ -145,25 +147,16 @@ void Gui::setLife2(int life)
     lifebar2->ChangeValue(life);
 }
 
-void Gui::setPower1(int power) // max power is 4
+void Gui::setPower1(int power)
 {
-
     power1 = power;
-
-    if (power > 3)
-        powerbar1->ChangeValue(3);
-    else
-        powerbar1->ChangeValue(power);
+    powerbar1->ChangeValue(power);
 }
 
 void Gui::setPower2(int power)
 {
     power2 = power;
-
-    if (power > 3)
-        powerbar2->ChangeValue(3);
-    else
-        powerbar2->ChangeValue(power);
+    powerbar2->ChangeValue(power);
 }
 
 void Gui::setWinningPoint1(int point)
@@ -207,20 +200,20 @@ void Gui::_drawWinningPoints(int winningPoints, int playerNumber)
 
 void Gui::_drawPowSymbol()
 {
-    if (power1 < 3 && power2 < 3)
+    if (power1 < state->player1->getMaxPowerLevel() - 1 && power2 < state->player2->getMaxPowerLevel() - 1)
     {
         bgLowerGui->setFrameTag("bgLowerGui-Idle");
         return;
     }
-    if (power1 == 4 && power2 == 4)
+    if (power1 == state->player1->getMaxPowerLevel() && power2 == state->player2->getMaxPowerLevel())
     {
         bgLowerGui->setFrameTag("bgLowerGui-Pow");
     }
-    else if (power1 == 4)
+    else if (power1 == state->player1->getMaxPowerLevel())
     {
         bgLowerGui->setFrameTag("bgLowerGui-PowP1");
     }
-    else if (power2 == 4)
+    else if (power2 == state->player2->getMaxPowerLevel())
     {
         bgLowerGui->setFrameTag("bgLowerGui-PowP2");
     }

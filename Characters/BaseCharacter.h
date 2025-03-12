@@ -51,6 +51,9 @@ public:
     // Todo: refactor this to private
     bool canDealDamage;
 
+    void setMaxPowerLevel(int maxPowerLevel); // use only for initialization
+    int getMaxPowerLevel();                   // use only for initialization
+
     void setPowerLevel(int powerLevel);
     int getPowerLevel();
 
@@ -68,6 +71,7 @@ protected:
 
     CharacterController* controller;
 
+    int maxPowerLevel;
     int powerLevel;
 
     // member functions

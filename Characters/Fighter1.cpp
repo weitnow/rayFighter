@@ -41,5 +41,6 @@ void Fighter1::init()
     setMaxLife(6);
 
     // set the power level of the character
-    setPowerLevel(2);
+    setMaxPowerLevel(3);
+    setPowerLevel(3);
 }
