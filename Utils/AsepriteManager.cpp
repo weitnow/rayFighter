@@ -316,12 +316,10 @@ void AsepriteManager::init()
     loadAnimFile("gbFighter", 0); // asepriteManager.frameTags[gbFighter-Idle] (0 is the spriteOffsetX)
                                   // asepriteManager.textures[gbFighter]
 
-    getFrameTag("gbFighter-Punch").frameNumberDuration[0] =
+    getFrameTag("gbFighter-Punch").frameNumberDuration[43] =
         100; // set the duration of the first frame of the punch animation
-    getFrameTag("gbFighter-Punch").frameNumberDuration[1] =
+    getFrameTag("gbFighter-Punch").frameNumberDuration[42] =
         100; // set the duration of the second frame of the punch animation
-    getFrameTag("gbFighter-Punch").frameNumberDuration[2] =
-        100; // set the duration of the third frame of the punch animation
 
 
     getFrameTag("gbFighter-Punch").frameOffsetX = 6; // set the spriteOffsetX for the punch animation

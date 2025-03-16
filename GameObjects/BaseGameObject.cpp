@@ -407,6 +407,7 @@ void BaseGameObject::addCollisionBoxForFrame(const std::string frameTag,
                             height);
 }
 
+
 void BaseGameObject::setPushVector(Vector2 pushVector)
 {
     this->pushVector = pushVector;

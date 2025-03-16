@@ -116,6 +116,7 @@ protected:
     Vector2 pos;        // calculated in the update method
     Vector2 moveVector; // (x,y) used to walk and jump
     Vector2 pushVector; // (x,y) used by setPushVector and reduced by _reducePushVector in update methode
+    FrameTag& getFrameTag();
     float moveSpeed = 60.f;
     float scale;
     Color color;
