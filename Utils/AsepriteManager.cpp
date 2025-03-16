@@ -410,10 +410,10 @@ void AsepriteManager::loadAnimFile(const std::string& filename, const int sprite
     nlohmann::json* jsonfile = loadJsonFile(filename);
 
     // get how many frameTags are in the json
-    int frameTagSize = (*jsonfile)["meta"]["frameTags"].size(); // 33 different frameTags (ex. gbFighter-Idle)
+    int frameTagSize = (*jsonfile)["meta"]["frameTags"].size(); // 33 different frameTags (gbFighter.json)
 
     // get how many frames are in the json (there is always at least 1 frame)
-    int frameSize = (*jsonfile)["frames"].size(); // 74 different frames
+    int frameSize = (*jsonfile)["frames"].size(); // 74 different frames (gbFighter.json)
 
     // Choose the correct frame key based on frameSize
     std::string frameKey = (frameSize == 1) ? (filename + ".aseprite") : (filename + " 0.aseprite");
@@ -426,8 +426,9 @@ void AsepriteManager::loadAnimFile(const std::string& filename, const int sprite
     {
         // file has frametags
 
-        for (int i = 0; i < frameTagSize; ++i)
+        for (int i = 0; i < frameTagSize; ++i) // loop through frametags 0 bis 32
         {
+            frameTag.frameNumberDuration.clear(); // Clear previous frame durations
             frameTag.tagname = (*jsonfile)["meta"]["frameTags"][i]["name"];
             frameTag.texturename = filename;
             frameTag.filenameTagname = filename + "-" + frameTag.tagname;
@@ -464,7 +465,7 @@ void AsepriteManager::loadAnimFile(const std::string& filename, const int sprite
     else
     {
         // file has NO frametags
-
+        frameTag.frameNumberDuration.clear(); // Clear previous frame durations
         frameTag.tagname = filename;
         frameTag.texturename = filename;
         frameTag.filenameTagname = filename;
