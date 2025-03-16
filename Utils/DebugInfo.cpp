@@ -117,7 +117,7 @@ void DebugInfo::_drawCharacterDataInternal(BaseCharacter* character, const std::
                    y);
 
     y += LINE_SPACING;
-    _drawDebugText("Frameduration", std::to_string(character->getAnim()->getDurationCurrentFrame() * 1000), x, y);
+    _drawDebugText("Frameduration", std::to_string(character->getAnimFile()->getDurationCurrentFrame() * 1000), x, y);
 
     y += LINE_SPACING;
     _drawDebugText("isLeft", std::to_string(character->getIsLeft()), x, y);
@@ -129,14 +129,14 @@ void DebugInfo::_drawCharacterDataInternal(BaseCharacter* character, const std::
     _drawDebugText("ObjName", character->getObjName(), x, y);
 
     y += LINE_SPACING;
-    _drawDebugText("currentFrame", std::to_string(character->getAnim()->getCurrentFrame()), x, y);
+    _drawDebugText("currentFrame", std::to_string(character->getAnimFile()->getCurrentFrame()), x, y);
 
     y += LINE_SPACING;
-    _drawDebugText("hasAnimJustFinished", std::to_string(character->getAnim()->hasAnimJustFinished()), x, y);
+    _drawDebugText("hasAnimJustFinished", std::to_string(character->getAnimFile()->hasAnimJustFinished()), x, y);
 
     y += LINE_SPACING;
     _drawDebugText("hasAnimJustFinishedPlusLastFrameDuration",
-                   std::to_string(character->getAnim()->hasAnimJustFinishedPlusLastFrameDuration()),
+                   std::to_string(character->getAnimFile()->hasAnimJustFinishedPlusLastFrameDuration()),
                    x,
                    y);
 
@@ -168,10 +168,10 @@ void DebugInfo::_drawGameObjectDataInternal(BaseGameObject* gameObject, const st
     _drawDebugText("ObjName", gameObject->getObjName(), x, y);
 
     y += LINE_SPACING;
-    _drawDebugText("currentFrame", std::to_string(gameObject->getAnim()->getCurrentFrame()), x, y);
+    _drawDebugText("currentFrame", std::to_string(gameObject->getAnimFile()->getCurrentFrame()), x, y);
 
     y += LINE_SPACING;
-    _drawDebugText("hasAnimJustFinished", std::to_string(gameObject->getAnim()->hasAnimJustFinished()), x, y);
+    _drawDebugText("hasAnimJustFinished", std::to_string(gameObject->getAnimFile()->hasAnimJustFinished()), x, y);
 }
 
 void DebugInfo::_drawDebugText(const std::string& label, const std::string& value, int x, int y)

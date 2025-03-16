@@ -202,7 +202,7 @@ void JumpPunchState::Init()
 
 void JumpPunchState::Update(float deltaTime)
 {
-    if (owner->getAnim()->hasAnimJustFinishedPlusLastFrameDuration())
+    if (owner->getAnimFile()->hasAnimJustFinishedPlusLastFrameDuration())
     {
         statemachine->changeState("Jump");
     }
@@ -259,7 +259,7 @@ void PunchState::Init()
 
 void PunchState::Update(float deltaTime)
 {
-    if (owner->getAnim()->hasAnimJustFinishedPlusLastFrameDuration())
+    if (owner->getAnimFile()->hasAnimJustFinishedPlusLastFrameDuration())
     {
         statemachine->changeState("Idle");
     }
@@ -285,7 +285,7 @@ void DuckPunchState::Init()
 
 void DuckPunchState::Update(float deltaTime)
 {
-    if (owner->getAnim()->hasAnimJustFinishedPlusLastFrameDuration())
+    if (owner->getAnimFile()->hasAnimJustFinishedPlusLastFrameDuration())
     {
         statemachine->changeState("Duck");
     }
@@ -308,7 +308,7 @@ void KickState::Init()
 
 void KickState::Update(float deltaTime)
 {
-    if (owner->getAnim()->hasAnimJustFinishedPlusLastFrameDuration())
+    if (owner->getAnimFile()->hasAnimJustFinishedPlusLastFrameDuration())
     {
         statemachine->changeState("Idle");
     }
@@ -329,7 +329,7 @@ void DuckKickState::Init()
 
 void DuckKickState::Update(float deltaTime)
 {
-    if (owner->getAnim()->hasAnimJustFinishedPlusLastFrameDuration())
+    if (owner->getAnimFile()->hasAnimJustFinishedPlusLastFrameDuration())
     {
         statemachine->changeState("Duck");
     }

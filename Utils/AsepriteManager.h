@@ -62,7 +62,7 @@ public:
 
     ~AsepriteAnimationFile();
 
-    FrameTag getFrameTag(const std::string& filenameTagname);
+    FrameTag& getFrameTag(const std::string& filenameTagname);
     std::string getAnimFilename() const;
     std::string getAnimFilenameTagname() const;
     float getDurationCurrentFrame(int frameNumber);

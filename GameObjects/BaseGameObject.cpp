@@ -229,7 +229,7 @@ void BaseGameObject::addAnim(AsepriteAnimationFile* animfileptr)
     this->animfilePtr = animfileptr;
 }
 
-AsepriteAnimationFile* BaseGameObject::getAnim()
+AsepriteAnimationFile* BaseGameObject::getAnimFile()
 {
     assert(animfilePtr != nullptr); // ups, getAnim was called before addAnim was called
 
@@ -406,7 +406,6 @@ void BaseGameObject::addCollisionBoxForFrame(const std::string frameTag,
                             width,
                             height);
 }
-
 
 void BaseGameObject::setPushVector(Vector2 pushVector)
 {

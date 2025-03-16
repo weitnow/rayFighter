@@ -11,7 +11,7 @@ SF2 / MK2 like game with gameboy-graphics written in c++ with raylib
 
 ## Development-Notes
 
-### Frame-Duration
+### Frame-Duration (global)
 They are specified in the json-file generated from aseprite. The json-file has frameTags
 for example gbFighter-Idle (frame 0 to 2). Each Frame (0, 1, 2) has a duration in ms.
 main.cpp creates a game-instance which creates a asepriteManager-Instance, which has
@@ -34,3 +34,10 @@ getFrameTag("gbFighter-Punch").frameOffsetX = 6; // set the spriteOffsetX for th
 getFrameTag("gbFighter-DuckPunch").frameOffsetX = 6;
 getFrameTag("gbFighter-DuckBlock").frameOffsetX = -2;
 getFrameTag("gbFighter-Death").loop = false; // set loop to false for the death animation
+
+### Frame-Duration (only for a specific Fighter)
+In the Fighter::init() you can do stuff like:
+getAnimFile()->getFrameTag("gbFighter-Punch").frameNumberDuration[42] =
+        100; // set the duration of the frame in milliseconds
+getAnimFile()->getFrameTag("gbFighter-Punch").frameNumberDuration[43] =
+        100; // set the duration of the frame in milliseconds
