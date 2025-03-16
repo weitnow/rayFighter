@@ -52,6 +52,13 @@ Game::~Game()
     // soundManager is a singleton and will be deleted automatically
 }
 
+void Game::init()
+{
+    player1 = 0;
+    player2 = 0;
+    selectedStage = 0;
+}
+
 void Game::ChangeState(std::unique_ptr<BaseState> newState)
 {
     if (!stateStack.empty())

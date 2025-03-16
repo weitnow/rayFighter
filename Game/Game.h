@@ -17,6 +17,8 @@ public:
     Game();
     ~Game();
 
+    void init(); // initialize the membervarialbes like player1, player2, selected Stage, etc.
+
     void ChangeState(std::unique_ptr<BaseState> newState);
     void PushState(std::unique_ptr<BaseState> newState);
     void PopState();
@@ -31,7 +33,11 @@ public:
     SoundManager* soundManager;
     InputHandler* inputHandler;
     AsepriteManager* asepriteManager;
+
     float deltaTime;
+    int player1;
+    int player2;
+    int selectedStage;
 
 private:
     using StateStack = std::stack<std::unique_ptr<BaseState>>;

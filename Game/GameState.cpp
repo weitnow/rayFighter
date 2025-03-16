@@ -12,15 +12,12 @@ GameState::GameState(Game* game) : BaseState(game)
     inputHandler->addDebugInfo(*debugInfo); // add debugInfo to inputHandler
 
     // Create Player 1 and 2
-    player1 = new Fighter2(asepriteManager, Constants::PLAYER1_X, Constants::BASELINE);
 
-    player2 = new Fighter1(asepriteManager, Constants::PLAYER2_X, Constants::BASELINE);
+    //player1 = createPlayer(game->player1, 1);
+    player1 = createPlayer(1, 1);
 
-    player1->addController(game->inputHandler->getPlayer1Controller());
-    player1->init();
-
-    player2->addController(game->inputHandler->getPlayer2Controller());
-    player2->init();
+    //player2 = createPlayer(game->player2, 2);
+    player2 = createPlayer(0, 2);
 
     // Create the HUD
     gui = new Gui(game);
@@ -217,6 +214,42 @@ void GameState::HandleInput()
         //pop this state and return to menu
         game->PopState();
     }
+}
+
+BaseCharacter* GameState::createPlayer(int characterNumber, int playerNumber)
+{
+
+    BaseCharacter* player = nullptr;
+    int Xpos = (playerNumber == 1) ? Constants::PLAYER1_X : Constants::PLAYER2_X;
+
+    switch (characterNumber)
+    {
+    case 0:
+        player = new Fighter1(asepriteManager, Xpos, Constants::BASELINE);
+        break;
+    case 1:
+        player = new Fighter2(asepriteManager, Xpos, Constants::BASELINE);
+        break;
+    case 2:
+        player = new Fighter3(asepriteManager, Xpos, Constants::BASELINE);
+        break;
+    default:
+        player = new Fighter1(asepriteManager, Xpos, Constants::BASELINE);
+        break;
+    }
+
+    if (playerNumber == 1)
+    {
+        player->addController(game->inputHandler->getPlayer1Controller());
+    }
+    else if (playerNumber == 2)
+    {
+        player->addController(game->inputHandler->getPlayer2Controller());
+    }
+
+
+    player->init(); // Ensure init() is called for all characters
+    return player;
 }
 
 Vector2 GameState::getMiddlePointBetweenPlayers() const

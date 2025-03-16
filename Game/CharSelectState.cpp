@@ -137,6 +137,9 @@ void CharSelectState::Resume()
 void CharSelectState::Exit()
 {
     std::cout << "CharSelectState::Exit() was called" << std::endl;
+
+    game->player1 = selectedCharacterP1;
+    game->player2 = selectedCharacterP2;
 }
 
 void CharSelectState::HandleInput()

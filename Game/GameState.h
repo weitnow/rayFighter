@@ -21,6 +21,9 @@ public: // METHODES
     virtual void Exit() override;
     void HandleInput() override;
 
+    BaseCharacter* createPlayer(int characterNumber, int playerNumber);
+
+
     Vector2 getMiddlePointBetweenPlayers() const;
     int _getScreenPosXofObject(BaseGameObject& object);
 

@@ -20,7 +20,7 @@ void Fighter2::init()
                                                                       {"Jump", std::make_shared<JumpState>()},
                                                                       {"JumpPunch", std::make_shared<JumpPunchState>()},
                                                                       {"Duck", std::make_shared<DuckState>()},
-                                                                      {"DuckPunch", std::make_shared<DuckPunchState>()},
+                                                                      {"DuckPunch", std::make_shared<DuckKickState>()},
                                                                       {"DuckKick", std::make_shared<DuckKickState>()},
                                                                       {"DuckBlock", std::make_shared<DuckBlockState>()},
                                                                       {"Punch", std::make_shared<PunchState>()},
@@ -34,9 +34,20 @@ void Fighter2::init()
     setCurrentFrameTag("nesFighter-Idle"); // using nesFighter-Graphics
     setObjName("Ken");
     setPlayerNumber(2);
+
+    // [0, 1, 2...] = frameNumber, -1 = valid for all frames of gbFigher (ex. gbFighter-*), -2 = valid for all frames of gbFighter-Action (ex. gbFighter-Idle)
     addCollisionBoxForFrame("nesFighter-Idle", -1, CollisionBoxType::PUSHBOX, true, 16, 0, 10, 30);
+
     addCollisionBoxForFrame("nesFighter-Punch", 0, CollisionBoxType::HITBOX, true, 30, 15, 5, 5);
-    addCollisionBoxForFrame("nesFighter-Idle", -2, CollisionBoxType::HURTBOX, HurtboxType::BODY, true, 10, 4, 12, 26);
+    addCollisionBoxForFrame("nesFighter-DuckKick", 0, CollisionBoxType::HITBOX, true, 32, 17, 5, 5);
+    addCollisionBoxForFrame("nesFighter-JumpPunch", 0, CollisionBoxType::HITBOX, true, 28, 19, 5, 5);
+
+    // x, y, width, height
+    addCollisionBoxForFrame("nesFighter-Idle", -1, CollisionBoxType::HURTBOX, HurtboxType::HEAD, true, 10, 3, 12, 10);
+    addCollisionBoxForFrame("nesFighter-Idle", -1, CollisionBoxType::HURTBOX, HurtboxType::BODY, true, 10, 13, 12, 10);
+    addCollisionBoxForFrame("nesFighter-Idle", -1, CollisionBoxType::HURTBOX, HurtboxType::LEGS, true, 10, 23, 12, 8);
+
+
     getStatemachine().changeState("Idle");
 
     // draw shadow
