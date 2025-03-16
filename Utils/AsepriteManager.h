@@ -40,11 +40,12 @@ private:
     bool animJustFinishedPlusLastFrameDuration;
     bool animJustFinished;
     bool loop;
-    int spriteOffsetX; // this will be apllied for all frames of the animationFile (stored in FrameTag object in every frame)
-    int spriteOffsetY; // this will be apllied for all frames of the animationFile (stored in FrameTag object in every frame)
-    int frameOffsetX; // this will be apllied only for all frames of specific frameTag (stored in FrameTag object in specific frame)
-    int frameOffsetY; // this will be apllied only for all frames of specific frameTag (stored in FrameTag object in specific frame)
+    int spriteOffsetX; // this will be applied for all frames of the animationFile (stored in FrameTag object in every frame)
+    int spriteOffsetY; // this will be applied for all frames of the animationFile (stored in FrameTag object in every frame)
+    int frameOffsetX; // this will be applied only for all frames of specific frameTag (stored in FrameTag object in specific frame)
+    int frameOffsetY; // this will be applied only for all frames of specific frameTag (stored in FrameTag object in specific frame)
 
+    void nextFrame();
     void _drawFrame(const std::string& filenameTagname,
                     int x,
                     int y,
@@ -61,14 +62,6 @@ public:
 
     ~AsepriteAnimationFile();
 
-    // methods
-    /**
-     * @brief Get the Frame Tag object. The object has a name (for example "Idle"), a from, a to, a loop and a duration property. The number in "from"
-     * is the position of the starting picture, the number in "to" is the last picture of the animation. After the last picture, the first picture (from)
-     * hast to be played again.
-     * @param tagname
-     * @return FrameTag
-     */
     FrameTag getFrameTag(const std::string& filenameTagname);
     std::string getAnimFilename() const;
     std::string getAnimFilenameTagname() const;
@@ -94,7 +87,7 @@ public:
     void drawCurrentSelectedTag(int x, int y, float scale, Color tint, bool flipX, bool flipY);
     void resetBools();
     void update(float deltaTime);
-    void nextFrame();
+
     bool setFrameTag(const std::string& tagname);
 };
 

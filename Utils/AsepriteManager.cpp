@@ -316,12 +316,19 @@ void AsepriteManager::init()
     loadAnimFile("gbFighter", 0); // asepriteManager.frameTags[gbFighter-Idle] (0 is the spriteOffsetX)
                                   // asepriteManager.textures[gbFighter]
 
+    getFrameTag("gbFighter-Punch").frameNumberDuration[0] =
+        100; // set the duration of the first frame of the punch animation
+    getFrameTag("gbFighter-Punch").frameNumberDuration[1] =
+        100; // set the duration of the second frame of the punch animation
+    getFrameTag("gbFighter-Punch").frameNumberDuration[2] =
+        100; // set the duration of the third frame of the punch animation
+
+
     getFrameTag("gbFighter-Punch").frameOffsetX = 6; // set the spriteOffsetX for the punch animation
     getFrameTag("gbFighter-DuckPunch").frameOffsetX = 6;
     getFrameTag("gbFighter-DuckBlock").frameOffsetX = -2;
 
     getFrameTag("gbFighter-Death").loop = false; // set loop to false for the death animation
-
 
     loadAnimFile("nesFighter", 6); // asepriteManager.frameTags[nesFighter-Idle] (6 is the spriteOffsetX)
                                    // asepriteManager.textures[nesFighter]
@@ -403,19 +410,15 @@ void AsepriteManager::loadAnimFile(const std::string& filename, const int sprite
     nlohmann::json* jsonfile = loadJsonFile(filename);
 
     // get how many frameTags are in the json
-    int frameTagSize = (*jsonfile)["meta"]["frameTags"].size();
+    int frameTagSize = (*jsonfile)["meta"]["frameTags"].size(); // 33 different frameTags (ex. gbFighter-Idle)
 
-    // get how many frames are in the json
-    int frameSize = (*jsonfile)["frames"].size();
+    // get how many frames are in the json (there is always at least 1 frame)
+    int frameSize = (*jsonfile)["frames"].size(); // 74 different frames
 
-    // check if the file has frames
-    if (frameSize == 0)
-    {
-        std::cerr << "Error: File " << filename << " has no frames" << std::endl;
-        return;
-    }
+    // Choose the correct frame key based on frameSize
+    std::string frameKey = (frameSize == 1) ? (filename + ".aseprite") : (filename + " 0.aseprite");
 
-    // if there are at least one frame, generate the FrameTag Obj
+    //create a new FrameTag object
     FrameTag frameTag;
 
     // check if file has frameTags
@@ -429,8 +432,8 @@ void AsepriteManager::loadAnimFile(const std::string& filename, const int sprite
             frameTag.texturename = filename;
             frameTag.filenameTagname = filename + "-" + frameTag.tagname;
             frameTag.direction = (*jsonfile)["meta"]["frameTags"][i]["direction"];
-            frameTag.sourceSizeX = (*jsonfile)["frames"][filename + " 0.aseprite"]["spriteSourceSize"]["w"];
-            frameTag.sourceSizeY = (*jsonfile)["frames"][filename + " 0.aseprite"]["spriteSourceSize"]["h"];
+            frameTag.sourceSizeX = (*jsonfile)["frames"][frameKey]["spriteSourceSize"]["w"];
+            frameTag.sourceSizeY = (*jsonfile)["frames"][frameKey]["spriteSourceSize"]["h"];
             frameTag.loop = true;
             frameTag.from = (*jsonfile)["meta"]["frameTags"][i]["from"];
             frameTag.to = (*jsonfile)["meta"]["frameTags"][i]["to"];
@@ -443,8 +446,15 @@ void AsepriteManager::loadAnimFile(const std::string& filename, const int sprite
             // add the frameNumber and the duration of the frame to the frameNumberDuration map
             for (int j = frameTag.from; j <= frameTag.to; ++j)
             {
-                frameTag.frameNumberDuration[j] =
-                    (*jsonfile)["frames"][filename + " " + std::to_string(j) + ".aseprite"]["duration"];
+                if (frameSize == 1)
+                {
+                    frameTag.frameNumberDuration[j] = (*jsonfile)["frames"][frameKey]["duration"];
+                }
+                else
+                {
+                    frameTag.frameNumberDuration[j] =
+                        (*jsonfile)["frames"][filename + " " + std::to_string(j) + ".aseprite"]["duration"];
+                }
             }
 
             // adding it to the frameTags-Map, so its accessible like frameTags["gbFighter-Idle"], which would return the frameTag Idle of gbFighter.png
@@ -459,8 +469,8 @@ void AsepriteManager::loadAnimFile(const std::string& filename, const int sprite
         frameTag.texturename = filename;
         frameTag.filenameTagname = filename;
         frameTag.direction = "forward";
-        frameTag.sourceSizeX = (*jsonfile)["frames"][filename + " 0.aseprite"]["spriteSourceSize"]["w"];
-        frameTag.sourceSizeY = (*jsonfile)["frames"][filename + " 0.aseprite"]["spriteSourceSize"]["h"];
+        frameTag.sourceSizeX = (*jsonfile)["frames"][frameKey]["spriteSourceSize"]["w"];
+        frameTag.sourceSizeY = (*jsonfile)["frames"][frameKey]["spriteSourceSize"]["h"];
         frameTag.loop = false;
         frameTag.from = 0;
         frameTag.to = frameSize - 1;
@@ -472,8 +482,15 @@ void AsepriteManager::loadAnimFile(const std::string& filename, const int sprite
         // add the frameNumber and the duration of the frame to the frameNumberDuration map
         for (int j = frameTag.from; j <= frameTag.to; ++j)
         {
-            frameTag.frameNumberDuration[j] =
-                (*jsonfile)["frames"][filename + " " + std::to_string(j) + ".aseprite"]["duration"];
+            if (frameSize == 1)
+            {
+                frameTag.frameNumberDuration[j] = (*jsonfile)["frames"][frameKey]["duration"];
+            }
+            else
+            {
+                frameTag.frameNumberDuration[j] =
+                    (*jsonfile)["frames"][filename + " " + std::to_string(j) + ".aseprite"]["duration"];
+            }
         }
 
         // adding it to the frameTags-Map, so its accessible like frameTags["gbFighter-Idle"], which would return the frameTag Idle of gbFighter.png
@@ -489,15 +506,7 @@ void AsepriteManager::loadAnimFile(const std::string& filename, const int sprite
 
 FrameTag& AsepriteManager::getFrameTag(const std::string& filenameTagname)
 {
-    try
-    {
-        return frameTags.at(filenameTagname); // for example frameTags["gbFighter-Idle"]
-    }
-    catch (const std::out_of_range& e)
-    {
-        std::cerr << "AsepriteManager::getFrameTag -> Error: FrameTag " << filenameTagname << " does not exist"
-                  << std::endl;
-    }
+    return frameTags.at(filenameTagname); // std::out_of_range will be thrown if key is missing
 }
 
 AsepriteAnimationFile* AsepriteManager::getAnimFile(const std::string& filename)
