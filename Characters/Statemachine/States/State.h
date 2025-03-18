@@ -11,19 +11,8 @@ class CharacterController;
 class State
 {
 public:
-    explicit State(const std::string& name) : stateName(name)
-    {
-#ifdef DEBUG
-        std::cout << "State '" << stateName << "' created" << std::endl;
-#endif
-    }
-
-    virtual ~State()
-    {
-#ifdef DEBUG
-        std::cout << "State '" << stateName << "' destroyed" << std::endl;
-#endif
-    }
+    explicit State(const std::string& name) : stateName(name) {};
+    virtual ~State() = default;
     // Pure virtual methods to be implemented by derived classes
     virtual void Init() = 0;
     virtual void Update(float deltaTime) = 0;
