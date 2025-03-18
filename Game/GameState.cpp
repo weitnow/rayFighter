@@ -14,10 +14,10 @@ GameState::GameState(Game* game) : BaseState(game)
     // Create Player 1 and 2
 
     //player1 = createPlayer(game->player1, 1);
-    player1 = createPlayer(1, 1);
+    player1 = createPlayer(0, 1);
 
     //player2 = createPlayer(game->player2, 2);
-    player2 = createPlayer(0, 2);
+    player2 = createPlayer(1, 2);
 
     // Create the HUD
     gui = new Gui(game);
