@@ -18,11 +18,11 @@ Statemachine::Statemachine(BaseCharacter* owner) : previousState(nullptr), curre
 
 void Statemachine::init(const Dictionary<std::string, std::shared_ptr<State>>& customStateMap)
 {
-    populateStateMap(customStateMap);
-    setOwnerForStates();
+    _populateStateMap(customStateMap);
+    _setOwnerForStates();
 }
 
-void Statemachine::populateStateMap(const Dictionary<std::string, std::shared_ptr<State>>& customStateMap)
+void Statemachine::_populateStateMap(const Dictionary<std::string, std::shared_ptr<State>>& customStateMap)
 {
     stateMap = customStateMap;
 }
@@ -100,7 +100,7 @@ std::string Statemachine::getPreviousStateAsString()
     }
 }
 
-void Statemachine::setOwnerForStates()
+void Statemachine::_setOwnerForStates()
 {
     // setting owner for each state-obj in statemap
     for (auto& [name, state] : stateMap)

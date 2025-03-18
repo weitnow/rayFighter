@@ -21,7 +21,7 @@ public:
     std::string getPreviousStateAsString();
     
 
-    void populateStateMap(const Dictionary<std::string, std::shared_ptr<State>>& customStateMap);
+    
 
 private:
     // Current state (use smart pointers for automatic memory management)
@@ -31,7 +31,8 @@ private:
 
     // Key: State name, Value: State instance
     Dictionary<std::string, shared<State>> stateMap;
-    void setOwnerForStates(); // Set the owner of this Statemachine (BaseCharacter, for example Player 1)
+    void _setOwnerForStates(); // Set the owner of this Statemachine (BaseCharacter, for example Player 1)
+    void _populateStateMap(const Dictionary<std::string, std::shared_ptr<State>>& customStateMap);
 };
 
 
