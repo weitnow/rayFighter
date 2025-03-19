@@ -21,16 +21,18 @@ public:
     std::string getPreviousStateAsString();
     
 
-    
-
-private:
+private: // private member variables
     // Current state (use smart pointers for automatic memory management)
     shared<State> previousState;
     shared<State> currentState;
     BaseCharacter* owner; // Pointer to the BaseCharacter owning this Statemachine
+    BaseCharacter* opponent; // Pointer to the opponent BaseCharacter
+    GameState* gameState;
 
     // Key: State name, Value: State instance
     Dictionary<std::string, shared<State>> stateMap;
+
+private: // private member functions
     void _setOwnerForStates(); // Set the owner of this Statemachine (BaseCharacter, for example Player 1)
     void _populateStateMap(const Dictionary<std::string, std::shared_ptr<State>>& customStateMap);
 };

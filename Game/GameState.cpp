@@ -12,7 +12,6 @@ GameState::GameState(Game* game) : BaseState(game)
     inputHandler->addDebugInfo(*debugInfo); // add debugInfo to inputHandler
 
     // Create Player 1 and 2
-
     //player1 = createPlayer(game->player1, 1);
     player1 = createPlayer(0, 1);
 
@@ -63,7 +62,8 @@ void GameState::Update(float deltaTime)
 {
     _updateIsLeftPlayer1and2(); // Check if player1 is left of player2
 
-    _checkHitsBetweenPlayers(); // Check if player1 and player2 are hitting each other
+    //Todo: get rid of _checkHitsBetweenPlayers
+    //_checkHitsBetweenPlayers(); // Check if player1 and player2 are hitting each other
 
     // Update all gameObjects
     for (auto& object : gameObjects)

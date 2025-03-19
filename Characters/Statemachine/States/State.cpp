@@ -259,15 +259,28 @@ void PunchState::Init()
 
 void PunchState::Update(float deltaTime)
 {
+    // check for hits
+    for (auto& hitbox : owner->getHitBoxes())
+    {
+        for (auto& hurtbox : owner->getOpponent()->getHurtBoxes())
+        {
+            if (Utils::checkCollision(hitbox, hurtbox) && owner->canDealDamage)
+            {
+                owner->getOpponent()->takeDamage(1, &hitbox);
+                owner->getOpponent()->setPushVector({120, 0});
+                owner->canDealDamage = false;
+
+                // Transition the opponent into "Hit" or "Hurt" state
+                owner->getOpponent()->changeState("Hit");
+            }
+        }
+    }
+
+    // check if animation is finished
     if (owner->getAnimFile()->hasAnimJustFinishedPlusLastFrameDuration())
     {
         statemachine->changeState("Idle");
     }
-
-    /*
-
-
-    */
 }
 
 void PunchState::Finalize()

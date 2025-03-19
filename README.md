@@ -64,21 +64,23 @@ addCollisionBoxForFrame("gbFighter-Idle", -1, CollisionBoxType::HURTBOX, Hurtbox
 
 ### Statemachine
 Every Character is inheriting from BaseCharacter which inherits from BaseGameObject.
-Every BaseCharacter has its own States which will be managed by its own Statemachine. You set the needed States in
-the init-methode of the Character like this:
+Every BaseCharacter has its own States which will be managed by its own Statemachine. You set the needed States in the init-methode of the Character like this:
 
-Dictionary<std::string, std::shared_ptr<State>> customStateMap = {{"Idle", std::make_shared<IdleState>()},
-                                                                      {"Walk", std::make_shared<WalkState>()},
-                                                                      {"Jump", std::make_shared<JumpState>()},
-                                                                      {"JumpPunch", std::make_shared<JumpPunchState>()},
-                                                                      {"Duck", std::make_shared<DuckState>()},
-                                                                      {"DuckPunch", std::make_shared<DuckPunchState>()},
-                                                                      {"DuckKick", std::make_shared<DuckKickState>()},
-                                                                      {"DuckBlock", std::make_shared<DuckBlockState>()},
-                                                                      {"Punch", std::make_shared<PunchState>()},
-                                                                      {"Kick", std::make_shared<KickState>()},
-                                                                      {"Block", std::make_shared<BlockState>()},
-                                                                      {"Hit", std::make_shared<HitState>()},
-                                                                      {"Hurt", std::make_shared<HurtState>()},
-                                                                      {"Death", std::make_shared<DeathState>()}};
+Dictionary<std::string, std::shared_ptr<State>> customStateMap = 
+{{"Idle", std::make_shared<IdleState>()},
+{"Walk", std::make_shared<WalkState>()},
+{"Jump", std::make_shared<JumpState>()},
+{"JumpPunch", std::make_shared<JumpPunchState>()},
+{"Duck", std::make_shared<DuckState>()},
+{"DuckPunch", std::make_shared<DuckPunchState>()},
+{"DuckKick", std::make_shared<DuckKickState>()},
+{"DuckBlock", std::make_shared<DuckBlockState>()},
+{"Punch", std::make_shared<PunchState>()},
+{"Kick", std::make_shared<KickState>()},
+{"Block", std::make_shared<BlockState>()},
+{"Hit", std::make_shared<HitState>()},
+{"Hurt", std::make_shared<HurtState>()},
+{"Death", std::make_shared<DeathState>()}};
+
+And then init the StateMachine like this:
 getStatemachine().init(customStateMap);
