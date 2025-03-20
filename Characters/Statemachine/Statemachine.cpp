@@ -17,12 +17,33 @@ Statemachine::Statemachine(BaseCharacter* owner)
     this->owner = owner;
 }
 
-void Statemachine::init(const Dictionary<std::string, std::shared_ptr<State>>& customStateMap, GameState* gameState)
+void Statemachine::init(const Dictionary<std::string, std::shared_ptr<State>>& customStateMap)
 {
     // Populate the stateMap with the customStateMap and set the owner for each state
     _populateStateMap(customStateMap);
     _setOwnerForStates();
+}
+
+void Statemachine::setOpponent(BaseCharacter* opponent)
+{
+    this->opponent = opponent;
+
+    // setting opponent for each state-obj in statemap
+    for (auto& [name, state] : stateMap)
+    {
+        state->setOpponent(opponent);
+    }
+}
+
+void Statemachine::setGameState(GameState* gameState)
+{
     this->gameState = gameState;
+
+    // setting gameState for each state-obj in statemap
+    for (auto& [name, state] : stateMap)
+    {
+        state->setGameState(gameState);
+    }
 }
 
 void Statemachine::_populateStateMap(const Dictionary<std::string, std::shared_ptr<State>>& customStateMap)
@@ -101,6 +122,36 @@ std::string Statemachine::getPreviousStateAsString()
     {
         return "No previous state";
     }
+}
+
+GameState* Statemachine::getGameState()
+{
+    // raise error if nullptr
+    if (gameState == nullptr)
+    {
+        throw std::runtime_error("Statemachine::getGameState() -> GameState is nullptr");
+    }
+    return gameState;
+}
+
+BaseCharacter* Statemachine::getOwner()
+{
+    // raise error if nullptr
+    if (owner == nullptr)
+    {
+        throw std::runtime_error("Statemachine::getOwner() -> Owner is nullptr");
+    }
+    return owner;
+}
+
+BaseCharacter* Statemachine::getOpponent()
+{
+    // raise error if nullptr
+    if (opponent == nullptr)
+    {
+        throw std::runtime_error("Statemachine::getOpponent() -> Opponent is nullptr");
+    }
+    return opponent;
 }
 
 void Statemachine::_setOwnerForStates()

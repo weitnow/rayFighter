@@ -2,6 +2,7 @@
 #define GBFIGHTER_STATE_H
 
 
+#include "../../../Game/GameState.h"
 #include "../../BaseCharacter.h"
 #include <iostream>
 
@@ -19,10 +20,14 @@ public:
     virtual void Finalize() = 0;
 
     virtual void setOwner(BaseCharacter* owner);
+    virtual void setOpponent(BaseCharacter* opponent);
+    virtual void setGameState(GameState* gameState);
     std::string stateName = "default";
 
 protected:
     BaseCharacter* owner = nullptr;            // Pointer to the BaseCharacter owning this state
+    BaseCharacter* opponent = nullptr;         // Pointer to the opponent BaseCharacter
+    GameState* gameState = nullptr;            // Pointer to the GameState
     CharacterController* controller = nullptr; // Pointer to the CharacterController
     Statemachine* statemachine = nullptr;      // Pointer to the Statemachine
     float timer = 0;

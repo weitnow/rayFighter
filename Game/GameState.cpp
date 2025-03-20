@@ -18,6 +18,10 @@ GameState::GameState(Game* game) : BaseState(game)
     //player2 = createPlayer(game->player2, 2);
     player2 = createPlayer(1, 2);
 
+    // Set the opponent for each player
+    player1->getStatemachine().setOpponent(player2);
+    player2->getStatemachine().setOpponent(player1);
+
     // Create the HUD
     gui = new Gui(game);
     gui->init(this);
@@ -248,7 +252,10 @@ BaseCharacter* GameState::createPlayer(int characterNumber, int playerNumber)
     }
 
 
-    player->init(); // Ensure init() is called for all characters
+    player->init(); // initialize the player
+    player->getStatemachine().setGameState(this);
+    player->setPlayerNumber(playerNumber);
+
     return player;
 }
 

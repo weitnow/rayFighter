@@ -16,6 +16,16 @@ void State::setOwner(BaseCharacter* owner)
     controller = owner->getController();
 }
 
+void State::setOpponent(BaseCharacter* opponent)
+{
+    this->opponent = opponent;
+}
+
+void State::setGameState(GameState* gameState)
+{
+    this->gameState = gameState;
+}
+
 /* #region IdleState */
 void IdleState::Init()
 {
@@ -262,16 +272,16 @@ void PunchState::Update(float deltaTime)
     // check for hits
     for (auto& hitbox : owner->getHitBoxes())
     {
-        for (auto& hurtbox : owner->getOpponent()->getHurtBoxes())
+        for (auto& hurtbox : opponent->getHurtBoxes())
         {
             if (Utils::checkCollision(hitbox, hurtbox) && owner->canDealDamage)
             {
-                owner->getOpponent()->takeDamage(1, &hitbox);
-                owner->getOpponent()->setPushVector({120, 0});
+                opponent->takeDamage(1, &hitbox);
+                opponent->setPushVector({120, 0});
                 owner->canDealDamage = false;
 
                 // Transition the opponent into "Hit" or "Hurt" state
-                owner->getOpponent()->changeState("Hit");
+                opponent->getStatemachine().changeState("Hit");
             }
         }
     }

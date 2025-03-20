@@ -4,7 +4,6 @@
 
 #include "../Utils/AsepriteManager.h"
 #include "../Utils/Core.h"
-#include "BaseSpriteObject.h"
 #include "CollisionBox2D.h"
 #include <raylib.h>
 
