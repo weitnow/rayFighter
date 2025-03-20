@@ -3,7 +3,8 @@
 #include <string>
 
 
-Statemachine::Statemachine(BaseCharacter* owner) : previousState(nullptr), currentState(nullptr), owner(nullptr)
+Statemachine::Statemachine(BaseCharacter* owner)
+    : previousState(nullptr), currentState(nullptr), owner(nullptr), opponent(nullptr), gameState(nullptr)
 {
 
     if (owner == nullptr)
@@ -16,10 +17,12 @@ Statemachine::Statemachine(BaseCharacter* owner) : previousState(nullptr), curre
     this->owner = owner;
 }
 
-void Statemachine::init(const Dictionary<std::string, std::shared_ptr<State>>& customStateMap)
+void Statemachine::init(const Dictionary<std::string, std::shared_ptr<State>>& customStateMap, GameState* gameState)
 {
+    // Populate the stateMap with the customStateMap and set the owner for each state
     _populateStateMap(customStateMap);
     _setOwnerForStates();
+    this->gameState = gameState;
 }
 
 void Statemachine::_populateStateMap(const Dictionary<std::string, std::shared_ptr<State>>& customStateMap)

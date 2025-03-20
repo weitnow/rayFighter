@@ -16,7 +16,7 @@ BaseCharacter::~BaseCharacter()
 {
 }
 
-void BaseCharacter::init()
+void BaseCharacter::init() // will be called by the createPlayer function in GameState
 {
     statemachine = std::make_unique<Statemachine>(this);
 }
