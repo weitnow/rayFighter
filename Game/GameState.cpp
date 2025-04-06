@@ -66,26 +66,18 @@ void GameState::Update(float deltaTime)
 {
     _updateIsLeftPlayer1and2(); // Check if player1 is left of player2
 
-    //Todo: get rid of _checkHitsBetweenPlayers
-    //_checkHitsBetweenPlayers(); // Check if player1 and player2 are hitting each other
 
     // Update all gameObjects
-    for (auto& object : gameObjects)
-    {
-        object->update(deltaTime);
-    }
-
+    _updateAllGameObjects(deltaTime);
     // Update all baseCharacters
-    for (auto& object : baseCharacters)
-    {
-        object->update(deltaTime);
-    }
+    _updateAllBaseCharacters(deltaTime);
+
 
     // Update players
-    player1->update(deltaTime); // _keepOnStage() is called in player update
-    player2->update(deltaTime); // _keepOnStage() is called in player update
+    player1->update(deltaTime);
+    player2->update(deltaTime);
 
-    _checkCollisionsBetweenPlayers();
+    _checkPushCollisionsBetweenPlayers();
 
     _updateMiddlePointBetweenPlayers(); // (needs to be done befor _updateCamera)
 
@@ -291,7 +283,7 @@ void GameState::_updateIsLeftPlayer1and2()
     }
 }
 
-void GameState::_checkCollisionsBetweenPlayers()
+void GameState::_checkPushCollisionsBetweenPlayers()
 {
     // Check if player1 and player2 are colliding
     // TODO: get rid of hardcoded [0]
@@ -310,49 +302,6 @@ void GameState::_checkCollisionsBetweenPlayers()
         {
             player1->setPushVector({50, 0});
             player2->setPushVector({-50, 0});
-        }
-    }
-}
-
-void GameState::_checkHitsBetweenPlayers()
-{
-    // TODO: refactor this, this stuff must be in the statemachine
-    // loop through all hitboxes of player1
-    for (auto& hitbox : player1->getHitBoxes())
-    {
-        // loop through all hurtboxes of player2
-        for (auto& hurtbox : player2->getHurtBoxes())
-        {
-            if (Utils::checkCollision(hitbox, hurtbox) && player1->canDealDamage)
-            {
-                // Handle hit (you can define specific hit logic here)
-                player2->takeDamage(1, &hitbox);
-                if (player1->getCurrentState() == "Kick")
-                {
-                    player2->setPushVector({200, 0});
-                }
-                else if (player1->getCurrentState() == "Punch")
-                {
-                    player2->setPushVector({120, 0});
-                }
-
-                player1->canDealDamage = false;
-            }
-        }
-    }
-
-    // loop through all hitboxes of player2
-    for (auto& hitbox : player2->getHitBoxes())
-    {
-        // loop through all hurtboxes of player1
-        for (auto& hurtbox : player1->getHurtBoxes())
-        {
-            if (Utils::checkCollision(hitbox, hurtbox) && player2->canDealDamage)
-            {
-                // Handle hit (you can define specific hit logic here)
-                player1->takeDamage(1, &hitbox);
-                player2->canDealDamage = false;
-            }
         }
     }
 }
@@ -417,4 +366,20 @@ void GameState::_updateCamera(bool restriction)
 
     // update x position of the camera
     game->screen2DManager->camera.target.x = cameraX;
+}
+
+void GameState::_updateAllGameObjects(float deltaTime)
+{
+    for (auto& object : gameObjects)
+    {
+        object->update(deltaTime);
+    }
+}
+
+void GameState::_updateAllBaseCharacters(float deltaTime)
+{
+    for (auto& object : baseCharacters)
+    {
+        object->update(deltaTime);
+    }
 }

@@ -32,7 +32,7 @@ public:
                    float offsety,
                    float width,
                    float height,
-                   float hitboxOwnerWith,
+                   float hitboxOwnerWith, // need to calculate the isFlippedX-Position of the hitbox
                    CollisionBoxType collisionBoxType = CollisionBoxType::PUSHBOX,
                    bool isActive = true,
                    Color color = BLUE,

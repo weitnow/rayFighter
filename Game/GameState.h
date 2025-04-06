@@ -40,10 +40,11 @@ public: // VARIABLES
 protected: // METHODES
     void _updateMiddlePointBetweenPlayers();
     void _updateIsLeftPlayer1and2();
-    void _checkCollisionsBetweenPlayers();
-    void _checkHitsBetweenPlayers();
+    void _checkPushCollisionsBetweenPlayers();
     void _keepPlayersOnStage();
     void _updateCamera(bool restriction = true); // if restriction is true, the camera is restricted to the stage
+    void _updateAllGameObjects(float deltaTime);
+    void _updateAllBaseCharacters(float deltaTime);
 
 protected: // VARIABLES
     /* <-- Game.h -->

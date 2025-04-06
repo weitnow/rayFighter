@@ -84,3 +84,6 @@ Dictionary<std::string, std::shared_ptr<State>> customStateMap =
 
 And then init the StateMachine like this:
 getStatemachine().init(customStateMap);
+
+## Todos
+Implement fireball as specialmove and see how well it works with the current hitbox and statemachine system
