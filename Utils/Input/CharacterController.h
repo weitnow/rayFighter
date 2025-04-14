@@ -1,6 +1,7 @@
 // CharacterController.h
 #ifndef CHARACTER_CONTROLLER_H
 #define CHARACTER_CONTROLLER_H
+#include <string>
 
 struct CharacterController
 {

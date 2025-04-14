@@ -48,19 +48,27 @@ InputHandler::~InputHandler()
 
 void InputHandler::Update()
 {
-    // Store the current state as the previous state, note that it is not a pointer
+    // Store the current state as the previous state, note: it is not a pointer
     prevPlayer1Controller = *player1Controller;
     prevPlayer2Controller = *player2Controller;
-
-    updateInputBuffer(player1InputBuffer, player1Controller);
-    checkSpecialMoves(player1InputBuffer, player1Controller);
 
     // check if gamepad is connected
     checkIfGamepadIsConnected();
 
+
+    // Reset the input states for the next frame
     _resetBoolsToFalse(player1Controller);
     _resetBoolsToFalse(player2Controller);
+
+    // Handle game input ----------- //
+
     _handleGameInput();
+
+    updateInputBuffer(player1InputBuffer, player1Controller);
+    checkSpecialMoves(player1InputBuffer, player1Controller);
+
+
+    // ----------------------------- //
 }
 
 
@@ -103,12 +111,14 @@ void InputHandler::_resetBoolsToFalse(CharacterController* controller)
     controller->punch = false;
     controller->kick = false;
     controller->block = false;
+
     // specialmoves
     controller->fireball = false;
     controller->spear = false;
-    // overriden by BaseCharacter (if CharacterController is added as Composition to a BaseCharacter)
-    controller->isLeft =
-        false; // true if the character is left of the other character, only valid for player1 or player2
+
+    // settings which are overriden by BaseCharacter, dont reset them here!
+    //controller->isLeft = false; //
+
     // general input
     controller->key_esc = false;
     controller->key_enter = false;
@@ -203,7 +213,7 @@ void InputHandler::checkSpecialMoves(InputBuffer& buffer, CharacterController* c
 {
     if (buffer.matchSequence(Fireball))
     {
-        std::cout << "Fireball executed!" << std::endl;
+        std::cout << "InputHandler: Fireball executed!" << std::endl;
 
         // clear buffer
         //otherwise the player can keep holding down the last needed input and the specialmove is executed again and again
@@ -212,7 +222,7 @@ void InputHandler::checkSpecialMoves(InputBuffer& buffer, CharacterController* c
     }
     else if (buffer.matchSequence(Spear))
     {
-        std::cout << "Spear executed!" << std::endl;
+        std::cout << "InputHandler: Spear executed!" << std::endl;
         buffer.clearBuffer();
         controller->spear = true;
     }

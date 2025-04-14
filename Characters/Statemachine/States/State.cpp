@@ -70,7 +70,7 @@ void IdleState::Init()
 void IdleState::Update(float deltaTime)
 {
     // allowed transitions
-    // walk, jump, duck, punch, kick, block, hit, hurt
+    // walk, jump, duck, punch, kick, block, hit, hurt, specialmove
 
     // Walk
     if (controller->moveLeft || controller->moveRight)
@@ -90,8 +90,18 @@ void IdleState::Update(float deltaTime)
         statemachine->changeState("Duck");
     }
 
-    // Punch
-    if (controller->punch)
+    // Attack
+    if (controller->fireball)
+    {
+        std::cout << "Fireball" << std::endl;
+        statemachine->changeState("Fireball");
+    }
+    else if (controller->spear)
+    {
+        std::cout << "Spear" << std::endl;
+        statemachine->changeState("Spear");
+    }
+    else if (controller->punch)
     {
         statemachine->changeState("Punch");
     }
