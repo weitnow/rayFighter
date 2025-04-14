@@ -31,6 +31,10 @@ protected:
     CharacterController* controller = nullptr; // Pointer to the CharacterController
     Statemachine* statemachine = nullptr;      // Pointer to the Statemachine
     float timer = 0;
+
+protected:
+    bool checkForHit();
+    bool hasAnimationFinished();
 };
 
 // Macro to declare State class methods

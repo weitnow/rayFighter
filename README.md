@@ -85,5 +85,33 @@ Dictionary<std::string, std::shared_ptr<State>> customStateMap =
 And then init the StateMachine like this:
 getStatemachine().init(customStateMap);
 
+All States inherit from State, which has:
+#### Membervariables
+- owner          (BaseCharacter*)
+- opponent       (BaseCharacter*)
+- statemachine   (Statemachine*)
+- gameState      (GameState*)
+#### Methodes
+- checkForHit()
+- hasAnimationFinished
+
+### Input
+A Instance of InputHandler is created in the Game-Class and called in its update method. The variable inputHandler which holds the instance is valid through all the GameStates. The InputHandler class has has to membervariables, player1Controller and player2Controller, which holds this bools:
+- moveLeft
+- moveRight
+- jump
+- duck
+- punch
+- kick
+- block
+#### specialmoves
+- fireball
+- spear
+- isLeft 
+#### general input
+- key_esc
+- key_enter
+- key_q
+
 ## Todos
 Implement fireball as specialmove and see how well it works with the current hitbox and statemachine system
