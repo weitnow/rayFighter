@@ -90,171 +90,174 @@ bool InputHandler::isKeyJustPressed(const CharacterController& current)
         !previous.jump && current.jump || !previous.duck && current.duck)
     {
         return true;
+    }
+    return false;
+}
 
+CharacterController* const InputHandler::getPlayer1Controller()
+{
+    return player1Controller;
+}
+
+void InputHandler::_resetBoolsToFalse(CharacterController* controller)
+{
+    controller->moveLeft = false;
+    controller->moveRight = false;
+    controller->jump = false;
+    controller->duck = false;
+    controller->punch = false;
+    controller->kick = false;
+    controller->block = false;
+
+    // specialmoves
+    controller->fireball = false;
+    controller->spear = false;
+
+    // settings which are overriden by BaseCharacter, dont reset them here!
+    //controller->isLeft = false; //
+
+    // general input
+    controller->key_esc = false;
+    controller->key_enter = false;
+    controller->key_q = false;
+}
+
+void InputHandler::_handleGameInput()
+{
+    // Iterate over the keyCommandMap
+    for (const auto& [key, inputCommand] : keyCommandMap)
+    {
+        if ((inputCommand.checkType == InputCheckType::Pressed &&
+             ((IsKeyPressed(key)) || IsGamepadButtonPressed(0, key))) ||
+            (inputCommand.checkType == InputCheckType::Down && ((IsKeyDown(key)) || IsGamepadButtonDown(0, key))))
         {
-            return player1Controller;
+            inputCommand.command();
         }
+    }
+}
 
-        void InputHandler::_resetBoolsToFalse(CharacterController * controller)
-        {
-            controller->moveLeft = false;
-            controller->moveRight = false;
-            controller->jump = false;
-            controller->duck = false;
-            controller->punch = false;
-            controller->kick = false;
-            controller->block = false;
+InputDirection InputHandler::_mapDirectionInput(CharacterController* controller)
+{
 
-            // specialmoves
-            controller->fireball = false;
-            controller->spear = false;
+    // Determine forward and backward based on character position
+    bool forward = controller->isLeft ? controller->moveRight : controller->moveLeft;
+    bool backward = controller->isLeft ? controller->moveLeft : controller->moveRight;
 
-            // settings which are overriden by BaseCharacter, dont reset them here!
-            //controller->isLeft = false; //
+    if (controller->duck)
+    {
+        if (forward)
+            return InputDirection::DownForward;
+        if (backward)
+            return InputDirection::DownBackward;
+        return InputDirection::Down;
+    }
 
-            // general input
-            controller->key_esc = false;
-            controller->key_enter = false;
-            controller->key_q = false;
-        }
+    if (controller->jump)
+    {
+        if (forward)
+            return InputDirection::UpForward;
+        if (backward)
+            return InputDirection::UpBackward;
+        return InputDirection::Up;
+    }
 
-        void InputHandler::_handleGameInput()
-        {
-            // Iterate over the keyCommandMap
-            for (const auto& [key, inputCommand] : keyCommandMap)
-            {
-                if ((inputCommand.checkType == InputCheckType::Pressed &&
-                     ((IsKeyPressed(key)) || IsGamepadButtonPressed(0, key))) ||
-                    (inputCommand.checkType == InputCheckType::Down &&
-                     ((IsKeyDown(key)) || IsGamepadButtonDown(0, key))))
-                {
-                    inputCommand.command();
-                }
-            }
-        }
+    if (forward)
+        return InputDirection::Forward;
 
-        InputDirection InputHandler::_mapDirectionInput(CharacterController * controller)
-        {
+    if (backward)
+        return InputDirection::Backward;
 
-            // Determine forward and backward based on character position
-            bool forward = controller->isLeft ? controller->moveRight : controller->moveLeft;
-            bool backward = controller->isLeft ? controller->moveLeft : controller->moveRight;
+    return InputDirection::Neutral; // No input
+}
 
-            if (controller->duck)
-            {
-                if (forward)
-                    return InputDirection::DownForward;
-                if (backward)
-                    return InputDirection::DownBackward;
-                return InputDirection::Down;
-            }
+InputAction InputHandler::_mapActionInput(CharacterController* controller)
+{
+    if (controller->punch && controller->kick)
+    {
+        return InputAction::Special;
+    }
 
-            if (controller->jump)
-            {
-                if (forward)
-                    return InputDirection::UpForward;
-                if (backward)
-                    return InputDirection::UpBackward;
-                return InputDirection::Up;
-            }
+    if (controller->punch)
+    {
+        return InputAction::Punch;
+    }
+    if (controller->kick)
+    {
+        return InputAction::Kick;
+    }
+    if (controller->block)
+    {
+        return InputAction::Block;
+    }
 
-            if (forward)
-                return InputDirection::Forward;
+    return InputAction::None;
+}
 
-            if (backward)
-                return InputDirection::Backward;
+void InputHandler::updateInputBuffer(InputBuffer& buffer, CharacterController* controller)
+{
+    InputDirection direction = _mapDirectionInput(controller); // returns ex. InputDirection::DownForward
+    InputAction action = _mapActionInput(controller);          // returns ex. InputAction::Punch
 
-            return InputDirection::Neutral; // No input
-        }
+    // Print the detected input direction and action in a readable format
+    // std::cout << "Direction: " << directionToString(direction) << ", Action: " << actionToString(action) << std::endl;
 
-        InputAction InputHandler::_mapActionInput(CharacterController * controller)
-        {
-            if (controller->punch && controller->kick)
-            {
-                return InputAction::Special;
-            }
+    buffer.addInput(direction,
+                    action); // this adds ex. [InputDirection::DownForward, InputAction::Punch] to the buffer
 
-            if (controller->punch)
-            {
-                return InputAction::Punch;
-            }
-            if (controller->kick)
-            {
-                return InputAction::Kick;
-            }
-            if (controller->block)
-            {
-                return InputAction::Block;
-            }
+    //buffer.addInput(_mapDirectionInput(controller), _mapActionInput(controller));
+}
 
-            return InputAction::None;
-        }
+void InputHandler::checkSpecialMoves(InputBuffer& buffer, CharacterController* controller)
+{
+    if (buffer.matchSequence(Fireball))
+    {
+        std::cout << "InputHandler: Fireball executed!" << std::endl;
 
-        void InputHandler::updateInputBuffer(InputBuffer & buffer, CharacterController * controller)
-        {
-            InputDirection direction = _mapDirectionInput(controller); // returns ex. InputDirection::DownForward
-            InputAction action = _mapActionInput(controller);          // returns ex. InputAction::Punch
+        // clear buffer
+        //otherwise the player can keep holding down the last needed input and the specialmove is executed again and again
+        buffer.clearBuffer();
+        controller->fireball = true;
+    }
+    else if (buffer.matchSequence(Spear))
+    {
+        std::cout << "InputHandler: Spear executed!" << std::endl;
+        buffer.clearBuffer();
+        controller->spear = true;
+    }
+}
 
-            // Print the detected input direction and action in a readable format
-            // std::cout << "Direction: " << directionToString(direction) << ", Action: " << actionToString(action) << std::endl;
-
-            buffer.addInput(direction,
-                            action); // this adds ex. [InputDirection::DownForward, InputAction::Punch] to the buffer
-
-            //buffer.addInput(_mapDirectionInput(controller), _mapActionInput(controller));
-        }
-
-        void InputHandler::checkSpecialMoves(InputBuffer & buffer, CharacterController * controller)
-        {
-            if (buffer.matchSequence(Fireball))
-            {
-                std::cout << "InputHandler: Fireball executed!" << std::endl;
-
-                // clear buffer
-                //otherwise the player can keep holding down the last needed input and the specialmove is executed again and again
-                buffer.clearBuffer();
-                controller->fireball = true;
-            }
-            else if (buffer.matchSequence(Spear))
-            {
-                std::cout << "InputHandler: Spear executed!" << std::endl;
-                buffer.clearBuffer();
-                controller->spear = true;
-            }
-        }
-
-        void InputHandler::checkIfGamepadIsConnected()
-        {
+void InputHandler::checkIfGamepadIsConnected()
+{
 
 
-            if (GamepadCheckConnectionDone <= 0)
-            {
-                return;
-            }
-            std::cout << "Checking for Gamepads, remaining trials: " << GamepadCheckConnectionDone << std::endl;
+    if (GamepadCheckConnectionDone <= 0)
+    {
+        return;
+    }
+    std::cout << "Checking for Gamepads, remaining trials: " << GamepadCheckConnectionDone << std::endl;
 
-            GamepadCheckConnectionDone--;
+    GamepadCheckConnectionDone--;
 
-            if (IsGamepadAvailable(0))
-            {
-                Gamepad0Connected = true;
-                std::cout << "Gamepad0 is connected" << std::endl;
-                std::cout << "Gamepad found, stop trying to connect" << std::endl;
-                GamepadCheckConnectionDone = 0;
-            }
-            else
-            {
-                Gamepad0Connected = false;
-                std::cout << "Gamepad0 is not connected" << std::endl;
-            }
-            if (IsGamepadAvailable(1))
-            {
-                Gamepad1Connected = true;
-                std::cout << "Gamepad1 is connected" << std::endl;
-            }
-            else
-            {
-                Gamepad1Connected = false;
-                std::cout << "Gamepad1 is not connected" << std::endl;
-            }
-        }
+    if (IsGamepadAvailable(0))
+    {
+        Gamepad0Connected = true;
+        std::cout << "Gamepad0 is connected" << std::endl;
+        std::cout << "Gamepad found, stop trying to connect" << std::endl;
+        GamepadCheckConnectionDone = 0;
+    }
+    else
+    {
+        Gamepad0Connected = false;
+        std::cout << "Gamepad0 is not connected" << std::endl;
+    }
+    if (IsGamepadAvailable(1))
+    {
+        Gamepad1Connected = true;
+        std::cout << "Gamepad1 is connected" << std::endl;
+    }
+    else
+    {
+        Gamepad1Connected = false;
+        std::cout << "Gamepad1 is not connected" << std::endl;
+    }
+}
