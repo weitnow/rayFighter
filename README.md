@@ -156,6 +156,10 @@ _updateCharacterController
 update animfilePtr
 
 ### Statemachine
+Statemachine holds a State-Instance as Membervariable and does:
+currentState->Update(dt)
+
+### State
 
 
 
