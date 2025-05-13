@@ -113,5 +113,51 @@ A Instance of InputHandler is created in the Game-Class and called in its update
 - key_enter
 - key_q
 
+## Updatesystem
+### Main
+main.cpp creates a game-instance which has:
+game->update()
+game->render()
+
+### Game
+game holds a gamestate and does:
+void Game::Update()
+update inpudHandler
+update soundManager
+update screen2DManager
+update currentGameState
+
+void Game::Render()
+render currentGameState
+
+### GameState
+if currentGameState holds a instance of gamestate.cpp it does:
+void GameState::Update(deltaTime)
+_updateIsLeftPlayer1and2()
+_updateAllGameObjects(dt)
+_updateAllBaseCharacters(dt)
+player1->update(dt)
+player2->update(dt)
+_checkPushCollsionBetweenPlayers()
+_updateMIddlePointBetweenPlayers()
+_updateCamera()
+_keepPlayerOnstage();
+_levelAnimFile->update(dt)
+gui->update(dt)
+
+### Player
+the update-method of players (basecharacter.cpp) does:
+_updateCollsionBoxes(dt)
+update position
+_reducePushVector(dt)
+apply gravity
+statemachine->update(dt)
+_updateCharacterController
+update animfilePtr
+
+### Statemachine
+
+
+
 ## Todos
 Implement fireball as specialmove and see how well it works with the current hitbox and statemachine system
