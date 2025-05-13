@@ -22,7 +22,7 @@ private:
 
     static constexpr int BUFFER_SIZE = 60;
     static constexpr int MAX_LENIENCY_FRAMES = 15;
-    std::deque<Input> buffer;
+    std::deque<Input> buffer; // the input buffer
 };
 
 #endif // INPUT_BUFFER_H

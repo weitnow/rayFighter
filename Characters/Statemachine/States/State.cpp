@@ -26,6 +26,39 @@ void State::setGameState(GameState* gameState)
     this->gameState = gameState;
 }
 
+bool State::checkForHit()
+{
+    // check for hits
+    for (auto& hitbox : owner->getHitBoxes())
+    {
+        for (auto& hurtbox : opponent->getHurtBoxes())
+        {
+            if (Utils::checkCollision(hitbox, hurtbox) && owner->canDealDamage)
+            {
+                opponent->takeDamage(1, &hitbox);
+                opponent->setPushVector({120, 0});
+                owner->canDealDamage = false;
+
+                // Transition the opponent into "Hit" or "Hurt" state
+                opponent->getStatemachine().changeState("Hit");
+                return true; // hit detected
+            }
+        }
+    }
+
+    return false; // no hit detected
+}
+
+bool State::hasAnimationFinished()
+{
+    // check if animation is finished
+    if (owner->getAnimFile()->hasAnimJustFinishedPlusLastFrameDuration())
+    {
+        return true;
+    }
+    return false;
+}
+
 /* #region IdleState */
 void IdleState::Init()
 {
@@ -37,7 +70,7 @@ void IdleState::Init()
 void IdleState::Update(float deltaTime)
 {
     // allowed transitions
-    // walk, jump, duck, punch, kick, block, hit, hurt
+    // walk, jump, duck, punch, kick, block, hit, hurt, specialmove
 
     // Walk
     if (controller->moveLeft || controller->moveRight)
@@ -57,8 +90,18 @@ void IdleState::Update(float deltaTime)
         statemachine->changeState("Duck");
     }
 
-    // Punch
-    if (controller->punch)
+    // Attack
+    if (controller->fireball)
+    {
+        std::cout << "Fireball" << std::endl;
+        statemachine->changeState("Fireball");
+    }
+    else if (controller->spear)
+    {
+        std::cout << "Spear" << std::endl;
+        statemachine->changeState("Spear");
+    }
+    else if (controller->punch)
     {
         statemachine->changeState("Punch");
     }
@@ -269,25 +312,10 @@ void PunchState::Init()
 
 void PunchState::Update(float deltaTime)
 {
-    // check for hits
-    for (auto& hitbox : owner->getHitBoxes())
-    {
-        for (auto& hurtbox : opponent->getHurtBoxes())
-        {
-            if (Utils::checkCollision(hitbox, hurtbox) && owner->canDealDamage)
-            {
-                opponent->takeDamage(1, &hitbox);
-                opponent->setPushVector({120, 0});
-                owner->canDealDamage = false;
-
-                // Transition the opponent into "Hit" or "Hurt" state
-                opponent->getStatemachine().changeState("Hit");
-            }
-        }
-    }
+    checkForHit();
 
     // check if animation is finished
-    if (owner->getAnimFile()->hasAnimJustFinishedPlusLastFrameDuration())
+    if (hasAnimationFinished())
     {
         statemachine->changeState("Idle");
     }
@@ -331,6 +359,8 @@ void KickState::Init()
 
 void KickState::Update(float deltaTime)
 {
+
+    // check if animation is finished
     if (owner->getAnimFile()->hasAnimJustFinishedPlusLastFrameDuration())
     {
         statemachine->changeState("Idle");
