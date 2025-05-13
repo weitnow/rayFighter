@@ -24,7 +24,7 @@ int main(void)
     //game->ChangeState(std::make_unique<StageSelectState>(game));
     game->ChangeState(std::make_unique<GameState>(game));
 
-
+    
     // Main game loop
     while (!game->quit)
     {
