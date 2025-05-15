@@ -13,10 +13,10 @@ GameState::GameState(Game* game) : BaseState(game)
 
     // Create Player 1 and 2
     //player1 = createPlayer(game->player1, 1);
-    player1 = createPlayer(0, 1);
+    player1 = createPlayer(1, 1);
 
     //player2 = createPlayer(game->player2, 2);
-    player2 = createPlayer(1, 2);
+    player2 = createPlayer(3, 2);
 
     // Set the opponent for each player
     player1->getStatemachine().setOpponent(player2);
@@ -220,13 +220,13 @@ BaseCharacter* GameState::createPlayer(int characterNumber, int playerNumber)
 
     switch (characterNumber)
     {
-    case 0:
+    case 1:
         player = new Fighter1(asepriteManager, Xpos, Constants::BASELINE);
         break;
-    case 1:
+    case 2:
         player = new Fighter2(asepriteManager, Xpos, Constants::BASELINE);
         break;
-    case 2:
+    case 3:
         player = new Fighter3(asepriteManager, Xpos, Constants::BASELINE);
         break;
     default:

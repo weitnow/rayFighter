@@ -14,6 +14,23 @@ Fighter3::~Fighter3()
 void Fighter3::init()
 {
     BaseCharacter::init();
+
+     Dictionary<std::string, std::shared_ptr<State>> customStateMap = {{"Idle", std::make_shared<IdleState>()},
+                                                                      {"Walk", std::make_shared<WalkState>()},
+                                                                      {"Jump", std::make_shared<JumpState>()},
+                                                                      {"JumpPunch", std::make_shared<JumpPunchState>()},
+                                                                      {"Duck", std::make_shared<DuckState>()},
+                                                                      {"DuckPunch", std::make_shared<DuckKickState>()},
+                                                                      {"DuckKick", std::make_shared<DuckKickState>()},
+                                                                      {"DuckBlock", std::make_shared<DuckBlockState>()},
+                                                                      {"Punch", std::make_shared<PunchState>()},
+                                                                      {"Kick", std::make_shared<PunchState>()},
+                                                                      {"Block", std::make_shared<BlockState>()},
+                                                                      {"Hit", std::make_shared<HitState>()},
+                                                                      {"Hurt", std::make_shared<HurtState>()},
+                                                                      {"Death", std::make_shared<DeathState>()}};
+
+    
     setCurrentFrameTag("gbFighter-Idle"); // using nesFighter-Graphics
     setObjName("Shang T.");
     setPlayerNumber(1);
@@ -35,4 +52,11 @@ void Fighter3::init()
 
     // draw shadow
     setDrawShadow(true);
+
+    // set the life of the character
+    setMaxLife(10);
+
+    // set the power level of the character
+    setMaxPowerLevel(2);
+    setPowerLevel(1);
 }
