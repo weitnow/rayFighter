@@ -160,7 +160,8 @@ Statemachine holds a State-Instance as Membervariable and does:
 currentState->Update(dt)
 
 ### State
-
+each State has an Update methode
+state->update(dt)
 
 
 ## Todos
