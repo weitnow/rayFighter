@@ -15,7 +15,7 @@ GameState::GameState(Game* game) : BaseState(game)
     //player1 = createPlayer(game->player1, 1);
     player1 = createPlayer(1, 1);
 
-    //player2 = createPlayer(game->player2, 2);
+    //player2 = createPlayer(game->player2, 2); //Todo: replace by this code
     player2 = createPlayer(3, 2);
 
     // Set the opponent for each player
@@ -237,10 +237,12 @@ BaseCharacter* GameState::createPlayer(int characterNumber, int playerNumber)
     if (playerNumber == 1)
     {
         player->addController(game->inputHandler->getPlayer1Controller());
+        player->setPlayerNumber(1);
     }
     else if (playerNumber == 2)
     {
         player->addController(game->inputHandler->getPlayer2Controller());
+        player->setPlayerNumber(2);
     }
 
 

@@ -33,8 +33,7 @@ void Fighter2::init()
 
     setCurrentFrameTag("nesFighter-Idle"); // using nesFighter-Graphics
     setObjName("Ken");
-    setPlayerNumber(2);
-
+   
     // [0, 1, 2...] = frameNumber, -1 = valid for all frames of gbFigher (ex. gbFighter-*), -2 = valid for all frames of gbFighter-Action (ex. gbFighter-Idle)
     addCollisionBoxForFrame("nesFighter-Idle", -1, CollisionBoxType::PUSHBOX, true, 16, 0, 10, 30);
 

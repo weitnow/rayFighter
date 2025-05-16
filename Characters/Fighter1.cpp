@@ -33,7 +33,7 @@ void Fighter1::init()
 
     setCurrentFrameTag("gbFighter-Idle"); // using gbFighter-Graphics
     setObjName("Andy");
-    setPlayerNumber(1);
+
     // [0, 1, 2...] = frameNumber, -1 = valid for all frames of gbFigher (ex. gbFighter-*), -2 = valid for all frames of gbFighter-Action (ex. gbFighter-Idle)
     addCollisionBoxForFrame("gbFighter-Idle", -1, CollisionBoxType::PUSHBOX, true, 10, 0, 10, 30);
 
