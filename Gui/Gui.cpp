@@ -59,7 +59,7 @@ void Gui::init(BaseState* state)
                             Constants::RAYFIGHTER_ROSA,
                             1,
                             false,
-                            "Andy");
+                            state->player1->getObjName());
     lifebar2 = new Powerbar(Vector2{132, 26},
                             5,
                             100,
@@ -67,7 +67,7 @@ void Gui::init(BaseState* state)
                             Constants::RAYFIGHTER_ROSA,
                             2,
                             false,
-                            "Zangief");
+                            state->player2->getObjName());
 
     powerbar1 =
         new Powerbar(Vector2{23, 138}, 5, 50, state->player1->getMaxPowerLevel(), Constants::RAYFIGHTER_ROSA, 1, true);

@@ -55,7 +55,6 @@ void InputHandler::Update()
     // check if gamepad is connected
     checkIfGamepadIsConnected();
 
-
     // Reset the input states for the next frame
     _resetBoolsToFalse(player1Controller);
     _resetBoolsToFalse(player2Controller);
@@ -63,8 +62,13 @@ void InputHandler::Update()
     // Handle game input ----------- //
     _handleGameInput(); // this will set the bools in player1Controller and player2Controller to true if the key is pressed
 
+    // Update the input buffer and check for special moves
     updateInputBuffer(player1InputBuffer, player1Controller);
     checkSpecialMoves(player1InputBuffer, player1Controller);
+
+    updateInputBuffer(player2InputBuffer, player2Controller);
+    checkSpecialMoves(player2InputBuffer, player2Controller);
+
     // ----------------------------- //
 }
 

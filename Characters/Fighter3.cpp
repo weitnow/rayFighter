@@ -15,7 +15,7 @@ void Fighter3::init()
 {
     BaseCharacter::init();
 
-     Dictionary<std::string, std::shared_ptr<State>> customStateMap = {{"Idle", std::make_shared<IdleState>()},
+    Dictionary<std::string, std::shared_ptr<State>> customStateMap = {{"Idle", std::make_shared<IdleState>()},
                                                                       {"Walk", std::make_shared<WalkState>()},
                                                                       {"Jump", std::make_shared<JumpState>()},
                                                                       {"JumpPunch", std::make_shared<JumpPunchState>()},
@@ -24,18 +24,18 @@ void Fighter3::init()
                                                                       {"DuckKick", std::make_shared<DuckKickState>()},
                                                                       {"DuckBlock", std::make_shared<DuckBlockState>()},
                                                                       {"Punch", std::make_shared<PunchState>()},
-                                                                      {"Kick", std::make_shared<PunchState>()},
+                                                                      {"Kick", std::make_shared<KickState>()},
                                                                       {"Block", std::make_shared<BlockState>()},
                                                                       {"Hit", std::make_shared<HitState>()},
                                                                       {"Hurt", std::make_shared<HurtState>()},
                                                                       {"Death", std::make_shared<DeathState>()}};
 
-    
+
     getStatemachine().init(customStateMap);
 
     setCurrentFrameTag("gbFighter-Idle"); // using nesFighter-Graphics
-    setObjName("Shang T.");
- 
+    setObjName("Shang Tsung");
+
 
     // [0, 1, 2...] = frameNumber, -1 = valid for all frames of gbFigher (ex. gbFighter-*), -2 = valid for all frames of gbFighter-Action (ex. gbFighter-Idle)
     addCollisionBoxForFrame("gbFighter-Idle", -1, CollisionBoxType::PUSHBOX, true, 10, 0, 10, 30);

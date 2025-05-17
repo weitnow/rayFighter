@@ -13,10 +13,10 @@ GameState::GameState(Game* game) : BaseState(game)
 
     // Create Player 1 and 2
     //player1 = createPlayer(game->player1, 1);
-    player1 = createPlayer(1, 1);
+    player1 = createPlayer(3, 1);
 
     //player2 = createPlayer(game->player2, 2); //Todo: replace by this code
-    player2 = createPlayer(3, 2);
+    player2 = createPlayer(1, 2);
 
     // Set the opponent for each player
     player1->getStatemachine().setOpponent(player2);
