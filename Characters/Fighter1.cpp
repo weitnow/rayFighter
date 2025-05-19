@@ -61,4 +61,18 @@ void Fighter1::init()
     // set the power level of the character
     setMaxPowerLevel(3);
     setPowerLevel(3);
+
+    // set special moves
+    specialMoves = {
+        {"Fireball",
+         {{InputDirection::Down, InputAction::None},
+          {InputDirection::DownForward, InputAction::None},
+          {InputDirection::Forward, InputAction::None},
+          {InputDirection::Neutral, InputAction::Punch}}},
+        {"Teleport",
+         {{InputDirection::Backward, InputAction::None},
+          {InputDirection::Down, InputAction::None},
+          {InputDirection::Forward, InputAction::None},
+          {InputDirection::Neutral, InputAction::Punch}}},
+    };
 }

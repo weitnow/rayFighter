@@ -1,6 +1,7 @@
 #ifndef INPUT_HANDLER_H
 #define INPUT_HANDLER_H
 
+#include "../../Characters/BaseCharacter.h"
 #include "CharacterController.h"
 #include "DebugInfo.h"
 #include "InputBuffer.h"
@@ -38,6 +39,8 @@ public:
     void Update();
 
     void addDebugInfo(DebugInfo& debugInfo);
+    void addPlayer(BaseCharacter* player, int playerNumber);
+
 
     CharacterController* const getPlayer1Controller();
     CharacterController* const getPlayer2Controller();
@@ -53,7 +56,7 @@ private:
     InputDirection _mapDirectionInput(CharacterController* controller);
     InputAction _mapActionInput(CharacterController* controller);
     void updateInputBuffer(InputBuffer& buffer, CharacterController* controller);
-    void checkSpecialMoves(InputBuffer& buffer, CharacterController* controller);
+    void checkSpecialMoves(InputBuffer& buffer, CharacterController* controller, BaseCharacter* player);
 
     CharacterController* player1Controller;
     CharacterController* player2Controller;
@@ -70,6 +73,9 @@ private:
     DebugInfo* debugInfo;
     InputBuffer player1InputBuffer;
     InputBuffer player2InputBuffer;
+
+    BaseCharacter* player1;
+    BaseCharacter* player2;
 
     KeyCommandMap keyCommandMap;
 };

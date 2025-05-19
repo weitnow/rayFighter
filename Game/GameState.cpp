@@ -16,7 +16,7 @@ GameState::GameState(Game* game) : BaseState(game)
     player1 = createPlayer(3, 1);
 
     //player2 = createPlayer(game->player2, 2); //Todo: replace by this code
-    player2 = createPlayer(1, 2);
+    player2 = createPlayer(2, 2);
 
     // Set the opponent for each player
     player1->getStatemachine().setOpponent(player2);
@@ -249,6 +249,9 @@ BaseCharacter* GameState::createPlayer(int characterNumber, int playerNumber)
     player->init(); // initialize the player
     player->getStatemachine().setGameState(this);
     player->setPlayerNumber(playerNumber);
+
+    //add playerPtr to InputHandler
+    game->inputHandler->addPlayer(player, playerNumber);
 
     return player;
 }

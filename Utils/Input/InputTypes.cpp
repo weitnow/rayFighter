@@ -45,15 +45,3 @@ std::string actionToString(InputAction action)
         return "Unknown";
     }
 }
-
-const SpecialMove Fireball = {"Fireball",
-                              {{InputDirection::Down, InputAction::None},
-                               {InputDirection::DownForward, InputAction::None},
-                               {InputDirection::Forward, InputAction::None},
-                               {InputDirection::Neutral, InputAction::Punch}}};
-
-const SpecialMove Spear = {"Spear",
-                           {{InputDirection::Backward, InputAction::None},
-                            {InputDirection::Down, InputAction::None},
-                            {InputDirection::Forward, InputAction::None},
-                            {InputDirection::Neutral, InputAction::Punch}}};

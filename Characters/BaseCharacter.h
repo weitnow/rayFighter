@@ -3,6 +3,7 @@
 
 #include "../GameObjects/BaseGameObject.h"
 #include "../Utils/Core.h"
+#include "../Utils/Input/InputTypes.h"
 
 //#include "../Utils/InputHandler.h"
 // Forward declaration of CharacterController
@@ -17,6 +18,7 @@ public:
     virtual ~BaseCharacter();
     virtual void init() override;
     virtual void update(float deltaTime) override;
+
     void draw();
     //void moveLeft();  // implemented in BaseGameObject
     //void moveRight(); // implemented in BaseGameObject
@@ -57,6 +59,9 @@ public:
     void setPowerLevel(int powerLevel);
     int getPowerLevel();
 
+    // special moves
+    virtual const std::vector<SpecialMove>& getSpecialMoves() const;
+
 
 protected:
     // member variables
@@ -73,6 +78,9 @@ protected:
 
     int maxPowerLevel;
     int powerLevel;
+
+    // special moves
+    std::vector<SpecialMove> specialMoves = {};
 
     // member functions
     virtual void _applyGravity(float deltaTime) override;

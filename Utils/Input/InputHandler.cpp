@@ -1,7 +1,9 @@
 #include "InputHandler.h"
 
 
-InputHandler::InputHandler() : Gamepad0Connected(false), Gamepad1Connected(false), GamepadCheckConnectionDone(5)
+InputHandler::InputHandler()
+    : Gamepad0Connected(false), Gamepad1Connected(false), GamepadCheckConnectionDone(5), player1(nullptr),
+      player2(nullptr)
 {
     player1Controller = new CharacterController();
     player2Controller = new CharacterController();
@@ -62,14 +64,20 @@ void InputHandler::Update()
     // Handle game input ----------- //
     _handleGameInput(); // this will set the bools in player1Controller and player2Controller to true if the key is pressed
 
-    // Update the input buffer and check for special moves
-    updateInputBuffer(player1InputBuffer, player1Controller);
-    checkSpecialMoves(player1InputBuffer, player1Controller);
 
-    updateInputBuffer(player2InputBuffer, player2Controller);
-    checkSpecialMoves(player2InputBuffer, player2Controller);
+    if (player1 == nullptr || player2 == nullptr)
+    {
+        return;
+    }
+    else
+    {
+        // Update the input buffer and check for special moves
+        updateInputBuffer(player1InputBuffer, player1Controller);
+        checkSpecialMoves(player1InputBuffer, player1Controller, player1);
 
-    // ----------------------------- //
+        updateInputBuffer(player2InputBuffer, player2Controller);
+        checkSpecialMoves(player2InputBuffer, player2Controller, player2);
+    }
 }
 
 
@@ -77,6 +85,19 @@ void InputHandler::addDebugInfo(DebugInfo& debugInfo)
 {
     this->debugInfo = &debugInfo;
 }
+
+void InputHandler::addPlayer(BaseCharacter* player, int playerNumber)
+{
+    if (playerNumber == 1)
+    {
+        player1 = player;
+    }
+    else if (playerNumber == 2)
+    {
+        player2 = player;
+    }
+}
+
 
 CharacterController* const InputHandler::getPlayer2Controller()
 {
@@ -211,24 +232,23 @@ void InputHandler::updateInputBuffer(InputBuffer& buffer, CharacterController* c
     //buffer.addInput(_mapDirectionInput(controller), _mapActionInput(controller));
 }
 
-void InputHandler::checkSpecialMoves(InputBuffer& buffer, CharacterController* controller)
+void InputHandler::checkSpecialMoves(InputBuffer& buffer, CharacterController* controller, BaseCharacter* player)
 {
-    if (buffer.matchSequence(Fireball))
+    // Check if the input buffer matches any special move sequence
+    for (const auto& specialMove : player->getSpecialMoves())
     {
-        std::cout << "InputHandler: Fireball executed!" << std::endl;
+        if (buffer.matchSequence(specialMove))
+        {
+            std::cout << "InputHandler: " << specialMove.name << " executed!" << std::endl;
 
-        // clear buffer
-        //otherwise the player can keep holding down the last needed input and the specialmove is executed again and again
-        buffer.clearBuffer();
-        controller->fireball = true;
-    }
-    else if (buffer.matchSequence(Spear))
-    {
-        std::cout << "InputHandler: Spear executed!" << std::endl;
-        buffer.clearBuffer();
-        controller->spear = true;
+            // clear buffer
+            //otherwise the player can keep holding down the last needed input and the specialmove is executed again and again
+            buffer.clearBuffer();
+            controller->fireball = true;
+        }
     }
 }
+
 
 void InputHandler::checkIfGamepadIsConnected()
 {

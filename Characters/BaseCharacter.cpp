@@ -68,6 +68,11 @@ void BaseCharacter::update(float deltaTime)
     }
 }
 
+const std::vector<SpecialMove>& BaseCharacter::getSpecialMoves() const
+{
+    return specialMoves;
+}
+
 
 void BaseCharacter::draw()
 {

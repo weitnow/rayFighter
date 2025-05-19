@@ -37,7 +37,5 @@ struct SpecialMove
 std::string directionToString(InputDirection direction);
 std::string actionToString(InputAction action);
 
-extern const SpecialMove Fireball;
-extern const SpecialMove Spear;
 
 #endif // INPUT_TYPES_H
