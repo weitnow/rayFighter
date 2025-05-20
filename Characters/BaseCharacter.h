@@ -85,6 +85,8 @@ protected:
     // member functions
     virtual void _applyGravity(float deltaTime) override;
     void _updateCharacterController(); //updates bool isLeft in CharacterController
+    
+
 };
 
 

@@ -15,6 +15,7 @@ void Fighter2::init()
 {
     BaseCharacter::init();
 
+    /*
     Dictionary<std::string, std::shared_ptr<State>> customStateMap = {{"Idle", std::make_shared<IdleState>()},
                                                                       {"Walk", std::make_shared<WalkState>()},
                                                                       {"Jump", std::make_shared<JumpState>()},
@@ -29,7 +30,11 @@ void Fighter2::init()
                                                                       {"Hit", std::make_shared<HitState>()},
                                                                       {"Hurt", std::make_shared<HurtState>()},
                                                                       {"Death", std::make_shared<DeathState>()}};
-    getStatemachine().init(customStateMap);
+
+    */
+    //Dictionary<std::string, std::shared_ptr<State>> customStateMap = {{"Idle", std::make_shared<F1IdleState>()}};
+
+    getStatemachine().init(getStatemachine().getDefaultStateMap());
 
     setCurrentFrameTag("nesFighter-Idle"); // using nesFighter-Graphics
     setObjName("Ken Masters");

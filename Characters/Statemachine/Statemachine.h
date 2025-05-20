@@ -29,6 +29,8 @@ public:
     BaseCharacter* getOwner();
     BaseCharacter* getOpponent();
 
+    Dictionary<std::string, std::shared_ptr<State>> getDefaultStateMap();
+
 
 private: // private member variables
     // Current state (use smart pointers for automatic memory management)

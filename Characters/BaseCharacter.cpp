@@ -258,3 +258,5 @@ void BaseCharacter::_updateCharacterController()
 
     controller->isLeft = isLeft;
 }
+
+
