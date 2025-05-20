@@ -17,7 +17,7 @@ void Fighter2::init()
 
     // Initialize the state machine with custom states
     auto customStateMap = getStatemachine().getDefaultStateMap(); // get default state map from statemachine with default behavior
-    customStateMap["Idle"] = std::make_shared<F1IdleState>(); // override with custom state
+    //customStateMap["Idle"] = std::make_shared<F1IdleState>(); // override with custom state
 
     getStatemachine().init(customStateMap); 
 
