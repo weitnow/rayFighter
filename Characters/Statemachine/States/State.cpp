@@ -158,8 +158,16 @@ void WalkState::Update(float deltaTime)
         statemachine->changeState("Duck");
     }
 
+    
+    // Attack
+    if (controller->fireball)
+    {
+        std::cout << "Hadouuken" << std::endl;
+        statemachine->changeState("Fireball");
+    }
+
     // Punch
-    if (controller->punch)
+    else if (controller->punch)
     {
         statemachine->changeState("Punch");
     }
