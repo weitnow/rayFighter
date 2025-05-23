@@ -63,7 +63,7 @@ Dictionary<std::string, std::shared_ptr<State>> Statemachine::getDefaultStateMap
                                                                       {"DuckKick", std::make_shared<DuckKickState>()},
                                                                       {"DuckBlock", std::make_shared<DuckBlockState>()},
                                                                       {"Punch", std::make_shared<PunchState>()},
-                                                                      {"Kick", std::make_shared<PunchState>()},
+                                                                      {"Kick", std::make_shared<KickState>()},
                                                                       {"Block", std::make_shared<BlockState>()},
                                                                       {"Hit", std::make_shared<HitState>()},
                                                                       {"Hurt", std::make_shared<HurtState>()},

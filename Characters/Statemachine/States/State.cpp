@@ -76,8 +76,10 @@ void State::checkTransitions(const std::vector<std::string>& allowedTransitions)
 
 State::State(const std::string& name) : stateName(name)
 {
+    // this list gets checked from top to botton. first state whichs lambda results true will execute. order matters!
     commonTransitions = {
-        { "Walk",     [this]() { return controller->moveLeft || controller->moveRight; } },
+        
+        { "Walk",     [this]() { return controller->moveLeft || controller->moveRight && !controller->duck;} },
         { "Jump",     [this]() { return controller->jump; } },
         { "Duck",     [this]() { return controller->duck; } },
         { "Punch",    [this]() { return controller->punch; } },
@@ -88,6 +90,7 @@ State::State(const std::string& name) : stateName(name)
         { "DuckBlock",[this]() { return controller->block && controller->duck; } },
         { "JumpPunch",[this]() { return controller->punch && !controller->jump; } },
         { "Idle",     [this]() { return !controller->moveLeft && !controller->moveRight && !controller->duck; } },
+        
     };
 }
 
@@ -100,7 +103,7 @@ void IdleState::Init()
 
 void IdleState::Update(float deltaTime)
 {
-    checkTransitions({ "Walk", "Jump", "Duck", "Fireball", "Spear", "Punch", "Kick", "Block" });
+    checkTransitions({ "Walk", "Jump", "Duck", "Punch", "Kick", "Block" });
 }
 
 void IdleState::Finalize()
@@ -118,7 +121,6 @@ void WalkState::Init()
 
 void WalkState::Update(float deltaTime)
 {
-    
     // Walk
     if (controller->moveLeft)
     {
@@ -193,8 +195,6 @@ void JumpState::Update(float deltaTime)
 
 void JumpState::Finalize()
 {
-    std::cout << "JumpState Finalize" << std::endl;
-
     // reset the bools for next jump
     goLeft = false;
     goRight = false;
@@ -236,21 +236,6 @@ void DuckState::Update(float deltaTime)
         statemachine->changeState("Idle");
     }
 
-    /*
-    // check if player is punching or kicking or blocking
-    if (controller->punch)
-    {
-        statemachine->changeState("DuckPunch");
-    }
-    else if (controller->kick)
-    {
-        statemachine->changeState("DuckKick");
-    }
-    else if (controller->block)
-    {
-        statemachine->changeState("DuckBlock");
-    }
-    */
     checkTransitions({"DuckPunch", "DuckKick", "DuckBlock"});
 }
 
@@ -467,16 +452,6 @@ void DeathState::Init()
 
     // play sound
     SoundManager::getInstance().playSound("death3.wav");
-
-
-    // change deltaMultiplier
-    //gameManager.setDeltaTimeMultiplier(0.5f);
-
-    // TODO: change this to opponent
-    //player2->setAffectedByGravity(false);
-
-    //player2->setPushVector({0, -250});
-    //player2->setMoveVectorY(-250);
 }
 
 void DeathState::Update(float deltaTime)
