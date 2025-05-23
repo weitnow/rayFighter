@@ -12,7 +12,7 @@ class CharacterController;
 class State
 {
 public:
-    explicit State(const std::string& name) : stateName(name) {};
+    explicit State(const std::string& name);
     virtual ~State() = default;
     // Pure virtual methods to be implemented by derived classes
     virtual void Init() = 0;
@@ -31,10 +31,14 @@ protected:
     CharacterController* controller = nullptr; // Pointer to the CharacterController
     Statemachine* statemachine = nullptr;      // Pointer to the Statemachine
     float timer = 0;
+    
+    std::vector<std::pair<std::string,std::function<bool()>>> commonTransitions;
+    
 
 protected:
     bool checkForHit();
     bool hasAnimationFinished();
+    void checkTransitions(const std::vector<std::string>& allowedTransitions);
 };
 
 // Macro to declare State class methods

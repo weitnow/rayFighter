@@ -15,23 +15,11 @@ void Fighter3::init()
 {
     BaseCharacter::init();
 
-    Dictionary<std::string, std::shared_ptr<State>> customStateMap = {{"Idle", std::make_shared<IdleState>()},
-                                                                      {"Walk", std::make_shared<WalkState>()},
-                                                                      {"Jump", std::make_shared<JumpState>()},
-                                                                      {"JumpPunch", std::make_shared<JumpPunchState>()},
-                                                                      {"Duck", std::make_shared<DuckState>()},
-                                                                      {"DuckPunch", std::make_shared<DuckKickState>()},
-                                                                      {"DuckKick", std::make_shared<DuckKickState>()},
-                                                                      {"DuckBlock", std::make_shared<DuckBlockState>()},
-                                                                      {"Punch", std::make_shared<PunchState>()},
-                                                                      {"Kick", std::make_shared<KickState>()},
-                                                                      {"Block", std::make_shared<BlockState>()},
-                                                                      {"Hit", std::make_shared<HitState>()},
-                                                                      {"Hurt", std::make_shared<HurtState>()},
-                                                                      {"Death", std::make_shared<DeathState>()}};
+    // Initialize the state machine with custom states
+    auto customStateMap = getStatemachine().getDefaultStateMap(); // get default state map from statemachine with default behavior
+    //customStateMap["Idle"] = std::make_shared<F1IdleState>(); // override with custom state
 
-
-    getStatemachine().init(customStateMap);
+    getStatemachine().init(customStateMap); 
 
     setCurrentFrameTag("gbFighter-Idle"); // using nesFighter-Graphics
     setObjName("Shang Tsung");

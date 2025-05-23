@@ -59,65 +59,53 @@ bool State::hasAnimationFinished()
     return false;
 }
 
+void State::checkTransitions(const std::vector<std::string>& allowedTransitions)
+{
+    for (const auto& stateName : allowedTransitions)
+    {
+        for (const auto& transition : commonTransitions)
+        {
+            if (transition.first == stateName && transition.second())
+            {
+                statemachine->changeState(stateName);
+                return; // exit after first successful transition
+            }
+        }
+    }
+}
+
+State::State(const std::string& name) : stateName(name)
+{
+    commonTransitions = {
+        { "Walk",     [this]() { return controller->moveLeft || controller->moveRight; } },
+        { "Jump",     [this]() { return controller->jump; } },
+        { "Duck",     [this]() { return controller->duck; } },
+        { "Punch",    [this]() { return controller->punch; } },
+        { "Kick",     [this]() { return controller->kick; } },
+        { "Block",    [this]() { return controller->block; } },
+        { "DuckPunch",[this]() { return controller->punch && controller->duck; } },
+        { "DuckKick", [this]() { return controller->kick && controller->duck; } },
+        { "DuckBlock",[this]() { return controller->block && controller->duck; } },
+        { "JumpPunch",[this]() { return controller->punch && !controller->jump; } },
+        { "Idle",     [this]() { return !controller->moveLeft && !controller->moveRight && !controller->duck; } },
+    };
+}
+
 /* #region IdleState */
 void IdleState::Init()
 {
     owner->stop(); // set moveVector.x = 0
-    statemachine->changeState("Idle");
-    std::cout << "IdleState Init" << std::endl;
+    statemachine->changeState("Idle"); 
 }
 
 void IdleState::Update(float deltaTime)
 {
-    // allowed transitions
-    // walk, jump, duck, punch, kick, block, hit, hurt, specialmove
-
-    // Walk
-    if (controller->moveLeft || controller->moveRight)
-    {
-        statemachine->changeState("Walk");
-    }
-
-    // Jump
-    if (controller->jump)
-    {
-        statemachine->changeState("Jump");
-    }
-
-    // Duck
-    if (controller->duck)
-    {
-        statemachine->changeState("Duck");
-    }
-
-    // Attack
-    if (controller->fireball)
-    {
-        std::cout << "Fireball" << std::endl;
-        statemachine->changeState("Fireball");
-    }
-    else if (controller->spear)
-    {
-        std::cout << "Spear" << std::endl;
-        statemachine->changeState("Spear");
-    }
-    else if (controller->punch)
-    {
-        statemachine->changeState("Punch");
-    }
-    else if (controller->kick)
-    {
-        statemachine->changeState("Kick");
-    }
-    else if (controller->block)
-    {
-        statemachine->changeState("Block");
-    }
+    checkTransitions({ "Walk", "Jump", "Duck", "Fireball", "Spear", "Punch", "Kick", "Block" });
 }
 
 void IdleState::Finalize()
 {
-    std::cout << "IdleState Finalize" << std::endl;
+    
 }
 
 /* #endregion */
@@ -125,18 +113,12 @@ void IdleState::Finalize()
 /* #region WalkState */
 void WalkState::Init()
 {
-    std::cout << "WalkState Init" << std::endl;
 
-    statemachine->changeState("Walk");
 }
 
 void WalkState::Update(float deltaTime)
 {
-    if (!controller->moveLeft && !controller->moveRight)
-    {
-        statemachine->changeState("Idle");
-    }
-
+    
     // Walk
     if (controller->moveLeft)
     {
@@ -145,59 +127,25 @@ void WalkState::Update(float deltaTime)
     else if (controller->moveRight)
     {
         owner->moveRight();
-    }
+    } 
 
-    // Jump
-    if (controller->jump)
-    {
-        statemachine->changeState("Jump");
-    }
-    // Duck
-    else if (controller->duck)
-    {
-        statemachine->changeState("Duck");
-    }
-
-    
-    // Attack
-    if (controller->fireball)
-    {
-        std::cout << "Hadouuken" << std::endl;
-        statemachine->changeState("Fireball");
-    }
-
-    // Punch
-    else if (controller->punch)
-    {
-        statemachine->changeState("Punch");
-    }
-    else if (controller->kick)
-    {
-        statemachine->changeState("Kick");
-    }
-    else if (controller->block)
-    {
-        statemachine->changeState("Block");
-    }
+    checkTransitions({"Jump", "Duck", "Idle", "Punch", "Kick", "Block" });
 }
 
 void WalkState::Finalize()
 {
-    std::cout << "WalkState Finalize" << std::endl;
+   
 }
 /* #endregion */
 
 /* #region JumpState */
 void JumpState::Init()
 {
-    std::cout << "JumpState Init" << std::endl;
-
     alreadyJumped = false;
 
     // check if last state was jumpPunch
     if (owner->getStatemachine().getPreviousStateAsString() == "JumpPunch")
     {
-        std::cout << "JumpState Init -> last state was JumpPunch" << std::endl;
         alreadyJumped = true;
     }
 
@@ -282,11 +230,13 @@ void DuckState::Init()
 /* #region DuckState */
 void DuckState::Update(float deltaTime)
 {
+    
     if (!controller->duck)
     {
         statemachine->changeState("Idle");
     }
 
+    /*
     // check if player is punching or kicking or blocking
     if (controller->punch)
     {
@@ -300,6 +250,8 @@ void DuckState::Update(float deltaTime)
     {
         statemachine->changeState("DuckBlock");
     }
+    */
+    checkTransitions({"DuckPunch", "DuckKick", "DuckBlock"});
 }
 
 void DuckState::Finalize()
