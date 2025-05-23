@@ -20,3 +20,18 @@ void F1IdleState::Finalize()
 {
     std::cout << "F1IdleState Finalize" << std::endl;
 }
+
+void F1DragenshotState::Init()
+{
+    
+}
+
+void F1DragenshotState::Update(float deltaTime)
+{
+    
+}
+
+void F1DragenshotState::Finalize()
+{
+    
+}

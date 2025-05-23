@@ -75,8 +75,9 @@ void InputHandler::Update()
         updateInputBuffer(player1InputBuffer, player1Controller);
         checkSpecialMoves(player1InputBuffer, player1Controller, player1);
 
-        updateInputBuffer(player2InputBuffer, player2Controller);
-        checkSpecialMoves(player2InputBuffer, player2Controller, player2);
+        // TODO: uncomment this code
+        //updateInputBuffer(player2InputBuffer, player2Controller);
+        //checkSpecialMoves(player2InputBuffer, player2Controller, player2);
     }
 }
 
@@ -224,7 +225,7 @@ void InputHandler::updateInputBuffer(InputBuffer& buffer, CharacterController* c
     InputAction action = _mapActionInput(controller);          // returns ex. InputAction::Punch
 
     // Print the detected input direction and action in a readable format
-    // std::cout << "Direction: " << directionToString(direction) << ", Action: " << actionToString(action) << std::endl;
+    //std::cout << "Direction: " << directionToString(direction) << ", Action: " << actionToString(action) << std::endl;
 
     buffer.addInput(direction,
                     action); // this adds ex. [InputDirection::DownForward, InputAction::Punch] to the buffer
