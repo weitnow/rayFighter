@@ -31,13 +31,13 @@ bool InputBuffer::matchSequence(const SpecialMove& move)
         const auto& requiredInput = move.sequence[moveIndex];
         const auto& currentInput = buffer[bufferIndex];
 
-        if (currentInput.direction == requiredInput.first)
+        if (currentInput.direction == requiredInput.first && currentInput.action == requiredInput.second)
         {
             moveIndex--; // Found a match, look for next required input
         }
         else if (currentInput.frames > MAX_LENIENCY_FRAMES)
         {
-            // If we've held this non-matching input too long, sequence fails
+            // Held wrong input too long — abort
             return false;
         }
 

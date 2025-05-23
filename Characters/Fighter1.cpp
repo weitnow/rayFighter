@@ -59,10 +59,6 @@ void Fighter1::init()
           {InputDirection::DownForward, InputAction::None},
           {InputDirection::Forward, InputAction::None},
           {InputDirection::Neutral, InputAction::Punch}}},
-        {"Teleport",
-         {{InputDirection::Down, InputAction::None},
-          {InputDirection::Down, InputAction::None},
-          {InputDirection::Forward, InputAction::None},
-          {InputDirection::Neutral, InputAction::Punch}}},
+        
     };
 }
