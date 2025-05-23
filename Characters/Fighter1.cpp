@@ -16,10 +16,11 @@ void Fighter1::init()
     BaseCharacter::init();
 
     // Initialize the state machine with custom states
-    auto customStateMap = getStatemachine().getDefaultStateMap(); // get default state map from statemachine with default behavior
+    auto customStateMap =
+        getStatemachine().getDefaultStateMap(); // get default state map from statemachine with default behavior
     //customStateMap["Idle"] = std::make_shared<F1IdleState>(); // override with custom state
 
-    getStatemachine().init(customStateMap); 
+    getStatemachine().init(customStateMap);
 
     setCurrentFrameTag("gbFighter-Idle"); // using gbFighter-Graphics
     setObjName("Andy Hug");
@@ -58,7 +59,11 @@ void Fighter1::init()
          {{InputDirection::Down, InputAction::None},
           {InputDirection::DownForward, InputAction::None},
           {InputDirection::Forward, InputAction::None},
+          {InputDirection::Forward, InputAction::Punch}}},
+        {"Spear",
+         {{InputDirection::Down, InputAction::None},
+          {InputDirection::Forward, InputAction::None},
           {InputDirection::Neutral, InputAction::Punch}}},
-        
+
     };
 }
