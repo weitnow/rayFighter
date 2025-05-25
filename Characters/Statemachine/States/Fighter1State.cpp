@@ -21,6 +21,7 @@ void F1IdleState::Finalize()
     std::cout << "F1IdleState Finalize" << std::endl;
 }
 
+// Special1
 void F1Special1State::Init()
 {
     std::cout << "F1Special1State Init" << std::endl;
@@ -35,4 +36,19 @@ void F1Special1State::Update(float deltaTime)
 void F1Special1State::Finalize()
 {
     std::cout << "F1Special1State Finalize" << std::endl;
+}
+
+
+// Special2
+void F1Special2State::Init()
+{
+    std::cout << "F2Special1State Init" << std::endl;
+}
+void F1Special2State::Update(float deltaTime)
+{
+    std::cout << "F2Special1State Update" << std::endl;
+}
+void F1Special2State::Finalize()
+{
+    std::cout << "F2Special1State Finalize" << std::endl;
 }

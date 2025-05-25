@@ -18,7 +18,8 @@ void Fighter1::init()
     // Initialize the state machine with custom states
     auto customStateMap =
         getStatemachine().getDefaultStateMap(); // get default state map from statemachine with default behavior
-    //customStateMap["Idle"] = std::make_shared<F1IdleState>(); // override with custom state
+    customStateMap["Special1"] = std::make_shared<F1Special1State>(); // override with custom state
+    customStateMap["Special2"] = std::make_shared<F1Special2State>(); // override with custom state
 
     getStatemachine().init(customStateMap);
 
@@ -55,12 +56,12 @@ void Fighter1::init()
 
     // set special moves
     specialMoves = {
-        {"special1",
+        {"special1", // Fireball
          {{InputDirection::Down, InputAction::None},
           {InputDirection::DownForward, InputAction::None},
           {InputDirection::Forward, InputAction::None},
           {InputDirection::Forward, InputAction::Punch}}},
-        {"special2",
+        {"special2", // Hurricane Kick
          {{InputDirection::Down, InputAction::None},
           {InputDirection::Down, InputAction::None},
           {InputDirection::Up, InputAction::None}}},
