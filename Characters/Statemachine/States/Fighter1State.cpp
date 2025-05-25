@@ -12,8 +12,8 @@ void F1IdleState::Init()
 
 void F1IdleState::Update(float deltaTime)
 {
-   std::cout << "F1IdleState Update" << std::endl;
-   owner->moveRight();
+    std::cout << "F1IdleState Update" << std::endl;
+    owner->moveRight();
 }
 
 void F1IdleState::Finalize()
@@ -21,17 +21,18 @@ void F1IdleState::Finalize()
     std::cout << "F1IdleState Finalize" << std::endl;
 }
 
-void F1DragenshotState::Init()
+void F1Special1State::Init()
 {
-    
+    std::cout << "F1Special1State Init" << std::endl;
 }
 
-void F1DragenshotState::Update(float deltaTime)
+void F1Special1State::Update(float deltaTime)
 {
-    
+    std::cout << "F1Special1State Update" << std::endl;
 }
 
-void F1DragenshotState::Finalize()
+
+void F1Special1State::Finalize()
 {
-    
+    std::cout << "F1Special1State Finalize" << std::endl;
 }

@@ -81,8 +81,8 @@ void Statemachine::changeState(std::string newStateName)
     // If state is not found, through an error
     if (it == stateMap.end())
     {
-        return;
-        //throw std::runtime_error("Statemachine::stateMap[" + newStateName + "] not found");
+        //return;
+        throw std::runtime_error("Statemachine::stateMap[" + newStateName + "] not found");
     }
 
     // Get the new state

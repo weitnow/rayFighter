@@ -136,8 +136,9 @@ void InputHandler::_resetBoolsToFalse(CharacterController* controller)
     controller->block = false;
 
     // specialmoves
-    controller->fireball = false;
-    controller->spear = false;
+    controller->special1 = false;
+    controller->special2 = false;
+    controller->special3 = false;
 
     // settings which are overriden by BaseCharacter, dont reset them here!
     //controller->isLeft = false; //
@@ -229,8 +230,6 @@ void InputHandler::updateInputBuffer(InputBuffer& buffer, CharacterController* c
 
     buffer.addInput(direction,
                     action); // this adds ex. [InputDirection::DownForward, InputAction::Punch] to the buffer
-
-    //buffer.addInput(_mapDirectionInput(controller), _mapActionInput(controller));
 }
 
 void InputHandler::checkSpecialMoves(InputBuffer& buffer, CharacterController* controller, BaseCharacter* player)
@@ -245,7 +244,14 @@ void InputHandler::checkSpecialMoves(InputBuffer& buffer, CharacterController* c
             // clear buffer
             //otherwise the player can keep holding down the last needed input and the specialmove is executed again and again
             buffer.clearBuffer();
-            controller->fireball = true;
+
+            // set the corresponding special move bool to true
+            if (specialMove.name == "special1")
+                controller->special1 = true;
+            else if (specialMove.name == "special2")
+                controller->special2 = true;
+            else if (specialMove.name == "special3")
+                controller->special3 = true;
         }
     }
 }

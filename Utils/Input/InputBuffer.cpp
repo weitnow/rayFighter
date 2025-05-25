@@ -19,17 +19,6 @@ void InputBuffer::addInput(InputDirection direction, InputAction action)
     {
         buffer.erase(buffer.begin());
     }
-
-    /*
-    // Print the entire buffer for debugging
-    std::cout << "Current buffer: ";
-    for (const auto& input : buffer)
-    {
-        std::cout << "(" << directionToString(input.direction) << ", " << actionToString(input.action) << ", "
-                  << input.frames << ") ";
-    }
-    std::cout << std::endl;
-    */
 }
 
 bool InputBuffer::matchSequence(const SpecialMove& move)
@@ -67,5 +56,5 @@ bool InputBuffer::matchSequence(const SpecialMove& move)
 void InputBuffer::clearBuffer()
 {
     buffer.clear();
-    std::cout << "InputBuffer cleared" << std::endl;
+    std::cout << "InputBuffer: InputBuffer cleared" << std::endl;
 }

@@ -16,10 +16,11 @@ void Fighter3::init()
     BaseCharacter::init();
 
     // Initialize the state machine with custom states
-    auto customStateMap = getStatemachine().getDefaultStateMap(); // get default state map from statemachine with default behavior
+    auto customStateMap =
+        getStatemachine().getDefaultStateMap(); // get default state map from statemachine with default behavior
     //customStateMap["Idle"] = std::make_shared<F1IdleState>(); // override with custom state
 
-    getStatemachine().init(customStateMap); 
+    getStatemachine().init(customStateMap);
 
     setCurrentFrameTag("gbFighter-Idle"); // using nesFighter-Graphics
     setObjName("Shang Tsung");
@@ -60,12 +61,12 @@ void Fighter3::init()
 
     // set special moves
     specialMoves = {
-        {"Fireball",
+        {"special1",
          {{InputDirection::Down, InputAction::None},
           {InputDirection::DownForward, InputAction::None},
           {InputDirection::Forward, InputAction::None},
           {InputDirection::Neutral, InputAction::Punch}}},
-        {"Spear",
+        {"spcieal2",
          {{InputDirection::Backward, InputAction::None},
           {InputDirection::Down, InputAction::None},
           {InputDirection::Forward, InputAction::None},

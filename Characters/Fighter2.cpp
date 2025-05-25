@@ -16,10 +16,11 @@ void Fighter2::init()
     BaseCharacter::init();
 
     // Initialize the state machine with custom states
-    auto customStateMap = getStatemachine().getDefaultStateMap(); // get default state map from statemachine with default behavior
+    auto customStateMap =
+        getStatemachine().getDefaultStateMap(); // get default state map from statemachine with default behavior
     customStateMap["Kick"] = std::make_shared<PunchState>(); // override with custom state
 
-    getStatemachine().init(customStateMap); 
+    getStatemachine().init(customStateMap);
 
 
     setCurrentFrameTag("nesFighter-Idle"); // using nesFighter-Graphics
@@ -51,12 +52,12 @@ void Fighter2::init()
 
     // set special moves
     specialMoves = {
-        {"Fireball",
+        {"special1",
          {{InputDirection::Down, InputAction::None},
           {InputDirection::DownForward, InputAction::None},
           {InputDirection::Forward, InputAction::None},
           {InputDirection::Neutral, InputAction::Punch}}},
-        {"Spear",
+        {"special2",
          {{InputDirection::Backward, InputAction::None},
           {InputDirection::Down, InputAction::None},
           {InputDirection::Forward, InputAction::None},

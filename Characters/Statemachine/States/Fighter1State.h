@@ -16,12 +16,11 @@ public:
     STATE_METHODS
 };
 
-class F1DragenshotState : public State
+class F1Special1State : public State
 {
-    F1DragenshotState() : State("Dragenshot") {};
+    F1Special1State() : State("Special1") {};
     STATE_METHODS
 };
-
 
 
 #endif //GBFIGHTER_FIGHTER1STATE_H

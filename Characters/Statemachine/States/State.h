@@ -31,9 +31,9 @@ protected:
     CharacterController* controller = nullptr; // Pointer to the CharacterController
     Statemachine* statemachine = nullptr;      // Pointer to the Statemachine
     float timer = 0;
-    
-    std::vector<std::pair<std::string,std::function<bool()>>> commonTransitions;
-    
+
+    std::unordered_map<std::string, std::function<bool()>> commonTransitions;
+
 
 protected:
     bool checkForHit();

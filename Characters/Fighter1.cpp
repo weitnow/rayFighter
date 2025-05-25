@@ -55,15 +55,15 @@ void Fighter1::init()
 
     // set special moves
     specialMoves = {
-        {"Fireball",
+        {"special1",
          {{InputDirection::Down, InputAction::None},
           {InputDirection::DownForward, InputAction::None},
           {InputDirection::Forward, InputAction::None},
           {InputDirection::Forward, InputAction::Punch}}},
-        {"Spear",
+        {"special2",
          {{InputDirection::Down, InputAction::None},
-          {InputDirection::Forward, InputAction::None},
-          {InputDirection::Neutral, InputAction::Punch}}},
+          {InputDirection::Down, InputAction::None},
+          {InputDirection::Up, InputAction::None}}},
 
     };
 }

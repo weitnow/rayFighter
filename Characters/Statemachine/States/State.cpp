@@ -67,6 +67,8 @@ void State::checkTransitions(const std::vector<std::string>& allowedTransitions)
         {
             if (transition.first == stateName && transition.second())
             {
+                std::cout << "Transitioning from " << statemachine->getCurrentStateAsString() << " to "
+                          << transition.first << std::endl;
                 statemachine->changeState(stateName);
                 return; // exit after first successful transition
             }
@@ -76,21 +78,22 @@ void State::checkTransitions(const std::vector<std::string>& allowedTransitions)
 
 State::State(const std::string& name) : stateName(name)
 {
-    // this list gets checked from top to botton. first state whichs lambda results true will execute. order matters!
     commonTransitions = {
-        
-        { "Walk",     [this]() { return controller->moveLeft || controller->moveRight && !controller->duck;} },
-        { "Jump",     [this]() { return controller->jump; } },
-        { "Duck",     [this]() { return controller->duck; } },
-        { "Punch",    [this]() { return controller->punch; } },
-        { "Kick",     [this]() { return controller->kick; } },
-        { "Block",    [this]() { return controller->block; } },
-        { "DuckPunch",[this]() { return controller->punch && controller->duck; } },
-        { "DuckKick", [this]() { return controller->kick && controller->duck; } },
-        { "DuckBlock",[this]() { return controller->block && controller->duck; } },
-        { "JumpPunch",[this]() { return controller->punch && !controller->jump; } },
-        { "Idle",     [this]() { return !controller->moveLeft && !controller->moveRight && !controller->duck; } },
-        
+        {"Special1", [this]() { return controller->special1; }},
+        {"Special2", [this]() { return controller->special2; }},
+        {"Special3", [this]() { return controller->special3; }},
+        {"Walk", [this]() { return controller->moveLeft || controller->moveRight && !controller->duck; }},
+        {"Jump", [this]() { return controller->jump; }},
+        {"Duck", [this]() { return controller->duck; }},
+        {"Punch", [this]() { return controller->punch; }},
+        {"Kick", [this]() { return controller->kick; }},
+        {"Block", [this]() { return controller->block; }},
+        {"DuckPunch", [this]() { return controller->punch && controller->duck; }},
+        {"DuckKick", [this]() { return controller->kick && controller->duck; }},
+        {"DuckBlock", [this]() { return controller->block && controller->duck; }},
+        {"JumpPunch", [this]() { return controller->punch && !controller->jump; }},
+        {"Idle", [this]() { return !controller->moveLeft && !controller->moveRight && !controller->duck; }},
+
     };
 }
 
@@ -98,17 +101,28 @@ State::State(const std::string& name) : stateName(name)
 void IdleState::Init()
 {
     owner->stop(); // set moveVector.x = 0
-    statemachine->changeState("Idle"); 
+    statemachine->changeState("Idle");
 }
 
 void IdleState::Update(float deltaTime)
 {
-    checkTransitions({ "Walk", "Jump", "Duck", "Punch", "Kick", "Block" });
+    // checkTransitions gets checked from beginning to the end. The FIRST matching transition will be executed.
+    // Order matters!
+    checkTransitions({
+        "Special1",
+        "Special2",
+        "Special3",
+        "Walk",
+        "Jump",
+        "Duck",
+        "Punch",
+        "Kick",
+        "Block",
+    });
 }
 
 void IdleState::Finalize()
 {
-    
 }
 
 /* #endregion */
@@ -116,7 +130,6 @@ void IdleState::Finalize()
 /* #region WalkState */
 void WalkState::Init()
 {
-
 }
 
 void WalkState::Update(float deltaTime)
@@ -129,14 +142,13 @@ void WalkState::Update(float deltaTime)
     else if (controller->moveRight)
     {
         owner->moveRight();
-    } 
+    }
 
-    checkTransitions({"Jump", "Duck", "Idle", "Punch", "Kick", "Block" });
+    checkTransitions({"Special1", "Special2", "Special3", "Jump", "Duck", "Idle", "Punch", "Kick", "Block"});
 }
 
 void WalkState::Finalize()
 {
-   
 }
 /* #endregion */
 
@@ -230,7 +242,7 @@ void DuckState::Init()
 /* #region DuckState */
 void DuckState::Update(float deltaTime)
 {
-    
+
     if (!controller->duck)
     {
         statemachine->changeState("Idle");

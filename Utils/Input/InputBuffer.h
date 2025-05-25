@@ -20,7 +20,7 @@ private:
         int frames; // how many frames this input has been held
     };
 
-    static constexpr int BUFFER_SIZE = 30;
+    static constexpr int BUFFER_SIZE = 45;
     static constexpr int MAX_LENIENCY_FRAMES = 15;
     std::deque<Input> buffer; // the input buffer
 };
