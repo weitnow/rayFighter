@@ -248,6 +248,8 @@ BaseCharacter* GameState::createPlayer(int characterNumber, int playerNumber)
 
     player->init(); // initialize the player
     player->getStatemachine().setGameState(this);
+    player->setGameState(this); // set the game state for the player
+
     player->setPlayerNumber(playerNumber);
 
     //add playerPtr to InputHandler

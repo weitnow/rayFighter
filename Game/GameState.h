@@ -56,13 +56,13 @@ protected: // VARIABLES
     float deltaTime;
 
     // <-- BaseState.h -->
-    List<unique<BaseCharacter>> baseCharacters;
-    List<unique<BaseGameObject>> gameObjects;
     CharacterController* player1Controller;
     CharacterController* player2Controller;
     */
 
     // <-- GameState.h -->
+    List<unique<BaseCharacter>> baseCharacters;
+    List<unique<BaseGameObject>> gameObjects;
     AsepriteAnimationFile* levelAnimFile;
     Gui* gui;
 

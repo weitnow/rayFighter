@@ -52,12 +52,12 @@ protected: // member variables
     float deltaTime;
 
     // <-- BaseState.h -->
-    List<unique<BaseCharacter>> baseCharacters;
-    List<unique<BaseGameObject>> gameObjects;
     CharacterController* player1Controller;
     CharacterController* player2Controller;
 
     // <-- GameState.h -->
+    // List<unique<BaseCharacter>> baseCharacters;
+    // List<unique<BaseGameObject>> gameObjects;
     // float camPos;
     // AsepriteAnimationFile* background;
     // std::string randomBackground;

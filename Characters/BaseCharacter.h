@@ -10,6 +10,8 @@
 class CharacterController;
 // Forward declaration of Statemachine
 class Statemachine;
+// Forward declaration of GameState
+class GameState;
 
 class BaseCharacter : public BaseGameObject
 {
@@ -43,6 +45,8 @@ public:
     CharacterController* getController();
 
     bool setCurrentFrameTag(std::string tag) override; //returns false if the animation is already playing
+
+    void setGameState(GameState* gameState);
 
     // states
     std::string getCurrentState();
@@ -80,6 +84,7 @@ protected:
     std::string currentState;
 
     CharacterController* controller;
+    GameState* gameState; // Pointer to the GameState, used for special moves
 
     int maxPowerLevel;
     int powerLevel;

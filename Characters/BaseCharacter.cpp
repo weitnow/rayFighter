@@ -6,7 +6,7 @@
 BaseCharacter::BaseCharacter(AsepriteManager* asepriteManager, float x, float y)
     : BaseGameObject(asepriteManager, x, y), isOnGround(false), animFileName("gbFighter"), isLeft(true),
       playerNumber(-1), statemachine(nullptr), currentState("Idle"), canDealDamage(true), controller(nullptr),
-      powerLevel(0), maxPowerLevel(0)
+      powerLevel(0), maxPowerLevel(0), gameState(nullptr), automaticallySetFrameTag(true)
 {
     affectedByGravity =
         true; // needs to be set here, because in the initializer list of basegameobject it is set to false
@@ -60,6 +60,7 @@ void BaseCharacter::update(float deltaTime)
             setCurrentFrameTag(animFileName + "-" + statemachine->getCurrentStateAsString());
         }
     }
+
 
     // update the member variables from the animationfile
     _updateMemberVariables();
@@ -261,4 +262,13 @@ void BaseCharacter::_updateCharacterController()
         return;
 
     controller->isLeft = isLeft;
+}
+
+void BaseCharacter::setGameState(GameState* gameState)
+{
+    if (gameState == nullptr)
+    {
+        throw std::runtime_error("BaseCharacter::setGameState() -> GameState is nullptr");
+    }
+    this->gameState = gameState;
 }
