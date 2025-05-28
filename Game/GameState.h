@@ -23,6 +23,8 @@ public: // METHODES
 
     BaseCharacter* createPlayer(int characterNumber, int playerNumber);
 
+    void addGameObject(unique<BaseGameObject> gameObject);
+
 
     Vector2 getMiddlePointBetweenPlayers() const;
     int _getScreenPosXofObject(BaseGameObject& object);

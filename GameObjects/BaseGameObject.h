@@ -7,6 +7,9 @@
 #include "CollisionBox2D.h"
 #include <raylib.h>
 
+// Forward declaration of GameState
+class GameState;
+
 // Using directive to shorten the type name
 using CollisionMap = Dictionary<std::string, List<CollisionBox2D>>;
 
@@ -109,6 +112,12 @@ public:
                                  float width,
                                  float height);
 
+    void setGameState(GameState* gameState);
+
+    void addGameObjectToGameState(std::unique_ptr<BaseGameObject> gameObject); //used for fireball etc.
+
+    AsepriteManager* asepriteManagerPtr;
+
 
 protected:
     Vector2 orginalPos; // the original position of the object as it was created - used for reseting the object
@@ -153,7 +162,8 @@ protected:
     CollisionMap throwBoxesPerFrame;
 
     AsepriteAnimationFile* animfilePtr;
-    AsepriteManager* asepriteManagerPtr;
+
+    GameState* gameState;
 
     // member functions
     virtual void _reducePushVector(float deltaTime);

@@ -258,6 +258,30 @@ BaseCharacter* GameState::createPlayer(int characterNumber, int playerNumber)
     return player;
 }
 
+void GameState::addGameObject(unique<BaseGameObject> gameObject)
+{
+    if (gameObject == nullptr)
+    {
+        throw std::runtime_error("GameState::addGameObject -> gameObject is nullptr");
+    }
+
+    // set the game state for the gameObject
+    gameObject->setGameState(this);
+
+    // add the gameObject to the list
+    gameObjects.push_back(std::move(gameObject));
+
+    // if the gameObject is a BaseCharacter, add it to the baseCharacters list
+    if (auto* character = dynamic_cast<BaseCharacter*>(gameObjects.back().get()))
+    {
+        // Release ownership from gameObjects and transfer to baseCharacters
+        std::unique_ptr<BaseGameObject> basePtr = std::move(gameObjects.back());
+        gameObjects.pop_back();
+        std::unique_ptr<BaseCharacter> charPtr(static_cast<BaseCharacter*>(basePtr.release()));
+        baseCharacters.push_back(std::move(charPtr));
+    }
+}
+
 Vector2 GameState::getMiddlePointBetweenPlayers() const
 {
     return Vector2{static_cast<float>(middlePointXbetweenPlayers), static_cast<float>(middlePointYbetweenPlayers)};

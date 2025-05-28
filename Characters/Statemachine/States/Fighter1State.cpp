@@ -27,6 +27,10 @@ void F1Special1State::Init()
     std::cout << "F1Special1State Init" << std::endl;
     owner->automaticallySetFrameTag = false;
     owner->setCurrentFrameTag("gbFighter-Dragonshot");
+
+    // create fireball
+    owner->addGameObjectToGameState(
+        std::make_unique<BaseGameObject>(owner->asepriteManagerPtr, owner->getPos().x + 20, owner->getPos().y));
 }
 
 void F1Special1State::Update(float deltaTime)

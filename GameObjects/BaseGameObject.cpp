@@ -1,5 +1,6 @@
 #include "BaseGameObject.h"
 #include "../Constants.h"
+#include "../Game/GameState.h"
 #include <assert.h>
 
 BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager)
@@ -7,7 +8,7 @@ BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager)
       isActive(true), isAlive(true), isInvincible(false), maxLife(1), currentLife(maxLife), _invincibleCounter(0.f),
       invincibleTime(Constants::INVINCIBLE_TIME), affectedByGravity(false), moveVector({0, 0}),
       getDurationCurrentFrame(0), currentFrame(0), minFrame(0), maxFrame(0), hasAnimJustFinished(false),
-      currentFrameTag(""), currentFrameAbsolut(0), drawShadow(false)
+      currentFrameTag(""), currentFrameAbsolut(0), drawShadow(false), gameState(nullptr)
 {
     if (!asepriteManager)
     {
@@ -769,4 +770,25 @@ List<CollisionBox2D> BaseGameObject::_checkIfCollisionMapHasCollisionBoxesAndRet
 
     // return an empty vector if the frame does not exist
     return collisionBoxes;
+}
+
+
+void BaseGameObject::setGameState(GameState* gameState)
+{
+    if (gameState == nullptr)
+    {
+        throw std::runtime_error("BaseCharacter::setGameState() -> GameState is nullptr");
+    }
+    this->gameState = gameState;
+}
+
+void BaseGameObject::addGameObjectToGameState(std::unique_ptr<BaseGameObject> gameObject)
+{
+    if (gameState == nullptr)
+    {
+        throw std::runtime_error("BaseGameObject::addGameObjectToGameState() -> GameState is nullptr");
+    }
+
+    // Add the gameObject to the gameState's gameObjects list
+    gameState->addGameObject(std::move(gameObject));
 }
