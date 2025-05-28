@@ -19,20 +19,20 @@ public:
 class F1Special1State : public State
 {
 public:
-    F1Special1State() : State("Dragonshot") {}; // using Dragonshot as Sprite
+    F1Special1State() : State("Special1") {};
     STATE_METHODS
 };
 
 class F1Special2State : public State
 {
 public:
-    F1Special2State() : State("A+B Move") {}; // using A+B Move as Sprite
+    F1Special2State() : State("Special2") {};
     STATE_METHODS
 };
 class F1Special3State : public State
 {
 public:
-    F1Special3State() : State("Special3") {};
+    F1Special3State() : State("Speical3") {};
     STATE_METHODS
 };
 

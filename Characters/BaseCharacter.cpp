@@ -48,15 +48,19 @@ void BaseCharacter::update(float deltaTime)
     statemachine->update(deltaTime);
 
     // UPDATE THE SPRITE
-    if (statemachine->getCurrentStateAsString() == "No current state")
+    if (automaticallySetFrameTag)
     {
-        setCurrentFrameTag(animFileName + "-Idle");
+        if (statemachine->getCurrentStateAsString() == "No current state")
+        {
+            setCurrentFrameTag(animFileName + "-Idle");
+        }
+        else if (currentState != statemachine->getCurrentStateAsString())
+        {
+            currentState = statemachine->getCurrentStateAsString();
+            setCurrentFrameTag(animFileName + "-" + statemachine->getCurrentStateAsString());
+        }
     }
-    else if (currentState != statemachine->getCurrentStateAsString())
-    {
-        currentState = statemachine->getCurrentStateAsString();
-        setCurrentFrameTag(animFileName + "-" + statemachine->getCurrentStateAsString());
-    }
+
     // update the member variables from the animationfile
     _updateMemberVariables();
     _updateCharacterController();
@@ -258,5 +262,3 @@ void BaseCharacter::_updateCharacterController()
 
     controller->isLeft = isLeft;
 }
-
-

@@ -25,16 +25,24 @@ void F1IdleState::Finalize()
 void F1Special1State::Init()
 {
     std::cout << "F1Special1State Init" << std::endl;
+    owner->automaticallySetFrameTag = false;
+    owner->setCurrentFrameTag("gbFighter-Dragonshot");
 }
 
 void F1Special1State::Update(float deltaTime)
 {
     std::cout << "F1Special1State Update" << std::endl;
+
+    // check if animation is finished
+    if (hasAnimationFinished())
+    {
+        statemachine->changeState("Idle");
+        owner->setCurrentFrameTag("gbFighter-Idle");
+    }
 }
-
-
 void F1Special1State::Finalize()
 {
+    owner->automaticallySetFrameTag = true; // reset to default
     std::cout << "F1Special1State Finalize" << std::endl;
 }
 
@@ -43,12 +51,23 @@ void F1Special1State::Finalize()
 void F1Special2State::Init()
 {
     std::cout << "F2Special1State Init" << std::endl;
+    owner->automaticallySetFrameTag = false;
+    owner->setCurrentFrameTag("gbFighter-A+B Move");
 }
 void F1Special2State::Update(float deltaTime)
 {
     std::cout << "F2Special1State Update" << std::endl;
+
+    // check if animation is finished
+    if (hasAnimationFinished())
+    {
+        statemachine->changeState("Idle");
+        owner->setCurrentFrameTag("gbFighter-Idle");
+    }
 }
 void F1Special2State::Finalize()
 {
+    owner->automaticallySetFrameTag = true; // reset to default
+
     std::cout << "F2Special1State Finalize" << std::endl;
 }
