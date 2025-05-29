@@ -49,14 +49,15 @@ bool State::checkForHit()
     return false; // no hit detected
 }
 
+bool State::hasAnimationFinishedPlusLastFrameDuration()
+{
+    return owner->getAnimFile()->hasAnimFinishedPlusLastFrameDuration();
+}
+
 bool State::hasAnimationFinished()
 {
-    // check if animation is finished
-    if (owner->getAnimFile()->hasAnimJustFinishedPlusLastFrameDuration())
-    {
-        return true;
-    }
-    return false;
+
+    return owner->getAnimFile()->hasAnimFinished();
 }
 
 void State::checkTransitions(const std::vector<std::string>& allowedTransitions)
@@ -223,7 +224,7 @@ void JumpPunchState::Init()
 
 void JumpPunchState::Update(float deltaTime)
 {
-    if (owner->getAnimFile()->hasAnimJustFinishedPlusLastFrameDuration())
+    if (owner->getAnimFile()->hasAnimFinishedPlusLastFrameDuration())
     {
         statemachine->changeState("Jump");
     }
@@ -272,7 +273,7 @@ void PunchState::Update(float deltaTime)
     checkForHit();
 
     // check if animation is finished
-    if (hasAnimationFinished())
+    if (hasAnimationFinishedPlusLastFrameDuration())
     {
         statemachine->changeState("Idle");
     }
@@ -293,7 +294,7 @@ void DuckPunchState::Init()
 
 void DuckPunchState::Update(float deltaTime)
 {
-    if (owner->getAnimFile()->hasAnimJustFinishedPlusLastFrameDuration())
+    if (owner->getAnimFile()->hasAnimFinishedPlusLastFrameDuration())
     {
         statemachine->changeState("Duck");
     }
@@ -318,7 +319,7 @@ void KickState::Update(float deltaTime)
 {
 
     // check if animation is finished
-    if (owner->getAnimFile()->hasAnimJustFinishedPlusLastFrameDuration())
+    if (owner->getAnimFile()->hasAnimFinishedPlusLastFrameDuration())
     {
         statemachine->changeState("Idle");
     }
@@ -339,7 +340,7 @@ void DuckKickState::Init()
 
 void DuckKickState::Update(float deltaTime)
 {
-    if (owner->getAnimFile()->hasAnimJustFinishedPlusLastFrameDuration())
+    if (owner->getAnimFile()->hasAnimFinishedPlusLastFrameDuration())
     {
         statemachine->changeState("Duck");
     }

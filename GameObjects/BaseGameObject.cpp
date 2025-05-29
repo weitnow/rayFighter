@@ -7,7 +7,7 @@ BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager)
     : ObjName(""), pushVector({0, 0}), scale(1.f), pos{0.f, 0.f}, color(WHITE), isFlippedX(false), isFlippedY(false),
       isActive(true), isAlive(true), isInvincible(false), maxLife(1), currentLife(maxLife), _invincibleCounter(0.f),
       invincibleTime(Constants::INVINCIBLE_TIME), affectedByGravity(false), moveVector({0, 0}),
-      getDurationCurrentFrame(0), currentFrame(0), minFrame(0), maxFrame(0), hasAnimJustFinished(false),
+      getDurationCurrentFrame(0), currentFrame(0), minFrame(0), maxFrame(0), hasAnimFinished(false),
       currentFrameTag(""), currentFrameAbsolut(0), drawShadow(false), gameState(nullptr)
 {
     if (!asepriteManager)
@@ -16,8 +16,8 @@ BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager)
         return;
     }
     this->asepriteManagerPtr = asepriteManager;
-    this->animfilePtr = this->asepriteManagerPtr->getAnimFile("gbFighter");
-    this->currentFrameTag = "gbFighter-Idle";
+    this->animfilePtr = this->asepriteManagerPtr->getAnimFile("nesFighter");
+    this->currentFrameTag = "nesFighter-Idle";
     this->animfilePtr->setFrameTag(this->currentFrameTag);
 }
 
@@ -701,7 +701,7 @@ void BaseGameObject::_updateMemberVariables()
     currentFrame = animfilePtr->getCurrentFrame();
     minFrame = animfilePtr->getMinFrame();
     maxFrame = animfilePtr->getMaxFrame();
-    hasAnimJustFinished = animfilePtr->hasAnimJustFinished();
+    hasAnimFinished = animfilePtr->hasAnimFinished();
     currentFrameAbsolut = currentFrame - minFrame;
 }
 

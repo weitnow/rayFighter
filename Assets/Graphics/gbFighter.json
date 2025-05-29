@@ -632,7 +632,8 @@
    { "name": "A+B Move Crouched", "from": 57, "to": 60, "direction": "forward", "color": "#000000ff" },
    { "name": "Dragonshot", "from": 61, "to": 63, "direction": "forward", "color": "#000000ff" },
    { "name": "Sidekick", "from": 65, "to": 67, "direction": "forward", "color": "#000000ff" },
-   { "name": "Upward Kick", "from": 68, "to": 72, "direction": "forward", "color": "#000000ff" }
+   { "name": "Upward Kick", "from": 68, "to": 72, "direction": "forward", "color": "#000000ff" },
+   { "name": "Shot", "from": 64, "to": 64, "direction": "forward", "color": "#000000ff" }
   ],
   "layers": [
    { "name": "Fighter", "opacity": 255, "blendMode": "normal" }

@@ -138,7 +138,7 @@ protected:
     int currentFrame;            // current frame of the animation
     int minFrame;                // min frame of the animation
     int maxFrame;                // max frame of the animation
-    bool hasAnimJustFinished;    // true if the animation has just finished
+    bool hasAnimFinished;    // true if the animation has just finished
     int currentFrameAbsolut;     // current frame number of the animation - min frame
 
     int maxLife;

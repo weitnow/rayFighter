@@ -37,7 +37,9 @@ protected:
 
 protected:
     bool checkForHit();
+    bool hasAnimationFinishedPlusLastFrameDuration();
     bool hasAnimationFinished();
+
     void checkTransitions(const std::vector<std::string>& allowedTransitions);
 };
 

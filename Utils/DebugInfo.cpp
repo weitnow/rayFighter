@@ -132,11 +132,11 @@ void DebugInfo::_drawCharacterDataInternal(BaseCharacter* character, const std::
     _drawDebugText("currentFrame", std::to_string(character->getAnimFile()->getCurrentFrame()), x, y);
 
     y += LINE_SPACING;
-    _drawDebugText("hasAnimJustFinished", std::to_string(character->getAnimFile()->hasAnimJustFinished()), x, y);
+    _drawDebugText("hasAnimFinished", std::to_string(character->getAnimFile()->hasAnimFinished()), x, y);
 
     y += LINE_SPACING;
-    _drawDebugText("hasAnimJustFinishedPlusLastFrameDuration",
-                   std::to_string(character->getAnimFile()->hasAnimJustFinishedPlusLastFrameDuration()),
+    _drawDebugText("hasAnimFinishedPlusLastFrameDuration",
+                   std::to_string(character->getAnimFile()->hasAnimFinishedPlusLastFrameDuration()),
                    x,
                    y);
 
@@ -171,7 +171,7 @@ void DebugInfo::_drawGameObjectDataInternal(BaseGameObject* gameObject, const st
     _drawDebugText("currentFrame", std::to_string(gameObject->getAnimFile()->getCurrentFrame()), x, y);
 
     y += LINE_SPACING;
-    _drawDebugText("hasAnimJustFinished", std::to_string(gameObject->getAnimFile()->hasAnimJustFinished()), x, y);
+    _drawDebugText("hasAnimFinished", std::to_string(gameObject->getAnimFile()->hasAnimFinished()), x, y);
 }
 
 void DebugInfo::_drawDebugText(const std::string& label, const std::string& value, int x, int y)

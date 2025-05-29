@@ -1,5 +1,6 @@
 #include "Fighter1State.h"
 #include "../../../Constants.h"
+#include "../../../GameObjects/Objects/Fireball.h"
 #include "../../../Utils/Input/InputHandler.h"
 #include "../../../Utils/SoundManager.h"
 
@@ -27,10 +28,7 @@ void F1Special1State::Init()
     std::cout << "F1Special1State Init" << std::endl;
     owner->automaticallySetFrameTag = false;
     owner->setCurrentFrameTag("gbFighter-Dragonshot");
-
-    // create fireball
-    owner->addGameObjectToGameState(
-        std::make_unique<BaseGameObject>(owner->asepriteManagerPtr, owner->getPos().x + 20, owner->getPos().y));
+    owner->stop();
 }
 
 void F1Special1State::Update(float deltaTime)
@@ -40,6 +38,8 @@ void F1Special1State::Update(float deltaTime)
     // check if animation is finished
     if (hasAnimationFinished())
     {
+        owner->addGameObjectToGameState(
+            std::make_unique<Fireball>(owner->asepriteManagerPtr, owner->getPos().x + 20, owner->getPos().y));
         statemachine->changeState("Idle");
         owner->setCurrentFrameTag("gbFighter-Idle");
     }

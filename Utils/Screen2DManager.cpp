@@ -432,7 +432,7 @@ void Screen2DManager::_updateScreenGenericEffects(float deltaTime)
 {
     if (screenGenericEffectPlaying)
     {
-        _animJustFinished = screenGenericEffectsAnimFile->hasAnimJustFinished();
+        _animJustFinished = screenGenericEffectsAnimFile->hasAnimFinished();
         std::cout << "_animJustFinished=" << _animJustFinished << std::endl;
 
         if (_animJustFinished != _previousAnimJustFinished)

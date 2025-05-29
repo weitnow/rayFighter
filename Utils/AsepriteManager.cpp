@@ -71,12 +71,12 @@ int AsepriteAnimationFile::getSpriteSizeY() const
     return spriteSizeY;
 }
 
-bool AsepriteAnimationFile::hasAnimJustFinished() const
+bool AsepriteAnimationFile::hasAnimFinished() const
 {
     return animJustFinished;
 }
 
-bool AsepriteAnimationFile::hasAnimJustFinishedPlusLastFrameDuration() const
+bool AsepriteAnimationFile::hasAnimFinishedPlusLastFrameDuration() const
 {
     return animJustFinishedPlusLastFrameDuration;
 }

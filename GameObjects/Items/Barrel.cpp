@@ -13,7 +13,7 @@ void Barrel::update(float deltaTime)
     BaseGameObject::update(deltaTime);
 
     // stop hit animation and set back to idle
-    if (currentFrameTag == "barrel-Hit" && this->getAnimFile()->hasAnimJustFinished())
+    if (currentFrameTag == "barrel-Hit" && this->getAnimFile()->hasAnimFinished())
     {
         setCurrentFrameTag("barrel-Idle");
     }

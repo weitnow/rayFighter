@@ -69,8 +69,8 @@ public:
     float getDurationCurrentFrame();
     int getSpriteSizeX() const;
     int getSpriteSizeY() const;
-    bool hasAnimJustFinished() const;
-    bool hasAnimJustFinishedPlusLastFrameDuration() const;
+    bool hasAnimFinished() const;
+    bool hasAnimFinishedPlusLastFrameDuration() const;
     int getCurrentFrame() const;
     int getMinFrame() const;
     int getMaxFrame() const;
