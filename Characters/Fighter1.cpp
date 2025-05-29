@@ -36,6 +36,9 @@ void Fighter1::init()
     addCollisionBoxForFrame("gbFighter-DuckPunch", 0, CollisionBoxType::HITBOX, true, 30, 14, 5, 5);
     addCollisionBoxForFrame("gbFighter-JumpPunch", 0, CollisionBoxType::HITBOX, true, 24, 20, 5, 5);
 
+    // special moves
+    addCollisionBoxForFrame("gbFighter-A+B Move", -2, CollisionBoxType::HITBOX, true, 0, 0, 35, 30);
+
     // x, y, width, height
     addCollisionBoxForFrame("gbFighter-Idle", -1, CollisionBoxType::HURTBOX, HurtboxType::HEAD, true, 10, 3, 12, 10);
     addCollisionBoxForFrame("gbFighter-Idle", -1, CollisionBoxType::HURTBOX, HurtboxType::BODY, true, 10, 13, 12, 10);

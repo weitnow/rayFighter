@@ -54,13 +54,14 @@ void F1Special1State::Finalize()
 // Special2
 void F1Special2State::Init()
 {
-    std::cout << "F2Special1State Init" << std::endl;
+    owner->canDealDamage = true; // allow to deal damage
     owner->automaticallySetFrameTag = false;
     owner->setCurrentFrameTag("gbFighter-A+B Move");
+    owner->jump();
 }
 void F1Special2State::Update(float deltaTime)
 {
-    std::cout << "F2Special1State Update" << std::endl;
+    checkForHit();
 
     // check if animation is finished
     if (hasAnimationFinished())
