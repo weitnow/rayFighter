@@ -17,8 +17,8 @@ enum MenuOptions
 class MenuState : public BaseState
 {
 public:
-    MenuState(Game* game);
-    ~MenuState();
+    explicit MenuState(Game* game);
+    ~MenuState() override;
     void Enter() override;
     void Update(float deltaTime) override;
     void Render() override;

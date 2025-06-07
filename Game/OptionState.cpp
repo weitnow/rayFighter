@@ -15,7 +15,7 @@ OptionSelectState::OptionSelectState(Game* game)
 
 OptionSelectState::~OptionSelectState()
 {
-    std::cout << "CharSelectState Destructor called, unloading resources" << std::endl;
+    std::cout << "CharSelectState Destructor called, unloading resources" << "\n";
 
     game->soundManager->unloadMusic("sunburn.mp3");
 
@@ -27,13 +27,13 @@ void OptionSelectState::Enter()
     BaseState::Enter();
 
     // Start playing background music
-    game->soundManager->loadMusic("sunburn.mp3", 1.f);
+    game->soundManager->loadMusic("sunburn.mp3", 1.F);
     game->soundManager->playBackgroundMusic("sunburn.mp3");
 
     screen2DManager->fadeEffect(0.6f, 0.f);
 }
 
-void OptionSelectState::Update(float deltaTime)
+void OptionSelectState::Update(const float deltaTime)
 {
 
     // Update OptionSelectScreen
@@ -219,7 +219,7 @@ void OptionSelectState::_renderOptionMenu()
     DrawText("Mastervolume", indentcol1, xValueFirstElement += spacer, 8, color);
     // Draw the background of the volume bar
     static const Rectangle volumeBar = {indentcol2,
-                                        xValueFirstElement + 1,
+                                        (float)xValueFirstElement + 1,
                                         volumebarLenght,
                                         8}; // Pos and Size of the volumebar
     DrawRectangleRec(volumeBar, Constants::RAYFIGHTER_LIGHTBROWN);

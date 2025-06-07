@@ -1,18 +1,9 @@
 #include "BaseState.h"
 #include "Game.h"
 
-BaseState::BaseState(Game* game) : game(game)
+BaseState::BaseState(Game* game) : screen2DManager(game->screen2DManager), player1(nullptr), player2(nullptr), game(game), soundManager(game->soundManager), inputHandler(game->inputHandler), asepriteManager(game->asepriteManager), debugInfo(nullptr), player1Controller(game->inputHandler->getPlayer1Controller()), player2Controller(game->inputHandler->getPlayer2Controller())
 {
 
-    screen2DManager = game->screen2DManager;
-    soundManager = game->soundManager;
-    inputHandler = game->inputHandler;
-    asepriteManager = game->asepriteManager;
-    debugInfo = nullptr;
-    player1 = nullptr;
-    player2 = nullptr;
-    player1Controller = game->inputHandler->getPlayer1Controller();
-    player2Controller = game->inputHandler->getPlayer2Controller();
 }
 
 BaseState::~BaseState()

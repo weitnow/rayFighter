@@ -49,7 +49,8 @@ ifeq ($(OS_WINDOWS), 1)
     CXX_SOURCES := $(shell powershell -Command "Get-ChildItem -Recurse -Include *.cpp | Select-Object -ExpandProperty FullName")
     CXX_SOURCES := $(subst \,/,$(CXX_SOURCES)) # Normalize Windows paths
 else
-    CXX_SOURCES := $(shell find . -name '*.cpp')
+    CXX_SOURCES := $(shell find . -path ./cmake-build-debug -prune -o -name '*.cpp' -print)
+
 endif
 
 # Print CXX_SOURCES for debugging

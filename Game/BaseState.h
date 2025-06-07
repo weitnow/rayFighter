@@ -49,7 +49,7 @@ protected: // member variables
     InputHandler* inputHandler;
     AsepriteManager* asepriteManager;
     DebugInfo* debugInfo;
-    float deltaTime;
+    float deltaTime{};
 
     // <-- BaseState.h -->
     CharacterController* player1Controller;
