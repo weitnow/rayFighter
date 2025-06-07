@@ -61,6 +61,9 @@ public:
     List<CollisionBox2D> getHurtBoxes();
     List<CollisionBox2D> getThrowBoxes();
 
+    // Todo: refactor this to private
+    bool canDealDamage;
+
     // position
     void setPos(float x, float y);
     void setPos(Vector2 pos);
@@ -138,7 +141,7 @@ protected:
     int currentFrame;            // current frame of the animation
     int minFrame;                // min frame of the animation
     int maxFrame;                // max frame of the animation
-    bool hasAnimFinished;    // true if the animation has just finished
+    bool hasAnimFinished;        // true if the animation has just finished
     int currentFrameAbsolut;     // current frame number of the animation - min frame
 
     int maxLife;

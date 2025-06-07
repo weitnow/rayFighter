@@ -50,8 +50,6 @@ public:
     Vector2 getMoveVector();
     Statemachine& getStatemachine();
 
-    // Todo: refactor this to private
-    bool canDealDamage;
 
     // if true, the character will automatically set the frameTag in ints update function which triggers the animation,
     // this will be set to false in the states for special attacks

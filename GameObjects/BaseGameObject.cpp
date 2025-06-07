@@ -8,7 +8,7 @@ BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager)
       isActive(true), isAlive(true), isInvincible(false), maxLife(1), currentLife(maxLife), _invincibleCounter(0.f),
       invincibleTime(Constants::INVINCIBLE_TIME), affectedByGravity(false), moveVector({0, 0}),
       getDurationCurrentFrame(0), currentFrame(0), minFrame(0), maxFrame(0), hasAnimFinished(false),
-      currentFrameTag(""), currentFrameAbsolut(0), drawShadow(false), gameState(nullptr)
+      currentFrameTag(""), currentFrameAbsolut(0), drawShadow(false), gameState(nullptr), canDealDamage(true)
 {
     if (!asepriteManager)
     {

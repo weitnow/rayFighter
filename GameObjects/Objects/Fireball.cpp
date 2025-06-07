@@ -8,7 +8,10 @@ Fireball::Fireball(AsepriteManager* asepriteManagerPtr, float x, float y, bool i
     this->setIsFlippedX(isFlippedX);
     this->setMaxLife(1); // Fireball is destroyed after one hit
     this->setAffectedByGravity(false);
-    this->setMoveSpeed(200); // Set a higher speed for the fireball
+    this->setMoveSpeed(10); // Set a higher speed for the fireball
+
+    // Add collision boxes for the fireball
+    addCollisionBoxForFrame("gbFighter-Shot", -1, CollisionBoxType::HITBOX, true, 10, 14, 10, 8);
 }
 
 void Fireball::update(float deltaTime)

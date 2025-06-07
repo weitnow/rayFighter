@@ -5,8 +5,8 @@
 
 BaseCharacter::BaseCharacter(AsepriteManager* asepriteManager, float x, float y)
     : BaseGameObject(asepriteManager, x, y), isOnGround(false), animFileName("gbFighter"), isLeft(true),
-      playerNumber(-1), statemachine(nullptr), currentState("Idle"), canDealDamage(true), controller(nullptr),
-      powerLevel(0), maxPowerLevel(0), automaticallySetFrameTag(true)
+      playerNumber(-1), statemachine(nullptr), currentState("Idle"), controller(nullptr), powerLevel(0),
+      maxPowerLevel(0), automaticallySetFrameTag(true)
 {
     affectedByGravity =
         true; // needs to be set here, because in the initializer list of basegameobject it is set to false
