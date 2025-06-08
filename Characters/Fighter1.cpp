@@ -71,6 +71,4 @@ void Fighter1::init()
 
     };
 
-    // Testing Todo: get rid of this
-    isActive = false;
 }
