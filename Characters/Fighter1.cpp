@@ -70,4 +70,7 @@ void Fighter1::init()
           {InputDirection::Up, InputAction::None}}},
 
     };
+
+    // Testing Todo: get rid of this
+    isActive = false;
 }

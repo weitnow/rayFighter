@@ -11,7 +11,7 @@ class AsepriteAnimationFile;
 class GameState : public BaseState
 {
 public: // METHODES
-    GameState(Game* game);
+    explicit GameState(Game* game);
     virtual ~GameState();
     virtual void Enter() override;
     virtual void Update(float deltaTime) override;
@@ -26,7 +26,7 @@ public: // METHODES
     void addGameObject(unique<BaseGameObject> gameObject);
 
 
-    Vector2 getMiddlePointBetweenPlayers() const;
+    [[nodiscard]] Vector2 getMiddlePointBetweenPlayers() const;
     int _getScreenPosXofObject(BaseGameObject& object);
 
 public: // VARIABLES
@@ -46,7 +46,10 @@ protected: // METHODES
     void _keepPlayersOnStage();
     void _updateCamera(bool restriction = true); // if restriction is true, the camera is restricted to the stage
     void _updateAllGameObjects(float deltaTime);
-    void _updateAllBaseCharacters(float deltaTime);
+    void _updateAllBaseCharacters(float deltatime);
+
+    void _drawAllGameObjects();
+    void _drawAllBaseCharacters();
 
 protected: // VARIABLES
     /* <-- Game.h -->

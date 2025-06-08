@@ -19,7 +19,7 @@ ifeq ($(WARNINGS_AS_ERRORS), 1)
 CXX_WARNINGS += -Werror
 endif
 
-CXX_STANDARD = c++17
+CXX_STANDARD = c++20
 CXX = g++
 CXXFLAGS = $(CXX_WARNINGS) -std=$(CXX_STANDARD)
 

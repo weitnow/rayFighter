@@ -23,6 +23,8 @@ void BaseCharacter::init() // will be called by the createPlayer function in Gam
 
 void BaseCharacter::update(float deltaTime)
 {
+    if (!isActive) { return; }
+
     if (scale != 1)
     {
         // TODO: Implement scale function

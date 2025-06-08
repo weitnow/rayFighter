@@ -2,6 +2,8 @@
 #include "Game/Game.h"
 
 #include "Game/IntroState.h"
+#include "Game/CharSelectState.h"
+#include "Game/GameState.h"
 
 
 
@@ -15,7 +17,12 @@ int main(void)
     auto game = std::make_unique<Game>();
     game->init();
 
-    game->ChangeState(std::make_unique<IntroState>(game.get()));
+    //game->ChangeState(std::make_unique<IntroState>(game.get()));
+    //game->ChangeState(std::make_unique<CharSelectState>(game.get()));
+    //game->ChangeState(std::make_unique<GameState>(game.get()));
+    game->ChangeState(std::make_unique<GameState>(game.get()));
+
+
 
     // Main game loop
     while (!game->quit)

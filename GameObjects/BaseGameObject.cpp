@@ -5,7 +5,7 @@
 
 BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager)
     : ObjName(""), pushVector({0, 0}), scale(1.f), pos{0.f, 0.f}, color(WHITE), isFlippedX(false), isFlippedY(false),
-      isActive(true), isAlive(true), isInvincible(false), maxLife(1), currentLife(maxLife), _invincibleCounter(0.f),
+      isActive(true), isAlive(true), shouldDestroy(false), isInvincible(false), maxLife(1), currentLife(maxLife), _invincibleCounter(0.f),
       invincibleTime(Constants::INVINCIBLE_TIME), affectedByGravity(false), moveVector({0, 0}),
       getDurationCurrentFrame(0), currentFrame(0), minFrame(0), maxFrame(0), hasAnimFinished(false),
       currentFrameTag(""), currentFrameAbsolut(0), drawShadow(false), gameState(nullptr), canDealDamage(true)
@@ -40,6 +40,8 @@ void BaseGameObject::init()
 
 void BaseGameObject::update(float deltaTime)
 {
+    if (!isActive) { return; }
+
     if (scale != 1)
     {
         // TODO: Implement scale function
@@ -73,6 +75,7 @@ void BaseGameObject::update(float deltaTime)
 
 void BaseGameObject::draw()
 {
+    if (!isActive) { return; }
 
     if (animfilePtr != nullptr)
     {
@@ -165,12 +168,16 @@ int BaseGameObject::getCurrentLife()
 
 bool BaseGameObject::getIsAlive()
 {
-    return isAlive;
+    return isAlive; // takeDamage will set isAlive == false if currentLife is less then 0
 }
 
 bool BaseGameObject::getIsActive()
 {
     return isActive;
+}
+bool BaseGameObject::getShouldDestroy()
+{
+    return shouldDestroy;
 }
 
 void BaseGameObject::setCurrentLife(int currentLife)

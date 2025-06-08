@@ -33,6 +33,7 @@ GameState::GameState(Game* game) : BaseState(game)
     {
         throw std::runtime_error("GameState::GameState -> player1 or player2 is nullptr");
     }
+
 }
 
 GameState::~GameState()
@@ -66,13 +67,6 @@ void GameState::Update(float deltaTime)
 {
     _updateIsLeftPlayer1and2(); // Check if player1 is left of player2
 
-
-    // Update all gameObjects
-    _updateAllGameObjects(deltaTime);
-    // Update all baseCharacters
-    _updateAllBaseCharacters(deltaTime);
-
-
     // Update players
     player1->update(deltaTime);
     player2->update(deltaTime);
@@ -84,6 +78,9 @@ void GameState::Update(float deltaTime)
     _updateCamera(true); //true = camera has restrictions turned on
 
     _keepPlayersOnStage(); // Keep the players on the stage
+
+    _updateAllGameObjects(deltaTime);
+    _updateAllBaseCharacters(deltaTime);
 
     // update levelAnimFile
     levelAnimFile->update(deltaTime);
@@ -113,18 +110,8 @@ void GameState::Render()
     // DRAW LEVEL
     levelAnimFile->drawCurrentSelectedTag(0, 24, 1, WHITE);
 
-    // draw gameObjects (player1 and player2 included)
-    // Draw all gameObjects
-    for (auto& object : gameObjects)
-    {
-        object->draw();
-    }
-
-    // Draw all baseCharacters
-    for (auto& object : baseCharacters)
-    {
-        object->draw();
-    }
+    _drawAllBaseCharacters();
+    _drawAllGameObjects();
 
     // draw player 1 and 2
     player1->draw();
@@ -401,16 +388,40 @@ void GameState::_updateCamera(bool restriction)
 
 void GameState::_updateAllGameObjects(float deltaTime)
 {
-    for (auto& object : gameObjects)
+
+    for (int i = gameObjects.size() - 1; i >= 0; --i)
     {
-        object->update(deltaTime);
+        if (gameObjects[i]->getShouldDestroy())
+        {
+
+            gameObjects.erase(gameObjects.begin() + i);
+        }
+        else
+        {
+            gameObjects[i]->update(deltaTime);
+        }
     }
 }
 
-void GameState::_updateAllBaseCharacters(float deltaTime)
+void GameState::_updateAllBaseCharacters(float deltatime)
 {
     for (auto& object : baseCharacters)
     {
         object->update(deltaTime);
+    }
+}
+void GameState::_drawAllGameObjects()
+{
+    for (auto& object : gameObjects)
+    {
+        object->draw();
+    }
+}
+void GameState::_drawAllBaseCharacters()
+{
+    // Draw all baseCharacters
+    for (auto& object : baseCharacters)
+    {
+        object->draw();
     }
 }

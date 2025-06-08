@@ -36,6 +36,7 @@ public:
 
     bool getIsAlive();
     bool getIsActive();
+    bool getShouldDestroy();
 
     void setObjName(std::string name);
     std::string getObjName();
@@ -134,8 +135,9 @@ protected:
     bool isFlippedY;
     std::string currentFrameTag; // for example "gbFighter-Idle"
     std::string ObjName;         // for example "Andy"
-    bool isActive;
-    bool isAlive; // if life is < 0 takeDamage will set isAlive = false
+    bool isActive;               // if isActive is false, object is NOT updated or drawn
+    bool isAlive;                // if life is < 0 takeDamage will set isAlive = false
+    bool shouldDestroy;          // if shouldDestroy is true, objects gets removed from the game (except p1 or p2)
     bool isInvincible;
     int getDurationCurrentFrame; // Duration of the current frame in milliseconds
     int currentFrame;            // current frame of the animation
