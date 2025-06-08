@@ -29,10 +29,11 @@ public:
 
 public:
     // Global components
-    Screen2DManager* screen2DManager;
-    SoundManager* soundManager;
-    InputHandler* inputHandler;
-    AsepriteManager* asepriteManager;
+    SoundManager* soundManager; // SoundManager is a singleton, so we can use it directly
+    std::unique_ptr<Screen2DManager> screen2DManager;
+    std::unique_ptr<InputHandler> inputHandler;
+    std::unique_ptr<AsepriteManager> asepriteManager;
+
 
     float deltaTime;
     int player1;

@@ -9,7 +9,7 @@ Game::Game() : quit(false)
 
     // Managing Global Compontents - which will be used in all game states
     // Initialize screen2DManager and set window size and title, this has to be done first before everything else
-    screen2DManager = new Screen2DManager("C++ RayFighter"); // instance of Screen2DManager
+    screen2DManager = std::make_unique<Screen2DManager>("C++ RayFighter"); //instance of Screen2DManager
 
     if (!screen2DManager->loadScreenResolution()) //load screenresolution from file
     {
@@ -22,10 +22,10 @@ Game::Game() : quit(false)
     screen2DManager->loadScreenResolution();
     soundManager->loadSoundConfig();
 
-    inputHandler = new InputHandler();
-    asepriteManager = new AsepriteManager{"Assets/Graphics/"}; // instance of AsepriteManager
+    inputHandler = std::make_unique<InputHandler>();
+    asepriteManager = std::make_unique<AsepriteManager>("Assets/Graphics/"); // instance of AsepriteManager
     asepriteManager->init();
-    screen2DManager->takeReferenceToAsepriteManager(asepriteManager); // load all aseprite files
+    screen2DManager->takeReferenceToAsepriteManager(asepriteManager.get()); // load all aseprite files
     deltaTime = GetFrameTime(); // will be feed in the update method of the different game states
 
     screen2DManager->loadScreenGenericEffects(
@@ -46,9 +46,6 @@ Game::~Game()
         stateStack.pop();
     }
 
-    delete screen2DManager; //deallocate memory on the heap
-    delete inputHandler;    //deallocate memory on the heap
-    delete asepriteManager; //deallocate memory on the heap <--Ensure no state is using this when deleting
     // soundManager is a singleton and will be deleted automatically
 }
 
