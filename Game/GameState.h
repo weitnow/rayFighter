@@ -8,6 +8,8 @@
 
 // forward declarations
 class AsepriteAnimationFile;
+class CollisionDetection;
+
 class GameState : public BaseState
 {
 public: // METHODES
@@ -70,6 +72,7 @@ protected: // VARIABLES
     List<unique<BaseGameObject>> gameObjects;
     AsepriteAnimationFile* levelAnimFile;
     Gui* gui;
+    CollisionDetection* hitDetection;
 
     int middlePointXbetweenPlayers = 0; // will be updated in _updateMiddlePointBetweenPlayers
     int middlePointYbetweenPlayers = 0;

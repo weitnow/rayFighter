@@ -62,8 +62,7 @@ public:
     List<CollisionBox2D> getHurtBoxes();
     List<CollisionBox2D> getThrowBoxes();
 
-    // Todo: refactor this to private
-    bool canDealDamage;
+    bool canDealDamage; // hitdetection will only work if this is true, it will be set to false by the CollisionDetection-System, after a hit has been registered
 
     // position
     void setPos(float x, float y);

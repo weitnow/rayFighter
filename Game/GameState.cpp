@@ -3,6 +3,7 @@
 #include "../Characters/Fighter2.h"
 #include "../Characters/Fighter3.h"
 #include "../Constants.h"
+#include "../Systems/CollisionDetection.h"
 #include "../Utils/HelperFunctions.h"
 #include "Game.h"
 
@@ -33,6 +34,9 @@ GameState::GameState(Game* game) : BaseState(game)
     {
         throw std::runtime_error("GameState::GameState -> player1 or player2 is nullptr");
     }
+
+    hitDetection = &CollisionDetection::getInstance(); // get reference to singleton
+    hitDetection->init(this); // pass gamestate to singleton to access gameobjects for hitdetection
 
 }
 
@@ -87,6 +91,9 @@ void GameState::Update(float deltaTime)
 
     // Update the HUD
     gui->update(deltaTime);
+
+    // Hitdetection
+    hitDetection->checkForCollision(*player1, *player2);
 
     HandleInput();
 }

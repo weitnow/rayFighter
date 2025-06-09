@@ -31,7 +31,9 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)
 
 # Create executable
-add_executable(${PROJECT_NAME} ${CXX_SOURCES})
+add_executable(${PROJECT_NAME} ${CXX_SOURCES}
+        Systems/CollisionDetection.h
+        Systems/CollisionDetection.cpp)
 
 # Include directories
 target_include_directories(${PROJECT_NAME} PRIVATE
