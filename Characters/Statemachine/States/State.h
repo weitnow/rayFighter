@@ -36,7 +36,6 @@ protected:
 
 
 protected:
-    bool checkForHit();
     bool hasAnimationFinishedPlusLastFrameDuration();
     bool hasAnimationFinished();
 

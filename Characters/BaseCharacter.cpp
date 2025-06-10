@@ -104,14 +104,6 @@ void BaseCharacter::punch()
 {
 }
 
-void BaseCharacter::takeDamage(float damage, CollisionBox2D* hitbox)
-{
-
-
-    BaseGameObject::takeDamage(damage, hitbox);
-
-    statemachine->changeState("Hit");
-}
 
 void BaseCharacter::setIsLeft(bool isLeft)
 {
@@ -264,4 +256,23 @@ void BaseCharacter::_updateCharacterController()
         return;
 
     controller->isLeft = isLeft;
+}
+void BaseCharacter::handleHitLogic(List<CollisionBox2D*>& hitboxesThatHit,
+                                   List<CollisionBox2D*>& hurtboxesThatWereHit,
+                                   BaseGameObject& otherGameObject)
+{
+    otherGameObject.takeDamage(1);
+    otherGameObject.setPushVector({120,0});
+    if (BaseCharacter* character = dynamic_cast<BaseCharacter*>(&otherGameObject))
+    {
+        character->getStatemachine().changeState("Hit");
+    }
+
+
+}
+void BaseCharacter::handleGotHitLogic(List<CollisionBox2D*>& hitboxesThatHit,
+                                      List<CollisionBox2D*>& hurtboxesThatWereHit,
+                                      BaseGameObject& otherGameObject)
+{
+
 }

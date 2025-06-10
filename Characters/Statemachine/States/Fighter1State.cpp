@@ -61,8 +61,6 @@ void F1Special2State::Init()
 }
 void F1Special2State::Update(float deltaTime)
 {
-    checkForHit();
-
     // check if animation is finished
     if (hasAnimationFinished())
     {

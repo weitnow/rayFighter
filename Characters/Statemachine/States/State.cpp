@@ -26,28 +26,6 @@ void State::setGameState(GameState* gameState)
     this->gameState = gameState;
 }
 
-bool State::checkForHit()
-{
-    // check for hits
-    for (auto& hitbox : owner->getHitBoxes())
-    {
-        for (auto& hurtbox : opponent->getHurtBoxes())
-        {
-            if (Utils::checkCollision(hitbox, hurtbox) && owner->canDealDamage)
-            {
-                opponent->takeDamage(1, &hitbox);
-                opponent->setPushVector({120, 0});
-                owner->canDealDamage = false;
-
-                // Transition the opponent into "Hit" or "Hurt" state
-                opponent->getStatemachine().changeState("Hit");
-                return true; // hit detected
-            }
-        }
-    }
-
-    return false; // no hit detected
-}
 
 bool State::hasAnimationFinishedPlusLastFrameDuration()
 {
@@ -270,7 +248,6 @@ void PunchState::Init()
 
 void PunchState::Update(float deltaTime)
 {
-    checkForHit();
 
     // check if animation is finished
     if (hasAnimationFinishedPlusLastFrameDuration())

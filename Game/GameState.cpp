@@ -94,6 +94,10 @@ void GameState::Update(float deltaTime)
 
     // Hitdetection
     hitDetection->checkForCollision(*player1, *player2);
+    hitDetection->checkForCollision(*player2, gameObjects);
+    hitDetection->checkForCollision(*player1, gameObjects);
+    hitDetection->checkForCollision(*player1, baseCharacters);
+    hitDetection->checkForCollision(*player2, baseCharacters);
 
     HandleInput();
 }
@@ -295,7 +299,7 @@ void GameState::_updateMiddlePointBetweenPlayers()
 
 void GameState::_updateIsLeftPlayer1and2()
 {
-    // check wheter player 1 is left of player 2
+    // check whether player 1 is left of player 2
     if (player1->getPos().x < player2->getPos().x)
     {
         player1->setIsLeft(true);

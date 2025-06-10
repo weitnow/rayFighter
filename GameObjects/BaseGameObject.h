@@ -25,11 +25,10 @@ public:
     virtual void update(float deltaTime);
     virtual void draw();
 
-    virtual void takeDamage(float damage = 1.f);
-    virtual void takeDamage(float damage, CollisionBox2D* hitbox);
+    virtual void takeDamage(float damage);
 
-    virtual void onYouGotHit(List<CollisionBox2D*>& hitboxesThatHit, List<CollisionBox2D*>& hurtboxesThatWereHit, BaseGameObject& otherGameObject);
-    virtual void onYouHit(List<CollisionBox2D*>& hitboxesThatHit, List<CollisionBox2D*>& hurtboxesThatWereHit, BaseGameObject& otherGameObject);
+    virtual void onYouGotHit(List<CollisionBox2D*>& hitboxesThatHit, List<CollisionBox2D*>& hurtboxesThatWereHit, BaseGameObject& otherGameObject); // use handleGotHitLogic-Methode
+    virtual void onYouHit(List<CollisionBox2D*>& hitboxesThatHit, List<CollisionBox2D*>& hurtboxesThatWereHit, BaseGameObject& otherGameObject); // use handleHitLogic-Methode
 
     int getMaxLife();
     void setMaxLife(int maxLife);
@@ -191,6 +190,9 @@ protected:
                                           CollisionBoxType collisionBoxType,
                                           HurtboxType hurtboxType,
                                           bool isActive);
+
+    virtual void handleHitLogic(List<CollisionBox2D*>& hitboxesThatHit, List<CollisionBox2D*>& hurtboxesThatWereHit, BaseGameObject& otherGameObject);
+    virtual void handleGotHitLogic(List<CollisionBox2D*>& hitboxesThatHit, List<CollisionBox2D*>& hurtboxesThatWereHit, BaseGameObject& otherGameObject);
 
     List<CollisionBox2D> _checkIfCollisionMapHasCollisionBoxesAndReturnList(const std::string& currentFrameTag,
                                                                             const int currentFrameAbsolut,

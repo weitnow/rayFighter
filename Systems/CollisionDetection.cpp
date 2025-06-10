@@ -41,11 +41,8 @@ bool CollisionDetection::checkForCollision(BaseGameObject& gameObject1, BaseGame
            _checkSingleDirectionCollisionInternal(gameObject2, gameObject1);
 }
 
-void CollisionDetection::checkForCollision(BaseGameObject& gameObject, List<unique<BaseGameObject>>& gameObjects) const
-{
-}
 void CollisionDetection::checkForCollision(List<unique<BaseGameObject>>& listOfGameObjects1,
-                                List<unique<BaseGameObject>>& listOfGameObjects2) const
+                                List<unique<BaseGameObject>>& listOfGameObjects2)
 {
 }
 
@@ -63,23 +60,8 @@ bool CollisionDetection::_checkSingleDirectionCollisionInternal(BaseGameObject& 
                 hitboxesThatHit.push_back(&hitbox);
                 hurtboxesThatWereHit.push_back(&hurtbox);
 
-                //attacker.canDealDamage = false;
-
-                /*
-                defender.takeDamage(1, &hitbox);
-                defender.setPushVector({120, 0});
-
-
-                // Try to cast to BaseCharacter
-                if (BaseCharacter* character = dynamic_cast<BaseCharacter*>(&defender))
-                {
-                    character->getStatemachine().changeState("Hit");
-                }
-                */
-
-                attacker.onYouHit(hitboxesThatHit, hurtboxesThatWereHit, defender);
                 defender.onYouGotHit(hitboxesThatHit, hurtboxesThatWereHit, attacker);
-
+                attacker.onYouHit(hitboxesThatHit, hurtboxesThatWereHit, defender); // here we set also canDealDamage to false
                 return true;
             }
         }

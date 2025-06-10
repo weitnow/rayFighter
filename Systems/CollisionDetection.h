@@ -26,8 +26,10 @@ public:
     void update(float deltaTime); // init(GameState* gameState) needed before calling update
 
     bool checkForCollision(BaseGameObject& gameObject1, BaseGameObject& gameObject2);
-    void checkForCollision(BaseGameObject& gameObject, List<unique<BaseGameObject>>& gameObjects) const;
-    void checkForCollision(List<unique<BaseGameObject>>& listOfGameObjects1, List<unique<BaseGameObject>>& listOfGameObjects2) const;
+    void checkForCollision(List<unique<BaseGameObject>>& listOfGameObjects1, List<unique<BaseGameObject>>& listOfGameObjects2);
+
+    template<typename T>
+    void checkForCollision(BaseGameObject& gameObject, List<unique<T>>& gameObjects);
 
 private:
     CollisionDetection(); // private constructor, because singleton
@@ -38,6 +40,19 @@ private:
     List<CollisionBox2D*> hurtboxesThatWereHit;
 };
 
+template<typename T>
+void CollisionDetection::checkForCollision(BaseGameObject& gameObject, List<unique<T>>& gameObjects)
+{
+    for (auto& otherGameObject : gameObjects)
+    {
+        if (otherGameObject) {
+            checkForCollision(gameObject, *otherGameObject.get());
+        } else
+        {
+            throw std::runtime_error("Null game object encountered in collision detection");
+        }
+    }
+}
 
 
 #endif //COLLISIONDETECTION_H

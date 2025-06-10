@@ -148,22 +148,16 @@ void BaseGameObject::takeDamage(float damage)
     }
 }
 
-void BaseGameObject::takeDamage(float damage, CollisionBox2D* hitbox)
-{
-    std::cout << "BaseGameObject::takeDamage -> " << ObjName << " took " << damage << " damage." << std::endl;
-
-    takeDamage(damage);
-}
 void BaseGameObject::onYouGotHit(List<CollisionBox2D*>& hitboxesThatHit,
                                  List<CollisionBox2D*>& hurtboxesThatWereHit,
                                  BaseGameObject& otherGameObject)
 {
     if (!otherGameObject.canDealDamage)
     {
-        std::cout << "hit registered but canDealDamage of " << otherGameObject.getObjName() << " is set to false." << std::endl;
+        //std::cout << "hit registered but canDealDamage of " << otherGameObject.getObjName() << " is set to false." << std::endl;
     } else
     {
-        // but here hitlogic if YOU WERE hit
+        handleGotHitLogic(hitboxesThatHit, hurtboxesThatWereHit, otherGameObject);
     }
 
 }
@@ -173,18 +167,14 @@ void BaseGameObject::onYouHit(List<CollisionBox2D*>& hitboxesThatHit,
 {
     if (!this->canDealDamage)
     {
-        std::cout << this->getObjName() << " hit " << otherGameObject.getObjName() << ". But canDealDamage of " << this->getObjName() << " is set to false." << std::endl;
+        //std::cout << this->getObjName() << " hit " << otherGameObject.getObjName() << ". But canDealDamage of " << this->getObjName() << " is set to false." << std::endl;
     } else
     {
         std::cout << this->getObjName() << " hit " << otherGameObject.getObjName() << ". canDealDamage of " << this->getObjName() << " is set to true." << std::endl;
 
-        // put here hitlogic if YOU hit
-
-
+        this->canDealDamage = false; // will be set true in the statemachine, otherwise we keep hitting the opponent
+        handleHitLogic(hitboxesThatHit, hurtboxesThatWereHit, otherGameObject);
     }
-
-
-
 }
 
 
@@ -741,6 +731,18 @@ void BaseGameObject::_addCollisionBoxForFrameInternal(std::string frameTagName,
     {
         throw std::runtime_error("CollisionBoxType not found");
     }
+}
+void BaseGameObject::handleHitLogic(List<CollisionBox2D*>& hitboxesThatHit,
+                                    List<CollisionBox2D*>& hurtboxesThatWereHit,
+                                    BaseGameObject& otherGameObject)
+{
+    // handle logic if you hit ohterGameObject
+}
+void BaseGameObject::handleGotHitLogic(List<CollisionBox2D*>& hitboxesThatHit,
+                                       List<CollisionBox2D*>& hurtboxesThatWereHit,
+                                       BaseGameObject& otherGameObject)
+{
+    // handle logic if you got hit by otherGameObject
 }
 
 void BaseGameObject::_updateMemberVariables()

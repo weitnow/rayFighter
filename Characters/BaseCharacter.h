@@ -27,8 +27,6 @@ public:
     void duck();
     void punch();
 
-    virtual void takeDamage(float damage, CollisionBox2D* hitbox) override;
-
     void setIsLeft(bool isLeft);
     bool getIsLeft();
 
@@ -88,6 +86,9 @@ protected:
     // member functions
     virtual void _applyGravity(float deltaTime) override;
     void _updateCharacterController(); //updates bool isLeft in CharacterController
+
+    void handleHitLogic(List<CollisionBox2D*>& hitboxesThatHit, List<CollisionBox2D*>& hurtboxesThatWereHit, BaseGameObject& otherGameObject) override;
+    void handleGotHitLogic(List<CollisionBox2D*>& hitboxesThatHit, List<CollisionBox2D*>& hurtboxesThatWereHit, BaseGameObject& otherGameObject) override;
 };
 
 
