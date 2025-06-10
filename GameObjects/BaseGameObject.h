@@ -28,6 +28,9 @@ public:
     virtual void takeDamage(float damage = 1.f);
     virtual void takeDamage(float damage, CollisionBox2D* hitbox);
 
+    virtual void onYouGotHit(const List<CollisionBox2D*>& hitboxesThatHit, const List<CollisionBox2D*>& hurtboxesThatWereHit, const BaseGameObject& otherGameObject);
+    virtual void onYouHit(const List<CollisionBox2D*>& hitboxesThatHit, const List<CollisionBox2D*>& hurtboxesThatWereHit, const BaseGameObject& otherGameObject);
+
     int getMaxLife();
     void setMaxLife(int maxLife);
 

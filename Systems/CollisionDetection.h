@@ -33,8 +33,8 @@ private:
     CollisionDetection();
     bool initialized = false;
     GameState* gameState;
-    List<CollisionBox2D> hitboxesThatHit;
-    List<CollisionBox2D> hurtboxesThatWereHit;
+    List<CollisionBox2D*> hitboxesThatHit;
+    List<CollisionBox2D*> hurtboxesThatWereHit;
 };
 
 

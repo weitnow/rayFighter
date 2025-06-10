@@ -44,8 +44,12 @@ bool CollisionDetection::checkForCollision(BaseGameObject& gameObject1, BaseGame
         {
             if (Utils::checkCollision(hitbox, hurtbox) && gameObject1.canDealDamage)
             {
-                hitboxesThatHit.push_back(hitbox);
-                hurtboxesThatWereHit.push_back(hurtbox);
+                // clear both lists
+                hitboxesThatHit.clear();
+                hurtboxesThatWereHit.clear();
+
+                hitboxesThatHit.push_back(&hitbox);
+                hurtboxesThatWereHit.push_back(&hurtbox);
 
                 gameObject2.takeDamage(1, &hitbox);
                 gameObject2.setPushVector({120, 0});
@@ -57,6 +61,9 @@ bool CollisionDetection::checkForCollision(BaseGameObject& gameObject1, BaseGame
                     // Transition the opponent into "Hit" or "Hurt" state
                     character->getStatemachine().changeState("Hit");
                 }
+
+                gameObject1.onYouHit(hitboxesThatHit, hurtboxesThatWereHit, gameObject2);
+
                 return true; // hit detected
             }
         }

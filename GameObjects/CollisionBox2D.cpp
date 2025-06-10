@@ -2,7 +2,8 @@
 #include "../Constants.h"
 
 
-CollisionBox2D::CollisionBox2D(float offsetx,
+CollisionBox2D::CollisionBox2D(BaseGameObject* owner,
+                               float offsetx,
                                float offsety,
                                float width,
                                float height,
@@ -13,7 +14,7 @@ CollisionBox2D::CollisionBox2D(float offsetx,
                                HurtboxType hurtboxType)
     : width(width), height(height), color(color), offset{offsetx, offsety}, myRectangle{0, 0, width, height},
       objPos{0, 0}, pos{0, 0}, isActive(isActive), collisionBoxType(collisionBoxType), hurtboxType(hurtboxType),
-      isFlippedX(false), hitboxOwnerWith(hitboxOwnerWith)
+      isFlippedX(false), hitboxOwnerWith(hitboxOwnerWith), owner(owner)
 {
     float flippedX = (hitboxOwnerWith - offsetx - width);
     offsetFlippedX = {flippedX, offsety};

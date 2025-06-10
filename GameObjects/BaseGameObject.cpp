@@ -5,8 +5,8 @@
 
 BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager)
     : ObjName(""), pushVector({0, 0}), scale(1.f), pos{0.f, 0.f}, color(WHITE), isFlippedX(false), isFlippedY(false),
-      isActive(true), isAlive(true), shouldDestroy(false), isInvincible(false), maxLife(1), currentLife(maxLife), _invincibleCounter(0.f),
-      invincibleTime(Constants::INVINCIBLE_TIME), affectedByGravity(false), moveVector({0, 0}),
+      isActive(true), isAlive(true), shouldDestroy(false), isInvincible(false), maxLife(1), currentLife(maxLife),
+      _invincibleCounter(0.f), invincibleTime(Constants::INVINCIBLE_TIME), affectedByGravity(false), moveVector({0, 0}),
       getDurationCurrentFrame(0), currentFrame(0), minFrame(0), maxFrame(0), hasAnimFinished(false),
       currentFrameTag(""), currentFrameAbsolut(0), drawShadow(false), gameState(nullptr), canDealDamage(true)
 {
@@ -40,7 +40,10 @@ void BaseGameObject::init()
 
 void BaseGameObject::update(float deltaTime)
 {
-    if (!isActive) { return; }
+    if (!isActive)
+    {
+        return;
+    }
 
     if (scale != 1)
     {
@@ -75,7 +78,10 @@ void BaseGameObject::update(float deltaTime)
 
 void BaseGameObject::draw()
 {
-    if (!isActive) { return; }
+    if (!isActive)
+    {
+        return;
+    }
 
     if (animfilePtr != nullptr)
     {
@@ -147,6 +153,16 @@ void BaseGameObject::takeDamage(float damage, CollisionBox2D* hitbox)
     std::cout << "BaseGameObject::takeDamage -> " << ObjName << " took " << damage << " damage." << std::endl;
 
     takeDamage(damage);
+}
+void BaseGameObject::onYouGotHit(const List<CollisionBox2D*>& hitboxesThatHit,
+                                 const List<CollisionBox2D*>& hurtboxesThatWereHit,
+                                 const BaseGameObject& otherGameObject)
+{
+}
+void BaseGameObject::onYouHit(const List<CollisionBox2D*>& hitboxesThatHit,
+                              const List<CollisionBox2D*>& hurtboxesThatWereHit,
+                              const BaseGameObject& otherGameObject)
+{
 }
 
 
@@ -649,7 +665,8 @@ void BaseGameObject::_addCollisionBoxForFrameInternal(std::string frameTagName,
 {
     if (collisionBoxType == CollisionBoxType::HITBOX)
     {
-        hitBoxesPerFrame[frameTagName].push_back(CollisionBox2D{offsetX,
+        hitBoxesPerFrame[frameTagName].push_back(CollisionBox2D{this,
+                                                                offsetX,
                                                                 offsetY,
                                                                 width,
                                                                 height,
@@ -661,7 +678,8 @@ void BaseGameObject::_addCollisionBoxForFrameInternal(std::string frameTagName,
     }
     else if (collisionBoxType == CollisionBoxType::HURTBOX)
     {
-        hurtBoxesPerFrame[frameTagName].push_back(CollisionBox2D{offsetX,
+        hurtBoxesPerFrame[frameTagName].push_back(CollisionBox2D{this,
+                                                                 offsetX,
                                                                  offsetY,
                                                                  width,
                                                                  height,
@@ -673,7 +691,8 @@ void BaseGameObject::_addCollisionBoxForFrameInternal(std::string frameTagName,
     }
     else if (collisionBoxType == CollisionBoxType::PUSHBOX)
     {
-        pushBoxesPerFrame[frameTagName].push_back(CollisionBox2D{offsetX,
+        pushBoxesPerFrame[frameTagName].push_back(CollisionBox2D{this,
+                                                                 offsetX,
                                                                  offsetY,
                                                                  width,
                                                                  height,
@@ -685,7 +704,8 @@ void BaseGameObject::_addCollisionBoxForFrameInternal(std::string frameTagName,
     }
     else if (collisionBoxType == CollisionBoxType::THROWBOX)
     {
-        throwBoxesPerFrame[frameTagName].push_back(CollisionBox2D{offsetX,
+        throwBoxesPerFrame[frameTagName].push_back(CollisionBox2D{this,
+                                                                  offsetX,
                                                                   offsetY,
                                                                   width,
                                                                   height,

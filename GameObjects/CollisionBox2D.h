@@ -8,6 +8,9 @@
 #include "raylib.h"
 #include <string>
 
+//forward declaration
+class BaseGameObject;
+
 enum class CollisionBoxType
 {
     HITBOX,
@@ -28,7 +31,8 @@ enum class HurtboxType
 class CollisionBox2D
 {
 public:
-    CollisionBox2D(float offsetx,
+    CollisionBox2D(BaseGameObject* owner,
+                   float offsetx,
                    float offsety,
                    float width,
                    float height,
@@ -45,6 +49,7 @@ public:
 
 protected:
     Rectangle myRectangle;
+    BaseGameObject* owner;
     Vector2 objPos;         // position of the obj which the collision box is attached to (x,y)
     Vector2 offset;         // offset from the objPos (x,y)
     Vector2 offsetFlippedX; // offset from the objPos (x,y) if the obj is flipped
