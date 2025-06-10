@@ -261,8 +261,19 @@ void BaseCharacter::handleHitLogic(List<CollisionBox2D*>& hitboxesThatHit,
                                    List<CollisionBox2D*>& hurtboxesThatWereHit,
                                    BaseGameObject& otherGameObject)
 {
+
+    bool otherGameObjectIsOnRightSide = otherGameObject.getPos().x > this->getPos().x;
+
     otherGameObject.takeDamage(1);
-    otherGameObject.setPushVector({120,0});
+
+    if (otherGameObjectIsOnRightSide)
+    {
+        otherGameObject.setPushVector({120,0});
+    } else
+    {
+        otherGameObject.setPushVector({-120,0});
+    }
+
     if (BaseCharacter* character = dynamic_cast<BaseCharacter*>(&otherGameObject))
     {
         character->getStatemachine().changeState("Hit");

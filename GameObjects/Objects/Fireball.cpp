@@ -3,6 +3,7 @@
 #include "../../Characters/BaseCharacter.h"
 #include "../../Characters/Statemachine/Statemachine.h"
 
+
 Fireball::Fireball(AsepriteManager* asepriteManagerPtr, float x, float y, bool isFlippedX)
     : BaseGameObject(asepriteManagerPtr, x, y)
 {

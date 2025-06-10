@@ -1,7 +1,8 @@
-#include "../BaseGameObject.h"
 #ifndef GBFIGHTER_FIREBALL_H
 #define GBFIGHTER_FIREBALL_H
-#include <string>
+
+#include "../BaseGameObject.h"
+
 
 class Fireball : public BaseGameObject
 {

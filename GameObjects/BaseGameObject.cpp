@@ -173,6 +173,7 @@ void BaseGameObject::onYouHit(List<CollisionBox2D*>& hitboxesThatHit,
         std::cout << this->getObjName() << " hit " << otherGameObject.getObjName() << ". canDealDamage of " << this->getObjName() << " is set to true." << std::endl;
 
         this->canDealDamage = false; // will be set true in the statemachine, otherwise we keep hitting the opponent
+
         handleHitLogic(hitboxesThatHit, hurtboxesThatWereHit, otherGameObject);
     }
 }
