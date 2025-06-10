@@ -30,7 +30,8 @@ public:
     void checkForCollision(List<unique<BaseGameObject>>& listOfGameObjects1, List<unique<BaseGameObject>>& listOfGameObjects2) const;
 
 private:
-    CollisionDetection();
+    CollisionDetection(); // private constructor, because singleton
+    bool _checkSingleDirectionCollisionInternal(BaseGameObject& attacker, BaseGameObject& defender);
     bool initialized = false;
     GameState* gameState;
     List<CollisionBox2D*> hitboxesThatHit;

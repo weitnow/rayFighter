@@ -154,15 +154,37 @@ void BaseGameObject::takeDamage(float damage, CollisionBox2D* hitbox)
 
     takeDamage(damage);
 }
-void BaseGameObject::onYouGotHit(const List<CollisionBox2D*>& hitboxesThatHit,
-                                 const List<CollisionBox2D*>& hurtboxesThatWereHit,
-                                 const BaseGameObject& otherGameObject)
+void BaseGameObject::onYouGotHit(List<CollisionBox2D*>& hitboxesThatHit,
+                                 List<CollisionBox2D*>& hurtboxesThatWereHit,
+                                 BaseGameObject& otherGameObject)
 {
+    if (!otherGameObject.canDealDamage)
+    {
+        std::cout << "hit registered but canDealDamage of " << otherGameObject.getObjName() << " is set to false." << std::endl;
+    } else
+    {
+        // but here hitlogic if YOU WERE hit
+    }
+
 }
-void BaseGameObject::onYouHit(const List<CollisionBox2D*>& hitboxesThatHit,
-                              const List<CollisionBox2D*>& hurtboxesThatWereHit,
-                              const BaseGameObject& otherGameObject)
+void BaseGameObject::onYouHit(List<CollisionBox2D*>& hitboxesThatHit,
+                              List<CollisionBox2D*>& hurtboxesThatWereHit,
+                              BaseGameObject& otherGameObject)
 {
+    if (!this->canDealDamage)
+    {
+        std::cout << this->getObjName() << " hit " << otherGameObject.getObjName() << ". But canDealDamage of " << this->getObjName() << " is set to false." << std::endl;
+    } else
+    {
+        std::cout << this->getObjName() << " hit " << otherGameObject.getObjName() << ". canDealDamage of " << this->getObjName() << " is set to true." << std::endl;
+
+        // put here hitlogic if YOU hit
+
+
+    }
+
+
+
 }
 
 

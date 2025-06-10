@@ -34,41 +34,11 @@ void CollisionDetection::update(float deltaTime)
     }
 
 }
+
 bool CollisionDetection::checkForCollision(BaseGameObject& gameObject1, BaseGameObject& gameObject2)
 {
-
-    // check if hitbox of gameObjects1 collides with a hurtbox of gameObjects2
-    for (auto& hitbox : gameObject1.getHitBoxes())
-    {
-        for (auto& hurtbox : gameObject2.getHurtBoxes())
-        {
-            if (Utils::checkCollision(hitbox, hurtbox) && gameObject1.canDealDamage)
-            {
-                // clear both lists
-                hitboxesThatHit.clear();
-                hurtboxesThatWereHit.clear();
-
-                hitboxesThatHit.push_back(&hitbox);
-                hurtboxesThatWereHit.push_back(&hurtbox);
-
-                gameObject2.takeDamage(1, &hitbox);
-                gameObject2.setPushVector({120, 0});
-                gameObject1.canDealDamage = false;
-
-                // Try to cast to BaseCharacter
-                if (BaseCharacter* character = dynamic_cast<BaseCharacter*>(&gameObject2))
-                {
-                    // Transition the opponent into "Hit" or "Hurt" state
-                    character->getStatemachine().changeState("Hit");
-                }
-
-                gameObject1.onYouHit(hitboxesThatHit, hurtboxesThatWereHit, gameObject2);
-
-                return true; // hit detected
-            }
-        }
-    }
-    return false; // no hit detected
+    return _checkSingleDirectionCollisionInternal(gameObject1, gameObject2) ||
+           _checkSingleDirectionCollisionInternal(gameObject2, gameObject1);
 }
 
 void CollisionDetection::checkForCollision(BaseGameObject& gameObject, List<unique<BaseGameObject>>& gameObjects) const
@@ -78,3 +48,42 @@ void CollisionDetection::checkForCollision(List<unique<BaseGameObject>>& listOfG
                                 List<unique<BaseGameObject>>& listOfGameObjects2) const
 {
 }
+
+bool CollisionDetection::_checkSingleDirectionCollisionInternal(BaseGameObject& attacker, BaseGameObject& defender)
+{
+    for (auto& hitbox : attacker.getHitBoxes())
+    {
+        for (auto& hurtbox : defender.getHurtBoxes())
+        {
+            if (Utils::checkCollision(hitbox, hurtbox) ) // && attacker.canDealDamage
+            {
+                hitboxesThatHit.clear();
+                hurtboxesThatWereHit.clear();
+
+                hitboxesThatHit.push_back(&hitbox);
+                hurtboxesThatWereHit.push_back(&hurtbox);
+
+                //attacker.canDealDamage = false;
+
+                /*
+                defender.takeDamage(1, &hitbox);
+                defender.setPushVector({120, 0});
+
+
+                // Try to cast to BaseCharacter
+                if (BaseCharacter* character = dynamic_cast<BaseCharacter*>(&defender))
+                {
+                    character->getStatemachine().changeState("Hit");
+                }
+                */
+
+                attacker.onYouHit(hitboxesThatHit, hurtboxesThatWereHit, defender);
+                defender.onYouGotHit(hitboxesThatHit, hurtboxesThatWereHit, attacker);
+
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
