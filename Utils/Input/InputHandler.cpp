@@ -1,9 +1,11 @@
 #include "InputHandler.h"
+#include "../HelperFunctions.h"
+#include "../../Game/GameState.h"
 
 
 InputHandler::InputHandler()
     : Gamepad0Connected(false), Gamepad1Connected(false), GamepadCheckConnectionDone(5), player1(nullptr),
-      player2(nullptr)
+      player2(nullptr), debugInfo(nullptr), gameState(nullptr)
 {
     player1Controller = new CharacterController();
     player2Controller = new CharacterController();
@@ -17,7 +19,6 @@ InputHandler::InputHandler()
         {KEY_S, {InputCheckType::Down, [this]() { player1Controller->duck = true; }}},
         {KEY_J, {InputCheckType::Pressed, [this]() { player1Controller->punch = true; }}},
         {KEY_K, {InputCheckType::Pressed, [this]() { player1Controller->kick = true; }}},
-        {KEY_L, {InputCheckType::Down, [this]() { player1Controller->block = true; }}},
         {KEY_ENTER, {InputCheckType::Pressed, [this]() { player1Controller->key_enter = true; }}},
         {KEY_ESCAPE, {InputCheckType::Pressed, [this]() { player1Controller->key_esc = true; }}},
         {KEY_Q, {InputCheckType::Pressed, [this]() { player1Controller->key_q = true; }}},
@@ -28,8 +29,6 @@ InputHandler::InputHandler()
         {GAMEPAD_BUTTON_LEFT_FACE_UP, {InputCheckType::Down, [this]() { player1Controller->jump = true; }}},
         {GAMEPAD_BUTTON_RIGHT_FACE_DOWN, {InputCheckType::Pressed, [this]() { player1Controller->punch = true; }}},
         {GAMEPAD_BUTTON_RIGHT_FACE_RIGHT, {InputCheckType::Pressed, [this]() { player1Controller->kick = true; }}},
-        {GAMEPAD_BUTTON_LEFT_TRIGGER_1, {InputCheckType::Down, [this]() { player1Controller->block = true; }}},
-        {GAMEPAD_BUTTON_RIGHT_TRIGGER_1, {InputCheckType::Down, [this]() { player1Controller->block = true; }}},
 
         // player 2 controls
         {KEY_LEFT, {InputCheckType::Down, [this]() { player2Controller->moveLeft = true; }}},
@@ -38,7 +37,7 @@ InputHandler::InputHandler()
         {KEY_DOWN, {InputCheckType::Down, [this]() { player2Controller->duck = true; }}},
         {KEY_U, {InputCheckType::Pressed, [this]() { player2Controller->punch = true; }}},
         {KEY_I, {InputCheckType::Pressed, [this]() { player2Controller->kick = true; }}},
-        {KEY_O, {InputCheckType::Down, [this]() { player2Controller->block = true; }}},
+
     };
 };
 
@@ -63,6 +62,10 @@ void InputHandler::Update()
 
     // Handle game input ----------- //
     _handleGameInput(); // this will set the bools in player1Controller and player2Controller to true if the key is pressed
+
+    // check blocking needed
+    checkIfPlayerShouldBlock(player1);
+    //checkIfPlayerShouldBlock(player2);
 
 
     if (player1 == nullptr || player2 == nullptr)
@@ -97,6 +100,10 @@ void InputHandler::addPlayer(BaseCharacter* player, int playerNumber)
     {
         player2 = player;
     }
+}
+void InputHandler::takeReferenceToGameState(GameState* gameState)
+{
+    this->gameState = gameState;
 }
 
 
@@ -254,6 +261,18 @@ void InputHandler::checkSpecialMoves(InputBuffer& buffer, CharacterController* c
                 controller->special3 = true;
         }
     }
+}
+void InputHandler::checkIfPlayerShouldBlock(BaseCharacter* player)
+{
+    // check if GameState is not nullptr, otherwise cannot calculate distance player <--> other gameobjects
+    if (gameState == nullptr)
+        return;
+
+    const int BLOCK_DISTANCE_THRESHOLD = 10;
+
+    float Distance =  Utils::calculateDistance(*player1, *player2);
+    std::cout << "Distance between players: " << Distance << std::endl;
+
 }
 
 

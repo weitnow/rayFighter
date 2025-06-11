@@ -6,9 +6,10 @@
 #include "DebugInfo.h"
 #include "InputBuffer.h"
 #include "InputTypes.h"
-#include "raylib.h"
-#include <deque>
 #include <unordered_map>
+
+//forward declarations
+class GameState;
 
 
 enum class InputCheckType
@@ -40,6 +41,7 @@ public:
 
     void addDebugInfo(DebugInfo& debugInfo);
     void addPlayer(BaseCharacter* player, int playerNumber);
+    void takeReferenceToGameState(GameState* gameState); // needed to check if pressing back on controller leads to blocking (if enemy is near)
 
 
     CharacterController* const getPlayer1Controller();
@@ -57,6 +59,7 @@ private:
     InputAction _mapActionInput(CharacterController* controller);
     void updateInputBuffer(InputBuffer& buffer, CharacterController* controller);
     void checkSpecialMoves(InputBuffer& buffer, CharacterController* controller, BaseCharacter* player);
+    void checkIfPlayerShouldBlock(BaseCharacter* player);
 
     CharacterController* player1Controller;
     CharacterController* player2Controller;
@@ -78,6 +81,7 @@ private:
     BaseCharacter* player2;
 
     KeyCommandMap keyCommandMap;
+    GameState* gameState;
 };
 
 #endif // INPUT_HANDLER_H

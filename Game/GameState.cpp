@@ -38,6 +38,8 @@ GameState::GameState(Game* game) : BaseState(game)
     hitDetection = &CollisionDetection::getInstance(); // get reference to singleton
     hitDetection->init(this); // pass gamestate to singleton to access gameobjects for hitdetection
 
+    inputHandler->takeReferenceToGameState(this); // inputhandler needs access to Gamestate to calculate if PlayerShouldBlock
+
 }
 
 GameState::~GameState()

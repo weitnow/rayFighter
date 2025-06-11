@@ -36,4 +36,6 @@ void Fireball::handleHitLogic(List<CollisionBox2D*>& hitboxesThatHit,
     {
         character->getStatemachine().changeState("Hit");
     }
+
+    shouldDestroy = true;
 }

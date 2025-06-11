@@ -8,6 +8,7 @@ BaseState::BaseState(Game* game)
       player1Controller(game->inputHandler->getPlayer1Controller()),
       player2Controller(game->inputHandler->getPlayer2Controller())
 {
+
 }
 
 BaseState::~BaseState()
