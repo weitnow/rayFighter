@@ -66,7 +66,7 @@ State::State(const std::string& name) : stateName(name)
         {"Duck", [this]() { return controller->duck; }},
         {"Punch", [this]() { return controller->punch; }},
         {"Kick", [this]() { return controller->kick; }},
-        {"Block", [this]() { return controller->block; }},
+        {"Block", [this]() { return controller->block && !controller->jump; }},
         {"DuckPunch", [this]() { return controller->punch && controller->duck; }},
         {"DuckKick", [this]() { return controller->kick && controller->duck; }},
         {"DuckBlock", [this]() { return controller->block && controller->duck; }},
@@ -335,10 +335,14 @@ void BlockState::Init()
 
 void BlockState::Update(float deltaTime)
 {
-    if (!controller->block)
-    {
-        statemachine->changeState("Idle");
-    }
+    checkTransitions({
+
+        "Jump",
+        "Duck",
+        "Punch",
+        "Kick",
+        "Block",
+        "Walk"});
 }
 
 void BlockState::Finalize()

@@ -31,6 +31,9 @@ public: // METHODES
     [[nodiscard]] Vector2 getMiddlePointBetweenPlayers() const;
     int _getScreenPosXofObject(BaseGameObject& object);
 
+public: // METHODES Informationprovider
+    float distanceBetweenGameObjects(BaseGameObject* object1, BaseGameObject* object2);
+
 public: // VARIABLES
     // <-- BaseState.h -->
     // Screen2DManager* screen2DManager;

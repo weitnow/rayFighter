@@ -438,3 +438,7 @@ void GameState::_drawAllBaseCharacters()
         object->draw();
     }
 }
+float GameState::distanceBetweenGameObjects(BaseGameObject* object1, BaseGameObject* object2)
+{
+    return Utils::calculateDistance(*object1, *object2);
+}

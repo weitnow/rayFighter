@@ -268,10 +268,13 @@ void InputHandler::checkIfPlayerShouldBlock(BaseCharacter* player)
     if (gameState == nullptr)
         return;
 
-    const int BLOCK_DISTANCE_THRESHOLD = 10;
+    const int BLOCK_DISTANCE_THRESHOLD = 30;
 
-    float Distance =  Utils::calculateDistance(*player1, *player2);
-    std::cout << "Distance between players: " << Distance << std::endl;
+    float Distance =  gameState->distanceBetweenGameObjects(player1, player2);
+    CharacterController* controller = player->getController();
+
+    if (Distance < BLOCK_DISTANCE_THRESHOLD && (controller->moveLeft && controller->isLeft || controller->moveRight && !controller->isLeft))
+        player->getController()->block = true;
 
 }
 
