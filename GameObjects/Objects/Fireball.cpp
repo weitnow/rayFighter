@@ -13,6 +13,7 @@ Fireball::Fireball(AsepriteManager* asepriteManagerPtr, float x, float y, bool i
     this->setMaxLife(1); // Fireball is destroyed after one hit
     this->setAffectedByGravity(false);
     this->setMoveSpeed(120); // Set a higher speed for the fireball
+    this->destroyIfHasLeftScreen = true;
 
     // Add collision boxes for the fireball
     addCollisionBoxForFrame("gbFighter-Shot", -1, CollisionBoxType::HITBOX, true, 10, 14, 10, 8);

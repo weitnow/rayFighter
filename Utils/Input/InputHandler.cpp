@@ -67,6 +67,12 @@ void InputHandler::Update()
     checkIfPlayerShouldBlock(player1);
     //checkIfPlayerShouldBlock(player2);
 
+    // check if game should stop for debug
+    if (IsKeyPressed(KEY_ZERO)) // Todo: get rid of this, just use while developping
+    {
+        std::cout << "Game should stop" << std::endl;
+    }
+
 
     if (player1 == nullptr || player2 == nullptr)
     {

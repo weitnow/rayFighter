@@ -34,6 +34,7 @@ public: // METHODES
 public: // METHODES Informationprovider
     float distanceBetweenGameObjects(BaseGameObject* object1, BaseGameObject* object2);
 
+
 public: // VARIABLES
     // <-- BaseState.h -->
     // Screen2DManager* screen2DManager;
@@ -43,6 +44,7 @@ public: // VARIABLES
     // <-- GameState.h -->
     int cameraX = 0; // will be updated in GameState::_updateCamera
     int cameraY = 0;
+
 
 protected: // METHODES
     void _updateMiddlePointBetweenPlayers();

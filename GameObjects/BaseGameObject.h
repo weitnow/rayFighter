@@ -172,6 +172,8 @@ protected:
 
     GameState* gameState;
 
+    bool destroyIfHasLeftScreen = false;
+
     // member functions
     virtual void _reducePushVector(float deltaTime);
     virtual void _applyGravity(float deltaTime);
@@ -196,8 +198,10 @@ protected:
     virtual void handleGotHitLogic(vector<CollisionBox2D*>& hitboxesThatHit, vector<CollisionBox2D*>& hurtboxesThatWereHit, BaseGameObject& otherGameObject);
 
     vector<CollisionBox2D> _checkIfCollisionMapHasCollisionBoxesAndReturnList(const std::string& currentFrameTag,
-                                                                            const int currentFrameAbsolut,
-                                                                            CollisionBoxType collisionBoxType);
+                                                                              const int currentFrameAbsolut,
+                                                                              CollisionBoxType collisionBoxType);
+
+    void _destroyIfHasLeftScreen();
 };
 
 #endif // GBFIGHTER_BASEGAMEOBJECT_H

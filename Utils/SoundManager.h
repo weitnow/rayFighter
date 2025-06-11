@@ -5,15 +5,12 @@
 #include "raylib.h"
 #include <string>
 
-class SoundManager
+class SoundManager : public Singleton<SoundManager>
 {
+    friend class Singleton<SoundManager>;
+
 public:
-    // Method to access the single instance of the class
-    static SoundManager& getInstance()
-    {
-        static SoundManager instance;
-        return instance;
-    }
+
     ~SoundManager();
 
     // needs to be called in the main loop

@@ -45,6 +45,9 @@ void BaseGameObject::update(float deltaTime)
         return;
     }
 
+    if (destroyIfHasLeftScreen)
+        _destroyIfHasLeftScreen();
+
     if (scale != 1)
     {
         // TODO: Implement scale function
@@ -822,6 +825,13 @@ vector<CollisionBox2D> BaseGameObject::_checkIfCollisionMapHasCollisionBoxesAndR
 
     // return an empty vector if the frame does not exist
     return collisionBoxes;
+}
+void BaseGameObject::_destroyIfHasLeftScreen()
+{
+    if (pos.x < -100 || pos.x > Constants::RENDERTARGET_WIDTH + 100 || pos.y < -100 || pos.y > Constants::RENDERTARGET_HEIGHT + 100)
+    {
+        this->shouldDestroy = true;
+    }
 }
 
 

@@ -26,6 +26,24 @@ using map = std::map<keyType, valType, Pr>;
 template <typename keyType, typename valType, typename hasher = std::hash<keyType>>
 using unordered_map = std::unordered_map<keyType, valType, hasher>;
 
+template<typename T>
+class Singleton
+{
+public:
+    Singleton(const Singleton&) = delete;
+    Singleton& operator=(const Singleton&) = delete;
+
+    static T& getInstance()
+    {
+        static T instance;
+        return instance;
+    }
+
+protected:
+    Singleton() = default;
+    ~Singleton() = default;
+};
+
 
 
 //macro to print a message to the console

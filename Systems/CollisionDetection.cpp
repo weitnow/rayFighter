@@ -7,14 +7,6 @@
 #include "CollisionDetection.h"
 
 
-CollisionDetection& CollisionDetection::getInstance()
-{
-    static CollisionDetection instance;
-    return instance;
-}
-
-CollisionDetection::CollisionDetection() = default;
-
 void CollisionDetection::init(GameState* gameState)
 {
     if (!initialized)
@@ -52,7 +44,7 @@ bool CollisionDetection::_checkSingleDirectionCollisionInternal(BaseGameObject& 
     {
         for (auto& hurtbox : defender.getHurtBoxes())
         {
-            if (Utils::checkCollision(hitbox, hurtbox) ) // && attacker.canDealDamage
+            if (Utils::checkCollision(hitbox, hurtbox) )
             {
                 hitboxesThatHit.clear();
                 hurtboxesThatWereHit.clear();
