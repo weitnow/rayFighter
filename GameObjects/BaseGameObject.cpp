@@ -148,8 +148,8 @@ void BaseGameObject::takeDamage(float damage)
     }
 }
 
-void BaseGameObject::onYouGotHit(List<CollisionBox2D*>& hitboxesThatHit,
-                                 List<CollisionBox2D*>& hurtboxesThatWereHit,
+void BaseGameObject::onYouGotHit(vector<CollisionBox2D*>& hitboxesThatHit,
+                                 vector<CollisionBox2D*>& hurtboxesThatWereHit,
                                  BaseGameObject& otherGameObject)
 {
     if (!otherGameObject.canDealDamage)
@@ -161,8 +161,8 @@ void BaseGameObject::onYouGotHit(List<CollisionBox2D*>& hitboxesThatHit,
     }
 
 }
-void BaseGameObject::onYouHit(List<CollisionBox2D*>& hitboxesThatHit,
-                              List<CollisionBox2D*>& hurtboxesThatWereHit,
+void BaseGameObject::onYouHit(vector<CollisionBox2D*>& hitboxesThatHit,
+                              vector<CollisionBox2D*>& hurtboxesThatWereHit,
                               BaseGameObject& otherGameObject)
 {
     if (!this->canDealDamage)
@@ -323,28 +323,28 @@ bool BaseGameObject::getIsFlippedX()
 }
 
 // TODO: refactor this method to return a reference to the list and not a copy
-List<CollisionBox2D> BaseGameObject::getPushBoxes()
+vector<CollisionBox2D> BaseGameObject::getPushBoxes()
 {
     return _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
                                                               currentFrameAbsolut,
                                                               CollisionBoxType::PUSHBOX);
 }
 
-List<CollisionBox2D> BaseGameObject::getHitBoxes()
+vector<CollisionBox2D> BaseGameObject::getHitBoxes()
 {
     return _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
                                                               currentFrameAbsolut,
                                                               CollisionBoxType::HITBOX);
 }
 
-List<CollisionBox2D> BaseGameObject::getHurtBoxes()
+vector<CollisionBox2D> BaseGameObject::getHurtBoxes()
 {
     return _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
                                                               currentFrameAbsolut,
                                                               CollisionBoxType::HURTBOX);
 }
 
-List<CollisionBox2D> BaseGameObject::getThrowBoxes()
+vector<CollisionBox2D> BaseGameObject::getThrowBoxes()
 {
     return _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
                                                               currentFrameAbsolut,
@@ -584,7 +584,7 @@ void BaseGameObject::_applyGravity(float deltaTime)
 void BaseGameObject::_updateCollisionBoxes(float deltaTime)
 {
     // List of all your CollisionMaps
-    List<CollisionMap*> collisionMaps = {&hitBoxesPerFrame,
+    vector<CollisionMap*> collisionMaps = {&hitBoxesPerFrame,
                                          &hurtBoxesPerFrame,
                                          &pushBoxesPerFrame,
                                          &throwBoxesPerFrame};
@@ -613,7 +613,7 @@ void BaseGameObject::_drawCollisionBoxes()
     // Draw the Hitboxes for the current frame
     if (Global::debugHitboxes)
     {
-        List<CollisionBox2D> collisionBoxes =
+        vector<CollisionBox2D> collisionBoxes =
             _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
                                                                currentFrameAbsolut,
                                                                CollisionBoxType::HITBOX);
@@ -627,7 +627,7 @@ void BaseGameObject::_drawCollisionBoxes()
     // Draw the Hurtboxes for the current frame
     if (Global::debugHurtboxes)
     {
-        List<CollisionBox2D> collisionBoxes =
+        vector<CollisionBox2D> collisionBoxes =
             _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
                                                                currentFrameAbsolut,
                                                                CollisionBoxType::HURTBOX);
@@ -641,7 +641,7 @@ void BaseGameObject::_drawCollisionBoxes()
     // Draw the Pushboxes for the current frame
     if (Global::debugPushboxes)
     {
-        List<CollisionBox2D> collisionBoxes =
+        vector<CollisionBox2D> collisionBoxes =
             _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
                                                                currentFrameAbsolut,
                                                                CollisionBoxType::PUSHBOX);
@@ -655,7 +655,7 @@ void BaseGameObject::_drawCollisionBoxes()
     // Draw the Throwboxes for the current frame
     if (Global::debugThrowboxes)
     {
-        List<CollisionBox2D> collisionBoxes =
+        vector<CollisionBox2D> collisionBoxes =
             _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
                                                                currentFrameAbsolut,
                                                                CollisionBoxType::THROWBOX);
@@ -733,14 +733,14 @@ void BaseGameObject::_addCollisionBoxForFrameInternal(std::string frameTagName,
         throw std::runtime_error("CollisionBoxType not found");
     }
 }
-void BaseGameObject::handleHitLogic(List<CollisionBox2D*>& hitboxesThatHit,
-                                    List<CollisionBox2D*>& hurtboxesThatWereHit,
+void BaseGameObject::handleHitLogic(vector<CollisionBox2D*>& hitboxesThatHit,
+                                    vector<CollisionBox2D*>& hurtboxesThatWereHit,
                                     BaseGameObject& otherGameObject)
 {
     // handle logic if you hit ohterGameObject
 }
-void BaseGameObject::handleGotHitLogic(List<CollisionBox2D*>& hitboxesThatHit,
-                                       List<CollisionBox2D*>& hurtboxesThatWereHit,
+void BaseGameObject::handleGotHitLogic(vector<CollisionBox2D*>& hitboxesThatHit,
+                                       vector<CollisionBox2D*>& hurtboxesThatWereHit,
                                        BaseGameObject& otherGameObject)
 {
     // handle logic if you got hit by otherGameObject
@@ -771,7 +771,7 @@ void BaseGameObject::_drawShadow(int groundLevel, float shadowSize, Color color,
                 Fade(color, shadowOpacity));
 }
 
-List<CollisionBox2D> BaseGameObject::_checkIfCollisionMapHasCollisionBoxesAndReturnList(
+vector<CollisionBox2D> BaseGameObject::_checkIfCollisionMapHasCollisionBoxesAndReturnList(
     const std::string& currentFrameTag,
     const int currentFrameAbsolut,
     CollisionBoxType collisionBoxType)
@@ -802,7 +802,7 @@ List<CollisionBox2D> BaseGameObject::_checkIfCollisionMapHasCollisionBoxesAndRet
     }
 
     // Create an empty vector of CollisionBox2D
-    List<CollisionBox2D> collisionBoxes;
+    vector<CollisionBox2D> collisionBoxes;
 
     // Check if the currentFrameTag exists in the chosen collisionMap
     auto tagIt = collisionMap->find(currentFrameTag + std::to_string(currentFrameAbsolut));

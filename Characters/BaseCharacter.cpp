@@ -257,8 +257,8 @@ void BaseCharacter::_updateCharacterController()
 
     controller->isLeft = isLeft;
 }
-void BaseCharacter::handleHitLogic(List<CollisionBox2D*>& hitboxesThatHit,
-                                   List<CollisionBox2D*>& hurtboxesThatWereHit,
+void BaseCharacter::handleHitLogic(vector<CollisionBox2D*>& hitboxesThatHit,
+                                   vector<CollisionBox2D*>& hurtboxesThatWereHit,
                                    BaseGameObject& otherGameObject)
 {
 
@@ -281,8 +281,8 @@ void BaseCharacter::handleHitLogic(List<CollisionBox2D*>& hitboxesThatHit,
 
 
 }
-void BaseCharacter::handleGotHitLogic(List<CollisionBox2D*>& hitboxesThatHit,
-                                      List<CollisionBox2D*>& hurtboxesThatWereHit,
+void BaseCharacter::handleGotHitLogic(vector<CollisionBox2D*>& hitboxesThatHit,
+                                      vector<CollisionBox2D*>& hurtboxesThatWereHit,
                                       BaseGameObject& otherGameObject)
 {
 

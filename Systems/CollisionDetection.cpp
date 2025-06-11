@@ -41,8 +41,8 @@ bool CollisionDetection::checkForCollision(BaseGameObject& gameObject1, BaseGame
            _checkSingleDirectionCollisionInternal(gameObject2, gameObject1);
 }
 
-void CollisionDetection::checkForCollision(List<unique<BaseGameObject>>& listOfGameObjects1,
-                                List<unique<BaseGameObject>>& listOfGameObjects2)
+void CollisionDetection::checkForCollision(vector<unique<BaseGameObject>>& listOfGameObjects1,
+                                vector<unique<BaseGameObject>>& listOfGameObjects2)
 {
 }
 

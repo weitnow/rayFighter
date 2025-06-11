@@ -14,7 +14,7 @@ class Statemachine
 {
 public:
     Statemachine(BaseCharacter* owner);
-    void init(const Dictionary<std::string, std::shared_ptr<State>>& customStateMap);
+    void init(const unordered_map<std::string, std::shared_ptr<State>>& customStateMap);
     void setOpponent(BaseCharacter* opponent);
     void setGameState(GameState* gameState);
 
@@ -29,7 +29,7 @@ public:
     BaseCharacter* getOwner();
     BaseCharacter* getOpponent();
 
-    Dictionary<std::string, std::shared_ptr<State>> getDefaultStateMap();
+    unordered_map<std::string, std::shared_ptr<State>> getDefaultStateMap();
 
 
 private: // private member variables
@@ -41,11 +41,11 @@ private: // private member variables
     GameState* gameState;
 
     // Key: State name, Value: State instance
-    Dictionary<std::string, shared<State>> stateMap;
+    unordered_map<std::string, shared<State>> stateMap;
 
 private:                       // private member functions
     void _setOwnerForStates(); // Set the owner of this Statemachine (BaseCharacter, for example Player 1)
-    void _populateStateMap(const Dictionary<std::string, std::shared_ptr<State>>& customStateMap);
+    void _populateStateMap(const unordered_map<std::string, std::shared_ptr<State>>& customStateMap);
 };
 
 

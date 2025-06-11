@@ -30,7 +30,7 @@ public:
 private:
     AsepriteAnimationFile* StageSelectScreen;
 
-    List<StageOption> stages;
+    vector<StageOption> stages;
 
 
     int selectedStage = 0;

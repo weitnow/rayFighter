@@ -26,22 +26,22 @@ public:
     void update(float deltaTime); // init(GameState* gameState) needed before calling update
 
     bool checkForCollision(BaseGameObject& gameObject1, BaseGameObject& gameObject2);
-    void checkForCollision(List<unique<BaseGameObject>>& listOfGameObjects1, List<unique<BaseGameObject>>& listOfGameObjects2);
+    void checkForCollision(vector<unique<BaseGameObject>>& listOfGameObjects1, vector<unique<BaseGameObject>>& listOfGameObjects2);
 
     template<typename T>
-    void checkForCollision(BaseGameObject& gameObject, List<unique<T>>& gameObjects);
+    void checkForCollision(BaseGameObject& gameObject, vector<unique<T>>& gameObjects);
 
 private:
     CollisionDetection(); // private constructor, because singleton
     bool _checkSingleDirectionCollisionInternal(BaseGameObject& attacker, BaseGameObject& defender);
     bool initialized = false;
     GameState* gameState;
-    List<CollisionBox2D*> hitboxesThatHit;
-    List<CollisionBox2D*> hurtboxesThatWereHit;
+    vector<CollisionBox2D*> hitboxesThatHit;
+    vector<CollisionBox2D*> hurtboxesThatWereHit;
 };
 
 template<typename T>
-void CollisionDetection::checkForCollision(BaseGameObject& gameObject, List<unique<T>>& gameObjects)
+void CollisionDetection::checkForCollision(BaseGameObject& gameObject, vector<unique<T>>& gameObjects)
 {
     for (auto& otherGameObject : gameObjects)
     {

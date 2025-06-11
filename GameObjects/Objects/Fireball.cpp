@@ -26,8 +26,8 @@ void Fireball::update(float deltaTime)
 
     moveRight();
 }
-void Fireball::handleHitLogic(List<CollisionBox2D*>& hitboxesThatHit,
-                              List<CollisionBox2D*>& hurtboxesThatWereHit,
+void Fireball::handleHitLogic(vector<CollisionBox2D*>& hitboxesThatHit,
+                              vector<CollisionBox2D*>& hurtboxesThatWereHit,
                               BaseGameObject& otherGameObject)
 {
     otherGameObject.takeDamage(1);

@@ -12,7 +12,7 @@
 class GameState;
 
 // Using directive to shorten the type name
-using CollisionMap = Dictionary<std::string, List<CollisionBox2D>>;
+using CollisionMap = unordered_map<std::string, vector<CollisionBox2D>>;
 
 class BaseGameObject
 {
@@ -28,8 +28,8 @@ public:
 
     virtual void takeDamage(float damage);
 
-    virtual void onYouGotHit(List<CollisionBox2D*>& hitboxesThatHit, List<CollisionBox2D*>& hurtboxesThatWereHit, BaseGameObject& otherGameObject); // use handleGotHitLogic-Methode
-    virtual void onYouHit(List<CollisionBox2D*>& hitboxesThatHit, List<CollisionBox2D*>& hurtboxesThatWereHit, BaseGameObject& otherGameObject); // use handleHitLogic-Methode
+    virtual void onYouGotHit(vector<CollisionBox2D*>& hitboxesThatHit, vector<CollisionBox2D*>& hurtboxesThatWereHit, BaseGameObject& otherGameObject); // use handleGotHitLogic-Methode
+    virtual void onYouHit(vector<CollisionBox2D*>& hitboxesThatHit, vector<CollisionBox2D*>& hurtboxesThatWereHit, BaseGameObject& otherGameObject); // use handleHitLogic-Methode
 
     int getMaxLife();
     void setMaxLife(int maxLife);
@@ -60,10 +60,10 @@ public:
     bool getIsFlippedX();
 
     // collision boxes
-    List<CollisionBox2D> getPushBoxes();
-    List<CollisionBox2D> getHitBoxes();
-    List<CollisionBox2D> getHurtBoxes();
-    List<CollisionBox2D> getThrowBoxes();
+    vector<CollisionBox2D> getPushBoxes();
+    vector<CollisionBox2D> getHitBoxes();
+    vector<CollisionBox2D> getHurtBoxes();
+    vector<CollisionBox2D> getThrowBoxes();
 
     bool canDealDamage; // hitdetection will only work if this is true, it will be set to false by the CollisionDetection-System, after a hit has been registered
 
@@ -192,10 +192,10 @@ protected:
                                           HurtboxType hurtboxType,
                                           bool isActive);
 
-    virtual void handleHitLogic(List<CollisionBox2D*>& hitboxesThatHit, List<CollisionBox2D*>& hurtboxesThatWereHit, BaseGameObject& otherGameObject);
-    virtual void handleGotHitLogic(List<CollisionBox2D*>& hitboxesThatHit, List<CollisionBox2D*>& hurtboxesThatWereHit, BaseGameObject& otherGameObject);
+    virtual void handleHitLogic(vector<CollisionBox2D*>& hitboxesThatHit, vector<CollisionBox2D*>& hurtboxesThatWereHit, BaseGameObject& otherGameObject);
+    virtual void handleGotHitLogic(vector<CollisionBox2D*>& hitboxesThatHit, vector<CollisionBox2D*>& hurtboxesThatWereHit, BaseGameObject& otherGameObject);
 
-    List<CollisionBox2D> _checkIfCollisionMapHasCollisionBoxesAndReturnList(const std::string& currentFrameTag,
+    vector<CollisionBox2D> _checkIfCollisionMapHasCollisionBoxesAndReturnList(const std::string& currentFrameTag,
                                                                             const int currentFrameAbsolut,
                                                                             CollisionBoxType collisionBoxType);
 };

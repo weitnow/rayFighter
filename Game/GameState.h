@@ -71,8 +71,8 @@ protected: // VARIABLES
     */
 
     // <-- GameState.h -->
-    List<unique<BaseCharacter>> baseCharacters;
-    List<unique<BaseGameObject>> gameObjects;
+    vector<unique<BaseCharacter>> baseCharacters;
+    vector<unique<BaseGameObject>> gameObjects;
     AsepriteAnimationFile* levelAnimFile;
     Gui* gui;
     CollisionDetection* hitDetection;

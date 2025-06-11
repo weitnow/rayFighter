@@ -17,7 +17,7 @@ Statemachine::Statemachine(BaseCharacter* owner)
     this->owner = owner;
 }
 
-void Statemachine::init(const Dictionary<std::string, std::shared_ptr<State>>& customStateMap)
+void Statemachine::init(const unordered_map<std::string, std::shared_ptr<State>>& customStateMap)
 {
     // Populate the stateMap with the customStateMap and set the owner for each state
     _populateStateMap(customStateMap);
@@ -46,15 +46,15 @@ void Statemachine::setGameState(GameState* gameState)
     }
 }
 
-void Statemachine::_populateStateMap(const Dictionary<std::string, std::shared_ptr<State>>& customStateMap)
+void Statemachine::_populateStateMap(const unordered_map<std::string, std::shared_ptr<State>>& customStateMap)
 {
     stateMap = customStateMap;
 }
 
-Dictionary<std::string, std::shared_ptr<State>> Statemachine::getDefaultStateMap()
+unordered_map<std::string, std::shared_ptr<State>> Statemachine::getDefaultStateMap()
 {
 
-    Dictionary<std::string, std::shared_ptr<State>> customStateMap = {{"Idle", std::make_shared<IdleState>()},
+    unordered_map<std::string, std::shared_ptr<State>> customStateMap = {{"Idle", std::make_shared<IdleState>()},
                                                                       {"Walk", std::make_shared<WalkState>()},
                                                                       {"Jump", std::make_shared<JumpState>()},
                                                                       {"JumpPunch", std::make_shared<JumpPunchState>()},

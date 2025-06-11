@@ -12,7 +12,7 @@ public:
 
     void update(float deltaTime) override;
 
-    void handleHitLogic(List<CollisionBox2D*>& hitboxesThatHit, List<CollisionBox2D*>& hurtboxesThatWereHit, BaseGameObject& otherGameObject) override;
+    void handleHitLogic(vector<CollisionBox2D*>& hitboxesThatHit, vector<CollisionBox2D*>& hurtboxesThatWereHit, BaseGameObject& otherGameObject) override;
 };
 
 

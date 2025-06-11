@@ -34,7 +34,7 @@ private:
     AsepriteAnimationFile* CharSelectScreen;
     AsepriteAnimationFile* playerTag;
 
-    List<Option> characters;
+    vector<Option> characters;
 
     int selectedCharacterP1;
     int selectedCharacterP2;

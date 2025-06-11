@@ -117,7 +117,7 @@ public:
     Texture getTexture(const std::string& textureName);
 
     // public member variables
-    Dictionary<std::string, FrameTag> frameTags;
+    unordered_map<std::string, FrameTag> frameTags;
 
 private:
     // private methods
@@ -154,7 +154,7 @@ struct FrameTag
     int frameOffsetY;
     int spriteOffsetX; // this will be apllied for all frames (ex. gbFighter)
     int spriteOffsetY;
-    Dictionary<int, int> frameNumberDuration;
+    unordered_map<int, int> frameNumberDuration;
 };
 
 //overrite the operator<< for FrameTag

@@ -60,10 +60,10 @@ private:
 
     // Store the currently playing background music
     Music* currentBackgroundMusic; // Pointer to the currently playing music
-    Dictionary<std::string, Music> backgroundMusicDict;
+    unordered_map<std::string, Music> backgroundMusicDict;
 
     // Store sound effects
-    Dictionary<std::string, Sound> soundEffectsDict;
+    unordered_map<std::string, Sound> soundEffectsDict;
 
 
     std::string musicPath;
