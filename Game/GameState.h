@@ -33,7 +33,7 @@ public: // METHODES
 
 public: // METHODES Informationprovider
     float distanceBetweenGameObjects(BaseGameObject* object1, BaseGameObject* object2);
-
+    BaseGameObject* getClosestEnemyOf(BaseCharacter& baseCharacter);
 
 public: // VARIABLES
     // <-- BaseState.h -->

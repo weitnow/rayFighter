@@ -38,8 +38,11 @@ void F1Special1State::Update(float deltaTime)
     // check if animation is finished
     if (hasAnimationFinished())
     {
-        owner->addGameObjectToGameState(
-            std::make_unique<Fireball>(owner->asepriteManagerPtr, owner->getPos().x + 20, owner->getPos().y));
+        // create fireball //Todo: We need a factory methode to create things like that!
+        auto fireball = std::make_unique<Fireball>(owner->asepriteManagerPtr, owner->getPos().x + 20, owner->getPos().y);
+        fireball->setOwnedByPlayerNumber(owner->getPlayerNumber());
+
+        owner->addGameObjectToGameState(std::move(fireball));
         statemachine->changeState("Idle");
         owner->setCurrentFrameTag("gbFighter-Idle");
     }

@@ -102,6 +102,8 @@ void GameState::Update(float deltaTime)
     hitDetection->checkForCollision(*player2, baseCharacters);
 
     HandleInput();
+
+
 }
 
 void GameState::Render()
@@ -442,3 +444,21 @@ float GameState::distanceBetweenGameObjects(BaseGameObject* object1, BaseGameObj
 {
     return Utils::calculateDistance(*object1, *object2);
 }
+BaseGameObject* GameState::getClosestEnemyOf(BaseCharacter& baseCharacter)
+{
+    float distanceClosestEnemy = 0;
+
+    // loop through baseCharacters and gameObjects
+    for (auto& object : gameObjects)
+    {
+        if (baseCharacter.getPlayerNumber() != object->getOwnedByPlayerNumber() && object->getIsAlive() && object->getIsActive() && object->canDealDamage)
+        {
+            // we found a enemy object (like a fireball)
+            std::cout << object->getObjName() << std::endl;
+        }
+    }
+
+    return nullptr;
+}
+
+

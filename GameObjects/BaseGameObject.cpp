@@ -314,6 +314,14 @@ void BaseGameObject::setShadowOpacity(float opacity)
 {
     shadowOpacity = opacity;
 }
+void BaseGameObject::setOwnedByPlayerNumber(int playerNumber)
+{
+    this->ownedByPlayerNumber = playerNumber;
+}
+int BaseGameObject::getOwnedByPlayerNumber()
+{
+    return ownedByPlayerNumber;
+}
 
 void BaseGameObject::setIsFlippedX(bool isFlippedX)
 {
@@ -828,10 +836,15 @@ vector<CollisionBox2D> BaseGameObject::_checkIfCollisionMapHasCollisionBoxesAndR
 }
 void BaseGameObject::_destroyIfHasLeftScreen()
 {
-    if (pos.x < -100 || pos.x > Constants::RENDERTARGET_WIDTH + 100 || pos.y < -100 || pos.y > Constants::RENDERTARGET_HEIGHT + 100)
+    if (pos.x < -100 || pos.x > Constants::RENDERTARGET_WIDTH + 100 || pos.y < -100 ||
+        pos.y > Constants::RENDERTARGET_HEIGHT + 100)
     {
         this->shouldDestroy = true;
     }
+}
+BaseGameObject* BaseGameObject::getClosestEnemy()
+{
+    // Todo: Implement
 }
 
 

@@ -56,6 +56,9 @@ public:
     void setShadowColor(Color color);
     void setShadowOpacity(float opacity);
 
+    void setOwnedByPlayerNumber(int playerNumber);
+    int getOwnedByPlayerNumber();
+
     void setIsFlippedX(bool isFlippedX);
     bool getIsFlippedX();
 
@@ -147,7 +150,7 @@ protected:
     int maxFrame;                // max frame of the animation
     bool hasAnimFinished;        // true if the animation has just finished
     int currentFrameAbsolut;     // current frame number of the animation - min frame
-
+    int ownedByPlayerNumber = -1;     // 1 or 2, -1 = unknown
     int maxLife;
     int currentLife;
 
@@ -202,6 +205,8 @@ protected:
                                                                               CollisionBoxType collisionBoxType);
 
     void _destroyIfHasLeftScreen();
+
+    BaseGameObject* getClosestEnemy();
 };
 
 #endif // GBFIGHTER_BASEGAMEOBJECT_H
