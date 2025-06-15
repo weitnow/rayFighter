@@ -27,53 +27,37 @@ void CollisionDetection::update(float deltaTime)
 
 }
 
-bool CollisionDetection::checkForCollision(BaseGameObject& gameObject1, BaseGameObject& gameObject2)
+
+
+std::pair<CollisionResult, CollisionResult> CollisionDetection::checkForCollision(BaseGameObject& gameObject1, BaseGameObject& gameObject2)
 {
-    return _checkSingleDirectionCollisionInternal(gameObject1, gameObject2) ||
-           _checkSingleDirectionCollisionInternal(gameObject2, gameObject1);
+    CollisionResult const result1 = _checkSingleDirectionCollisionInternal(gameObject1, gameObject2);
+    CollisionResult const result2 = _checkSingleDirectionCollisionInternal(gameObject2, gameObject1);
+    return { result1, result2 };
 }
 
-void CollisionDetection::checkForCollision(vector<shared<BaseGameObject>>& listOfGameObjects1,
-                                           vector<shared<BaseGameObject>>& listOfGameObjects2)
+CollisionResult CollisionDetection::_checkSingleDirectionCollisionInternal(BaseGameObject& attacker, BaseGameObject& defender)
 {
-    for (const auto& object1 : listOfGameObjects1)
-    {
-        if (!object1 || !object1->getIsActive() || !object1->getIsAlive())
-            continue;
+    CollisionResult result;
 
-        for (const auto& object2 : listOfGameObjects2)
-        {
-            if (!object2 || !object2->getIsActive() || !object2->getIsAlive())
-                continue;
-
-            if (object1.get() == object2.get())
-                continue;
-
-            checkForCollision(*object1, *object2);
-        }
-    }
-}
-
-bool CollisionDetection::_checkSingleDirectionCollisionInternal(BaseGameObject& attacker, BaseGameObject& defender)
-{
     for (auto& hitbox : attacker.getHitBoxes())
     {
         for (auto& hurtbox : defender.getHurtBoxes())
         {
-            if (Utils::checkCollision(hitbox, hurtbox) )
+            if (Utils::checkCollision(hitbox, hurtbox))
             {
-                hitboxesThatHit.clear();
-                hurtboxesThatWereHit.clear();
+                result.hitboxesThatHit.push_back(&hitbox);
+                result.hurtboxesThatWereHit.push_back(&hurtbox);
+                result.hasCollision = true;
 
-                hitboxesThatHit.push_back(&hitbox);
-                hurtboxesThatWereHit.push_back(&hurtbox);
+                defender.onYouGotHit(result.hitboxesThatHit, result.hurtboxesThatWereHit, attacker);
+                attacker.onYouHit(result.hitboxesThatHit, result.hurtboxesThatWereHit, defender);
 
-                defender.onYouGotHit(hitboxesThatHit, hurtboxesThatWereHit, attacker);
-                attacker.onYouHit(hitboxesThatHit, hurtboxesThatWereHit, defender); // here we set also canDealDamage to false
-                return true;
+                return result; // early return after first hit
             }
         }
     }
-    return false;
+
+    return result;
 }
 

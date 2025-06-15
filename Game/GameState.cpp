@@ -97,9 +97,9 @@ void GameState::Update(float deltaTime)
     // Hitdetection
     hitDetection->checkForCollision(*player1, *player2);
     hitDetection->checkForCollision(*player2, gameObjects);
-    hitDetection->checkForCollision(*player1, gameObjects);
-    hitDetection->checkForCollision(*player1, baseCharacters);
-    hitDetection->checkForCollision(*player2, baseCharacters);
+    //hitDetection->checkForCollision(*player1, gameObjects);
+    //hitDetection->checkForCollision(*player1, baseCharacters);
+    //hitDetection->checkForCollision(*player2, baseCharacters);
 
     HandleInput();
 
