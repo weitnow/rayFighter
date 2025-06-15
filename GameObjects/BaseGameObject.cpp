@@ -857,7 +857,11 @@ void BaseGameObject::setGameState(GameState* gameState)
     this->gameState = gameState;
 }
 
-void BaseGameObject::addGameObjectToGameState(std::unique_ptr<BaseGameObject> gameObject)
+void BaseGameObject::addGameObjectToGameState(std::shared_ptr<BaseGameObject> gameObject)
+{
+    addGameObjectToGameState(std::move(gameObject), this->ownedByPlayerNumber);
+}
+void BaseGameObject::addGameObjectToGameState(std::shared_ptr<BaseGameObject> gameObject, int ownerPlayerNumber)
 {
     if (gameState == nullptr)
     {
@@ -865,5 +869,6 @@ void BaseGameObject::addGameObjectToGameState(std::unique_ptr<BaseGameObject> ga
     }
 
     // Add the gameObject to the gameState's gameObjects list
-    gameState->addGameObject(std::move(gameObject));
+    gameState->addGameObject(std::move(gameObject), ownerPlayerNumber);
+
 }

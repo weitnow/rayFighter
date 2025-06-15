@@ -33,9 +33,25 @@ bool CollisionDetection::checkForCollision(BaseGameObject& gameObject1, BaseGame
            _checkSingleDirectionCollisionInternal(gameObject2, gameObject1);
 }
 
-void CollisionDetection::checkForCollision(vector<unique<BaseGameObject>>& listOfGameObjects1,
-                                vector<unique<BaseGameObject>>& listOfGameObjects2)
+void CollisionDetection::checkForCollision(vector<shared<BaseGameObject>>& listOfGameObjects1,
+                                           vector<shared<BaseGameObject>>& listOfGameObjects2)
 {
+    for (const auto& object1 : listOfGameObjects1)
+    {
+        if (!object1 || !object1->getIsActive() || !object1->getIsAlive())
+            continue;
+
+        for (const auto& object2 : listOfGameObjects2)
+        {
+            if (!object2 || !object2->getIsActive() || !object2->getIsAlive())
+                continue;
+
+            if (object1.get() == object2.get())
+                continue;
+
+            checkForCollision(*object1, *object2);
+        }
+    }
 }
 
 bool CollisionDetection::_checkSingleDirectionCollisionInternal(BaseGameObject& attacker, BaseGameObject& defender)

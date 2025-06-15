@@ -103,6 +103,8 @@ void GameState::Update(float deltaTime)
 
     HandleInput();
 
+    //getClosestEnemyOf(*player2);
+
 
 }
 
@@ -260,29 +262,65 @@ BaseCharacter* GameState::createPlayer(int characterNumber, int playerNumber)
     return player;
 }
 
-void GameState::addGameObject(unique<BaseGameObject> gameObject)
+
+void GameState::addGameObject(std::shared_ptr<BaseGameObject> gameObject, int ownerPlayerNumber)
 {
-    if (gameObject == nullptr)
+    if (!gameObject)
     {
         throw std::runtime_error("GameState::addGameObject -> gameObject is nullptr");
     }
 
-    // set the game state for the gameObject
     gameObject->setGameState(this);
 
-    // add the gameObject to the list
-    gameObjects.push_back(std::move(gameObject));
-
-    // if the gameObject is a BaseCharacter, add it to the baseCharacters list
-    if (auto* character = dynamic_cast<BaseCharacter*>(gameObjects.back().get()))
+    if (auto character = std::dynamic_pointer_cast<BaseCharacter>(gameObject))
     {
-        // Release ownership from gameObjects and transfer to baseCharacters
-        std::unique_ptr<BaseGameObject> basePtr = std::move(gameObjects.back());
-        gameObjects.pop_back();
-        std::unique_ptr<BaseCharacter> charPtr(static_cast<BaseCharacter*>(basePtr.release()));
-        baseCharacters.push_back(std::move(charPtr));
+        baseCharacters.push_back(character);
+
+        // Assign weak reference to appropriate baseCharacters* vector
+        switch (ownerPlayerNumber)
+        {
+        case 1:
+            baseCharactersP1.push_back(character);
+            break;
+        case 2:
+            baseCharactersP2.push_back(character);
+            break;
+        case -1:
+            baseCharactersNoOwner.push_back(character);
+            break;
+        case -2:
+            baseCharactersBothOwner.push_back(character);
+            break;
+        default:
+            throw std::runtime_error("GameState::addGameObject -> Invalid ownerPlayerNumber for BaseCharacter");
+        }
+    }
+    else
+    {
+        gameObjects.push_back(gameObject);
+
+        // Assign weak reference to appropriate gameObjects* vector
+        switch (ownerPlayerNumber)
+        {
+        case 1:
+            gameObjectsP1.push_back(gameObject);
+            break;
+        case 2:
+            gameObjectsP2.push_back(gameObject);
+            break;
+        case -1:
+            gameObjectsNoOwner.push_back(gameObject);
+            break;
+        case -2:
+            gameObjectsBothOwner.push_back(gameObject);
+            break;
+        default:
+            throw std::runtime_error("GameState::addGameObject -> Invalid ownerPlayerNumber for BaseGameObject");
+        }
     }
 }
+
+
 
 Vector2 GameState::getMiddlePointBetweenPlayers() const
 {
@@ -403,13 +441,28 @@ void GameState::_updateCamera(bool restriction)
 
 void GameState::_updateAllGameObjects(float deltaTime)
 {
-
-    for (int i = gameObjects.size() - 1; i >= 0; --i)
+    for (int i = static_cast<int>(gameObjects.size()) - 1; i >= 0; --i)
     {
         if (gameObjects[i]->getShouldDestroy())
         {
-
+            auto destroyedPtr = gameObjects[i];
             gameObjects.erase(gameObjects.begin() + i);
+
+            // Clean up weak references that point to this destroyed object
+            auto removeDestroyedWeakRefs = [&](std::vector<std::weak_ptr<BaseGameObject>>& vec)
+            {
+                vec.erase(std::remove_if(vec.begin(), vec.end(),
+                    [&](const std::weak_ptr<BaseGameObject>& weakRef)
+                    {
+                        auto shared = weakRef.lock();
+                        return !shared || shared == destroyedPtr;
+                    }), vec.end());
+            };
+
+            removeDestroyedWeakRefs(gameObjectsP1);
+            removeDestroyedWeakRefs(gameObjectsP2);
+            removeDestroyedWeakRefs(gameObjectsNoOwner);
+            removeDestroyedWeakRefs(gameObjectsBothOwner);
         }
         else
         {
@@ -418,13 +471,39 @@ void GameState::_updateAllGameObjects(float deltaTime)
     }
 }
 
-void GameState::_updateAllBaseCharacters(float deltatime)
+
+void GameState::_updateAllBaseCharacters(float deltaTime)
 {
-    for (auto& object : baseCharacters)
+    for (int i = static_cast<int>(baseCharacters.size()) - 1; i >= 0; --i)
     {
-        object->update(deltaTime);
+        if (baseCharacters[i]->getShouldDestroy())
+        {
+            auto destroyedPtr = baseCharacters[i];
+            baseCharacters.erase(baseCharacters.begin() + i);
+
+            // Remove from all weak character lists
+            auto removeDestroyedWeakRefs = [&](std::vector<std::weak_ptr<BaseCharacter>>& vec)
+            {
+                vec.erase(std::remove_if(vec.begin(), vec.end(),
+                    [&](const std::weak_ptr<BaseCharacter>& weakRef)
+                    {
+                        auto shared = weakRef.lock();
+                        return !shared || shared == destroyedPtr;
+                    }), vec.end());
+            };
+
+            removeDestroyedWeakRefs(baseCharactersP1);
+            removeDestroyedWeakRefs(baseCharactersP2);
+            removeDestroyedWeakRefs(baseCharactersNoOwner);
+            removeDestroyedWeakRefs(baseCharactersBothOwner);
+        }
+        else
+        {
+            baseCharacters[i]->update(deltaTime);
+        }
     }
 }
+
 void GameState::_drawAllGameObjects()
 {
     for (auto& object : gameObjects)
@@ -446,7 +525,8 @@ float GameState::distanceBetweenGameObjects(BaseGameObject* object1, BaseGameObj
 }
 BaseGameObject* GameState::getClosestEnemyOf(BaseCharacter& baseCharacter)
 {
-    float distanceClosestEnemy = 0;
+    float distanceClosestEnemy = 500;
+    BaseGameObject* closestEnemy = nullptr;
 
     // loop through baseCharacters and gameObjects
     for (auto& object : gameObjects)
@@ -455,10 +535,19 @@ BaseGameObject* GameState::getClosestEnemyOf(BaseCharacter& baseCharacter)
         {
             // we found a enemy object (like a fireball)
             std::cout << object->getObjName() << std::endl;
+            // check distanceBetween it and the baseCharacter
+            float const distance = distanceBetweenGameObjects(&baseCharacter, object.get());
+            // check if distanceClosestEnemy is bigger then distance, if so set it
+            if (distanceClosestEnemy > distance)
+            {
+                distanceClosestEnemy = distance;
+                closestEnemy = object.get();
+            }
         }
     }
 
-    return nullptr;
+
+    return closestEnemy;
 }
 
 

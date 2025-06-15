@@ -24,9 +24,10 @@ public:
     void update(float deltaTime); // init(GameState* gameState) needed before calling update
 
     bool checkForCollision(BaseGameObject& gameObject1, BaseGameObject& gameObject2);
-    void checkForCollision(vector<unique<BaseGameObject>>& listOfGameObjects1, vector<unique<BaseGameObject>>& listOfGameObjects2);
+    void checkForCollision(vector<shared<BaseGameObject>>& listOfGameObjects1,
+                           vector<shared<BaseGameObject>>& listOfGameObjects2);
     template<typename T>
-    void checkForCollision(BaseGameObject& gameObject, vector<unique<T>>& gameObjects);
+    void checkForCollision(BaseGameObject& gameObject, std::vector<std::shared_ptr<T>>& gameObjects);
 
 private:
     CollisionDetection() = default ; // private constructor, because singleton
@@ -38,7 +39,7 @@ private:
 };
 
 template<typename T>
-void CollisionDetection::checkForCollision(BaseGameObject& gameObject, vector<unique<T>>& gameObjects)
+void CollisionDetection::checkForCollision(BaseGameObject& gameObject, vector<shared<T>>& gameObjects)
 {
     for (auto& otherGameObject : gameObjects)
     {

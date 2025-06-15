@@ -123,7 +123,9 @@ public:
 
     void setGameState(GameState* gameState);
 
-    void addGameObjectToGameState(std::unique_ptr<BaseGameObject> gameObject); //used for fireball etc.
+    void addGameObjectToGameState(std::shared_ptr<BaseGameObject> gameObject); //used for fireball etc.
+    void addGameObjectToGameState(std::shared_ptr<BaseGameObject> gameObject,
+                                  int ownerPlayerNumber); //used for fireball etc., ownerPlayerNumber -1 = it belongs to noone, -2 it belongs to both, 1 = p1, 2 = p2
 
     AsepriteManager* asepriteManagerPtr;
 

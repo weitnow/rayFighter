@@ -25,7 +25,7 @@ public: // METHODES
 
     BaseCharacter* createPlayer(int characterNumber, int playerNumber);
 
-    void addGameObject(unique<BaseGameObject> gameObject);
+    void addGameObject(shared<BaseGameObject> gameObject, int ownerPlayerNumber); // -1 = it belongs to noone, -2 = it belongs to both, 1 = p1, 2 = p2
 
 
     [[nodiscard]] Vector2 getMiddlePointBetweenPlayers() const;
@@ -73,8 +73,16 @@ protected: // VARIABLES
     */
 
     // <-- GameState.h -->
-    vector<unique<BaseCharacter>> baseCharacters;
-    vector<unique<BaseGameObject>> gameObjects;
+    vector<shared<BaseCharacter>> baseCharacters;
+    vector<shared<BaseGameObject>> gameObjects;
+    vector<weak<BaseCharacter>> baseCharactersP1; // holds weak reference to baseCharacters
+    vector<weak<BaseCharacter>> baseCharactersP2; // holds weak reference to baseCharacters
+    vector<weak<BaseCharacter>> baseCharactersNoOwner; // holds weak reference to baseCharacters
+    vector<weak<BaseCharacter>> baseCharactersBothOwner; // holds weak reference to baseCharacters
+    vector<weak<BaseGameObject>> gameObjectsP1;   // holds weak reference to gameObjects
+    vector<weak<BaseGameObject>> gameObjectsP2;   // holds weak reference to gameObjects
+    vector<weak<BaseGameObject>> gameObjectsNoOwner;   // holds weak reference to gameObjects
+    vector<weak<BaseGameObject>> gameObjectsBothOwner;   // holds weak reference to gameObjects
     AsepriteAnimationFile* levelAnimFile;
     Gui* gui;
     CollisionDetection* hitDetection;

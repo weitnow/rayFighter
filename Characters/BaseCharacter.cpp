@@ -143,6 +143,7 @@ void BaseCharacter::setPlayerNumber(int playerNumber)
         this->setObjName("Player" + std::to_string(playerNumber));
     }
     this->playerNumber = playerNumber;
+    this->ownedByPlayerNumber = playerNumber;
 }
 
 int BaseCharacter::getPlayerNumber()
