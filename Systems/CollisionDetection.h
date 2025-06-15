@@ -38,7 +38,14 @@ public:
                            std::vector<std::shared_ptr<T2>>& listOfGameObjects2);
 
     template <typename T>
-    std::pair<CollisionResult, CollisionResult>  checkForCollision(BaseGameObject& gameObject, std::vector<std::shared_ptr<T>>& gameObjects);
+    std::pair<CollisionResult, CollisionResult> checkForCollision(BaseGameObject& gameObject,
+                                                                  std::vector<std::shared_ptr<T>>& gameObjects);
+    template <class T1, class T2>
+    std::pair<CollisionResult, CollisionResult> checkForCollision(const std::vector<std::weak_ptr<T1>>& weakList1,
+                                                                  const std::vector<std::weak_ptr<T2>>& weakList2);
+    template <class T>
+    std::pair<CollisionResult, CollisionResult> checkForCollision(BaseGameObject& gameObject,
+                                                                  const std::vector<std::weak_ptr<T>>& weakGameObjects);
 
 private:
     CollisionDetection() = default ; // private constructor, because singleton
@@ -90,6 +97,31 @@ std::pair<CollisionResult, CollisionResult> CollisionDetection::checkForCollisio
     // No collisions or list is empty
     return std::make_pair(CollisionResult(), CollisionResult());
 }
+
+template<typename T1, typename T2>
+std::pair<CollisionResult, CollisionResult> CollisionDetection::checkForCollision(
+    const std::vector<std::weak_ptr<T1>>& weakList1,
+    const std::vector<std::weak_ptr<T2>>& weakList2)
+{
+    auto list1 = lockWeakVector(weakList1);
+    auto list2 = lockWeakVector(weakList2);
+    return checkForCollision(list1, list2); // reuse shared_ptr version
+}
+
+template<typename T>
+std::pair<CollisionResult, CollisionResult> CollisionDetection::checkForCollision(
+    BaseGameObject& gameObject, const std::vector<std::weak_ptr<T>>& weakGameObjects)
+{
+    std::vector<std::shared_ptr<T>> sharedGameObjects;
+    for (const auto& weakPtr : weakGameObjects)
+    {
+        if (auto shared = weakPtr.lock())
+            sharedGameObjects.push_back(shared);
+    }
+
+    return checkForCollision(gameObject, sharedGameObjects); // reuse existing logic
+}
+
 
 
 #endif //COLLISIONDETECTION_H

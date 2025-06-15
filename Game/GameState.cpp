@@ -95,11 +95,24 @@ void GameState::Update(float deltaTime)
     gui->update(deltaTime);
 
     // Hitdetection
-    hitDetection->checkForCollision(*player1, *player2);
-    hitDetection->checkForCollision(*player2, gameObjects);
-    //hitDetection->checkForCollision(*player1, gameObjects);
-    //hitDetection->checkForCollision(*player1, baseCharacters);
-    //hitDetection->checkForCollision(*player2, baseCharacters);
+    hitDetection->checkForCollision(*player1, *player2); // check for collision between player1 and player2
+
+    hitDetection->checkForCollision(*player1, gameObjectsP2); // check for collision between player1 and gameObjectsP2
+    //hitDetection->checkForCollision(*player1, gameObjectsNoOwner); // check for collision between player1 and gameObjectsNoOwner
+    //hitDetection->checkForCollision(*player1, gameObjectsBothOwner); // check for collision between player1 and gameObjectsBothOwner
+    hitDetection->checkForCollision(*player1, baseCharactersP1); // check for collision between player1 and baseCharactersP1
+    //hitDetection->checkForCollision(*player1, baseCharactersNoOwner); // check for collision between player1 and baseCharactersNoOwner
+    //hitDetection->checkForCollision(*player1, baseCharactersBothOwner); // check for collision between player1 and baseCharactersBothOwner
+
+    hitDetection->checkForCollision(*player2, gameObjectsP1);
+    //hitDetection->checkForCollision(*player2, gameObjectsNoOwner);
+    //hitDetection->checkForCollision(*player2, gameObjectsBothOwner);
+    hitDetection->checkForCollision(*player2, baseCharactersP2);
+    //hitDetection->checkForCollision(*player2, baseCharactersNoOwner);
+    //hitDetection->checkForCollision(*player2, baseCharactersBothOwner);
+
+
+
 
     HandleInput();
 
