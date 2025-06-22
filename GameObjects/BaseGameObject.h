@@ -76,6 +76,8 @@ public:
     virtual Vector2 getPos() const;
     void resetPos(); // sets the object to the orginal position where it was instantiated
 
+    void setUpateClosestEnemies(bool updateClosestEnemies);
+
     //pushVector
     void setPushVector(Vector2 pushVector);
     Vector2 getPushVector();
@@ -155,6 +157,12 @@ protected:
     int ownedByPlayerNumber = -1;     // 1 or 2, -1 = unknown
     int maxLife;
     int currentLife;
+
+    // update closest enemies
+    bool updateClosestEnemy = false;
+    float distanceToClosestEnemy = 500.0f; // initial value
+    BaseGameObject* closestEnemyPtr = nullptr; // holds a pointer to the closestEnemy, which can damage you (ex. other player, fireball etc)
+    std::vector<BaseGameObject*> allEnemies; // a vector with pointer to all your enemies (ex. other player, fireball etc, which can damage you)
 
     // shadow
     bool drawShadow;

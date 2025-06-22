@@ -63,6 +63,9 @@ void BaseCharacter::update(float deltaTime)
         }
     }
 
+    if (updateClosestEnemy)
+        closestEnemyPtr = gameState->getClosestEnemyOf(*this, &distanceToClosestEnemy, &allEnemies);
+
 
     // update the member variables from the animationfile
     _updateMemberVariables();

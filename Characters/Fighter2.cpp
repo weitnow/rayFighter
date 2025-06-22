@@ -50,6 +50,8 @@ void Fighter2::init()
     setMaxPowerLevel(2);
     setPowerLevel(1);
 
+    setUpateClosestEnemies(true);
+
     // set special moves
     specialMoves = {
         {"special1",

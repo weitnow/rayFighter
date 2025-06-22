@@ -57,6 +57,8 @@ void Fighter1::init()
     setMaxPowerLevel(3);
     setPowerLevel(3);
 
+    setUpateClosestEnemies(true);
+
     // set special moves
     specialMoves = {
         {"special1", // Fireball

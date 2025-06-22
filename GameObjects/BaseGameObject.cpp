@@ -72,6 +72,9 @@ void BaseGameObject::update(float deltaTime)
     // update the member variables from the animationfile
     _updateMemberVariables();
 
+    if (updateClosestEnemy)
+        closestEnemyPtr = gameState->getClosestEnemyOf(*this, &distanceToClosestEnemy, &allEnemies);
+
     // check if this->animfileptr is not nullptr - if its not, then update the animation
     if (animfilePtr != nullptr)
     {
@@ -247,6 +250,10 @@ void BaseGameObject::resetPos()
 {
 
     pos = orginalPos;
+}
+void BaseGameObject::setUpateClosestEnemies(bool updateClosestEnemies)
+{
+    updateClosestEnemy = updateClosestEnemies;
 }
 
 void BaseGameObject::setAffectedByGravity(bool affectedByGravity)

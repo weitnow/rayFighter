@@ -33,7 +33,9 @@ public: // METHODES
 
 public: // METHODES Informationprovider
     float distanceBetweenGameObjects(BaseGameObject* object1, BaseGameObject* object2);
-    BaseGameObject* getClosestEnemyOf(BaseCharacter& baseCharacter);
+    BaseGameObject* getClosestEnemyOf(BaseGameObject& baseGameObject,
+                                      float* outDistance = nullptr,
+                                      std::vector<BaseGameObject*>* outEnemies = nullptr);
 
 public: // VARIABLES
     // <-- BaseState.h -->
@@ -54,6 +56,7 @@ protected: // METHODES
     void _updateCamera(bool restriction = true); // if restriction is true, the camera is restricted to the stage
     void _updateAllGameObjects(float deltaTime);
     void _updateAllBaseCharacters(float deltatime);
+    void _updateHitDetection();
 
     void _drawAllGameObjects();
     void _drawAllBaseCharacters();
