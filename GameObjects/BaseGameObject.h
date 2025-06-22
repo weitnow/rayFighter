@@ -44,6 +44,11 @@ public:
     void setObjName(std::string name);
     std::string getObjName();
 
+    // enemies
+    [[nodiscard]] float getDistanceToClosestEnemy() const;
+    [[nodiscard]] BaseGameObject* getClosestEnemyPtr() const;
+    [[nodiscard]] std::vector<BaseGameObject*> getListOfAllEnemies() const;
+
     // sprites
     void addAnim(AsepriteAnimationFile* animfileptr);
     AsepriteAnimationFile* getAnimFile();

@@ -335,6 +335,10 @@ void BlockState::Init()
 
 void BlockState::Update(float deltaTime)
 {
+    if (!controller->block) // if we dont block anymore, switch to idle
+        statemachine->changeState("Idle");
+
+    // otherwise check other transition condition
     checkTransitions({
 
         "Jump",

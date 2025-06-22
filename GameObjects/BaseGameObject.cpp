@@ -229,6 +229,19 @@ std::string BaseGameObject::getObjName()
 {
     return ObjName;
 }
+float BaseGameObject::getDistanceToClosestEnemy() const
+{
+    return distanceToClosestEnemy;
+}
+BaseGameObject* BaseGameObject::getClosestEnemyPtr() const
+{
+    return closestEnemyPtr;
+
+}
+std::vector<BaseGameObject*> BaseGameObject::getListOfAllEnemies() const
+{
+    return allEnemies;
+}
 
 void BaseGameObject::setPos(float x, float y)
 {

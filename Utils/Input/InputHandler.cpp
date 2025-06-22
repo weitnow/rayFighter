@@ -65,7 +65,7 @@ void InputHandler::Update()
 
     // check blocking needed
     checkIfPlayerShouldBlock(player1);
-    //checkIfPlayerShouldBlock(player2);
+    checkIfPlayerShouldBlock(player2);
 
     // check if game should stop for debug
     if (IsKeyPressed(KEY_ZERO)) // Todo: get rid of this, just use while developping
@@ -270,19 +270,28 @@ void InputHandler::checkSpecialMoves(InputBuffer& buffer, CharacterController* c
 }
 void InputHandler::checkIfPlayerShouldBlock(BaseCharacter* player)
 {
-    // check if GameState is not nullptr, otherwise cannot calculate distance player <--> other gameobjects
-    if (gameState == nullptr)
+    if (!gameState || !player)
         return;
 
-    const int BLOCK_DISTANCE_THRESHOLD = 30;
+    constexpr float BLOCK_DISTANCE_THRESHOLD = 40.0f;
 
-    float Distance =  gameState->distanceBetweenGameObjects(player1, player2);
+    BaseGameObject* closestEnemy = player->getClosestEnemyPtr();
+    if (!closestEnemy)
+        return;
+
+    float distanceToEnemy = player->getDistanceToClosestEnemy();
+    bool enemyHasHitbox = !closestEnemy->getHitBoxes().empty();
+
     CharacterController* controller = player->getController();
+    bool isMovingTowardEnemy = (controller->moveLeft && controller->isLeft) ||
+                                (controller->moveRight && !controller->isLeft);
 
-    if (Distance < BLOCK_DISTANCE_THRESHOLD && (controller->moveLeft && controller->isLeft || controller->moveRight && !controller->isLeft))
-        player->getController()->block = true;
-
+    if (distanceToEnemy < BLOCK_DISTANCE_THRESHOLD && enemyHasHitbox && isMovingTowardEnemy)
+    {
+        controller->block = true;
+    }
 }
+
 
 
 void InputHandler::checkIfGamepadIsConnected()

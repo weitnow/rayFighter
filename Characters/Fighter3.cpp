@@ -59,6 +59,8 @@ void Fighter3::init()
     setMaxPowerLevel(2);
     setPowerLevel(1);
 
+    setUpateClosestEnemies(true); // updates <float>distanceToClosestEnemy, <BaseGameObject*>closestEnemyPtr, <std::vector<BaseGameObject*> allEnemies
+
     // set special moves
     specialMoves = {
         {"special1",
