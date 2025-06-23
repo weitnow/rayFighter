@@ -59,7 +59,8 @@ void DebugInfo::setDebugMode(bool debugMode)
     Global::debugHitboxes = debugMode;
     Global::debugHurtboxes = debugMode;
     Global::debugPushboxes = false;  // false or debugMode;
-    Global::debugThrowboxes = false; //debugMode;
+    Global::debugThrowboxes = debugMode;
+    Global::debugProximityBoxes = debugMode;
 
     if (debugMode)
     {

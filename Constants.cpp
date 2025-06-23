@@ -18,3 +18,4 @@ bool Global::debugHitboxes = false;       // will be set by GameManager->setDebu
 bool Global::debugHurtboxes = false;      // will be set by GameManager->setDebugMode
 bool Global::debugPushboxes = false;      // will be set by GameManager->setDebugMode
 bool Global::debugThrowboxes = false;     // will be set by GameManager->setDebugMode
+bool Global::debugProximityBoxes = false; // will be set by GameManager->setDebugMode

@@ -86,7 +86,6 @@ const std::vector<SpecialMove>& BaseCharacter::getSpecialMoves() const
 
 void BaseCharacter::draw()
 {
-
     BaseGameObject::draw();
 }
 

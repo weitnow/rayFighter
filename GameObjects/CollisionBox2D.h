@@ -16,8 +16,8 @@ enum class CollisionBoxType
     HITBOX,
     HURTBOX,
     PUSHBOX,
-    THROWBOX
-
+    THROWBOX,
+    PROXIMITYBOX,
 };
 
 enum class HurtboxType

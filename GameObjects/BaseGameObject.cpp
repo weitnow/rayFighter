@@ -126,7 +126,7 @@ void BaseGameObject::draw()
                                    getPos().y,
                                    animfilePtr->getSpriteSizeX() * scale,
                                    animfilePtr->getSpriteSizeY() * scale,
-                                   YELLOW);
+                                   LIGHTGRAY);
             }
             if (Global::debugCollisionBoxes)
             {
@@ -161,11 +161,11 @@ void BaseGameObject::onYouGotHit(vector<CollisionBox2D*>& hitboxesThatHit,
     if (!otherGameObject.canDealDamage)
     {
         //std::cout << "hit registered but canDealDamage of " << otherGameObject.getObjName() << " is set to false." << std::endl;
-    } else
+    }
+    else
     {
         handleGotHitLogic(hitboxesThatHit, hurtboxesThatWereHit, otherGameObject);
     }
-
 }
 void BaseGameObject::onYouHit(vector<CollisionBox2D*>& hitboxesThatHit,
                               vector<CollisionBox2D*>& hurtboxesThatWereHit,
@@ -174,9 +174,11 @@ void BaseGameObject::onYouHit(vector<CollisionBox2D*>& hitboxesThatHit,
     if (!this->canDealDamage)
     {
         //std::cout << this->getObjName() << " hit " << otherGameObject.getObjName() << ". But canDealDamage of " << this->getObjName() << " is set to false." << std::endl;
-    } else
+    }
+    else
     {
-        std::cout << this->getObjName() << " hit " << otherGameObject.getObjName() << ". canDealDamage of " << this->getObjName() << " is set to true." << std::endl;
+        std::cout << this->getObjName() << " hit " << otherGameObject.getObjName() << ". canDealDamage of "
+                  << this->getObjName() << " is set to true." << std::endl;
 
         this->canDealDamage = false; // will be set true in the statemachine, otherwise we keep hitting the opponent
 
@@ -236,7 +238,6 @@ float BaseGameObject::getDistanceToClosestEnemy() const
 BaseGameObject* BaseGameObject::getClosestEnemyPtr() const
 {
     return closestEnemyPtr;
-
 }
 std::vector<BaseGameObject*> BaseGameObject::getListOfAllEnemies() const
 {
@@ -616,9 +617,10 @@ void BaseGameObject::_updateCollisionBoxes(float deltaTime)
 {
     // List of all your CollisionMaps
     vector<CollisionMap*> collisionMaps = {&hitBoxesPerFrame,
-                                         &hurtBoxesPerFrame,
-                                         &pushBoxesPerFrame,
-                                         &throwBoxesPerFrame};
+                                           &hurtBoxesPerFrame,
+                                           &pushBoxesPerFrame,
+                                           &throwBoxesPerFrame,
+                                           &proximityBoxesPerFrame};
 
     // Loop through each CollisionMap
     for (auto* collisionMap : collisionMaps)
@@ -641,61 +643,25 @@ void BaseGameObject::_updateCollisionBoxes(float deltaTime)
 
 void BaseGameObject::_drawCollisionBoxes()
 {
-    // Draw the Hitboxes for the current frame
-    if (Global::debugHitboxes)
-    {
-        vector<CollisionBox2D> collisionBoxes =
-            _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
-                                                               currentFrameAbsolut,
-                                                               CollisionBoxType::HITBOX);
-        for (auto& box : collisionBoxes)
+    auto drawIfEnabled = [&](bool debugFlag, CollisionBoxType type) {
+        if (debugFlag)
         {
-            box.draw();
+            vector<CollisionBox2D> collisionBoxes =
+                _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag, currentFrameAbsolut, type);
+            for (auto& box : collisionBoxes)
+            {
+                box.draw();
+            }
         }
-    }
+    };
 
-
-    // Draw the Hurtboxes for the current frame
-    if (Global::debugHurtboxes)
-    {
-        vector<CollisionBox2D> collisionBoxes =
-            _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
-                                                               currentFrameAbsolut,
-                                                               CollisionBoxType::HURTBOX);
-        for (auto& box : collisionBoxes)
-        {
-            box.draw();
-        }
-    }
-
-
-    // Draw the Pushboxes for the current frame
-    if (Global::debugPushboxes)
-    {
-        vector<CollisionBox2D> collisionBoxes =
-            _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
-                                                               currentFrameAbsolut,
-                                                               CollisionBoxType::PUSHBOX);
-        for (auto& box : collisionBoxes)
-        {
-            box.draw();
-        }
-    }
-
-
-    // Draw the Throwboxes for the current frame
-    if (Global::debugThrowboxes)
-    {
-        vector<CollisionBox2D> collisionBoxes =
-            _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
-                                                               currentFrameAbsolut,
-                                                               CollisionBoxType::THROWBOX);
-        for (auto& box : collisionBoxes)
-        {
-            box.draw();
-        }
-    }
+    drawIfEnabled(Global::debugHitboxes, CollisionBoxType::HITBOX);
+    drawIfEnabled(Global::debugHurtboxes, CollisionBoxType::HURTBOX);
+    drawIfEnabled(Global::debugPushboxes, CollisionBoxType::PUSHBOX);
+    drawIfEnabled(Global::debugThrowboxes, CollisionBoxType::THROWBOX);
+    drawIfEnabled(Global::debugProximityBoxes, CollisionBoxType::PROXIMITYBOX);
 }
+
 
 void BaseGameObject::_addCollisionBoxForFrameInternal(std::string frameTagName,
                                                       int offsetX,
@@ -707,63 +673,48 @@ void BaseGameObject::_addCollisionBoxForFrameInternal(std::string frameTagName,
                                                       HurtboxType hurtboxType,
                                                       bool isActive)
 {
-    if (collisionBoxType == CollisionBoxType::HITBOX)
+    std::unordered_map<std::string, std::vector<CollisionBox2D>>* targetMap = nullptr;
+    Color boxColor;
+
+    switch (collisionBoxType)
     {
-        hitBoxesPerFrame[frameTagName].push_back(CollisionBox2D{this,
-                                                                offsetX,
-                                                                offsetY,
-                                                                width,
-                                                                height,
-                                                                hitboxOwnerWith,
-                                                                collisionBoxType,
-                                                                isActive,
-                                                                RED,
-                                                                hurtboxType});
-    }
-    else if (collisionBoxType == CollisionBoxType::HURTBOX)
-    {
-        hurtBoxesPerFrame[frameTagName].push_back(CollisionBox2D{this,
-                                                                 offsetX,
-                                                                 offsetY,
-                                                                 width,
-                                                                 height,
-                                                                 hitboxOwnerWith,
-                                                                 collisionBoxType,
-                                                                 isActive,
-                                                                 GREEN,
-                                                                 hurtboxType});
-    }
-    else if (collisionBoxType == CollisionBoxType::PUSHBOX)
-    {
-        pushBoxesPerFrame[frameTagName].push_back(CollisionBox2D{this,
-                                                                 offsetX,
-                                                                 offsetY,
-                                                                 width,
-                                                                 height,
-                                                                 hitboxOwnerWith,
-                                                                 collisionBoxType,
-                                                                 isActive,
-                                                                 BLUE,
-                                                                 hurtboxType});
-    }
-    else if (collisionBoxType == CollisionBoxType::THROWBOX)
-    {
-        throwBoxesPerFrame[frameTagName].push_back(CollisionBox2D{this,
-                                                                  offsetX,
-                                                                  offsetY,
-                                                                  width,
-                                                                  height,
-                                                                  hitboxOwnerWith,
-                                                                  collisionBoxType,
-                                                                  isActive,
-                                                                  BROWN,
-                                                                  hurtboxType});
-    }
-    else
-    {
+    case CollisionBoxType::HITBOX:
+        targetMap = &hitBoxesPerFrame;
+        boxColor = RED;
+        break;
+    case CollisionBoxType::HURTBOX:
+        targetMap = &hurtBoxesPerFrame;
+        boxColor = GREEN;
+        break;
+    case CollisionBoxType::PUSHBOX:
+        targetMap = &pushBoxesPerFrame;
+        boxColor = BLUE;
+        break;
+    case CollisionBoxType::THROWBOX:
+        targetMap = &throwBoxesPerFrame;
+        boxColor = BROWN;
+        break;
+    case CollisionBoxType::PROXIMITYBOX:
+        targetMap = &proximityBoxesPerFrame;
+        boxColor = YELLOW;
+        break;
+    default:
         throw std::runtime_error("CollisionBoxType not found");
     }
+
+    targetMap->operator[](frameTagName)
+        .emplace_back(CollisionBox2D{this,
+                                     offsetX,
+                                     offsetY,
+                                     width,
+                                     height,
+                                     hitboxOwnerWith,
+                                     collisionBoxType,
+                                     isActive,
+                                     boxColor,
+                                     hurtboxType});
 }
+
 void BaseGameObject::handleHitLogic(vector<CollisionBox2D*>& hitboxesThatHit,
                                     vector<CollisionBox2D*>& hurtboxesThatWereHit,
                                     BaseGameObject& otherGameObject)
@@ -828,6 +779,9 @@ vector<CollisionBox2D> BaseGameObject::_checkIfCollisionMapHasCollisionBoxesAndR
     case CollisionBoxType::THROWBOX:
         collisionMap = &throwBoxesPerFrame;
         break;
+    case CollisionBoxType::PROXIMITYBOX:
+        collisionMap = &proximityBoxesPerFrame;
+        break;
     default:
         throw std::runtime_error("Invalid CollisionBoxType");
     }
@@ -862,11 +816,6 @@ void BaseGameObject::_destroyIfHasLeftScreen()
         this->shouldDestroy = true;
     }
 }
-BaseGameObject* BaseGameObject::getClosestEnemy()
-{
-    // Todo: Implement
-}
-
 
 void BaseGameObject::setGameState(GameState* gameState)
 {
@@ -890,5 +839,4 @@ void BaseGameObject::addGameObjectToGameState(std::shared_ptr<BaseGameObject> ga
 
     // Add the gameObject to the gameState's gameObjects list
     gameState->addGameObject(std::move(gameObject), ownerPlayerNumber);
-
 }

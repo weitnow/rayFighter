@@ -185,6 +185,7 @@ protected:
     CollisionMap hurtBoxesPerFrame;
     CollisionMap pushBoxesPerFrame;
     CollisionMap throwBoxesPerFrame;
+    CollisionMap proximityBoxesPerFrame;
 
     AsepriteAnimationFile* animfilePtr;
 
