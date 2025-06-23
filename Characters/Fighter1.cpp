@@ -29,15 +29,23 @@ void Fighter1::init()
     // [0, 1, 2...] = frameNumber, -1 = valid for all frames of gbFigher (ex. gbFighter-*), -2 = valid for all frames of gbFighter-Action (ex. gbFighter-Idle)
     addCollisionBoxForFrame("gbFighter-Idle", -1, CollisionBoxType::PUSHBOX, true, 10, 0, 10, 30);
 
-    addCollisionBoxForFrame("gbFighter-Idle", -1, CollisionBoxType::PROXIMITYBOX, true, 40, 0, 20, 30);
-
+    addCollisionBoxForFrame("gbFighter-Punch", -2, CollisionBoxType::PROXIMITYBOX, true, 16, 0, 40, 32);
     addCollisionBoxForFrame("gbFighter-Punch", 1, CollisionBoxType::HITBOX, true, 31, 10, 5, 5);
+
+    addCollisionBoxForFrame("gbFighter-Kick", -2, CollisionBoxType::PROXIMITYBOX, true, 16, 0, 40, 32);
     addCollisionBoxForFrame("gbFighter-Kick", 1, CollisionBoxType::HITBOX, true, 26, 10, 5, 5);
+
+    addCollisionBoxForFrame("gbFighter-DuckKick", -2, CollisionBoxType::PROXIMITYBOX, true, 16, 0, 40, 32);
     addCollisionBoxForFrame("gbFighter-DuckKick", 1, CollisionBoxType::HITBOX, true, 26, 26, 5, 5);
+
+    addCollisionBoxForFrame("gbFighter-DuckPunch", -2, CollisionBoxType::PROXIMITYBOX, true, 16, 0, 40, 32);
     addCollisionBoxForFrame("gbFighter-DuckPunch", 0, CollisionBoxType::HITBOX, true, 30, 14, 5, 5);
+
+    addCollisionBoxForFrame("gbFighter-JumpPunch", -2, CollisionBoxType::PROXIMITYBOX, true, 16, 0, 40, 32);
     addCollisionBoxForFrame("gbFighter-JumpPunch", 0, CollisionBoxType::HITBOX, true, 24, 20, 5, 5);
 
     // special moves
+    addCollisionBoxForFrame("gbFighter-A+B Move", -2, CollisionBoxType::PROXIMITYBOX, true, 16, 0, 40, 32);
     addCollisionBoxForFrame("gbFighter-A+B Move", -2, CollisionBoxType::HITBOX, true, 0, 0, 35, 30);
 
     // x, y, width, height

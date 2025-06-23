@@ -29,8 +29,13 @@ void Fighter2::init()
     // [0, 1, 2...] = frameNumber, -1 = valid for all frames of gbFigher (ex. gbFighter-*), -2 = valid for all frames of gbFighter-Action (ex. gbFighter-Idle)
     addCollisionBoxForFrame("nesFighter-Idle", -1, CollisionBoxType::PUSHBOX, true, 16, 0, 10, 30);
 
+    addCollisionBoxForFrame("nesFighter-Punch", -2, CollisionBoxType::PROXIMITYBOX, true, 16, 0, 40, 32);
     addCollisionBoxForFrame("nesFighter-Punch", 0, CollisionBoxType::HITBOX, true, 30, 15, 5, 5);
+
+    addCollisionBoxForFrame("nesFighter-DuckKick", -2, CollisionBoxType::PROXIMITYBOX, true, 16, 0, 40, 32);
     addCollisionBoxForFrame("nesFighter-DuckKick", 0, CollisionBoxType::HITBOX, true, 32, 17, 5, 5);
+
+    addCollisionBoxForFrame("nesFighter-JumpPunch", -2, CollisionBoxType::PROXIMITYBOX, true, 16, 0, 40, 32);
     addCollisionBoxForFrame("nesFighter-JumpPunch", 0, CollisionBoxType::HITBOX, true, 28, 19, 5, 5);
 
     // x, y, width, height
