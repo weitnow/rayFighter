@@ -137,6 +137,10 @@ void GameState::Render()
 
         // Draw the middlePointYbetweenPlayers
         DrawLine(0, middlePointYbetweenPlayers, Constants::STAGE_WIDTH, middlePointYbetweenPlayers, RED);
+
+        // Draw line between Middlepoint of p1 and p2
+        DrawLine(player1->getMiddlePointPos().x, player1->getMiddlePointPos().y, player2->getMiddlePointPos().x, player2->getMiddlePointPos().y, BLUE);
+
     }
 
 

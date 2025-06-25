@@ -80,8 +80,10 @@ public:
     void setPos(Vector2 pos);
     virtual Vector2 getPos() const;
     void resetPos(); // sets the object to the orginal position where it was instantiated
+    void setMiddlePointOffset(Vector2 offset);
+    virtual Vector2 getMiddlePointPos() const;
 
-    void setUpateClosestEnemies(bool updateClosestEnemies);
+    void setUpdateClosestEnemies(bool updateClosestEnemies);
 
     //pushVector
     void setPushVector(Vector2 pushVector);
@@ -140,6 +142,7 @@ public:
 protected:
     Vector2 orginalPos; // the original position of the object as it was created - used for reseting the object
     Vector2 pos;        // calculated in the update method
+    Vector2 middlePoint; // used for calculating the distance between obj
     Vector2 moveVector; // (x,y) used to walk and jump
     Vector2 pushVector; // (x,y) used by setPushVector and reduced by _reducePushVector in update methode
     float moveSpeed = 60.f;
@@ -222,7 +225,6 @@ protected:
 
     void _destroyIfHasLeftScreen();
 
-    BaseGameObject* getClosestEnemy();
 };
 
 #endif // GBFIGHTER_BASEGAMEOBJECT_H

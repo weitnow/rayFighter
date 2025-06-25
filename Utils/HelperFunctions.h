@@ -17,9 +17,10 @@ namespace Utils
 
 inline float calculateDistance(const BaseGameObject& obj1, const BaseGameObject& obj2)
 {
-    float dx = obj1.getPos().x - obj2.getPos().x;
-    float dy = obj1.getPos().y - obj2.getPos().y;
+    float dx = obj1.getMiddlePointPos().x - obj2.getMiddlePointPos().x;
+    float dy = obj1.getMiddlePointPos().y - obj2.getMiddlePointPos().y;
     return std::sqrt(dx * dx + dy * dy);
+
 }
 inline float calculateDistanceX(const BaseGameObject& obj1, const BaseGameObject& obj2)
 {

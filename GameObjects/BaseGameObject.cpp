@@ -8,7 +8,7 @@ BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager)
       isActive(true), isAlive(true), shouldDestroy(false), isInvincible(false), maxLife(1), currentLife(maxLife),
       _invincibleCounter(0.f), invincibleTime(Constants::INVINCIBLE_TIME), affectedByGravity(false), moveVector({0, 0}),
       getDurationCurrentFrame(0), currentFrame(0), minFrame(0), maxFrame(0), hasAnimFinished(false),
-      currentFrameTag(""), currentFrameAbsolut(0), drawShadow(false), gameState(nullptr), canDealDamage(true)
+      currentFrameTag(""), currentFrameAbsolut(0), drawShadow(false), gameState(nullptr), canDealDamage(false)
 {
     if (!asepriteManager)
     {
@@ -24,6 +24,8 @@ BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager)
 BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager, float x, float y) : BaseGameObject(asepriteManager)
 {
     setPos(x, y);
+    // set middlepoint default offsets can also set after with setMiddlePointOffset(vector2)
+    setMiddlePointOffset({Constants::PLAYER_PIXELSIZE / 2, Constants::PLAYER_PIXELSIZE / 2});
     orginalPos = pos; // save the original position for reseting the object
 }
 
@@ -265,7 +267,16 @@ void BaseGameObject::resetPos()
 
     pos = orginalPos;
 }
-void BaseGameObject::setUpateClosestEnemies(bool updateClosestEnemies)
+void BaseGameObject::setMiddlePointOffset(Vector2 offset)
+{
+    this->middlePoint = offset;
+}
+Vector2 BaseGameObject::getMiddlePointPos() const
+{
+    return Vector2(pos.x + middlePoint.x, pos.y + middlePoint.y);
+}
+
+void BaseGameObject::setUpdateClosestEnemies(bool updateClosestEnemies)
 {
     updateClosestEnemy = updateClosestEnemies;
 }
@@ -704,10 +715,10 @@ void BaseGameObject::_addCollisionBoxForFrameInternal(std::string frameTagName,
 
     targetMap->operator[](frameTagName)
         .emplace_back(CollisionBox2D{this,
-                                     offsetX,
-                                     offsetY,
-                                     width,
-                                     height,
+                                     static_cast<float>(offsetX),
+                                     static_cast<float>(offsetY),
+                                     static_cast<float>(width),
+                                     static_cast<float>(height),
                                      hitboxOwnerWith,
                                      collisionBoxType,
                                      isActive,
