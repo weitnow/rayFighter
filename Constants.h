@@ -25,8 +25,8 @@ const int FPS = 60;
 const int PLAYER1_X = 128; //128;
 const int PLAYER2_X = 256; //256;
 
-const Color GAMEOBJ_COLOR = YELLOW;  // used to specify the color of the debug rectangle
-const Vector2 GAMEOBJ_SIZE = {3, 3}; // used specify the size of the debug rectangle
+const Color GAMEOBJ_POS_RECT_COLOR = DARKGRAY;  // used to specify the color of the debug rectangle
+const Vector2 GAMEOBJ_POS_RECT_SIZE = {3, 3}; // used to specify the size of the debug rectangle
 
 
 //RayFighter Colors

@@ -111,16 +111,6 @@ void BaseGameObject::draw()
                 animfilePtr->drawCurrentSelectedTag(getPos().x, getPos().y, scale, BLUE, isFlippedX, isFlippedY);
             }
 
-
-            // Draw a small rectangle at the position of the gameobj.
-
-            DrawRectangleLines(getPos().x,
-                               getPos().y,
-                               Constants::GAMEOBJ_SIZE.x,
-                               Constants::GAMEOBJ_SIZE.y,
-                               Constants::GAMEOBJ_COLOR);
-
-
             // Draw the Spriteborder
             if (Global::debugSpriteBorder)
             {
@@ -130,6 +120,14 @@ void BaseGameObject::draw()
                                    animfilePtr->getSpriteSizeY() * scale,
                                    LIGHTGRAY);
             }
+
+            // Draw a small rectangle at the position of the gameobj.
+            DrawRectangleLines(getPos().x,
+                               getPos().y,
+                               Constants::GAMEOBJ_POS_RECT_SIZE.x,
+                               Constants::GAMEOBJ_POS_RECT_SIZE.y,
+                               Constants::GAMEOBJ_POS_RECT_COLOR);
+
             if (Global::debugCollisionBoxes)
             {
                 // Draw the collision boxes
