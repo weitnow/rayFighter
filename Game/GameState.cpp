@@ -38,8 +38,8 @@ GameState::GameState(Game* game) : BaseState(game)
     hitDetection = &CollisionDetection::getInstance(); // get reference to singleton
     hitDetection->init(this); // pass gamestate to singleton to access gameobjects for hitdetection
 
-    inputHandler->takeReferenceToGameState(this); // inputhandler needs access to Gamestate to calculate if PlayerShouldBlock
-
+    inputHandler->takeReferenceToGameState(
+        this); // inputhandler needs access to Gamestate to calculate if PlayerShouldBlock
 }
 
 GameState::~GameState()
@@ -85,8 +85,8 @@ void GameState::Update(float deltaTime)
 
     _keepPlayersOnStage(); // Keep the players on the stage
 
-    _updateAllGameObjects(deltaTime);
-    _updateAllBaseCharacters(deltaTime);
+    _updateAllGameObjects(deltaTime);    // if gameobj->shouldDestroy, it removes it from the list
+    _updateAllBaseCharacters(deltaTime); // if gameobj->shouldDestroy, it removes it from the list
 
     // update levelAnimFile
     levelAnimFile->update(deltaTime);
@@ -98,10 +98,6 @@ void GameState::Update(float deltaTime)
     _updateHitDetection();
 
     HandleInput();
-
-
-
-
 }
 
 void GameState::Render()
@@ -139,8 +135,7 @@ void GameState::Render()
         DrawLine(0, middlePointYbetweenPlayers, Constants::STAGE_WIDTH, middlePointYbetweenPlayers, RED);
 
         // Draw line between Middlepoint of p1 and p2
-        DrawLine(player1->getMiddlePointPos().x, player1->getMiddlePointPos().y, player2->getMiddlePointPos().x, player2->getMiddlePointPos().y, BLUE);
-
+        //DrawLine(player1->getMiddlePointPos().x, player1->getMiddlePointPos().y, player2->getMiddlePointPos().x, player2->getMiddlePointPos().y, BLUE);
     }
 
 
@@ -321,7 +316,6 @@ void GameState::addGameObject(std::shared_ptr<BaseGameObject> gameObject, int ow
 }
 
 
-
 Vector2 GameState::getMiddlePointBetweenPlayers() const
 {
     return Vector2{static_cast<float>(middlePointXbetweenPlayers), static_cast<float>(middlePointYbetweenPlayers)};
@@ -449,14 +443,14 @@ void GameState::_updateAllGameObjects(float deltaTime)
             gameObjects.erase(gameObjects.begin() + i);
 
             // Clean up weak references that point to this destroyed object
-            auto removeDestroyedWeakRefs = [&](std::vector<std::weak_ptr<BaseGameObject>>& vec)
-            {
-                vec.erase(std::remove_if(vec.begin(), vec.end(),
-                    [&](const std::weak_ptr<BaseGameObject>& weakRef)
-                    {
-                        auto shared = weakRef.lock();
-                        return !shared || shared == destroyedPtr;
-                    }), vec.end());
+            auto removeDestroyedWeakRefs = [&](std::vector<std::weak_ptr<BaseGameObject>>& vec) {
+                vec.erase(std::remove_if(vec.begin(),
+                                         vec.end(),
+                                         [&](const std::weak_ptr<BaseGameObject>& weakRef) {
+                                             auto shared = weakRef.lock();
+                                             return !shared || shared == destroyedPtr;
+                                         }),
+                          vec.end());
             };
 
             removeDestroyedWeakRefs(gameObjectsP1);
@@ -511,7 +505,8 @@ void GameState::_updateHitDetection()
     hitDetection->checkForCollision(*player1, gameObjectsP2); // check for collision between player1 and gameObjectsP2
     //hitDetection->checkForCollision(*player1, gameObjectsNoOwner); // check for collision between player1 and gameObjectsNoOwner
     //hitDetection->checkForCollision(*player1, gameObjectsBothOwner); // check for collision between player1 and gameObjectsBothOwner
-    hitDetection->checkForCollision(*player1, baseCharactersP1); // check for collision between player1 and baseCharactersP1
+    hitDetection->checkForCollision(*player1,
+                                    baseCharactersP1); // check for collision between player1 and baseCharactersP1
     //hitDetection->checkForCollision(*player1, baseCharactersNoOwner); // check for collision between player1 and baseCharactersNoOwner
     //hitDetection->checkForCollision(*player1, baseCharactersBothOwner); // check for collision between player1 and baseCharactersBothOwner
 
@@ -542,6 +537,7 @@ float GameState::distanceBetweenGameObjects(BaseGameObject* object1, BaseGameObj
 {
     return Utils::calculateDistance(*object1, *object2);
 }
+
 BaseGameObject* GameState::getClosestEnemyOf(BaseGameObject& baseGameObject,
                                              float* outDistance,
                                              std::vector<BaseGameObject*>* outEnemies)
@@ -553,18 +549,15 @@ BaseGameObject* GameState::getClosestEnemyOf(BaseGameObject& baseGameObject,
     if (outEnemies)
         outEnemies->clear();
 
-    auto isValidEnemy = [&](BaseGameObject* obj)
-    {
-        return obj != nullptr &&
-               obj->getOwnedByPlayerNumber() != baseGameObject.getOwnedByPlayerNumber() &&
-               obj->getIsAlive() &&
-               obj->getIsActive() &&
-               obj->canDealDamage;
+    auto isValidEnemy = [&](BaseGameObject* obj) {
+        return obj != nullptr && !obj->getShouldDestroy() &&
+               obj->getOwnedByPlayerNumber() != baseGameObject.getOwnedByPlayerNumber() && obj->getIsAlive() &&
+               obj->getIsActive() && obj->canDealDamage;
     };
 
-    auto processPotentialEnemy = [&](BaseGameObject* obj)
-    {
-        if (!isValidEnemy(obj)) return;
+    auto processPotentialEnemy = [&](BaseGameObject* obj) {
+        if (!isValidEnemy(obj))
+            return;
 
         if (outEnemies)
             outEnemies->push_back(obj);
@@ -594,8 +587,3 @@ BaseGameObject* GameState::getClosestEnemyOf(BaseGameObject& baseGameObject,
 
     return closestEnemy;
 }
-
-
-
-
-

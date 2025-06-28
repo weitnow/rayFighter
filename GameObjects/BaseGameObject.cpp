@@ -42,46 +42,34 @@ void BaseGameObject::init()
 
 void BaseGameObject::update(float deltaTime)
 {
-    if (!isActive)
-    {
-        return;
-    }
+    if (!isActive) return;
 
-    if (destroyIfHasLeftScreen)
-        _destroyIfHasLeftScreen();
+    if (destroyIfHasLeftScreen) // if set to true
+        _destroyIfHasLeftScreen(); // check if it has left the screen and destroy it
 
     if (scale != 1)
     {
         // TODO: Implement scale function
     }
 
-    // update collision boxes
     _updateCollisionBoxes(deltaTime);
 
-    this->setPos(this->getPos().x + (moveVector.x + pushVector.x) * deltaTime,
-                 this->getPos().y + (moveVector.y + pushVector.y) * deltaTime);
+    setPos(getPos().x + (moveVector.x + pushVector.x) * deltaTime,
+           getPos().y + (moveVector.y + pushVector.y) * deltaTime);
 
-
-    // apply gravity
     if (affectedByGravity)
-    {
         _applyGravity(deltaTime);
-    }
 
-    // reduce push vector
     _reducePushVector(deltaTime);
 
-    // update the member variables from the animationfile
     _updateMemberVariables();
 
-    if (updateClosestEnemy)
+    if (updateClosestEnemy) // if set to true
+        // update closestEnemyPtr, distanceToClosestEnemy, vector<allEnemies>
         closestEnemyPtr = gameState->getClosestEnemyOf(*this, &distanceToClosestEnemy, &allEnemies);
 
-    // check if this->animfileptr is not nullptr - if its not, then update the animation
     if (animfilePtr != nullptr)
-    {
         animfilePtr->update(deltaTime);
-    }
 }
 
 void BaseGameObject::draw()
@@ -106,7 +94,7 @@ void BaseGameObject::draw()
             {
                 animfilePtr->drawCurrentSelectedTag(getPos().x, getPos().y, scale, color, isFlippedX, isFlippedY);
             }
-            else //if the object is invincible draw it in blue
+            else //if the object is invincible, draw it in blue
             {
                 animfilePtr->drawCurrentSelectedTag(getPos().x, getPos().y, scale, BLUE, isFlippedX, isFlippedY);
             }

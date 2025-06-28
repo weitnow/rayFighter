@@ -6,10 +6,11 @@
 BaseCharacter::BaseCharacter(AsepriteManager* asepriteManager, float x, float y)
     : BaseGameObject(asepriteManager, x, y), isOnGround(false), animFileName("gbFighter"), isLeft(true),
       playerNumber(-1), statemachine(nullptr), currentState("Idle"), controller(nullptr), powerLevel(0),
-      maxPowerLevel(0), automaticallySetFrameTag(true)
+      maxPowerLevel(0)
 {
     affectedByGravity =
         true; // needs to be set here, because in the initializer list of basegameobject it is set to false
+    canDealDamage = true; // set initially to true, otherwise getClosestEnemy will not work until the player attacks
 }
 
 BaseCharacter::~BaseCharacter()
@@ -23,59 +24,30 @@ void BaseCharacter::init() // will be called by the createPlayer function in Gam
 
 void BaseCharacter::update(float deltaTime)
 {
-    if (!isActive) { return; }
+    if (!isActive) return;
 
-    if (scale != 1)
-    {
-        // TODO: Implement scale function
-    }
+    // Call base implementation for common behavior
+    BaseGameObject::update(deltaTime);
 
-    // UPDATE COLLISION BOXES
-    _updateCollisionBoxes(deltaTime);
-
-    // UPDATE THE POSITION
-    this->setPos(this->getPos().x + (moveVector.x + pushVector.x) * deltaTime,
-                 this->getPos().y + (moveVector.y + pushVector.y) * deltaTime);
-
-    // REDUCE PUSH VECTOR
-    _reducePushVector(deltaTime);
-
-    //APPLY GRAVITY
-    if (affectedByGravity)
-    {
-        _applyGravity(deltaTime);
-    }
-
-    // UPDATE THE STATE
+    // Add character-specific logic
     statemachine->update(deltaTime);
 
-    // UPDATE THE SPRITE
     if (automaticallySetFrameTag)
     {
-        if (statemachine->getCurrentStateAsString() == "No current state")
+        std::string newState = statemachine->getCurrentStateAsString();
+
+        if (newState == "No current state")
         {
             setCurrentFrameTag(animFileName + "-Idle");
         }
-        else if (currentState != statemachine->getCurrentStateAsString())
+        else if (currentState != newState)
         {
-            currentState = statemachine->getCurrentStateAsString();
-            setCurrentFrameTag(animFileName + "-" + statemachine->getCurrentStateAsString());
+            currentState = newState;
+            setCurrentFrameTag(animFileName + "-" + newState);
         }
     }
 
-    if (updateClosestEnemy)
-        closestEnemyPtr = gameState->getClosestEnemyOf(*this, &distanceToClosestEnemy, &allEnemies);
-
-
-    // update the member variables from the animationfile
-    _updateMemberVariables();
-    _updateCharacterController();
-
-    // check if this->animfileptr is not nullptr - if its not, then update the animation
-    if (animfilePtr != nullptr)
-    {
-        animfilePtr->update(deltaTime);
-    }
+    _updateCharacterController(); // Only for characters
 }
 
 const std::vector<SpecialMove>& BaseCharacter::getSpecialMoves() const
@@ -87,6 +59,18 @@ const std::vector<SpecialMove>& BaseCharacter::getSpecialMoves() const
 void BaseCharacter::draw()
 {
     BaseGameObject::draw();
+
+    if (Global::debugMode)
+    {
+        if (getPlayerNumber() == 2)
+        {
+            // draw debug line to the closestenemy
+            if (closestEnemyPtr!=nullptr)
+
+                DrawLine(getMiddlePointPos().x, getMiddlePointPos().y, closestEnemyPtr->getMiddlePointPos().x, closestEnemyPtr->getMiddlePointPos().y, DARKBLUE);
+        }
+
+    }
 }
 
 void BaseCharacter::jump()
