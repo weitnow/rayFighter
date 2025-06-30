@@ -34,7 +34,8 @@ public:
     virtual void onPushBoxThatHitYou(vector<CollisionBox2D*>& yourPushBox, vector<CollisionBox2D*>& otherPushBox, BaseGameObject& otherGameObject);
     virtual void onYourInteractionBoxHitOther(vector<CollisionBox2D*>& throwBoxThatHit, vector<CollisionBox2D*>& throwableBoxThatWereHit, BaseGameObject& otherGameObject );
     virtual void onOtherProximityBoxHitYou(vector<CollisionBox2D*>& otherProximityBox, BaseGameObject& otherGameObject);
-    void updateCollisionInformation(CollisionResult* collisionHitInformationForThisFrame);
+
+    CollisionResult collisionHitInformationForThisFrame; //updated by CollisionDetection.cpp
 
     int getMaxLife();
     void setMaxLife(int maxLife);
@@ -79,6 +80,8 @@ public:
     vector<CollisionBox2D> getThrowBoxes();
     vector<CollisionBox2D> getThrowableBoxes();
     vector<CollisionBox2D> getProximityBoxes();
+
+    bool gotHitByProximityBoxThisFrame() const;
 
     bool canDealDamage; // hitdetection will only work if this is true, it will be set to false by the CollisionDetection-System, after a hit has been registered
 
@@ -145,9 +148,6 @@ public:
 
     AsepriteManager* asepriteManagerPtr;
 
-    CollisionResult collisionHitInformationForThisFrame; //updated by CollisionDetection.cpp
-
-
 protected:
     Vector2 orginalPos; // the original position of the object as it was created - used for reseting the object
     Vector2 pos;        // calculated in the update method
@@ -180,6 +180,8 @@ protected:
     float distanceToClosestEnemy = 500.0f; // initial value
     BaseGameObject* closestEnemyPtr = nullptr; // holds a pointer to the closestEnemy, which can damage you (ex. other player, fireball etc)
     std::vector<BaseGameObject*> allEnemies; // a vector with pointer to all your enemies (ex. other player, fireball etc, which can damage you)
+
+    bool gotHitByProximityBox = false;
 
     // shadow
     bool drawShadow;

@@ -83,12 +83,6 @@ CollisionResult CollisionDetection::_checkSingleDirectionCollisionInternal(BaseG
         }
     }
 
-    result.attacker = &attacker;
-    result.defender = &defender;
-
-    //update collisionHitInformationForThisFrame for both gameObjects
-    attacker.collisionHitInformationForThisFrame = result;
-    defender.collisionHitInformationForThisFrame = result;
 
     return result;
 }

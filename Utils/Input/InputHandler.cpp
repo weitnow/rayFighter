@@ -270,8 +270,15 @@ void InputHandler::checkSpecialMoves(InputBuffer& buffer, CharacterController* c
 }
 void InputHandler::checkIfPlayerShouldBlock(BaseCharacter* player)
 {
-    if (!gameState || !player)
+    if (!player)
         return;
+
+
+    std::cout << player->gotHitByProximityBoxThisFrame() << std::endl;
+    if (player->gotHitByProximityBoxThisFrame())
+    {
+        std::cout << "Player got hit by proximity box" << std::endl;
+    }
 
     constexpr float BLOCK_DISTANCE_THRESHOLD = 40.0f;
 

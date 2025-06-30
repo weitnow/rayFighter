@@ -48,6 +48,8 @@ void BaseGameObject::update(float deltaTime)
     if (destroyIfHasLeftScreen)    // if set to true
         _destroyIfHasLeftScreen(); // check if it has left the screen and destroy it
 
+    gotHitByProximityBox = false;   // reset gotHitByProximityBox, is set in onOtherProximityBoxHitYou()
+
     if (scale != 1)
     {
         // TODO: Implement scale function
@@ -191,7 +193,7 @@ void BaseGameObject::onYourInteractionBoxHitOther(vector<CollisionBox2D*>& throw
 void BaseGameObject::onOtherProximityBoxHitYou(vector<CollisionBox2D*>& otherProximityBox,
                                                BaseGameObject& otherGameObject)
 {
-
+    gotHitByProximityBox = true;
 }
 
 
@@ -410,6 +412,10 @@ vector<CollisionBox2D> BaseGameObject::getProximityBoxes()
     return _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
                                                               currentFrameAbsolut,
                                                               CollisionBoxType::PROXIMITYBOX);
+}
+bool BaseGameObject::gotHitByProximityBoxThisFrame() const
+{
+    return gotHitByProximityBox;
 }
 
 void BaseGameObject::addCollisionBoxForFrame(const std::string frameTag,

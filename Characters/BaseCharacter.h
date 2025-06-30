@@ -49,6 +49,8 @@ public:
     Statemachine& getStatemachine();
 
 
+
+
     // if true, the character will automatically set the frameTag in ints update function which triggers the animation,
     // this will be set to false in the states for special attacks
     bool automaticallySetFrameTag = true;
