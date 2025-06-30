@@ -31,7 +31,7 @@ CollisionResult CollisionDetection::_checkSingleDirectionCollisionInternal(BaseG
                 defender.onYouGotHit(result.hitboxesThatHit, result.hurtboxesThatWereHit, attacker);
                 attacker.onYouHit(result.hitboxesThatHit, result.hurtboxesThatWereHit, defender);
 
-                return result; // Early return after first successful hit
+                break; // Early return after first successful hit
             }
         }
     }
@@ -77,9 +77,18 @@ CollisionResult CollisionDetection::_checkSingleDirectionCollisionInternal(BaseG
                 result.proximityboxesThatHit.push_back(&proximitybox);
 
                 defender.onOtherProximityBoxHitYou(result.proximityboxesThatHit, attacker);
+
+                break; // Early return after first successful hit
             }
         }
     }
+
+    result.attacker = &attacker;
+    result.defender = &defender;
+
+    //update collisionHitInformationForThisFrame for both gameObjects
+    attacker.collisionHitInformationForThisFrame = result;
+    defender.collisionHitInformationForThisFrame = result;
 
     return result;
 }

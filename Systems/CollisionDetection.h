@@ -27,6 +27,8 @@ struct CollisionResult
     std::vector<CollisionBox2D*> throwboxesThatHit;
     std::vector<CollisionBox2D*> throwableboxesThatWereHit;
     std::vector<CollisionBox2D*> proximityboxesThatHit;
+    BaseGameObject* attacker = nullptr;
+    BaseGameObject* defender = nullptr;
 };
 
 

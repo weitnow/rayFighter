@@ -6,6 +6,7 @@
 #include "../Utils/Core.h"
 #include "CollisionBox2D.h"
 #include <raylib.h>
+#include "../Systems/CollisionDetection.h"
 
 
 // Forward declaration of GameState
@@ -33,6 +34,7 @@ public:
     virtual void onPushBoxThatHitYou(vector<CollisionBox2D*>& yourPushBox, vector<CollisionBox2D*>& otherPushBox, BaseGameObject& otherGameObject);
     virtual void onYourInteractionBoxHitOther(vector<CollisionBox2D*>& throwBoxThatHit, vector<CollisionBox2D*>& throwableBoxThatWereHit, BaseGameObject& otherGameObject );
     virtual void onOtherProximityBoxHitYou(vector<CollisionBox2D*>& otherProximityBox, BaseGameObject& otherGameObject);
+    void updateCollisionInformation(CollisionResult* collisionHitInformationForThisFrame);
 
     int getMaxLife();
     void setMaxLife(int maxLife);
@@ -142,6 +144,8 @@ public:
                                   int ownerPlayerNumber); //used for fireball etc., ownerPlayerNumber -1 = it belongs to noone, -2 it belongs to both, 1 = p1, 2 = p2
 
     AsepriteManager* asepriteManagerPtr;
+
+    CollisionResult collisionHitInformationForThisFrame; //updated by CollisionDetection.cpp
 
 
 protected:
