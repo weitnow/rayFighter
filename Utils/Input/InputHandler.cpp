@@ -273,27 +273,11 @@ void InputHandler::checkIfPlayerShouldBlock(BaseCharacter* player)
     if (!player)
         return;
 
-
-    std::cout << player->gotHitByProximityBoxThisFrame() << std::endl;
-    if (player->gotHitByProximityBoxThisFrame())
-    {
-        std::cout << "Player got hit by proximity box" << std::endl;
-    }
-
-    constexpr float BLOCK_DISTANCE_THRESHOLD = 40.0f;
-
-    BaseGameObject* closestEnemy = player->getClosestEnemyPtr();
-    if (!closestEnemy)
-        return;
-
-    float distanceToEnemy = player->getDistanceToClosestEnemy();
-    bool enemyHasHitbox = !closestEnemy->getHitBoxes().empty();
-
     CharacterController* controller = player->getController();
     bool isMovingTowardEnemy = (controller->moveLeft && controller->isLeft) ||
                                 (controller->moveRight && !controller->isLeft);
 
-    if (distanceToEnemy < BLOCK_DISTANCE_THRESHOLD && enemyHasHitbox && isMovingTowardEnemy)
+    if (player->gotHitByProximityBoxThisFrame() && isMovingTowardEnemy)
     {
         controller->block = true;
     }
