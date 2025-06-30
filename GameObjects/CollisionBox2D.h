@@ -17,14 +17,14 @@ enum class CollisionBoxType
     HURTBOX,
     PUSHBOX,
     THROWBOX,
+    THROWABLEBOX,
     PROXIMITYBOX,
 };
 
 enum class HurtboxType
 {
-    HEAD,
-    BODY,
-    LEGS
+    HIGH,
+    LOW,
 };
 
 
@@ -40,7 +40,7 @@ public:
                    CollisionBoxType collisionBoxType = CollisionBoxType::PUSHBOX,
                    bool isActive = true,
                    Color color = BLUE,
-                   HurtboxType hurtboxType = HurtboxType::BODY);
+                   HurtboxType hurtboxType = HurtboxType::HIGH);
     ~CollisionBox2D();
     void update(float deltaTime, bool isFlippedX = false);
     void draw();

@@ -12,10 +12,11 @@ float Global::pushReduction = 1000.f;
 
 bool Global::debugMode = false;           // will be set by GameManager->setDebugMode
 bool Global::debugWindow = false;         // will be set by GameManager->setDebugMode
-bool Global::debugSpriteBorder = false;   // will be set by GameManager->setDebugModegame->debugInfo->draw();
+bool Global::debugSpriteBorder = false;   // will be set by GameManager->setDebugMode
 bool Global::debugCollisionBoxes = false; // will be set by GameManager->setDebugMode
 bool Global::debugHitboxes = false;       // will be set by GameManager->setDebugMode
 bool Global::debugHurtboxes = false;      // will be set by GameManager->setDebugMode
 bool Global::debugPushboxes = false;      // will be set by GameManager->setDebugMode
 bool Global::debugThrowboxes = false;     // will be set by GameManager->setDebugMode
+bool Global::debugThrowableboxes = false; // will be set by GameManager->setDebugMode
 bool Global::debugProximityBoxes = false; // will be set by GameManager->setDebugMode

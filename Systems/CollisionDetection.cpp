@@ -6,29 +6,6 @@
 #include "../Characters/Statemachine/Statemachine.h"
 #include "CollisionDetection.h"
 
-
-void CollisionDetection::init(GameState* gameState)
-{
-    if (!initialized)
-    {
-        initialized = true;
-
-        // reference gamestate
-        this->gameState = gameState;
-    }
-}
-void CollisionDetection::update(float deltaTime)
-{
-    if (!initialized)
-    {
-        std::cerr << "hit detection ist not initialized!" << std::endl;
-        return;
-    }
-
-}
-
-
-
 std::pair<CollisionResult, CollisionResult> CollisionDetection::checkForCollision(BaseGameObject& gameObject1, BaseGameObject& gameObject2)
 {
     CollisionResult const result1 = _checkSingleDirectionCollisionInternal(gameObject1, gameObject2);
@@ -40,6 +17,7 @@ CollisionResult CollisionDetection::_checkSingleDirectionCollisionInternal(BaseG
 {
     CollisionResult result;
 
+    // Hitbox vs Hurtbox (attack)
     for (auto& hitbox : attacker.getHitBoxes())
     {
         for (auto& hurtbox : defender.getHurtBoxes())
@@ -48,12 +26,57 @@ CollisionResult CollisionDetection::_checkSingleDirectionCollisionInternal(BaseG
             {
                 result.hitboxesThatHit.push_back(&hitbox);
                 result.hurtboxesThatWereHit.push_back(&hurtbox);
-                result.hasCollision = true;
+                result.hasHitBoxCollision = true;
 
                 defender.onYouGotHit(result.hitboxesThatHit, result.hurtboxesThatWereHit, attacker);
                 attacker.onYouHit(result.hitboxesThatHit, result.hurtboxesThatWereHit, defender);
 
-                return result; // early return after first hit
+                return result; // Early return after first successful hit
+            }
+        }
+    }
+
+    // Pushbox vs Pushbox (movement collision)
+    for (auto& pushbox1 : attacker.getPushBoxes())
+    {
+        for (auto& pushbox2 : defender.getPushBoxes())
+        {
+            if (Utils::checkCollision(pushbox1, pushbox2))
+            {
+                result.hasPushBoxCollision = true;
+                result.pushboxesThatWereHit.push_back(&pushbox2);
+                // Todo: Could also call callbacks here if needed
+            }
+        }
+    }
+
+    // Throwbox vs ThrowableBox (throw attempt)
+    for (auto& throwbox : attacker.getThrowBoxes())
+    {
+        for (auto& throwablebox : defender.getThrowableBoxes())
+        {
+            if (Utils::checkCollision(throwbox, throwablebox))
+            {
+                result.hasThrowBoxCollision = true;
+                result.throwboxesThatHit.push_back(&throwbox);
+                result.throwableboxesThatWereHit.push_back(&throwablebox);
+
+                attacker.onYourInteractionBoxHitOther(result.throwboxesThatHit, result.throwableboxesThatWereHit, defender);
+            }
+        }
+    }
+
+    // ProximityBox vs Hurtbox (e.g. for AI awareness)
+    for (auto& proximitybox : attacker.getProximityBoxes())
+    {
+        for (auto& hurtbox : defender.getHurtBoxes())
+        {
+            if (Utils::checkCollision(proximitybox, hurtbox))
+            {
+                result.hasProximityBoxCollision = true;
+                result.proximityboxesThatHit.push_back(&proximitybox);
+
+                defender.onOtherProximityBoxHitYou(result.proximityboxesThatHit, attacker);
             }
         }
     }

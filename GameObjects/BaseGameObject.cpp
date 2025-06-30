@@ -42,9 +42,10 @@ void BaseGameObject::init()
 
 void BaseGameObject::update(float deltaTime)
 {
-    if (!isActive) return;
+    if (!isActive)
+        return;
 
-    if (destroyIfHasLeftScreen) // if set to true
+    if (destroyIfHasLeftScreen)    // if set to true
         _destroyIfHasLeftScreen(); // check if it has left the screen and destroy it
 
     if (scale != 1)
@@ -70,6 +71,8 @@ void BaseGameObject::update(float deltaTime)
 
     if (animfilePtr != nullptr)
         animfilePtr->update(deltaTime);
+
+
 }
 
 void BaseGameObject::draw()
@@ -172,6 +175,23 @@ void BaseGameObject::onYouHit(vector<CollisionBox2D*>& hitboxesThatHit,
 
         handleHitLogic(hitboxesThatHit, hurtboxesThatWereHit, otherGameObject);
     }
+}
+void BaseGameObject::onPushBoxThatHitYou(vector<CollisionBox2D*>& yourPushBox,
+                                         vector<CollisionBox2D*>& otherPushBox,
+                                         BaseGameObject& otherGameObject)
+{
+
+}
+void BaseGameObject::onYourInteractionBoxHitOther(vector<CollisionBox2D*>& throwBoxThatHit,
+                                                  vector<CollisionBox2D*>& throwableBoxThatWereHit,
+                                                  BaseGameObject& otherGameObject)
+{
+
+}
+void BaseGameObject::onOtherProximityBoxHitYou(vector<CollisionBox2D*>& otherProximityBox,
+                                               BaseGameObject& otherGameObject)
+{
+
 }
 
 
@@ -379,6 +399,18 @@ vector<CollisionBox2D> BaseGameObject::getThrowBoxes()
                                                               currentFrameAbsolut,
                                                               CollisionBoxType::THROWBOX);
 }
+vector<CollisionBox2D> BaseGameObject::getThrowableBoxes()
+{
+    return _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
+                                                              currentFrameAbsolut,
+                                                              CollisionBoxType::THROWABLEBOX);
+}
+vector<CollisionBox2D> BaseGameObject::getProximityBoxes()
+{
+    return _checkIfCollisionMapHasCollisionBoxesAndReturnList(currentFrameTag,
+                                                              currentFrameAbsolut,
+                                                              CollisionBoxType::PROXIMITYBOX);
+}
 
 void BaseGameObject::addCollisionBoxForFrame(const std::string frameTag,
                                              int frameNumber,
@@ -465,7 +497,7 @@ void BaseGameObject::addCollisionBoxForFrame(const std::string frameTag,
     addCollisionBoxForFrame(frameTag,
                             frameNumber,
                             collisionBoxType,
-                            HurtboxType::BODY,
+                            HurtboxType::HIGH,
                             isActive,
                             offsetX,
                             offsetY,
@@ -617,6 +649,7 @@ void BaseGameObject::_updateCollisionBoxes(float deltaTime)
                                            &hurtBoxesPerFrame,
                                            &pushBoxesPerFrame,
                                            &throwBoxesPerFrame,
+                                           &throwableBoxesPerFrame,
                                            &proximityBoxesPerFrame};
 
     // Loop through each CollisionMap
@@ -656,6 +689,7 @@ void BaseGameObject::_drawCollisionBoxes()
     drawIfEnabled(Global::debugHurtboxes, CollisionBoxType::HURTBOX);
     drawIfEnabled(Global::debugPushboxes, CollisionBoxType::PUSHBOX);
     drawIfEnabled(Global::debugThrowboxes, CollisionBoxType::THROWBOX);
+    drawIfEnabled(Global::debugThrowableboxes, CollisionBoxType::THROWABLEBOX);
     drawIfEnabled(Global::debugProximityBoxes, CollisionBoxType::PROXIMITYBOX);
 }
 
@@ -690,6 +724,10 @@ void BaseGameObject::_addCollisionBoxForFrameInternal(std::string frameTagName,
     case CollisionBoxType::THROWBOX:
         targetMap = &throwBoxesPerFrame;
         boxColor = BROWN;
+        break;
+    case CollisionBoxType::THROWABLEBOX:
+        targetMap = &throwableBoxesPerFrame;
+        boxColor = BEIGE;
         break;
     case CollisionBoxType::PROXIMITYBOX:
         targetMap = &proximityBoxesPerFrame;
@@ -775,6 +813,9 @@ vector<CollisionBox2D> BaseGameObject::_checkIfCollisionMapHasCollisionBoxesAndR
         break;
     case CollisionBoxType::THROWBOX:
         collisionMap = &throwBoxesPerFrame;
+        break;
+    case CollisionBoxType::THROWABLEBOX:
+        collisionMap = &throwableBoxesPerFrame;
         break;
     case CollisionBoxType::PROXIMITYBOX:
         collisionMap = &proximityBoxesPerFrame;

@@ -49,9 +49,13 @@ void Fighter1::init()
     addCollisionBoxForFrame("gbFighter-A+B Move", -2, CollisionBoxType::HITBOX, true, 0, 0, 35, 30);
 
     // x, y, width, height
-    addCollisionBoxForFrame("gbFighter-Idle", -1, CollisionBoxType::HURTBOX, HurtboxType::HEAD, true, 10, 3, 12, 10);
-    addCollisionBoxForFrame("gbFighter-Idle", -1, CollisionBoxType::HURTBOX, HurtboxType::BODY, true, 10, 13, 12, 10);
-    addCollisionBoxForFrame("gbFighter-Idle", -1, CollisionBoxType::HURTBOX, HurtboxType::LEGS, true, 10, 23, 12, 8);
+    addCollisionBoxForFrame("gbFighter-Idle", -1, CollisionBoxType::HURTBOX, HurtboxType::HIGH, true, 10, 3, 12, 20);
+    addCollisionBoxForFrame("gbFighter-Idle", -1, CollisionBoxType::HURTBOX, HurtboxType::LOW, true, 10, 23, 12, 8);
+
+    //addCollisionBoxForFrame("gbFighter-Idle", -1, CollisionBoxType::THROWBOX, HurtboxType::HIGH, true, 16, 10, 12, 20);
+
+    addCollisionBoxForFrame("gbFighter-Idle", -1, CollisionBoxType::THROWABLEBOX, HurtboxType::HIGH, true, 16, 10, 12, 20);
+
 
 
     getStatemachine().changeState("Walk");

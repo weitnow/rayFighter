@@ -30,6 +30,9 @@ public:
 
     virtual void onYouGotHit(vector<CollisionBox2D*>& hitboxesThatHit, vector<CollisionBox2D*>& hurtboxesThatWereHit, BaseGameObject& otherGameObject); // use handleGotHitLogic-Methode
     virtual void onYouHit(vector<CollisionBox2D*>& hitboxesThatHit, vector<CollisionBox2D*>& hurtboxesThatWereHit, BaseGameObject& otherGameObject); // use handleHitLogic-Methode
+    virtual void onPushBoxThatHitYou(vector<CollisionBox2D*>& yourPushBox, vector<CollisionBox2D*>& otherPushBox, BaseGameObject& otherGameObject);
+    virtual void onYourInteractionBoxHitOther(vector<CollisionBox2D*>& throwBoxThatHit, vector<CollisionBox2D*>& throwableBoxThatWereHit, BaseGameObject& otherGameObject );
+    virtual void onOtherProximityBoxHitYou(vector<CollisionBox2D*>& otherProximityBox, BaseGameObject& otherGameObject);
 
     int getMaxLife();
     void setMaxLife(int maxLife);
@@ -72,6 +75,8 @@ public:
     vector<CollisionBox2D> getHitBoxes();
     vector<CollisionBox2D> getHurtBoxes();
     vector<CollisionBox2D> getThrowBoxes();
+    vector<CollisionBox2D> getThrowableBoxes();
+    vector<CollisionBox2D> getProximityBoxes();
 
     bool canDealDamage; // hitdetection will only work if this is true, it will be set to false by the CollisionDetection-System, after a hit has been registered
 
@@ -188,6 +193,7 @@ protected:
     CollisionMap hurtBoxesPerFrame;
     CollisionMap pushBoxesPerFrame;
     CollisionMap throwBoxesPerFrame;
+    CollisionMap throwableBoxesPerFrame;
     CollisionMap proximityBoxesPerFrame;
 
     AsepriteAnimationFile* animfilePtr;

@@ -17,9 +17,16 @@ class BaseGameObject;
 
 struct CollisionResult
 {
-    bool hasCollision = false;
+    bool hasHitBoxCollision = false;
+    bool hasPushBoxCollision = false;
+    bool hasThrowBoxCollision = false;
+    bool hasProximityBoxCollision = false;
     std::vector<CollisionBox2D*> hitboxesThatHit;
     std::vector<CollisionBox2D*> hurtboxesThatWereHit;
+    std::vector<CollisionBox2D*> pushboxesThatWereHit;
+    std::vector<CollisionBox2D*> throwboxesThatHit;
+    std::vector<CollisionBox2D*> throwableboxesThatWereHit;
+    std::vector<CollisionBox2D*> proximityboxesThatHit;
 };
 
 
@@ -27,14 +34,10 @@ class CollisionDetection : public Singleton<CollisionDetection>
 {
     friend class Singleton<CollisionDetection>; // allows access to the private constructor
 public:
-
-    void init(GameState* gameState);
-    void update(float deltaTime); // init(GameState* gameState) needed before calling update
-
     std::pair<CollisionResult, CollisionResult> checkForCollision(BaseGameObject& gameObject1, BaseGameObject& gameObject2);
 
     template <class T1, class T2>
-    std::pair<CollisionResult, CollisionResult>  checkForCollision(std::vector<std::shared_ptr<T1>>& listOfGameObjects1,
+    std::pair<CollisionResult, CollisionResult> checkForCollision(std::vector<std::shared_ptr<T1>>& listOfGameObjects1,
                            std::vector<std::shared_ptr<T2>>& listOfGameObjects2);
 
     template <typename T>
@@ -90,7 +93,7 @@ std::pair<CollisionResult, CollisionResult> CollisionDetection::checkForCollisio
             continue;
 
         auto result = checkForCollision(gameObject, *otherGameObject);
-        if (result.first.hasCollision || result.second.hasCollision)
+        if (result.first.hasHitBoxCollision || result.second.hasHitBoxCollision)
             return result;
     }
 

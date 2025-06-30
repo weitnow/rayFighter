@@ -55,6 +55,7 @@ extern bool debugHitboxes;
 extern bool debugHurtboxes;
 extern bool debugPushboxes;
 extern bool debugThrowboxes;
+extern bool debugThrowableboxes;
 extern bool debugProximityBoxes;
 
 } // namespace Global
