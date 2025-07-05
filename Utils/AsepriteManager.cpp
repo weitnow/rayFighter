@@ -359,6 +359,8 @@ void AsepriteManager::init()
     getFrameTag("optionSelectScreen-Intro").loop = false;
 
     loadAnimFile("bg16SpriteCollection");
+
+    loadAnimFile("gbSpear");
 }
 
 nlohmann::json* AsepriteManager::loadJsonFile(const std::string& filename)

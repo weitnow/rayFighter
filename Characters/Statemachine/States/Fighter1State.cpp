@@ -1,6 +1,7 @@
 #include "Fighter1State.h"
 #include "../../../Constants.h"
 #include "../../../GameObjects/Objects/Fireball.h"
+#include "../../../GameObjects/Objects/Spear.h"
 #include "../../../Utils/Input/InputHandler.h"
 #include "../../../Utils/SoundManager.h"
 
@@ -22,10 +23,9 @@ void F1IdleState::Finalize()
     std::cout << "F1IdleState Finalize" << std::endl;
 }
 
-// Special1
+// Special1 - Fireball
 void F1Special1State::Init()
 {
-    std::cout << "F1Special1State Init" << std::endl;
     owner->automaticallySetFrameTag = false;
     owner->setCurrentFrameTag("gbFighter-Dragonshot");
     owner->stop();
@@ -33,7 +33,6 @@ void F1Special1State::Init()
 
 void F1Special1State::Update(float deltaTime)
 {
-    std::cout << "F1Special1State Update" << std::endl;
 
     // check if animation is finished
     if (hasAnimationFinished())
@@ -50,11 +49,11 @@ void F1Special1State::Update(float deltaTime)
 void F1Special1State::Finalize()
 {
     owner->automaticallySetFrameTag = true; // reset to default
-    std::cout << "F1Special1State Finalize" << std::endl;
+
 }
 
 
-// Special2
+// Special2 - Huricankick
 void F1Special2State::Init()
 {
     owner->canDealDamage = true; // allow to deal damage
@@ -75,5 +74,35 @@ void F1Special2State::Finalize()
 {
     owner->automaticallySetFrameTag = true; // reset to default
 
-    std::cout << "F2Special1State Finalize" << std::endl;
+
+}
+
+
+
+// Special3 - Spear
+void F1Special3State::Init()
+{
+    owner->automaticallySetFrameTag = false;
+    owner->setCurrentFrameTag("gbFighter-Dragonshot");
+    owner->stop();
+}
+void F1Special3State::Update(float deltaTime)
+{
+    // check if animation is finished
+    if (hasAnimationFinished())
+    {
+        // create spear //Todo: We need a factory methode to create things like that!
+        auto spear = std::make_unique<Spear>(owner->asepriteManagerPtr, owner->getPos().x + 20, owner->getPos().y + 10);
+        spear->setOwnedByPlayerNumber(owner->getPlayerNumber());
+
+        owner->addGameObjectToGameState(std::move(spear));
+        statemachine->changeState("Idle");
+        owner->setCurrentFrameTag("gbFighter-Idle");
+    }
+}
+void F1Special3State::Finalize()
+{
+    owner->automaticallySetFrameTag = true; // reset to default
+
+
 }

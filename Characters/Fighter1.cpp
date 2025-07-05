@@ -20,6 +20,7 @@ void Fighter1::init()
         getStatemachine().getDefaultStateMap(); // get default state map from statemachine with default behavior
     customStateMap["Special1"] = std::make_shared<F1Special1State>(); // override with custom state
     customStateMap["Special2"] = std::make_shared<F1Special2State>(); // override with custom state
+    customStateMap["Special3"] = std::make_shared<F1Special3State>(); // override with custom state
 
     getStatemachine().init(customStateMap);
 
@@ -54,8 +55,15 @@ void Fighter1::init()
 
     //addCollisionBoxForFrame("gbFighter-Idle", -1, CollisionBoxType::THROWBOX, HurtboxType::HIGH, true, 16, 10, 12, 20);
 
-    addCollisionBoxForFrame("gbFighter-Idle", -1, CollisionBoxType::THROWABLEBOX, HurtboxType::HIGH, true, 16, 10, 12, 20);
-
+    addCollisionBoxForFrame("gbFighter-Idle",
+                            -1,
+                            CollisionBoxType::THROWABLEBOX,
+                            HurtboxType::HIGH,
+                            true,
+                            16,
+                            10,
+                            12,
+                            20);
 
 
     getStatemachine().changeState("Walk");
@@ -70,20 +78,27 @@ void Fighter1::init()
     setMaxPowerLevel(3);
     setPowerLevel(3);
 
-    setUpdateClosestEnemies(true); // updates <float>distanceToClosestEnemy, <BaseGameObject*>closestEnemyPtr, <std::vector<BaseGameObject*> allEnemies
+    setUpdateClosestEnemies(
+        true); // updates <float>distanceToClosestEnemy, <BaseGameObject*>closestEnemyPtr, <std::vector<BaseGameObject*> allEnemies
 
     // set special moves
-    specialMoves = {
-        {"special1", // Fireball
-         {{InputDirection::Down, InputAction::None},
-          {InputDirection::DownForward, InputAction::None},
-          {InputDirection::Forward, InputAction::None},
-          {InputDirection::Forward, InputAction::Punch}}},
-        {"special2", // Hurricane Kick
-         {{InputDirection::Down, InputAction::None},
-          {InputDirection::Down, InputAction::None},
-          {InputDirection::Up, InputAction::None}}},
+    specialMoves = {{"special1", // Fireball
+                     {{InputDirection::Down, InputAction::None},
+                      {InputDirection::DownForward, InputAction::None},
+                      {InputDirection::Forward, InputAction::None},
+                      {InputDirection::Forward, InputAction::Punch}}},
+                    {"special2", // Hurricane Kick
+                     {{InputDirection::Down, InputAction::None},
+                      {InputDirection::Down, InputAction::None},
+                      {InputDirection::Up, InputAction::None}}},
+                    {"special3", // Spear
+                     {
+                         {InputDirection::Backward, InputAction::None},
+                         {InputDirection::Backward, InputAction::None},
+                         {InputDirection::Forward, InputAction::None},
+                         {InputDirection::Neutral, InputAction::Punch},
+
+                     }}
 
     };
-
 }

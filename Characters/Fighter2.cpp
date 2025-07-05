@@ -42,7 +42,7 @@ void Fighter2::init()
     addCollisionBoxForFrame("nesFighter-Idle", -1, CollisionBoxType::HURTBOX, HurtboxType::HIGH, true, 10, 3, 12, 20);
     addCollisionBoxForFrame("nesFighter-Idle", -1, CollisionBoxType::HURTBOX, HurtboxType::LOW, true, 10, 23, 12, 8);
 
-    addCollisionBoxForFrame("nesFighter-Idle", -1, CollisionBoxType::THROWBOX, HurtboxType::HIGH, true, 16, 10, 12, 20);
+    addCollisionBoxForFrame("nesFighter-Idle", -1, CollisionBoxType::THROWABLEBOX, HurtboxType::HIGH, true, 16, 10, 12, 20);
 
     getStatemachine().changeState("Idle");
 

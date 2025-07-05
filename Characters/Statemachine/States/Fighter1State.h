@@ -32,7 +32,7 @@ public:
 class F1Special3State : public State
 {
 public:
-    F1Special3State() : State("Speical3") {};
+    F1Special3State() : State("Special3") {};
     STATE_METHODS
 };
 
