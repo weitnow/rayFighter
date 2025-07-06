@@ -8,7 +8,8 @@ BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager)
       isActive(true), isAlive(true), shouldDestroy(false), isInvincible(false), maxLife(1), currentLife(maxLife),
       _invincibleCounter(0.f), invincibleTime(Constants::INVINCIBLE_TIME), affectedByGravity(false), moveVector({0, 0}),
       getDurationCurrentFrame(0), currentFrame(0), minFrame(0), maxFrame(0), hasAnimFinished(false),
-      currentFrameTag(""), currentFrameAbsolut(0), drawShadow(false), gameState(nullptr), canDealDamage(false)
+      currentFrameTag(""), currentFrameAbsolut(0), drawShadow(false), gameState(nullptr), canDealDamage(false),
+      canInteract(true)
 {
     if (!asepriteManager)
     {
@@ -48,7 +49,7 @@ void BaseGameObject::update(float deltaTime)
     if (destroyIfHasLeftScreen)    // if set to true
         _destroyIfHasLeftScreen(); // check if it has left the screen and destroy it
 
-    gotHitByProximityBox = false;   // reset gotHitByProximityBox, is set in onOtherProximityBoxHitYou()
+    gotHitByProximityBox = false; // reset gotHitByProximityBox, is set in onOtherProximityBoxHitYou()
 
     if (scale != 1)
     {
@@ -73,8 +74,6 @@ void BaseGameObject::update(float deltaTime)
 
     if (animfilePtr != nullptr)
         animfilePtr->update(deltaTime);
-
-
 }
 
 void BaseGameObject::draw()
@@ -182,13 +181,17 @@ void BaseGameObject::onPushBoxThatHitYou(vector<CollisionBox2D*>& yourPushBox,
                                          vector<CollisionBox2D*>& otherPushBox,
                                          BaseGameObject& otherGameObject)
 {
-
 }
 void BaseGameObject::onYourInteractionBoxHitOther(vector<CollisionBox2D*>& throwBoxThatHit,
                                                   vector<CollisionBox2D*>& throwableBoxThatWereHit,
                                                   BaseGameObject& otherGameObject)
 {
-
+    if (this->canInteract)
+    {
+        this->canInteract =
+            false; // will be set true in the statemachine or on creation of the gameobject, otherwise we keep hitting the opponent
+        handleYouInteractLogic(throwBoxThatHit, throwableBoxThatWereHit, otherGameObject);
+    }
 }
 void BaseGameObject::onOtherProximityBoxHitYou(vector<CollisionBox2D*>& otherProximityBox,
                                                BaseGameObject& otherGameObject)
@@ -767,6 +770,11 @@ void BaseGameObject::handleGotHitLogic(vector<CollisionBox2D*>& hitboxesThatHit,
                                        BaseGameObject& otherGameObject)
 {
     // handle logic if you got hit by otherGameObject
+}
+void BaseGameObject::handleYouInteractLogic(vector<CollisionBox2D*>& throwBoxThatHit,
+                                            vector<CollisionBox2D*>& throwableBoxThatWereHit,
+                                            BaseGameObject& otherGameObject)
+{
 }
 
 void BaseGameObject::_updateMemberVariables()

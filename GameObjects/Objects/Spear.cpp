@@ -12,18 +12,25 @@ Spear::Spear(AsepriteManager* asepriteManagerPtr, float x, float y, bool isFlipp
     this->setCurrentFrameTag("gbSpear-Head");
     this->destroyIfHasLeftScreen = true;
     this->canDealDamage = true;
-    this->setIsFlippedX(isFlippedX);
-    this->setMoveSpeed(30);
+    this->setMoveSpeed(80);
     addCollisionBoxForFrame("gbSpear-Head", -1, CollisionBoxType::THROWBOX, true, 10, 0, 10, 10);
+
+    if (!isFlippedX)
+        movingRight = true;
+    else
+        movingRight = false;
 
 }
 
 
 void Spear::update(float deltaTime)
 {
-    BaseGameObject::update(deltaTime);
+    if (movingRight)
+        moveRight();
+    else
+        moveLeft();
 
-    moveRight();
+    BaseGameObject::update(deltaTime);
 }
 
 void Spear::handleHitLogic(vector<CollisionBox2D*>& hitboxesThatHit,
@@ -32,12 +39,15 @@ void Spear::handleHitLogic(vector<CollisionBox2D*>& hitboxesThatHit,
 {
     std::cout << "hitbox hit" << '\n';
 }
-void Spear::onYourInteractionBoxHitOther(vector<CollisionBox2D*>& throwBoxThatHit,
-                                         vector<CollisionBox2D*>& throwableBoxThatWereHit,
-                                         BaseGameObject& otherGameObject)
+void Spear::handleYouInteractLogic(vector<CollisionBox2D*>& throwBoxThatHit,
+                                   vector<CollisionBox2D*>& throwableBoxThatWereHit,
+                                   BaseGameObject& otherGameObject)
 {
-    std::cout << "interactionbox hit" << '\n';
+    // on hit switch direction
+    std::cout << "youInteractLogic" << '\n';
+    movingRight = !movingRight;
 }
+
 void Spear::draw()
 {
     // draw line

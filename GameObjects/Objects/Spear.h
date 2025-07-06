@@ -19,9 +19,13 @@ public:
                         vector<CollisionBox2D*>& hurtboxesThatWereHit,
                         BaseGameObject& otherGameObject) override;
 
-    void onYourInteractionBoxHitOther(vector<CollisionBox2D*>& throwBoxThatHit, vector<CollisionBox2D*>& throwableBoxThatWereHit, BaseGameObject& otherGameObject) override;
+    void handleYouInteractLogic(vector<CollisionBox2D*>& throwBoxThatHit, vector<CollisionBox2D*>& throwableBoxThatWereHit, BaseGameObject& otherGameObject) override;
 
     void draw() override;
+
+protected:
+    bool movingRight;
+
 };
 
 

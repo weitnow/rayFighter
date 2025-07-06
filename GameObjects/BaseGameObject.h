@@ -84,6 +84,7 @@ public:
     bool gotHitByProximityBoxThisFrame() const;
 
     bool canDealDamage; // hitdetection will only work if this is true, it will be set to false by the CollisionDetection-System, after a hit has been registered
+    bool canInteract; // hitdetection will only work if this is true, it will be set to false by the CollisionDetection-System, after a hit has been registered
 
     // position
     void setPos(float x, float y);
@@ -230,6 +231,7 @@ protected:
 
     virtual void handleHitLogic(vector<CollisionBox2D*>& hitboxesThatHit, vector<CollisionBox2D*>& hurtboxesThatWereHit, BaseGameObject& otherGameObject);
     virtual void handleGotHitLogic(vector<CollisionBox2D*>& hitboxesThatHit, vector<CollisionBox2D*>& hurtboxesThatWereHit, BaseGameObject& otherGameObject);
+    virtual void handleYouInteractLogic(vector<CollisionBox2D*>& throwBoxThatHit, vector<CollisionBox2D*>& throwableBoxThatWereHit, BaseGameObject& otherGameObject);
 
     vector<CollisionBox2D> _checkIfCollisionMapHasCollisionBoxesAndReturnList(const std::string& currentFrameTag,
                                                                               const int currentFrameAbsolut,

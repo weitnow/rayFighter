@@ -62,6 +62,7 @@ CollisionResult CollisionDetection::_checkSingleDirectionCollisionInternal(BaseG
                 result.throwableboxesThatWereHit.push_back(&throwablebox);
 
                 attacker.onYourInteractionBoxHitOther(result.throwboxesThatHit, result.throwableboxesThatWereHit, defender);
+                break; // Early return after first successful hit
             }
         }
     }

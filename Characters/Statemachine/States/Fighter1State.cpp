@@ -92,7 +92,7 @@ void F1Special3State::Update(float deltaTime)
     if (hasAnimationFinished())
     {
         // create spear //Todo: We need a factory methode to create things like that!
-        auto spear = std::make_unique<Spear>(owner->asepriteManagerPtr, owner->getPos().x + 20, owner->getPos().y + 10);
+        auto spear = std::make_unique<Spear>(owner->asepriteManagerPtr, owner->getPos().x + 20, owner->getPos().y + 10, owner->getIsFlippedX());
         spear->setOwnedByPlayerNumber(owner->getPlayerNumber());
 
         owner->addGameObjectToGameState(std::move(spear));
