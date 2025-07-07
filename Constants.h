@@ -2,6 +2,8 @@
 #define GBFIGHTER_CONSTANTS_H
 
 #include "raylib.h"
+#include <functional>
+#include <cmath> // for sin, cos, etc.
 
 namespace Constants
 {
@@ -37,8 +39,72 @@ const Color RAYFIGHTER_ROSA = {208, 144, 120, 255};
 const Color RAYFIGHTER_WHITE = {248, 248, 248, 255};
 const Color RAYFIGHTER_LIGHTROSA = {209, 191, 184, 255};
 
-
 } // namespace Constants
+
+namespace Tween
+{
+// Type alias for readability
+using TweenFunc = std::function<float(float)>;
+
+
+// Linear interpolation
+inline const TweenFunc Linear = [](float t) {
+    return t;
+};
+
+// Quadratic ease in (accelerating)
+inline const TweenFunc EaseInQuad = [](float t) {
+    return t * t;
+};
+
+// Quadratic ease out (decelerating)
+inline const TweenFunc EaseOutQuad = [](float t) {
+    return t * (2 - t);
+};
+
+// Quadratic ease in/out (accel then decel)
+inline const TweenFunc EaseInOutQuad = [](float t) {
+    return t < 0.5f ? 2 * t * t : -1 + (4 - 2 * t) * t;
+};
+
+// Cubic ease in/out
+inline const TweenFunc EaseInOutCubic = [](float t) {
+    return t < 0.5f ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+};
+
+// Sine ease in/out
+inline const TweenFunc EaseInOutSine = [](float t) {
+    return -(cos(M_PI * t) - 1) / 2;
+};
+
+// Exponential ease out
+inline const TweenFunc EaseOutExpo = [](float t) {
+    return t == 1.0f ? 1.0f : 1 - pow(2, -10 * t);
+};
+
+// Bounce (ease out)
+inline TweenFunc EaseOutBounce = [](float t) {
+    if (t < 1 / 2.75f) {
+        return 7.5625f * t * t;
+    } else if (t < 2 / 2.75f) {
+        t -= 1.5f / 2.75f;
+        return 7.5625f * t * t + 0.75f;
+    } else if (t < 2.5f / 2.75f) {
+        t -= 2.25f / 2.75f;
+        return 7.5625f * t * t + 0.9375f;
+    } else {
+        t -= 2.625f / 2.75f;
+        return 7.5625f * t * t + 0.984375f;
+    }
+};
+
+
+} // namespace Tween
+
+
+
+
+
 
 namespace Global
 {

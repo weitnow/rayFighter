@@ -5,7 +5,7 @@
 #ifndef COLLISIONDETECTION_H
 #define COLLISIONDETECTION_H
 #include "Core.h"
-#include "../GameObjects/BaseGameObject.h"
+#include "../GameObjects/CollisionBoxes/CollisionBox2D.h"
 
 #include <algorithm>
 #include <chrono>

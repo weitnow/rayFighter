@@ -2,11 +2,11 @@
 #ifndef GBFIGHTER_BASEGAMEOBJECT_H
 #define GBFIGHTER_BASEGAMEOBJECT_H
 
+#include "../Systems/CollisionDetection.h"
 #include "../Utils/AsepriteManager.h"
 #include "../Utils/Core.h"
-#include "CollisionBox2D.h"
+#include "CollisionBoxes/CollisionBox2D.h"
 #include <raylib.h>
-#include "../Systems/CollisionDetection.h"
 
 
 // Forward declaration of GameState

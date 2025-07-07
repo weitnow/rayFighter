@@ -1,7 +1,7 @@
 #include "Fighter1State.h"
 #include "../../../Constants.h"
-#include "../../../GameObjects/Objects/Fireball.h"
-#include "../../../GameObjects/Objects/Spear.h"
+#include "../../../GameObjects/Specialmoves/Abstractclasses/Spear.h"
+#include "../../../GameObjects/Specialmoves/Fireball.h"
 #include "../../../Utils/Input/InputHandler.h"
 #include "../../../Utils/SoundManager.h"
 
