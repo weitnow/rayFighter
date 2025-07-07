@@ -89,7 +89,7 @@ void BaseSpriteObject::setPos(Vector2 pos)
 }
 Vector2 BaseSpriteObject::getPos()
 {
-    return {pos.x - sourceRect.width, pos.y - sourceRect.y};
+    return {pos.x - sourceRect.width, pos.y - sourceRect.height};
 }
 
 void BaseSpriteObject::setCenterPos(float x, float y)

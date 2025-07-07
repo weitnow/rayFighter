@@ -25,7 +25,7 @@ public: // METHODES
     void HandleInput() override;
 
     //TODO: get rid of this
-    unique<BaseAsepriteObject> mySpriteObject = std::make_unique<BaseAsepriteObject>(asepriteManager, 128, 80);
+    unique<BaseAsepriteObject> mySpriteObject = std::make_unique<BaseAsepriteObject>(asepriteManager, 128, 97);
 
     BaseCharacter* createPlayer(int characterNumber, int playerNumber);
 
