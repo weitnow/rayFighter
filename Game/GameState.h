@@ -2,7 +2,7 @@
 #define GAMESTATE_H
 
 #include "../Gui/Gui.h"
-#include "BaseSpriteObject.h"
+#include "BaseAsepriteObject.h"
 #include "BaseState.h"
 #include <raylib.h>
 #include <string>
@@ -25,7 +25,7 @@ public: // METHODES
     void HandleInput() override;
 
     //TODO: get rid of this
-    unique<BaseSpriteObject> mySpriteObject = std::make_unique<BaseSpriteObject>(128, 97);
+    unique<BaseAsepriteObject> mySpriteObject = std::make_unique<BaseAsepriteObject>(asepriteManager, 128, 80);
 
     BaseCharacter* createPlayer(int characterNumber, int playerNumber);
 
