@@ -92,7 +92,6 @@ public:
     void setPos(Vector2 pos);
     virtual Vector2 getPos() const;
     void resetPos(); // sets the object to the orginal position where it was instantiated
-    void setMiddlePointOffset(Vector2 offset);
     virtual Vector2 getMiddlePointPos() const;
 
     void setUpdateClosestEnemies(bool updateClosestEnemies);
@@ -239,6 +238,8 @@ protected:
     vector<CollisionBox2D> _checkIfCollisionMapHasCollisionBoxesAndReturnList(const std::string& currentFrameTag,
                                                                               const int currentFrameAbsolut,
                                                                               CollisionBoxType collisionBoxType);
+
+    void _setMiddlePointOffset(Vector2 offset);
 
     void _destroyIfHasLeftScreen();
 

@@ -25,8 +25,8 @@ BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager)
 BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager, float x, float y) : BaseGameObject(asepriteManager)
 {
     setPos(x, y);
-    // set middlepoint default offsets can also set after with setMiddlePointOffset(vector2)
-    setMiddlePointOffset({Constants::PLAYER_PIXELSIZE / 2, Constants::PLAYER_PIXELSIZE / 2});
+    // set middlepoint according to spriteSize
+    _setMiddlePointOffset({static_cast<float>(getAnimFile()->getSpriteSizeX()) / 2, static_cast<float>(getAnimFile()->getSpriteSizeY()) / 2});
     orginalPos = pos; // save the original position for reseting the object
 }
 
@@ -275,10 +275,9 @@ Vector2 BaseGameObject::getPos() const
 
 void BaseGameObject::resetPos()
 {
-
     pos = orginalPos;
 }
-void BaseGameObject::setMiddlePointOffset(Vector2 offset)
+void BaseGameObject::_setMiddlePointOffset(Vector2 offset)
 {
     this->middlePoint = offset;
 }
@@ -325,6 +324,8 @@ bool BaseGameObject::setCurrentFrameTag(std::string tag)
     // if the tag doesnt exist a runtime-error will be thrown
     bool animAlreadyPlaying = animfilePtr->setFrameTag(tag);
     currentFrameTag = tag;
+    // setMiddlePoint according to spriteSize
+    _setMiddlePointOffset({static_cast<float>(animfilePtr->getSpriteSizeX()) / 2, static_cast<float>(animfilePtr->getSpriteSizeY()) / 2});
     return animAlreadyPlaying;
 }
 
