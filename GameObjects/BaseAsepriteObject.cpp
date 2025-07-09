@@ -4,6 +4,7 @@
 
 #include "BaseAsepriteObject.h"
 BaseAsepriteObject::BaseAsepriteObject(AsepriteManager* asepriteManager)
+    : animfilePtr(nullptr), animFileName(""), currentFrameTag(""), shouldDestroy(false)
 {
     if (!asepriteManager)
     {
@@ -11,9 +12,6 @@ BaseAsepriteObject::BaseAsepriteObject(AsepriteManager* asepriteManager)
         return;
     }
     this->asepriteManagerPtr = asepriteManager;
-    this->animfilePtr = this->asepriteManagerPtr->getAnimFile("nesFighter");
-    this->currentFrameTag = "nesFighter-Idle";
-    this->animfilePtr->setFrameTag(this->currentFrameTag);
 }
 BaseAsepriteObject::BaseAsepriteObject(AsepriteManager* asepriteManager, float x, float y)
     : BaseAsepriteObject(asepriteManager)
@@ -23,8 +21,11 @@ BaseAsepriteObject::BaseAsepriteObject(AsepriteManager* asepriteManager, float x
 BaseAsepriteObject::~BaseAsepriteObject()
 {
     // free the memory of the animfilePtr
-    delete animfilePtr;
-    animfilePtr = nullptr;
+    if (animfilePtr != nullptr)
+    {
+        delete animfilePtr;
+        animfilePtr = nullptr;
+    }
 }
 void BaseAsepriteObject::update(float deltaTime)
 {
@@ -44,18 +45,36 @@ void BaseAsepriteObject::draw()
         std::cerr << "Error: BaseGameObject received null AsepriteAnimationFile!" << std::endl;
     }
 }
-void BaseAsepriteObject::addAnim(AsepriteAnimationFile* animfileptr)
-{
-}
-AsepriteAnimationFile* BaseAsepriteObject::getAnimFile()
-{
-}
+
+//setCurrentFrameTag("gbFighter-Idle")
 bool BaseAsepriteObject::setCurrentFrameTag(std::string tag)
 {
+    // if the animation is already playing, return false, otherwise return true
+    // if the tag doesnt exist a runtime-error will be thrown
+
+    // check if a animfilePtr is already present
+    if (animfilePtr == nullptr)
+    {
+        // if not, create a new one
+        // get first part of tag ("gbFighter-Idle" -> "gbFighter")
+        animFileName = tag.substr(0, tag.find("-"));
+        // get a animfilePtr
+        this->animfilePtr = this->asepriteManagerPtr->getAnimFile(animFileName);
+    }
+
+    bool animAlreadyPlaying = animfilePtr->setFrameTag(tag);
+    currentFrameTag = tag;
+    return animAlreadyPlaying;
 }
 std::string BaseAsepriteObject::getCurrentFrameTag()
 {
+    return currentFrameTag;
+}
+void BaseAsepriteObject::setShouldDestroy(bool shouldDestroy)
+{
+    this->shouldDestroy = shouldDestroy;
 }
 bool BaseAsepriteObject::getShouldDestroy()
 {
+    return shouldDestroy;
 }

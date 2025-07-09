@@ -19,12 +19,10 @@ public:
     virtual void draw();
 
     // sprites
-    void addAnim(AsepriteAnimationFile* animfileptr);
-    AsepriteAnimationFile* getAnimFile();
     virtual bool setCurrentFrameTag(std::string tag);
     std::string getCurrentFrameTag();
 
-
+    void setShouldDestroy(bool shouldDestroy);
     bool getShouldDestroy();
 
 
@@ -32,7 +30,8 @@ public:
 protected:
     AsepriteManager* asepriteManagerPtr;
     AsepriteAnimationFile* animfilePtr;
-    std::string currentFrameTag; // for example "gbFighter-Idle"
+    std::string animFileName;    // for example, "gbFighter"
+    std::string currentFrameTag; // for example, "gbFighter-Idle"
     bool shouldDestroy = false;
     int getDurationCurrentFrame; // Duration of the current frame in milliseconds
     int currentFrame;            // current frame of the animation

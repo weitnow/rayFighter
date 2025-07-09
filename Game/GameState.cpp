@@ -67,7 +67,7 @@ void GameState::Enter()
     gui->setWinningPoint1(1);
     gui->setWinningPoint2(1);
 
-
+    mySpriteObject->setCurrentFrameTag("nesFighter-Idle");
 
 }
 
