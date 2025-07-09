@@ -90,6 +90,8 @@ ifeq ($(OS_WINDOWS), 1)
 	./$(BUILD_DIR)/$(EXECUTABLE_NAME).exe & powershell -Command "Start-Sleep -Seconds 1; Get-Process -Name $(EXECUTABLE_NAME) | Select-Object WorkingSet64"
 else
 	/usr/bin/time -v ./$(BUILD_DIR)/$(EXECUTABLE_NAME)
+	@echo "Executable size:"
+	@du -h $(BUILD_DIR)/$(EXECUTABLE_NAME)
 endif
 
 clean:

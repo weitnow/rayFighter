@@ -24,9 +24,6 @@ public: // METHODES
     virtual void Exit() override;
     void HandleInput() override;
 
-    //TODO: get rid of this
-    unique<BaseAsepriteObject> mySpriteObject = std::make_unique<BaseAsepriteObject>(asepriteManager, 128, 97);
-
     BaseCharacter* createPlayer(int characterNumber, int playerNumber);
 
     void addGameObject(shared<BaseGameObject> gameObject, int ownerPlayerNumber); // -1 = it belongs to noone, -2 = it belongs to both, 1 = p1, 2 = p2

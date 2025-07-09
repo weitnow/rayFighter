@@ -14,15 +14,15 @@ BaseSpriteObject::BaseSpriteObject()
     scale = 1;
     pos = {0.f, 0.f};
     rotation = 0.0f;
-    destRect = {pos.x, pos.y, scale * sourceRect.height, scale * sourceRect.width};
-    myDebug32x32Texture = LoadTexture("Assets/Graphics/debug32x32.png"); //Raylib function
-    loadTexture("Assets/Graphics/debug32x32.png");                       //class method
+    color = WHITE;
+    sourceRect.height = 32; // inital value = 32, needed for setpos()
+    sourceRect.width = 32;  // inital value = 32, needed for setpos()
+
 }
 
-BaseSpriteObject::BaseSpriteObject(float x, float y, const std::string& texturePath) : BaseSpriteObject()
+BaseSpriteObject::BaseSpriteObject(float x, float y) : BaseSpriteObject()
 {
     setPos(x, y);
-    loadTexture(texturePath);
 }
 
 BaseSpriteObject::~BaseSpriteObject()
@@ -68,15 +68,7 @@ void BaseSpriteObject::update(float deltaTime)
 
 void BaseSpriteObject::draw()
 {
-
-    DrawTexturePro(myTexture, sourceRect, destRect, origin, rotation, WHITE);
-
-
-    if (Global::debugMode)
-    {
-
-        DrawTexturePro(myDebug32x32Texture, sourceRect, destRect, origin, rotation, WHITE);
-    }
+    DrawTexturePro(myTexture, sourceRect, destRect, origin, rotation, color);
 }
 void BaseSpriteObject::setPos(float x, float y)
 {
@@ -92,20 +84,7 @@ Vector2 BaseSpriteObject::getPos()
     return {pos.x - std::abs(sourceRect.width), pos.y - std::abs(sourceRect.height)};
 }
 
-void BaseSpriteObject::setCenterPos(float x, float y)
-{
-    pos.x = x;
-    pos.y = y;
-}
-void BaseSpriteObject::setCenterPos(Vector2 pos)
-{
-    BaseSpriteObject::setCenterPos(pos.x, pos.y);
-}
 
-Vector2 BaseSpriteObject::getCenterPos()
-{
-    return pos;
-}
 void BaseSpriteObject::moveTowards(Vector2 target, float speed, std::function<float(float)> tweenFunc)
 {
     isMoving = true;
@@ -124,8 +103,8 @@ void BaseSpriteObject::loadTexture(const std::string& texturePath)
 {
     myTexture = LoadTexture(texturePath.c_str());
     sourceRect = {
-        0.0f,
-        0.0f,
+        0.f,
+        0.f,
         static_cast<float>(myTexture.width),
         static_cast<float>(myTexture.height) // <- fix here
     };
@@ -136,6 +115,13 @@ void BaseSpriteObject::loadTexture(const std::string& texturePath)
 
     // Update origin after loading new texture
     origin = {destRect.width / 2.0f, destRect.height / 2.0f};
+}
+void BaseSpriteObject::unloadTexture()
+{
+    UnloadTexture(myTexture);
+    myTexture.id = 0; // mark it as unloaded
+    destRect.height = 32;
+    destRect.width = 32;
 }
 
 
@@ -206,4 +192,8 @@ void BaseSpriteObject::setRotation(int rotation)
 int BaseSpriteObject::getRotation()
 {
     return static_cast<int>(rotation);
+}
+void BaseSpriteObject::setColor(Color color)
+{
+    this->color = color;
 }

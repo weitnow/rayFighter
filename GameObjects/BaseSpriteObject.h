@@ -12,7 +12,7 @@ class BaseSpriteObject
 {
 public:
     BaseSpriteObject();
-    BaseSpriteObject(float x, float y, const std::string& texturePath = "Assets/Graphics/debug32x32.png");
+    BaseSpriteObject(float x, float y);
     ~BaseSpriteObject();
 
     void update(float deltaTime);
@@ -22,14 +22,13 @@ public:
     void setPos(float x, float y); // topleftCorner
     void setPos(Vector2 pos); // topleftCorner
     Vector2 getPos(); // topleftCorner
-    void setCenterPos(float x, float y);
-    void setCenterPos(Vector2 pos);
-    Vector2 getCenterPos();
+
 
     void moveTowards(Vector2 target, float speed, std::function<float(float)> tweenFunc);
 
     //texture
     void loadTexture(const std::string& texturePath);
+    void unloadTexture();
 
     //scale
     void setScale(int scaleLevel);
@@ -45,6 +44,9 @@ public:
     void setRotation(int rotation);
     int getRotation();
 
+    // color
+    void setColor(Color color);
+
 protected:
     // Define the origin point for rotation (the center of the rectangle)
     Vector2 origin;
@@ -52,9 +54,7 @@ protected:
     Vector2 pos;
     int scale;
     Texture2D myTexture;
-
-    // a 32x32 Texture which will be drawn in debug-mode
-    Texture2D myDebug32x32Texture;
+    Color color;
 
     // Define the source rectangle (which part of myTexture should be drawn)
     Rectangle sourceRect;

@@ -66,12 +66,6 @@ void GameState::Enter()
     // Todo: get rid of this
     gui->setWinningPoint1(1);
     gui->setWinningPoint2(1);
-
-    mySpriteObject->setCurrentFrameTag("nesFighter-Idle");
-    mySpriteObject->setIsFlippedX(true);
-
-
-
 }
 
 void GameState::Update(float deltaTime)
@@ -103,11 +97,6 @@ void GameState::Update(float deltaTime)
     _updateHitDetection();
 
     HandleInput();
-
-    //TODO: get rid of this
-    mySpriteObject->update(deltaTime);
-
-
 }
 
 void GameState::Render()
@@ -135,9 +124,6 @@ void GameState::Render()
     // draw player 1 and 2
     player1->draw();
     player2->draw();
-
-    //TODO: get rid of this
-    mySpriteObject->draw();
 
     if (Global::debugMode)
     {

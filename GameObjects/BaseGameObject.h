@@ -5,6 +5,7 @@
 #include "../Systems/CollisionDetection.h"
 #include "../Utils/AsepriteManager.h"
 #include "../Utils/Core.h"
+#include "BaseAsepriteObject.h"
 #include "CollisionBoxes/CollisionBox2D.h"
 #include <raylib.h>
 
@@ -147,6 +148,7 @@ public:
     void addGameObjectToGameState(std::shared_ptr<BaseGameObject> gameObject,
                                   int ownerPlayerNumber); //used for fireball etc., ownerPlayerNumber -1 = it belongs to noone, -2 it belongs to both, 1 = p1, 2 = p2
 
+    //Sprites
     AsepriteManager* asepriteManagerPtr;
 
 protected:
@@ -203,7 +205,8 @@ protected:
     CollisionMap throwableBoxesPerFrame;
     CollisionMap proximityBoxesPerFrame;
 
-    AsepriteAnimationFile* animfilePtr;
+    // Sprites
+    AsepriteAnimationFile* animfilePtr; // pointer to the mainAnimationFile
 
     GameState* gameState;
 

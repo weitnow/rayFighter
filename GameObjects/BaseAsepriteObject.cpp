@@ -44,7 +44,7 @@ void BaseAsepriteObject::draw()
     // draw animfilePtr (if it exist)
     if (animfilePtr != nullptr)
     {
-        animfilePtr->drawCurrentSelectedTag(getPos().x, getPos().y, scale, WHITE);
+        animfilePtr->drawCurrentSelectedTag(getPos().x, getPos().y, scale, color, isFlippedX, isFlippedY);
     }
 
 }
