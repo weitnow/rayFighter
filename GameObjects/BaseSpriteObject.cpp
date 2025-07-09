@@ -89,7 +89,7 @@ void BaseSpriteObject::setPos(Vector2 pos)
 }
 Vector2 BaseSpriteObject::getPos()
 {
-    return {pos.x - sourceRect.width, pos.y - sourceRect.height};
+    return {pos.x - std::abs(sourceRect.width), pos.y - std::abs(sourceRect.height)};
 }
 
 void BaseSpriteObject::setCenterPos(float x, float y)
@@ -167,9 +167,9 @@ void BaseSpriteObject::setIsFlippedX(bool flipX)
     }
     else
     {
-        sourceRect.width = sourceRect.width;
+        sourceRect.width = std::abs(sourceRect.width);
         sourceRect.height = sourceRect.height;
-        destRect.width = destRect.width;
+        destRect.width = std::abs(destRect.width);
         destRect.height = destRect.height;
     }
 }
@@ -186,9 +186,9 @@ void BaseSpriteObject::setIsFlippedY(bool flipY)
     else
     {
         sourceRect.width = sourceRect.width;
-        sourceRect.height = sourceRect.height;
+        sourceRect.height = std::abs(sourceRect.height);
         destRect.width = destRect.width;
-        destRect.height = destRect.height;
+        destRect.height = std::abs(destRect.height);
     }
 }
 bool BaseSpriteObject::getIsFlippedX()

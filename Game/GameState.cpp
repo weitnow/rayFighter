@@ -68,6 +68,9 @@ void GameState::Enter()
     gui->setWinningPoint2(1);
 
     mySpriteObject->setCurrentFrameTag("nesFighter-Idle");
+    mySpriteObject->setIsFlippedX(true);
+
+
 
 }
 

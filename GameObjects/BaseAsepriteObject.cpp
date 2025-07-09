@@ -4,7 +4,7 @@
 
 #include "BaseAsepriteObject.h"
 BaseAsepriteObject::BaseAsepriteObject(AsepriteManager* asepriteManager)
-    : animfilePtr(nullptr), animFileName(""), currentFrameTag(""), shouldDestroy(false)
+    : BaseSpriteObject(), animfilePtr(nullptr), animFileName(""), currentFrameTag("")
 {
     if (!asepriteManager)
     {
@@ -33,17 +33,20 @@ void BaseAsepriteObject::update(float deltaTime)
     {
         animfilePtr->update(deltaTime);
     }
+
+    BaseSpriteObject::update(deltaTime);
 }
 void BaseAsepriteObject::draw()
 {
+    // call Baseclass
+    BaseSpriteObject::draw();
+
+    // draw animfilePtr (if it exist)
     if (animfilePtr != nullptr)
     {
         animfilePtr->drawCurrentSelectedTag(getPos().x, getPos().y, scale, WHITE);
     }
-    else
-    {
-        std::cerr << "Error: BaseGameObject received null AsepriteAnimationFile!" << std::endl;
-    }
+
 }
 
 //setCurrentFrameTag("gbFighter-Idle")
