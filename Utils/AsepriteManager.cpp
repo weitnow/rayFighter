@@ -258,6 +258,7 @@ bool AsepriteAnimationFile::setFrameTag(const std::string& filenameTagname)
         return false;
     }
 
+
     current_filenameTagname = filenameTagname;
 
     if (this->asepriteManager->frameTags.find(filenameTagname) == this->asepriteManager->frameTags.end())
