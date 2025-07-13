@@ -58,18 +58,18 @@ private:
                     bool flipY = false);
 
 public:
-    explicit AsepriteAnimationFile(std::string filename,
-                                   std::string foldername,
+    explicit AsepriteAnimationFile(const std::string& filename,
+                                   const std::string& foldername,
                                    Texture& texture,
                                    AsepriteManager& asepriteManager);
 
     ~AsepriteAnimationFile();
 
-    FrameTag& getFrameTag(const std::string& filenameTagname);
+    FrameTag& getFrameTag(const std::string& filenameTagname) const;
     std::string getAnimFilename() const;
     std::string getAnimFilenameTagname() const;
-    float getDurationCurrentFrame(int frameNumber);
-    float getDurationCurrentFrame();
+    float getDurationCurrentFrame(int frameNumber) const;
+    float getDurationCurrentFrame() const;
     int getSpriteSizeX() const;
     int getSpriteSizeY() const;
     bool hasAnimFinished() const;
@@ -106,7 +106,7 @@ class AsepriteManager
 {
 public:
     // public methods
-    explicit AsepriteManager(std::string foldername);
+    explicit AsepriteManager(const std::string& foldername);
     ~AsepriteManager();
 
     void init();

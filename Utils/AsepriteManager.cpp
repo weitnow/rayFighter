@@ -2,8 +2,8 @@
 
 
 /* #region ---AsepriteAnimationFile Class */
-AsepriteAnimationFile::AsepriteAnimationFile(std::string filename,
-                                             std::string foldername,
+AsepriteAnimationFile::AsepriteAnimationFile(const std::string& filename,
+                                             const std::string& foldername,
                                              Texture& texture,
                                              AsepriteManager& asepriteManager)
 {
@@ -34,7 +34,7 @@ AsepriteAnimationFile::~AsepriteAnimationFile()
 {
 }
 
-FrameTag& AsepriteAnimationFile::getFrameTag(const std::string& filenameTagname) // for example "gbFighter-Idle"
+FrameTag& AsepriteAnimationFile::getFrameTag(const std::string& filenameTagname) const // for example "gbFighter-Idle"
 {
     return this->asepriteManager->getFrameTag(filenameTagname);
 }
@@ -49,14 +49,14 @@ std::string AsepriteAnimationFile::getAnimFilenameTagname() const
     return this->current_filenameTagname;
 }
 
-float AsepriteAnimationFile::getDurationCurrentFrame(int frameNumber)
+float AsepriteAnimationFile::getDurationCurrentFrame(int frameNumber) const
 {
     int duration = this->asepriteManager->getFrameTag(current_filenameTagname).frameNumberDuration[this->current_frame];
     // 100 = 0.1 seconds
     return duration / 1000.0f;
 }
 
-float AsepriteAnimationFile::getDurationCurrentFrame()
+float AsepriteAnimationFile::getDurationCurrentFrame() const
 {
     return getDurationCurrentFrame(current_frame);
 }
@@ -269,7 +269,7 @@ bool AsepriteAnimationFile::setFrameTag(const std::string& filenameTagname)
     resetBools();
 
     //set initial values
-    FrameTag current_FrameTag = this->asepriteManager->getFrameTag(current_filenameTagname);
+    const FrameTag& current_FrameTag = this->asepriteManager->getFrameTag(current_filenameTagname);
     min_frame = current_FrameTag.from;
     max_frame = current_FrameTag.to;
     spriteSizeX = current_FrameTag.sourceSizeX;
@@ -298,7 +298,7 @@ bool AsepriteAnimationFile::setFrameTag(const std::string& filenameTagname)
 /* #region ---AsepriteManager class--- */
 
 // foldername where the png and json-files are located
-AsepriteManager::AsepriteManager(std::string foldername)
+AsepriteManager::AsepriteManager(const std::string& foldername)
 {
     this->foldername = foldername;
 }
