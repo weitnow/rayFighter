@@ -13,50 +13,17 @@
 struct FrameTag;       // forward declaration
 class AsepriteManager; //forward declaration
 
+struct OffSets // used in AsepriteAnimationFile and AsepriteManager
+{
+    int x;
+    int y;
+};
+
 /* #region ---AsepriteAnimationFile class--- */
 
-/**
- * @brief currently holds filename "gbfighter", and its texture, as well as a frameTags<string, FrameTag>
- * @param filename Filename as a String without file-extension. The class will look for a [filename].png and [filename].json
- * @param foldername Foldername where the png and json is located
- */
 class AsepriteAnimationFile
 {
-private:
-    // member variables
-    std::string filename;             // filename, ex. "gbFighter", is also the name of the texture
-    AsepriteManager* asepriteManager; // reference to the asepriteManager
-    Texture texture;
-    std::string current_filenameTagname;
-    int current_frame; // current frame of the animation
-    int min_frame;
-    int max_frame;
-    int spriteSizeX;
-    int spriteSizeY;
-    float update_counter;
-    float current_duration;                             // duration of the current frame in milliseconds
-    float animJustFinishedPlusLastFrameDurationCounter; // float value of duration of last frame
-    bool animJustFinishedPlusLastFrameDurationCounterSet;
-    bool animJustFinishedPlusLastFrameDuration;
-    bool animJustFinished;
-    bool loop;
-    int spriteOffsetX; // this will be applied for all frames of the animationFile (stored in FrameTag object in every frame)
-    int spriteOffsetY; // this will be applied for all frames of the animationFile (stored in FrameTag object in every frame)
-    int frameTagOffsetX; // this will be applied only for all frames of specific frameTag (stored in FrameTag object in specific frame)
-    int frameTagOffsetY; // this will be applied only for all frames of specific frameTag (stored in FrameTag object in specific frame)
-    //int frameOffsetX; // this will be applied only for a specific frameNumber (stored in FrameTag object in specific frame)
-    //int frameOffsetY; // this will be applied only for a specific frameNumber (stored in FrameTag object in specific frame)
-
-
-    void nextFrame();
-    void _drawFrame(const std::string& filenameTagname,
-                    int x,
-                    int y,
-                    float scale = 1.0f,
-                    Color tint = WHITE,
-                    bool flipX = false,
-                    bool flipY = false) const;
-
+    friend class AsepriteManager; // gives AsepriteManager access to private members of AsepriteAnimationFile. Used in createNewAnimFilePtr()
 public:
     explicit AsepriteAnimationFile(const std::string& filename,
                                    const std::string& foldername,
@@ -79,6 +46,16 @@ public:
     int getMaxFrame() const;
     void setCurrentFrameToMinFrame();
 
+    void setSpriteOffset(const std::string& AnimFileName, int x, int y);
+    void setFrameTagOffset(const std::string& AnimFileTagname, int x, int y);
+    void setFrameOffset(const std::string& AnimFileTagname, int frameNumber, int x, int y);
+    void setLoop(const std::string& AnimFileTagname, bool loop);
+    OffSets getSpriteOffset();
+    OffSets getFrameTagOffset();
+    OffSets getFrameOffset();
+    bool getLoop() const;
+
+
     void drawFrame(const std::string& filenameTagname,
                    int x,
                    int y,
@@ -92,16 +69,53 @@ public:
     void update(float deltaTime);
 
     bool setFrameTag(const std::string& tagname);
+
+private:
+    // member variables
+    std::string filename;             // filename, ex. "gbFighter", is also the name of the texture
+    AsepriteManager* asepriteManager; // reference to the asepriteManager
+    Texture texture;
+    std::string current_filenameTagname;
+    int current_frame; // current frame of the animation
+    int min_frame;
+    int max_frame;
+    int spriteSizeX;
+    int spriteSizeY;
+    float update_counter;
+    float current_duration;                             // duration of the current frame in milliseconds
+    float animJustFinishedPlusLastFrameDurationCounter; // float value of duration of last frame
+    bool animJustFinishedPlusLastFrameDurationCounterSet;
+    bool animJustFinishedPlusLastFrameDuration;
+    bool animJustFinished;
+    bool loop;
+
+    // data containers for offsets
+    std::unordered_map<std::string, OffSets> spriteOffsets;                         // ("gbFighter", {10, 20})
+    std::unordered_map<std::string, OffSets> frameTagOffsets;                       // "gbFighter-Punch", {10, 20}
+    std::unordered_map<std::string, std::unordered_map<int, OffSets>> frameOffsets; // "gbFighter-Punch, 42, {10, 20}
+
+    // intenal use only -> use data containers for setting offsets
+    int spriteOffsetX;   // this will be applied for all frames of the animationFile (ex. all files of gbFighter)
+    int spriteOffsetY;   // this will be applied for all frames of the animationFile (ex. all files of gbFighter)
+    int frameTagOffsetX; // this will be applied only for all frames of specific frameTag (ex. only for gbFighter-Idle)
+    int frameTagOffsetY; // this will be applied only for all frames of specific frameTag (ex. only for gbFighter-Idle)
+    int frameOffsetX;    // this will be applied only for a specific frameNumber
+    int frameOffsetY;    // this will be applied only for a specific frameNumber
+    // -----------------------------------------------------------------------
+
+    void nextFrame();
+    void _drawFrame(const std::string& filenameTagname,
+                    int x,
+                    int y,
+                    float scale = 1.0f,
+                    Color color = WHITE,
+                    bool flipX = false,
+                    bool flipY = false) const;
 };
 
 /* #endregion */
 
 /* #region ---AsepriteManager class--- */
-/**
- * @class AsepriteManager
- * @brief The object instantiated of this class controlls the loading of sprites
- * @param[in] foldername where the png and json-files of the aseprite-assets are located
- */
 class AsepriteManager
 {
 public:
@@ -111,26 +125,24 @@ public:
 
     void init();
 
-    void loadAnimFile(const std::string& filename, const int spriteOffsetX = 0, const int spriteOffsetY = 0);
+    void loadAnimFile(const std::string& filename);
 
     FrameTag& getFrameTag(const std::string& filenameTagname);
 
-    AsepriteAnimationFile* getAnimFile(const std::string& filename);
+    AsepriteAnimationFile* createNewAnimFilePtr(const std::string& filename);
 
     Texture getTexture(const std::string& textureName);
 
     // public member variables
-    unordered_map<std::string, FrameTag> frameTags;
+    unordered_map<std::string, FrameTag> frameTags; // all frameTags are stored here
+
+    // data containers for offsets
+    std::unordered_map<std::string, OffSets> spriteOffsets;                         // ("gbFighter", {10, 20})
+    std::unordered_map<std::string, OffSets> frameTagOffsets;                       // "gbFighter-Punch", {10, 20}
+    std::unordered_map<std::string, std::unordered_map<int, OffSets>> frameOffsets; // "gbFighter-Punch", 42, {10, 20}
 
 private:
     // private methods
-    /**
-     * @brief This function reads a JsonFile, creates a nlohmann:json-object on the heap and returns a pointer to this json-object.
-     * it does NOT handle the deletion of this object on the heap. this needs to be done through the code which calls the method loadJsonFile
-     * an receives the pointer to the object on the heap.
-     * @param filename filename of a .json-object without .json at the end
-     * @return nlohmann::json* : A pointer to a json-object
-     */
     nlohmann::json* loadJsonFile(const std::string& filename);
 
     // private member variable
@@ -152,17 +164,8 @@ struct FrameTag
     bool loop;
     int from;
     int to;
-    int frameTagOffsetX; // this will be applied only for all frames of specific frameTag (ex. gbFighter-Idle)
-    int frameTagOffsetY;
-    int spriteOffsetX; // this will be applied for all frames (ex. gbFighter)
-    int spriteOffsetY;
-    unordered_map<int, int> frameNumberOffsetX; // this will be applied only for a specific frameNumber of this texture
-    unordered_map<int, int> frameNumberOffsetY;
     unordered_map<int, int> frameNumberDuration;
 };
 
-//overrite the operator<< for FrameTag
-std::ostream& operator<<(std::ostream& os, const FrameTag& frameTag);
-/* #endregion */
 
 #endif // GBFIGHTER_ASEPRITEMANAGER_H

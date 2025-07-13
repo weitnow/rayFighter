@@ -27,7 +27,7 @@ GameState::GameState(Game* game) : BaseState(game)
     gui = new Gui(game);
     gui->init(this);
 
-    levelAnimFile = asepriteManager->getAnimFile("stages");
+    levelAnimFile = asepriteManager->createNewAnimFilePtr("stages");
     levelAnimFile->setFrameTag("stages-Level");
 
     if (player1 == nullptr || player2 == nullptr)

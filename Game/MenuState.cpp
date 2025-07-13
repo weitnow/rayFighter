@@ -29,7 +29,7 @@ void MenuState::Enter()
     selectedOption = MenuOptions::PLAY;
 
     // load TitleScreen
-    aafTitleScreen = game->asepriteManager->getAnimFile("titleScreen");
+    aafTitleScreen = game->asepriteManager->createNewAnimFilePtr("titleScreen");
     aafTitleScreen->setFrameTag("titleScreen-Titlescreen");
 }
 

@@ -6,7 +6,7 @@
 
 StageSelectState::StageSelectState(Game* game) : BaseState(game), StageSelectScreen(nullptr)
 {
-    StageSelectScreen = game->asepriteManager->getAnimFile("stageSelectScreen");
+    StageSelectScreen = game->asepriteManager->createNewAnimFilePtr("stageSelectScreen");
     StageSelectScreen->setFrameTag("stageSelectScreen-Idle");
 }
 

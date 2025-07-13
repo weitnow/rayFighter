@@ -62,7 +62,7 @@ bool BaseAsepriteObject::setCurrentFrameTag(std::string tag)
         // get first part of tag ("gbFighter-Idle" -> "gbFighter")
         animFileName = tag.substr(0, tag.find("-"));
         // get a animfilePtr
-        this->animfilePtr = this->asepriteManagerPtr->getAnimFile(animFileName);
+        this->animfilePtr = this->asepriteManagerPtr->createNewAnimFilePtr(animFileName);
     }
 
     bool animAlreadyPlaying = animfilePtr->setFrameTag(tag);

@@ -484,7 +484,7 @@ void Screen2DManager::loadScreenGenericEffects(const std::string& nameAnimFile)
     }
 
     // load file
-    screenGenericEffectsAnimFile = asepriteManager->getAnimFile(nameAnimFile);
+    screenGenericEffectsAnimFile = asepriteManager->createNewAnimFilePtr(nameAnimFile);
 }
 
 void Screen2DManager::setScreenGenericEffects(const std::string& frameTag, int playHowOften)

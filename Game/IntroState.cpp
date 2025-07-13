@@ -26,7 +26,7 @@ void IntroState::Enter()
     //game->soundManager->playBackgroundMusic("decisions.mp3");
 
     // load TitleScreen
-    IntroScreen = game->asepriteManager->getAnimFile("gbIntro");
+    IntroScreen = game->asepriteManager->createNewAnimFilePtr("gbIntro");
     IntroScreen->setFrameTag("gbIntro-Intro");
 }
 

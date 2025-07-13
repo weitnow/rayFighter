@@ -9,7 +9,7 @@ OptionSelectState::OptionSelectState(Game* game)
     : BaseState(game), OptionSelectScreen(nullptr), selectedResolution{screen2DManager->getScreenResolution()},
       musicOn{soundManager->getBgMusicOn()}, soundMasterVolume{soundManager->getMasterVolume()}
 {
-    OptionSelectScreen = game->asepriteManager->getAnimFile("optionSelectScreen");
+    OptionSelectScreen = game->asepriteManager->createNewAnimFilePtr("optionSelectScreen");
     OptionSelectScreen->setFrameTag("optionSelectScreen-Intro");
 }
 
