@@ -19,9 +19,9 @@ public:
     void draw();
 
     //position
-    void setPos(float x, float y); // topleftCorner
-    void setPos(Vector2 pos); // topleftCorner
-    Vector2 getPos(); // topleftCorner
+    void setPos(float x, float y);
+    void setPos(Vector2 pos);
+    Vector2 getPos();
 
 
     void moveTowards(Vector2 target, float speed, std::function<float(float)> tweenFunc);

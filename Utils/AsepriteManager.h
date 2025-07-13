@@ -42,8 +42,11 @@ private:
     bool loop;
     int spriteOffsetX; // this will be applied for all frames of the animationFile (stored in FrameTag object in every frame)
     int spriteOffsetY; // this will be applied for all frames of the animationFile (stored in FrameTag object in every frame)
-    int frameOffsetX; // this will be applied only for all frames of specific frameTag (stored in FrameTag object in specific frame)
-    int frameOffsetY; // this will be applied only for all frames of specific frameTag (stored in FrameTag object in specific frame)
+    int frameTagOffsetX; // this will be applied only for all frames of specific frameTag (stored in FrameTag object in specific frame)
+    int frameTagOffsetY; // this will be applied only for all frames of specific frameTag (stored in FrameTag object in specific frame)
+    //int frameOffsetX; // this will be applied only for a specific frameNumber (stored in FrameTag object in specific frame)
+    //int frameOffsetY; // this will be applied only for a specific frameNumber (stored in FrameTag object in specific frame)
+
 
     void nextFrame();
     void _drawFrame(const std::string& filenameTagname,
@@ -80,11 +83,11 @@ public:
                    int x,
                    int y,
                    float scale = 1.0f,
-                   Color tint = WHITE,
+                   Color color = WHITE,
                    bool flipX = false,
                    bool flipY = false);
-    void drawCurrentSelectedTag(int x, int y, float scale = 1.0f, Color tint = WHITE);
-    void drawCurrentSelectedTag(int x, int y, float scale, Color tint, bool flipX, bool flipY);
+    void drawCurrentSelectedTag(int x, int y, float scale = 1.0f, Color color = WHITE);
+    void drawCurrentSelectedTag(int x, int y, float scale, Color color, bool flipX, bool flipY);
     void resetBools();
     void update(float deltaTime);
 
@@ -149,11 +152,12 @@ struct FrameTag
     bool loop;
     int from;
     int to;
-    // Todo: get rid of spriteOffsetX and spriteOffsetY
-    int frameOffsetX; // this will be apllied only for all frames of specific frameTag (ex. gbFighter-Idle)
-    int frameOffsetY;
-    int spriteOffsetX; // this will be apllied for all frames (ex. gbFighter)
+    int frameTagOffsetX; // this will be applied only for all frames of specific frameTag (ex. gbFighter-Idle)
+    int frameTagOffsetY;
+    int spriteOffsetX; // this will be applied for all frames (ex. gbFighter)
     int spriteOffsetY;
+    unordered_map<int, int> frameNumberOffsetX; // this will be applied only for a specific frameNumber of this texture
+    unordered_map<int, int> frameNumberOffsetY;
     unordered_map<int, int> frameNumberDuration;
 };
 

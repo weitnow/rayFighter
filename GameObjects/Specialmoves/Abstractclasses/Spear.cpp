@@ -20,6 +20,10 @@ Spear::Spear(AsepriteManager* asepriteManagerPtr, float x, float y, bool isFlipp
     else
         movingRight = false;
 
+    auto mySprite1 = std::make_unique<BaseAsepriteObject>(asepriteManagerPtr, getPos().x, getPos().y);
+    mySprite1->loadTexture("Assets/Graphics/debug32x32.png");
+    myAsepriteObjects.push_back(std::move(mySprite1));
+
 }
 
 
@@ -30,8 +34,13 @@ void Spear::update(float deltaTime)
     else
         moveLeft();
 
+    myAsepriteObjects[0]->update(deltaTime);
+    myAsepriteObjects[0]->setPos(getPos());
+
     BaseGameObject::update(deltaTime);
 }
+
+
 
 void Spear::handleHitLogic(vector<CollisionBox2D*>& hitboxesThatHit,
                            vector<CollisionBox2D*>& hurtboxesThatWereHit,
@@ -53,6 +62,9 @@ void Spear::draw()
     // draw line
     static int offsety = 5;
     DrawLine(orginalPos.x + offsety, orginalPos.y + offsety, getPos().x + offsety, getPos().y + offsety, BLACK);
+
+    myAsepriteObjects[0]->draw();
+
     BaseGameObject::draw();
 }
 

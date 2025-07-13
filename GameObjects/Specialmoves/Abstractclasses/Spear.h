@@ -26,6 +26,8 @@ public:
 protected:
     bool movingRight;
 
+    std::vector<unique<BaseAsepriteObject>> myAsepriteObjects;
+
 };
 
 

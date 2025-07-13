@@ -68,6 +68,8 @@ void BaseSpriteObject::update(float deltaTime)
 
 void BaseSpriteObject::draw()
 {
+    //DrawTexturePro(myTexture, sourceRect, destRect, origin, rotation, color);
+
     DrawTexturePro(myTexture, sourceRect, destRect, origin, rotation, color);
 }
 void BaseSpriteObject::setPos(float x, float y)
