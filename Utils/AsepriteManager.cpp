@@ -398,6 +398,7 @@ nlohmann::json* AsepriteManager::loadJsonFile(const std::string& filename)
 
 void AsepriteManager::loadAnimFile(const std::string& filename, const int spriteOffsetX, const int spriteOffsetY)
 {
+    // this method reads jsonfile, generates a frametag-object for each frameTag and loads the correct texture (png) file and stores it in the std::map<string, texture>
 
     // --ADD FRAMETAG TO FRAMETAGS MEMBER VARIABLE--
 
