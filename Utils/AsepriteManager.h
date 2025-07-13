@@ -55,7 +55,7 @@ private:
                     float scale = 1.0f,
                     Color tint = WHITE,
                     bool flipX = false,
-                    bool flipY = false);
+                    bool flipY = false) const;
 
 public:
     explicit AsepriteAnimationFile(const std::string& filename,
@@ -86,8 +86,8 @@ public:
                    Color color = WHITE,
                    bool flipX = false,
                    bool flipY = false);
-    void drawCurrentSelectedTag(int x, int y, float scale = 1.0f, Color color = WHITE);
-    void drawCurrentSelectedTag(int x, int y, float scale, Color color, bool flipX, bool flipY);
+    void drawCurrentSelectedTag(int x, int y, float scale = 1.0f, Color color = WHITE) const;
+    void drawCurrentSelectedTag(int x, int y, float scale, Color color, bool flipX, bool flipY) const;
     void resetBools();
     void update(float deltaTime);
 

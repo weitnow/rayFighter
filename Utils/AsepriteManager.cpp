@@ -24,10 +24,10 @@ AsepriteAnimationFile::AsepriteAnimationFile(const std::string& filename,
     animJustFinishedPlusLastFrameDuration = false;
     animJustFinished = false;
     loop = true;
-    spriteOffsetX = 0; // this will be applied for all frames of the animationFile (ex. all files of gbFighter)
-    spriteOffsetY = 0; // this will be applied for all frames of the animationFile (ex. all files of gbFighter)
-    frameTagOffsetX = 0;  // this will be applied only for all frames of specific frameTag (ex. only for gbFighter-Idle)
-    frameTagOffsetY = 0;  // this will be applied only for all frames of specific frameTag (ex. only for gbFighter-Idle)
+    spriteOffsetX = 0;   // this will be applied for all frames of the animationFile (ex. all files of gbFighter)
+    spriteOffsetY = 0;   // this will be applied for all frames of the animationFile (ex. all files of gbFighter)
+    frameTagOffsetX = 0; // this will be applied only for all frames of specific frameTag (ex. only for gbFighter-Idle)
+    frameTagOffsetY = 0; // this will be applied only for all frames of specific frameTag (ex. only for gbFighter-Idle)
 }
 
 AsepriteAnimationFile::~AsepriteAnimationFile()
@@ -107,7 +107,7 @@ void AsepriteAnimationFile::_drawFrame(const std::string& filenameTagname,
                                        float scale,
                                        Color tint,
                                        bool flipX,
-                                       bool flipY)
+                                       bool flipY) const
 {
 
     // Determine source rectangle (which part of the texture to draw)
@@ -129,8 +129,9 @@ void AsepriteAnimationFile::_drawFrame(const std::string& filenameTagname,
     // Adjust the origin point for flipping
     Vector2 origin = {
         (flipX ? (spriteOffsetX + frameTagOffsetX)
-               : -(spriteOffsetX + frameTagOffsetX)),                                 // Flip point adjusted by offsetFlipX
-        (flipY ? (spriteOffsetY + frameTagOffsetY) : -(spriteOffsetY + frameTagOffsetY)) // Flip point adjusted by offsetFlipY
+               : -(spriteOffsetX + frameTagOffsetX)), // Flip point adjusted by offsetFlipX
+        (flipY ? (spriteOffsetY + frameTagOffsetY)
+               : -(spriteOffsetY + frameTagOffsetY)) // Flip point adjusted by offsetFlipY
     };
 
     // Draw the texture with the specified scaling and tint
@@ -170,12 +171,12 @@ void AsepriteAnimationFile::drawFrame(const std::string& filenameTagname,
 }
 
 
-void AsepriteAnimationFile::drawCurrentSelectedTag(int x, int y, float scale, Color color)
+void AsepriteAnimationFile::drawCurrentSelectedTag(int x, int y, float scale, Color color) const
 {
     _drawFrame(current_filenameTagname, x, y, scale, color, false, false);
 }
 
-void AsepriteAnimationFile::drawCurrentSelectedTag(int x, int y, float scale, Color color, bool flipX, bool flipY)
+void AsepriteAnimationFile::drawCurrentSelectedTag(int x, int y, float scale, Color color, bool flipX, bool flipY) const
 
 {
 
@@ -477,7 +478,8 @@ void AsepriteManager::loadAnimFile(const std::string& filename, const int sprite
         frameTag.loop = false;
         frameTag.from = 0;
         frameTag.to = frameSize - 1;
-        frameTag.frameTagOffsetX = 0; // this will be applied only for all frames of specific frameTag (ex. gbFighter-Idle)
+        frameTag.frameTagOffsetX =
+            0; // this will be applied only for all frames of specific frameTag (ex. gbFighter-Idle)
         frameTag.frameTagOffsetY = 0;
         frameTag.spriteOffsetX = 0; // this will be applied for all frames (ex. gbFighter)
         frameTag.spriteOffsetY = 0;
