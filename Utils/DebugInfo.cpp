@@ -54,14 +54,15 @@ void DebugInfo::setDebugMode(bool debugMode)
 
     Global::debugMode = debugMode;
     Global::debugWindow = debugMode;
-    Global::debugSpriteBorder = debugMode;
+    Global::debugGameObjBorder = debugMode;
+    Global::debugSpriteBorder = false; //debugMode;
     Global::debugCollisionBoxes = debugMode;
     Global::debugHitboxes = debugMode;
     Global::debugHurtboxes = debugMode;
     Global::debugPushboxes = false;  // false or debugMode;
-    Global::debugThrowboxes = debugMode;
-    Global::debugThrowableboxes = debugMode;
-    Global::debugProximityBoxes = debugMode;
+    Global::debugThrowboxes = false; //debugMode;
+    Global::debugThrowableboxes = false; //debugMode;
+    Global::debugProximityBoxes = false; //debugMode;
 
     if (debugMode)
     {

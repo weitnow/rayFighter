@@ -115,6 +115,7 @@ extern float pushReduction;
 // Debug Variables
 extern bool debugMode;
 extern bool debugWindow;
+extern bool debugGameObjBorder;
 extern bool debugSpriteBorder;
 extern bool debugCollisionBoxes;
 extern bool debugHitboxes;

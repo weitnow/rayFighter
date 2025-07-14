@@ -12,6 +12,7 @@ float Global::pushReduction = 1000.f;
 
 bool Global::debugMode = false;           // will be set by GameManager->setDebugMode
 bool Global::debugWindow = false;         // will be set by GameManager->setDebugMode
+bool Global::debugGameObjBorder = false;   // will be set by GameManager->setDebugMode
 bool Global::debugSpriteBorder = false;   // will be set by GameManager->setDebugMode
 bool Global::debugCollisionBoxes = false; // will be set by GameManager->setDebugMode
 bool Global::debugHitboxes = false;       // will be set by GameManager->setDebugMode

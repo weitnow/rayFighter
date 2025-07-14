@@ -165,13 +165,21 @@ void AsepriteAnimationFile::_drawFrame(const std::string& filenameTagname,
     };
 
     // Determine destination rectangle (where to draw the texture on screen)
+    // Position + offset
+    Rectangle destRec = {static_cast<float>(x + spriteOffsetX + frameTagOffsetX + frameOffsetX),
+                         static_cast<float>(y + spriteOffsetY + frameTagOffsetY + frameOffsetY),
+                         spriteSizeX * scale,
+                         spriteSizeY * scale};
+
+    /*
     Rectangle destRec = {
         (float)x,            // X position to draw
         (float)y,            // Y position to draw
         spriteSizeX * scale, // Scaled width
         spriteSizeY * scale  // Scaled height
     };
-
+    */
+    /*
     // Adjust the origin point for flipping
     Vector2 origin = {
         (flipX ? (spriteOffsetX + frameTagOffsetX)
@@ -179,9 +187,19 @@ void AsepriteAnimationFile::_drawFrame(const std::string& filenameTagname,
         (flipY ? (spriteOffsetY + frameTagOffsetY)
                : -(spriteOffsetY + frameTagOffsetY)) // Flip point adjusted by offsetFlipY
     };
+    */
+
+    // Normal pivot (top-left or center)
+    Vector2 origin = {0, 0}; // Or use {destRec.width/2, destRec.height/2} if rotating
 
     // Draw the texture with the specified scaling and tint
     DrawTexturePro(texture, sourceRec, destRec, origin, 0.0f, color);
+
+    // Draw the Spriteborder
+    if (Global::debugSpriteBorder)
+    {
+        DrawRectangleLinesEx(destRec, 1.f, YELLOW);
+    }
 }
 
 void AsepriteAnimationFile::drawFrame(const std::string& filenameTagname,

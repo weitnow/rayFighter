@@ -103,8 +103,8 @@ void BaseGameObject::draw()
                 animfilePtr->drawCurrentSelectedTag(getPos().x, getPos().y, scale, BLUE, isFlippedX, isFlippedY);
             }
 
-            // Draw the Spriteborder
-            if (Global::debugSpriteBorder)
+            // Draw the GameObjBorder
+            if (Global::debugGameObjBorder)
             {
                 DrawRectangleLines(getPos().x,
                                    getPos().y,
@@ -446,7 +446,7 @@ void BaseGameObject::addCollisionBoxForFrame(const std::string frameTag,
     {
         // the collision box is valid all frames of the frameTagName
         // get the min and max frame number of the frameTagName
-        FrameTag tag = asepriteManagerPtr->getFrameTag(frameTag);
+        FrameTag& tag = asepriteManagerPtr->getFrameTag(frameTag);
         int NumberOfFrames = tag.to - tag.from;
 
         for (int i = 0; i <= NumberOfFrames; ++i)
