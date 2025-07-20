@@ -125,21 +125,14 @@ public:
     void addCollisionBoxForFrame(const std::string frameTag,
                                  int frameNumber,
                                  CollisionBoxType collisionBoxType,
-                                 HurtboxType hurtboxType,
-                                 bool isActive,
                                  float offsetX,
                                  float offsetY,
                                  float width,
-                                 float height);
+                                 float height,
+                                 HurtboxType hurtboxType = HurtboxType::HIGH,
+                                 bool isActive = true);
 
-    void addCollisionBoxForFrame(const std::string frameTag,
-                                 int frameNumber,
-                                 CollisionBoxType collisionBoxType,
-                                 bool isActive,
-                                 float offsetX,
-                                 float offsetY,
-                                 float width,
-                                 float height);
+
 
     void setGameState(GameState* gameState);
 
@@ -226,7 +219,6 @@ protected:
                                           int offsetY,
                                           int width,
                                           int height,
-                                          float hitboxOwnerWith,
                                           CollisionBoxType collisionBoxType,
                                           HurtboxType hurtboxType,
                                           bool isActive);

@@ -7,7 +7,7 @@
 
 namespace Constants
 {
-const int PLAYER_PIXELSIZE = 32;
+const int DEFAULT_CHARACTER_SIZE = 32;
 
 const int RENDERTARGET_WIDTH = 256;
 const int RENDERTARGET_HEIGHT = 144;
@@ -100,10 +100,6 @@ inline TweenFunc EaseOutBounce = [](float t) {
 
 
 } // namespace Tween
-
-
-
-
 
 
 namespace Global

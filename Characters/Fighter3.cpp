@@ -27,22 +27,22 @@ void Fighter3::init()
 
 
     // [0, 1, 2...] = frameNumber, -1 = valid for all frames of gbFigher (ex. gbFighter-*), -2 = valid for all frames of gbFighter-Action (ex. gbFighter-Idle)
-    addCollisionBoxForFrame("gbFighter-Idle", -1, CollisionBoxType::PUSHBOX, true, 10, 0, 10, 30);
-    addCollisionBoxForFrame("gbFighter-Punch", 1, CollisionBoxType::HITBOX, true, 31, 10, 5, 5);
-    addCollisionBoxForFrame("gbFighter-Kick", 1, CollisionBoxType::HITBOX, true, 26, 10, 5, 5);
-    addCollisionBoxForFrame("gbFighter-DuckKick", 1, CollisionBoxType::HITBOX, true, 26, 26, 5, 5);
-    addCollisionBoxForFrame("gbFighter-DuckPunch", 0, CollisionBoxType::HITBOX, true, 30, 14, 5, 5);
-    addCollisionBoxForFrame("gbFighter-JumpPunch", 0, CollisionBoxType::HITBOX, true, 24, 20, 5, 5);
-    addCollisionBoxForFrame("gbFighter-Idle", -1, CollisionBoxType::HURTBOX, HurtboxType::HIGH, true, 10, 3, 12, 10);
-    addCollisionBoxForFrame("gbFighter-Idle", -1, CollisionBoxType::HURTBOX, HurtboxType::LOW, true, 10, 23, 12, 8);
+    addCollisionBoxForFrame("gbFighter-Idle", -1, CollisionBoxType::PUSHBOX, 10, 0, 10, 30);
+    addCollisionBoxForFrame("gbFighter-Punch", 1, CollisionBoxType::HITBOX, 31, 10, 5, 5);
+    addCollisionBoxForFrame("gbFighter-Kick", 1, CollisionBoxType::HITBOX, 26, 10, 5, 5);
+    addCollisionBoxForFrame("gbFighter-DuckKick", 1, CollisionBoxType::HITBOX, 26, 26, 5, 5);
+    addCollisionBoxForFrame("gbFighter-DuckPunch", 0, CollisionBoxType::HITBOX, 30, 14, 5, 5);
+    addCollisionBoxForFrame("gbFighter-JumpPunch", 0, CollisionBoxType::HITBOX, 24, 20, 5, 5);
+    addCollisionBoxForFrame("gbFighter-Idle", -1, CollisionBoxType::HURTBOX, 10, 3, 12, 10, HurtboxType::HIGH);
+    addCollisionBoxForFrame("gbFighter-Idle", -1, CollisionBoxType::HURTBOX, 10, 23, 12, 8, HurtboxType::LOW);
 
     // [0, 1, 2...] = frameNumber, -1 = valid for all frames of gbFigher (ex. gbFighter-*), -2 = valid for all frames of gbFighter-Action (ex. gbFighter-Idle)
-    addCollisionBoxForFrame("nesFighter-Idle", -1, CollisionBoxType::PUSHBOX, true, 16, 0, 10, 30);
-    addCollisionBoxForFrame("nesFighter-Punch", 0, CollisionBoxType::HITBOX, true, 30, 15, 5, 5);
-    addCollisionBoxForFrame("nesFighter-DuckKick", 0, CollisionBoxType::HITBOX, true, 32, 17, 5, 5);
-    addCollisionBoxForFrame("nesFighter-JumpPunch", 0, CollisionBoxType::HITBOX, true, 28, 19, 5, 5);
-    addCollisionBoxForFrame("nesFighter-Idle", -1, CollisionBoxType::HURTBOX, HurtboxType::HIGH, true, 10, 3, 12, 20);
-    addCollisionBoxForFrame("nesFighter-Idle", -1, CollisionBoxType::HURTBOX, HurtboxType::LOW, true, 10, 13, 12, 10);
+    addCollisionBoxForFrame("nesFighter-Idle", -1, CollisionBoxType::PUSHBOX, 16, 0, 10, 30);
+    addCollisionBoxForFrame("nesFighter-Punch", 0, CollisionBoxType::HITBOX, 30, 15, 5, 5);
+    addCollisionBoxForFrame("nesFighter-DuckKick", 0, CollisionBoxType::HITBOX, 32, 17, 5, 5);
+    addCollisionBoxForFrame("nesFighter-JumpPunch", 0, CollisionBoxType::HITBOX, 28, 19, 5, 5);
+    addCollisionBoxForFrame("nesFighter-Idle", -1, CollisionBoxType::HURTBOX, 10, 3, 12, 20, HurtboxType::HIGH);
+    addCollisionBoxForFrame("nesFighter-Idle", -1, CollisionBoxType::HURTBOX, 10, 13, 12, 10, HurtboxType::LOW);
 
 
 

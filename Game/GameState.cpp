@@ -329,7 +329,7 @@ int GameState::_getScreenPosXofObject(BaseGameObject& object)
 void GameState::_updateMiddlePointBetweenPlayers()
 {
     middlePointXbetweenPlayers = (player1->getPos().x + player2->getPos().x + 32) / 2.f;
-    middlePointYbetweenPlayers = (player1->getPos().y + player2->getPos().y) / 2.f + Constants::PLAYER_PIXELSIZE / 2;
+    middlePointYbetweenPlayers = (player1->getPos().y + player2->getPos().y) / 2.f + Constants::DEFAULT_CHARACTER_SIZE / 2;
 }
 
 void GameState::_updateIsLeftPlayer1and2()
@@ -379,10 +379,10 @@ void GameState::_keepPlayersOnStage()
         // keep player on screen
         player1->setPos(0, player1->getPos().y);
     }
-    else if (player1->getPos().x > Constants::STAGE_WIDTH - Constants::PLAYER_PIXELSIZE)
+    else if (player1->getPos().x > Constants::STAGE_WIDTH - Constants::DEFAULT_CHARACTER_SIZE)
     {
         // keep player on screen
-        player1->setPos(Constants::STAGE_WIDTH - Constants::PLAYER_PIXELSIZE, player1->getPos().y);
+        player1->setPos(Constants::STAGE_WIDTH - Constants::DEFAULT_CHARACTER_SIZE, player1->getPos().y);
     }
 
     // check if the character is out of bounds
@@ -391,10 +391,10 @@ void GameState::_keepPlayersOnStage()
         // keep player on screen
         player2->setPos(0, player2->getPos().y);
     }
-    else if (player2->getPos().x > Constants::STAGE_WIDTH - Constants::PLAYER_PIXELSIZE)
+    else if (player2->getPos().x > Constants::STAGE_WIDTH - Constants::DEFAULT_CHARACTER_SIZE)
     {
         // keep player on screen
-        player2->setPos(Constants::STAGE_WIDTH - Constants::PLAYER_PIXELSIZE, player2->getPos().y);
+        player2->setPos(Constants::STAGE_WIDTH - Constants::DEFAULT_CHARACTER_SIZE, player2->getPos().y);
     }
 }
 

@@ -7,16 +7,15 @@ CollisionBox2D::CollisionBox2D(BaseGameObject* owner,
                                float offsety,
                                float width,
                                float height,
-                               float hitboxOwnerWith,
                                CollisionBoxType collisionBoxType,
                                bool isActive,
                                Color color,
                                HurtboxType hurtboxType)
     : width(width), height(height), color(color), offset{offsetx, offsety}, myRectangle{0, 0, width, height},
       objPos{0, 0}, pos{0, 0}, isActive(isActive), collisionBoxType(collisionBoxType), hurtboxType(hurtboxType),
-      isFlippedX(false), hitboxOwnerWith(hitboxOwnerWith), owner(owner)
+      isFlippedX(false), owner(owner)
 {
-    float flippedX = (hitboxOwnerWith - offsetx - width);
+    float flippedX = (32 - offsetx - width); //Todo: Refactor this, after we have a middlepoint of the gameobj
     offsetFlippedX = {flippedX, offsety};
 }
 

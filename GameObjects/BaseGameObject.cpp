@@ -26,7 +26,8 @@ BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager, float x, float 
 {
     setPos(x, y);
     // set middlepoint according to spriteSize
-    _setMiddlePointOffset({static_cast<float>(getAnimFile()->getSpriteSizeX()) / 2, static_cast<float>(getAnimFile()->getSpriteSizeY()) / 2});
+    _setMiddlePointOffset({static_cast<float>(getAnimFile()->getSpriteSizeX()) / 2,
+                           static_cast<float>(getAnimFile()->getSpriteSizeY()) / 2});
     orginalPos = pos; // save the original position for reseting the object
 }
 
@@ -325,7 +326,8 @@ bool BaseGameObject::setCurrentFrameTag(std::string tag)
     bool animAlreadyPlaying = animfilePtr->setFrameTag(tag);
     currentFrameTag = tag;
     // setMiddlePoint according to spriteSize
-    _setMiddlePointOffset({static_cast<float>(animfilePtr->getSpriteSizeX()) / 2, static_cast<float>(animfilePtr->getSpriteSizeY()) / 2});
+    _setMiddlePointOffset(
+        {static_cast<float>(animfilePtr->getSpriteSizeX()) / 2, static_cast<float>(animfilePtr->getSpriteSizeY()) / 2});
     return animAlreadyPlaying;
 }
 
@@ -425,12 +427,12 @@ bool BaseGameObject::gotHitByProximityBoxThisFrame() const
 void BaseGameObject::addCollisionBoxForFrame(const std::string frameTag,
                                              int frameNumber,
                                              CollisionBoxType collisionBoxType,
-                                             HurtboxType hurtboxType,
-                                             bool isActive,
                                              float offsetX,
                                              float offsetY,
                                              float width,
-                                             float height)
+                                             float height,
+                                             HurtboxType hurtboxType,
+                                             bool isActive)
 {
     std::string frameTagName = frameTag;
 
@@ -457,7 +459,6 @@ void BaseGameObject::addCollisionBoxForFrame(const std::string frameTag,
                                              offsetY,
                                              width,
                                              height,
-                                             tag.sourceSizeX,
                                              collisionBoxType,
                                              hurtboxType,
                                              isActive);
@@ -479,40 +480,9 @@ void BaseGameObject::addCollisionBoxForFrame(const std::string frameTag,
                                      offsetY,
                                      width,
                                      height,
-                                     sourceSizeX,
                                      collisionBoxType,
                                      hurtboxType,
                                      isActive);
-}
-
-void BaseGameObject::addCollisionBoxForFrame(const std::string frameTag,
-                                             int frameNumber,
-                                             CollisionBoxType collisionBoxType,
-                                             bool isActive,
-                                             float offsetX,
-                                             float offsetY,
-                                             float width,
-                                             float height)
-{
-#ifdef DEBUG
-    if (collisionBoxType == CollisionBoxType::HURTBOX)
-    {
-        std::cerr << "BaseGameObject::addCollisionBoxForFrame -> "
-                  << "You have to specify a HurtboxType for a Hurtbox. "
-                  << "Otherwise HurtboxType::BODY assumed" << std::endl;
-    }
-#endif
-
-
-    addCollisionBoxForFrame(frameTag,
-                            frameNumber,
-                            collisionBoxType,
-                            HurtboxType::HIGH,
-                            isActive,
-                            offsetX,
-                            offsetY,
-                            width,
-                            height);
 }
 
 void BaseGameObject::setPushVector(Vector2 pushVector)
@@ -709,7 +679,6 @@ void BaseGameObject::_addCollisionBoxForFrameInternal(std::string frameTagName,
                                                       int offsetY,
                                                       int width,
                                                       int height,
-                                                      float hitboxOwnerWith,
                                                       CollisionBoxType collisionBoxType,
                                                       HurtboxType hurtboxType,
                                                       bool isActive)
@@ -753,7 +722,6 @@ void BaseGameObject::_addCollisionBoxForFrameInternal(std::string frameTagName,
                                      static_cast<float>(offsetY),
                                      static_cast<float>(width),
                                      static_cast<float>(height),
-                                     hitboxOwnerWith,
                                      collisionBoxType,
                                      isActive,
                                      boxColor,

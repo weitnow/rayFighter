@@ -16,10 +16,10 @@ Fireball::Fireball(AsepriteManager* asepriteManagerPtr, float x, float y, bool i
     this->destroyIfHasLeftScreen = true;
 
     // Add collision boxes for the fireball
-    addCollisionBoxForFrame("gbFighter-Shot", -1, CollisionBoxType::HITBOX, true, 10, 14, 10, 8);
+    addCollisionBoxForFrame("gbFighter-Shot", -1, CollisionBoxType::HITBOX, 10, 14, 10, 8);
 
     // Add proximity boxe for the fireball
-    addCollisionBoxForFrame("gbFighter-Shot", -1, CollisionBoxType::PROXIMITYBOX, true, 10, 14, 45, 8);
+    addCollisionBoxForFrame("gbFighter-Shot", -1, CollisionBoxType::PROXIMITYBOX, 10, 14, 45, 8);
     canDealDamage = true; // otherwise hitbox will not register when overlapping with hurtbox
 }
 

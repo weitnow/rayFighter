@@ -27,22 +27,29 @@ void Fighter2::init()
     setObjName("Ken Masters");
 
     // [0, 1, 2...] = frameNumber, -1 = valid for all frames of gbFigher (ex. gbFighter-*), -2 = valid for all frames of gbFighter-Action (ex. gbFighter-Idle)
-    addCollisionBoxForFrame("nesFighter-Idle", -1, CollisionBoxType::PUSHBOX, true, 16, 0, 10, 30);
+    addCollisionBoxForFrame("nesFighter-Idle", -1, CollisionBoxType::PUSHBOX, 16, 0, 10, 30);
 
-    addCollisionBoxForFrame("nesFighter-Punch", -2, CollisionBoxType::PROXIMITYBOX, true, 16, 0, 40, 32);
-    addCollisionBoxForFrame("nesFighter-Punch", 0, CollisionBoxType::HITBOX, true, 30, 15, 5, 5);
+    addCollisionBoxForFrame("nesFighter-Punch", -2, CollisionBoxType::PROXIMITYBOX, 16, 0, 40, 32);
+    addCollisionBoxForFrame("nesFighter-Punch", 0, CollisionBoxType::HITBOX, 30, 15, 5, 5);
 
-    addCollisionBoxForFrame("nesFighter-DuckKick", -2, CollisionBoxType::PROXIMITYBOX, true, 16, 0, 40, 32);
-    addCollisionBoxForFrame("nesFighter-DuckKick", 0, CollisionBoxType::HITBOX, true, 32, 17, 5, 5);
+    addCollisionBoxForFrame("nesFighter-DuckKick", -2, CollisionBoxType::PROXIMITYBOX, 16, 0, 40, 32);
+    addCollisionBoxForFrame("nesFighter-DuckKick", 0, CollisionBoxType::HITBOX, 32, 17, 5, 5);
 
-    addCollisionBoxForFrame("nesFighter-JumpPunch", -2, CollisionBoxType::PROXIMITYBOX, true, 16, 0, 40, 32);
-    addCollisionBoxForFrame("nesFighter-JumpPunch", 0, CollisionBoxType::HITBOX, true, 28, 19, 5, 5);
+    addCollisionBoxForFrame("nesFighter-JumpPunch", -2, CollisionBoxType::PROXIMITYBOX, 16, 0, 40, 32);
+    addCollisionBoxForFrame("nesFighter-JumpPunch", 0, CollisionBoxType::HITBOX, 28, 19, 5, 5);
 
     // x, y, width, height
-    addCollisionBoxForFrame("nesFighter-Idle", -1, CollisionBoxType::HURTBOX, HurtboxType::HIGH, true, 10, 3, 12, 20);
-    addCollisionBoxForFrame("nesFighter-Idle", -1, CollisionBoxType::HURTBOX, HurtboxType::LOW, true, 10, 23, 12, 8);
+    addCollisionBoxForFrame("nesFighter-Idle", -1, CollisionBoxType::HURTBOX, 10, 3, 12, 20, HurtboxType::HIGH);
+    addCollisionBoxForFrame("nesFighter-Idle", -1, CollisionBoxType::HURTBOX, 10, 23, 12, 8, HurtboxType::LOW);
 
-    addCollisionBoxForFrame("nesFighter-Idle", -1, CollisionBoxType::THROWABLEBOX, HurtboxType::HIGH, true, 16, 10, 12, 20);
+    addCollisionBoxForFrame("nesFighter-Idle",
+                            -1,
+                            CollisionBoxType::THROWABLEBOX,
+                            16,
+                            10,
+                            12,
+                            20,
+                            HurtboxType::HIGH);
 
     getStatemachine().changeState("Idle");
 

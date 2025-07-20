@@ -13,7 +13,7 @@ Spear::Spear(AsepriteManager* asepriteManagerPtr, float x, float y, bool isFlipp
     this->destroyIfHasLeftScreen = true;
     this->canDealDamage = true;
     this->setMoveSpeed(80);
-    addCollisionBoxForFrame("gbSpear-Head", -1, CollisionBoxType::THROWBOX, true, 10, 0, 10, 10);
+    addCollisionBoxForFrame("gbSpear-Head", -1, CollisionBoxType::THROWBOX, 10, 0, 10, 10);
 
     if (!isFlippedX)
         movingRight = true;
