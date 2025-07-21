@@ -23,7 +23,8 @@ struct OffSets // used in AsepriteAnimationFile and AsepriteManager
 
 class AsepriteAnimationFile
 {
-    friend class AsepriteManager; // gives AsepriteManager access to private members of AsepriteAnimationFile. Used in createNewAnimFilePtr()
+    friend class
+        AsepriteManager; // gives AsepriteManager access to private members of AsepriteAnimationFile. Used in createNewAnimFilePtr()
 public:
     explicit AsepriteAnimationFile(const std::string& filename,
                                    const std::string& foldername,
@@ -33,8 +34,8 @@ public:
     ~AsepriteAnimationFile();
 
     FrameTag& getFrameTag(const std::string& filenameTagname) const;
-    std::string getAnimFilename() const;
-    std::string getAnimFilenameTagname() const;
+    std::string getFilename() const;
+    std::string getFilenameTagName() const;
     float getDurationCurrentFrame(int frameNumber) const;
     float getDurationCurrentFrame() const;
     int getSpriteSizeX() const;
@@ -63,7 +64,12 @@ public:
                    Color color = WHITE,
                    bool flipX = false,
                    bool flipY = false);
-    void drawCurrentSelectedTag(int x, int y, float scale = 1.0f, Color color = WHITE, bool flipX = false, bool flipY = false) const;
+    void drawCurrentSelectedTag(int x,
+                                int y,
+                                float scale = 1.0f,
+                                Color color = WHITE,
+                                bool flipX = false,
+                                bool flipY = false) const;
     void resetBools();
     void update(float deltaTime);
 
@@ -75,7 +81,7 @@ private:
     AsepriteManager* asepriteManager; // reference to the asepriteManager
     Texture texture;
     std::string current_filenameTagname;
-    int current_frame; // current frame of the animation
+    int current_frame_number; // current frame of the animation
     int min_frame;
     int max_frame;
     int spriteSizeX;
@@ -103,13 +109,17 @@ private:
     // -----------------------------------------------------------------------
 
     void nextFrame();
+
     void _drawFrame(const std::string& filenameTagname,
+                    int frameNumber,
+                    int sourceSpriteSizeX,
+                    int sourceSpriteSizeY,
                     int x,
                     int y,
-                    float scale = 1.0f,
-                    Color color = WHITE,
-                    bool flipX = false,
-                    bool flipY = false) const;
+                    float scale,
+                    Color color,
+                    bool flipX,
+                    bool flipY) const;
 };
 
 /* #endregion */

@@ -15,5 +15,7 @@ void Debug32Rectangle::init()
 }
 void Debug32Rectangle::draw()
 {
-    getAnimFile()->drawFrame("debug32", 100, 100);
+    auto myAnimFile = getAnimFile();
+    myAnimFile->drawFrame("debug32", 100, 100);
+    //myAnimFile->_drawFrame("debug32", 100, 100);
 }

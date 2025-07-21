@@ -193,7 +193,7 @@ void CharSelectState::HandleInput()
 void CharSelectState::DrawSelectionScreen(int selectedIndex, int playerNumber)
 {
     // Draw
-    DrawRectangleLinesEx(characters[selectedIndex].rect, 1.0f, Constants::RAYFIGHTER_WHITE);
+    DrawRectangleLinesEx(characters[selectedIndex].rect,        1.0f, Constants::RAYFIGHTER_WHITE);
 
     if (playerNumber == 1)
     {

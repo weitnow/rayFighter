@@ -11,7 +11,7 @@ AsepriteAnimationFile::AsepriteAnimationFile(const std::string& filename,
     this->filename = filename;
     this->texture = texture;
     current_filenameTagname = "none";
-    current_frame = 0;
+    current_frame_number = 0;
     min_frame = 0;
     max_frame = 0;
     spriteSizeX = 0;
@@ -41,26 +41,26 @@ FrameTag& AsepriteAnimationFile::getFrameTag(const std::string& filenameTagname)
     return this->asepriteManager->getFrameTag(filenameTagname);
 }
 
-std::string AsepriteAnimationFile::getAnimFilename() const
+std::string AsepriteAnimationFile::getFilename() const
 {
     return this->filename;
 }
 
-std::string AsepriteAnimationFile::getAnimFilenameTagname() const
+std::string AsepriteAnimationFile::getFilenameTagName() const
 {
     return this->current_filenameTagname;
 }
 
 float AsepriteAnimationFile::getDurationCurrentFrame(int frameNumber) const
 {
-    int duration = this->asepriteManager->getFrameTag(current_filenameTagname).frameNumberDuration[this->current_frame];
+    int duration = this->asepriteManager->getFrameTag(current_filenameTagname).frameNumberDuration[this->current_frame_number];
     // 100 = 0.1 seconds
     return duration / 1000.0f;
 }
 
 float AsepriteAnimationFile::getDurationCurrentFrame() const
 {
-    return getDurationCurrentFrame(current_frame);
+    return getDurationCurrentFrame(current_frame_number);
 }
 
 int AsepriteAnimationFile::getSpriteSizeX() const
@@ -85,7 +85,7 @@ bool AsepriteAnimationFile::hasAnimFinishedPlusLastFrameDuration() const
 
 int AsepriteAnimationFile::getCurrentFrame() const
 {
-    return current_frame;
+    return current_frame_number;
 }
 
 int AsepriteAnimationFile::getMinFrame() const
@@ -100,7 +100,7 @@ int AsepriteAnimationFile::getMaxFrame() const
 
 void AsepriteAnimationFile::setCurrentFrameToMinFrame()
 {
-    current_frame = min_frame;
+    current_frame_number = min_frame;
 }
 void AsepriteAnimationFile::setSpriteOffset(const std::string& AnimFileName, int x, int y)
 {
@@ -133,7 +133,7 @@ OffSets AsepriteAnimationFile::getFrameOffset()
     auto tagIt = frameOffsets.find(current_filenameTagname);
     if (tagIt != frameOffsets.end())
     {
-        auto frameIt = tagIt->second.find(current_frame);
+        auto frameIt = tagIt->second.find(current_frame_number);
         if (frameIt != tagIt->second.end())
         {
             return frameIt->second;
@@ -148,6 +148,9 @@ bool AsepriteAnimationFile::getLoop() const
 }
 
 void AsepriteAnimationFile::_drawFrame(const std::string& filenameTagname,
+                                       int frameNumber,
+                                       int sourceSpriteSizeX,
+                                       int sourceSpriteSizeY,
                                        int x,
                                        int y,
                                        float scale,
@@ -158,39 +161,20 @@ void AsepriteAnimationFile::_drawFrame(const std::string& filenameTagname,
 
     // Determine source rectangle (which part of the texture to draw)
     Rectangle sourceRec = {
-        (float)current_frame * spriteSizeX,   // X position of the frame
+        (float)frameNumber * sourceSpriteSizeX,   // X position of the frame
         0,                                    // Y position (top of the texture)
-        (flipX ? -1.0f : 1.0f) * spriteSizeX, // Flip horizontally if flipX is true
-        (flipY ? -1.0f : 1.0f) * spriteSizeY  // Flip vertically if flipY is true
+        (flipX ? -1.0f : 1.0f) * sourceSpriteSizeX, // Flip horizontally if flipX is true
+        (flipY ? -1.0f : 1.0f) * sourceSpriteSizeY  // Flip vertically if flipY is true
     };
 
     // Determine destination rectangle (where to draw the texture on screen)
     // Position + offset
     Rectangle destRec = {static_cast<float>(x + spriteOffsetX + frameTagOffsetX + frameOffsetX),
                          static_cast<float>(y + spriteOffsetY + frameTagOffsetY + frameOffsetY),
-                         spriteSizeX * scale,
-                         spriteSizeY * scale};
+                         sourceSpriteSizeX * scale,
+                         sourceSpriteSizeY * scale};
 
-    /*
-    Rectangle destRec = {
-        (float)x,            // X position to draw
-        (float)y,            // Y position to draw
-        spriteSizeX * scale, // Scaled width
-        spriteSizeY * scale  // Scaled height
-    };
-    */
-    /*
-    // Adjust the origin point for flipping
-    Vector2 origin = {
-        (flipX ? (spriteOffsetX + frameTagOffsetX)
-               : -(spriteOffsetX + frameTagOffsetX)), // Flip point adjusted by offsetFlipX
-        (flipY ? (spriteOffsetY + frameTagOffsetY)
-               : -(spriteOffsetY + frameTagOffsetY)) // Flip point adjusted by offsetFlipY
-    };
-    */
-
-    // Normal pivot (top-left or center)
-    Vector2 origin = {0, 0}; // Or use {destRec.width/2, destRec.height/2} if rotating
+    Vector2 origin = {0, 0};
 
     // Draw the texture with the specified scaling and tint
     DrawTexturePro(texture, sourceRec, destRec, origin, 0.0f, color);
@@ -210,35 +194,19 @@ void AsepriteAnimationFile::drawFrame(const std::string& filenameTagname,
                                       bool flipX,
                                       bool flipY)
 {
+
     int sizeX = this->asepriteManager->getFrameTag(filenameTagname).sourceSizeX; // width of the frame
     int sizeY = this->asepriteManager->getFrameTag(filenameTagname).sourceSizeY; // height of the frame
     int frameNumber = this->asepriteManager->getFrameTag(filenameTagname).from;
 
-    // Determine source rectangle (which part of the texture to draw)
-    Rectangle sourceRec = {
-        (float)frameNumber * sizeX,     // X position of the frame
-        0,                              // Y position (top of the texture)
-        (flipX ? -1.0f : 1.0f) * sizeX, // Flip horizontally if flipX is true
-        (flipY ? -1.0f : 1.0f) * sizeY  // Flip vertically if flipY is true
-    };
+    _drawFrame(filenameTagname, frameNumber, sizeX, sizeY, x, y, scale, color, flipX, flipY);
 
-    // Determine destination rectangle (where to draw the texture on screen)
-    Rectangle destRec = {
-        (float)x,      // X position to draw
-        (float)y,      // Y position to draw
-        sizeX * scale, // Scaled width
-        sizeY * scale  // Scaled height
-    };
-
-    // Draw the texture with the specified scaling and tint
-    DrawTexturePro(texture, sourceRec, destRec, Vector2{0, 0}, 0.0f, color);
 }
 
 void AsepriteAnimationFile::drawCurrentSelectedTag(int x, int y, float scale, Color color, bool flipX, bool flipY) const
 
 {
-
-    _drawFrame(current_filenameTagname, x, y, scale, color, flipX, flipY);
+    _drawFrame(current_filenameTagname, current_frame_number, spriteSizeX, spriteSizeY, x, y, scale, color, flipX, flipY);
 }
 
 void AsepriteAnimationFile::update(float deltaTime)
@@ -283,30 +251,30 @@ void AsepriteAnimationFile::nextFrame()
     {
         if (!animJustFinishedPlusLastFrameDurationCounterSet)
         {
-            animJustFinishedPlusLastFrameDurationCounter = getDurationCurrentFrame(current_frame) - 0.1f;
+            animJustFinishedPlusLastFrameDurationCounter = getDurationCurrentFrame(current_frame_number) - 0.1f;
             animJustFinishedPlusLastFrameDurationCounterSet = true;
         }
     }
     // if the animation has more than one frame check if the current frame is not the last frame
-    else if (current_frame < max_frame)
+    else if (current_frame_number < max_frame)
     {
         animJustFinished = false;
-        current_frame++;
+        current_frame_number++;
     }
     // if it is the last frame, check if the animation should loop
     else
     {
         // if the animation should loop, go back to the first frame
         if (loop)
-            current_frame = min_frame;
+            current_frame_number = min_frame;
 
         animJustFinished = true;
-        animJustFinishedPlusLastFrameDurationCounter = getDurationCurrentFrame(current_frame) - 0.1f;
+        animJustFinishedPlusLastFrameDurationCounter = getDurationCurrentFrame(current_frame_number) - 0.1f;
     }
 
     // update current_duration and spritesize
     // get the duration of the current frame
-    current_duration = getDurationCurrentFrame(current_frame);
+    current_duration = getDurationCurrentFrame(current_frame_number);
     // get the sprite size of the current frame
     spriteSizeX = this->asepriteManager->getFrameTag(current_filenameTagname).sourceSizeX;
     spriteSizeY = this->asepriteManager->getFrameTag(current_filenameTagname).sourceSizeY;
@@ -351,7 +319,7 @@ bool AsepriteAnimationFile::setFrameTag(const std::string& filenameTagname)
     frameTagOffsetY = getFrameTagOffset().y;
     frameOffsetX = getFrameOffset().x;
     frameOffsetY = getFrameOffset().y;
-    current_duration = getDurationCurrentFrame(current_frame);
+    current_duration = getDurationCurrentFrame(current_frame_number);
 
     if (this->filename != current_FrameTag.texturename)
     {
@@ -359,7 +327,7 @@ bool AsepriteAnimationFile::setFrameTag(const std::string& filenameTagname)
         this->filename = current_FrameTag.texturename;
     }
 
-    current_frame = min_frame;
+    current_frame_number = min_frame;
 
     return true;
 }
