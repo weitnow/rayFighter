@@ -2,6 +2,7 @@
 #include "../Characters/Fighter1.h"
 #include "../Characters/Fighter2.h"
 #include "../Characters/Fighter3.h"
+#include "../GameObjects/Items/Debug32Rectangle.h"
 #include "../Constants.h"
 #include "../Systems/CollisionDetection.h"
 #include "../Utils/HelperFunctions.h"
@@ -18,6 +19,9 @@ GameState::GameState(Game* game) : BaseState(game)
 
     //player2 = createPlayer(game->player2, 2); //Todo: replace by this code
     player2 = createPlayer(2, 2);
+
+    //create debug32-obj
+    addGameObject(std::make_unique<Debug32Rectangle>(asepriteManager, 190, 97), -1);
 
     // Set the opponent for each player
     player1->getStatemachine().setOpponent(player2);

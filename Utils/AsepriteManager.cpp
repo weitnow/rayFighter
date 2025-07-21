@@ -234,12 +234,6 @@ void AsepriteAnimationFile::drawFrame(const std::string& filenameTagname,
     DrawTexturePro(texture, sourceRec, destRec, Vector2{0, 0}, 0.0f, color);
 }
 
-
-void AsepriteAnimationFile::drawCurrentSelectedTag(int x, int y, float scale, Color color) const
-{
-    _drawFrame(current_filenameTagname, x, y, scale, color, false, false);
-}
-
 void AsepriteAnimationFile::drawCurrentSelectedTag(int x, int y, float scale, Color color, bool flipX, bool flipY) const
 
 {
@@ -439,6 +433,8 @@ void AsepriteManager::init()
     loadAnimFile("bg16SpriteCollection");
 
     loadAnimFile("gbSpear");
+
+    loadAnimFile("debug32");
 }
 
 nlohmann::json* AsepriteManager::loadJsonFile(const std::string& filename)

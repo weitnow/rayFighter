@@ -63,8 +63,7 @@ public:
                    Color color = WHITE,
                    bool flipX = false,
                    bool flipY = false);
-    void drawCurrentSelectedTag(int x, int y, float scale = 1.0f, Color color = WHITE) const;
-    void drawCurrentSelectedTag(int x, int y, float scale, Color color, bool flipX, bool flipY) const;
+    void drawCurrentSelectedTag(int x, int y, float scale = 1.0f, Color color = WHITE, bool flipX = false, bool flipY = false) const;
     void resetBools();
     void update(float deltaTime);
 

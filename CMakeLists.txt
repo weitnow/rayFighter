@@ -38,6 +38,8 @@ add_executable(${PROJECT_NAME} ${CXX_SOURCES}
         GameObjects/Specialmoves/Abstractclasses/Spear.h
         GameObjects/BaseAsepriteObject.cpp
         GameObjects/BaseAsepriteObject.h
+        GameObjects/Items/Debug32Rectangle.cpp
+        GameObjects/Items/Debug32Rectangle.h
 )
 
 # Include directories
