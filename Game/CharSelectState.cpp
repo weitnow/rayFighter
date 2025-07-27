@@ -8,8 +8,8 @@ CharSelectState::CharSelectState(Game* game)
     : BaseState(game), CharSelectScreen(nullptr), selectedCharacterP1{0}, activeCharacterP1{0}, selectedCharacterP2{3},
       activeCharacterP2{3}
 {
-    CharSelectScreen = game->asepriteManager->createNewAnimFilePtr("charSelectScreen");
-    CharSelectScreen->setFrameTag("charSelectScreen-Idle");
+    CharSelectScreen = game->asepriteManager->createNewAnimFilePtr("charSelectScreen-Idle");
+    //CharSelectScreen->setFrameTag("charSelectScreen-Idle");
 
     playerTag = game->asepriteManager->createNewAnimFilePtr("playerTags");
 }

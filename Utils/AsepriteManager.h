@@ -27,7 +27,6 @@ class AsepriteAnimationFile
         AsepriteManager; // gives AsepriteManager access to private members of AsepriteAnimationFile. Used in createNewAnimFilePtr()
 public:
     explicit AsepriteAnimationFile(const std::string& filename,
-                                   const std::string& foldername,
                                    Texture& texture,
                                    AsepriteManager& asepriteManager);
 
@@ -138,7 +137,7 @@ public:
 
     FrameTag& getFrameTag(const std::string& filenameTagname);
 
-    AsepriteAnimationFile* createNewAnimFilePtr(const std::string& filename);
+    AsepriteAnimationFile* createNewAnimFilePtr(const std::string& initialFrameTag);
 
     Texture getTexture(const std::string& textureName);
 

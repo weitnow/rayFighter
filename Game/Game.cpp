@@ -29,7 +29,7 @@ Game::Game() : quit(false)
     deltaTime = GetFrameTime(); // will be feed in the update method of the different game states
 
     screen2DManager->loadScreenGenericEffects(
-        "screenEffects"); // load the screenEffects animation file, the screenManager will unload it in the destructor
+        "screenEffects-Leafs"); // load the screenEffects animation file, the screenManager will unload it in the destructor
 
     HideCursor(); // Raylibfunction to hide the Mousecursor
 }

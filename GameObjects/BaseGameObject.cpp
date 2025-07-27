@@ -18,7 +18,7 @@ BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager, float x, float 
     }
 
     this->asepriteManagerPtr = asepriteManager;
-    this->animfilePtr = this->asepriteManagerPtr->createNewAnimFilePtr("nesFighter");
+    this->animfilePtr = this->asepriteManagerPtr->createNewAnimFilePtr("nesFighter-Idle");
 
     this->currentFrameTag = "nesFighter-Idle";
     this->animfilePtr->setFrameTag(this->currentFrameTag);

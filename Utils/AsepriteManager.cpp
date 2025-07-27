@@ -3,7 +3,6 @@
 
 /* #region ---AsepriteAnimationFile Class */
 AsepriteAnimationFile::AsepriteAnimationFile(const std::string& filename,
-                                             const std::string& foldername,
                                              Texture& texture,
                                              AsepriteManager& asepriteManager)
 {
@@ -539,20 +538,40 @@ FrameTag& AsepriteManager::getFrameTag(const std::string& filenameTagname)
     return frameTags.at(filenameTagname); // std::out_of_range will be thrown if key is missing
 }
 
-AsepriteAnimationFile* AsepriteManager::createNewAnimFilePtr(const std::string& filename)
+AsepriteAnimationFile* AsepriteManager::createNewAnimFilePtr(const std::string& initialFrameTag)
 {
-    auto it = this->textures.find(filename);
-    if (it == this->textures.end())
-    {
-        throw std::runtime_error("Texture not found: " + filename);
+    const FrameTag* frameTagPtr = nullptr;
+    std::string textureName;
+
+    // Step 1: Check if frameTag exists
+    auto frameTagIt = this->frameTags.find(initialFrameTag);
+    if (frameTagIt != this->frameTags.end()) {
+        frameTagPtr = &frameTagIt->second;
+        textureName = frameTagPtr->texturename;
+    } else {
+        // Step 2: If no frameTag, check if texture with that name exists
+        if (this->textures.find(initialFrameTag) != this->textures.end()) {
+            textureName = initialFrameTag;
+        } else {
+            // Step 3: Neither frameTag nor texture found
+            throw std::runtime_error("Neither FrameTag nor Texture found for: " + initialFrameTag);
+        }
     }
-    auto NewAnimFilePtr = new AsepriteAnimationFile(filename, this->foldername, this->textures[filename], (*this));
 
-    NewAnimFilePtr->spriteOffsets = this->spriteOffsets;     // ← deep copy (new internal map)
-    NewAnimFilePtr->frameTagOffsets = this->frameTagOffsets; // ← deep copy (new internal map)
-    NewAnimFilePtr->frameOffsets = this->frameOffsets;       // ← deep copy (new internal map)
+    // Step 4: Create animation file
+    auto* newAnimFile = new AsepriteAnimationFile(textureName, this->textures[textureName], (*this));
 
-    return NewAnimFilePtr;
+    // Optional: only set frameTag name if an actual FrameTag was found
+    if (frameTagPtr != nullptr) {
+        newAnimFile->setFrameTag(initialFrameTag);
+    }
+
+    // Deep copy maps
+    newAnimFile->spriteOffsets     = this->spriteOffsets;
+    newAnimFile->frameTagOffsets   = this->frameTagOffsets;
+    newAnimFile->frameOffsets      = this->frameOffsets;
+
+    return newAnimFile;
 }
 
 Texture AsepriteManager::getTexture(const std::string& textureName)

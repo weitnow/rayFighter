@@ -7,12 +7,10 @@ Gui::Gui(Game* game)
 
 
     //Load the bgUpperGui animation
-    bgUpperGui = game->asepriteManager->createNewAnimFilePtr("bgUpperGui");
-    bgUpperGui->setFrameTag("bgUpperGui-Idle");
+    bgUpperGui = game->asepriteManager->createNewAnimFilePtr("bgUpperGui-Idle");
 
     //Load the bgLowerGui animation
-    bgLowerGui = game->asepriteManager->createNewAnimFilePtr("bgLowerGui");
-    bgLowerGui->setFrameTag("bgLowerGui-Idle");
+    bgLowerGui = game->asepriteManager->createNewAnimFilePtr("bgLowerGui-Idle");
 
     //Load the winningPoint graphics
     winningPoint = game->asepriteManager->createNewAnimFilePtr("bg16SpriteCollection");
