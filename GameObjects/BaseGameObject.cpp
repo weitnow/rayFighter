@@ -3,7 +3,7 @@
 #include "../Game/GameState.h"
 #include <assert.h>
 
-BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager)
+BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager, float x, float y)
     : ObjName(""), pushVector({0, 0}), scale(1.f), pos{0.f, 0.f}, color(WHITE), isFlippedX(false), isFlippedY(false),
       isActive(true), isAlive(true), shouldDestroy(false), isInvincible(false), maxLife(1), currentLife(maxLife),
       _invincibleCounter(0.f), invincibleTime(Constants::INVINCIBLE_TIME), affectedByGravity(false), moveVector({0, 0}),
@@ -16,20 +16,24 @@ BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager)
         std::cerr << "Error: BaseGameObject received null AsepriteManager!" << std::endl;
         return;
     }
+
     this->asepriteManagerPtr = asepriteManager;
     this->animfilePtr = this->asepriteManagerPtr->createNewAnimFilePtr("nesFighter");
+
     this->currentFrameTag = "nesFighter-Idle";
     this->animfilePtr->setFrameTag(this->currentFrameTag);
-}
 
-BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager, float x, float y) : BaseGameObject(asepriteManager)
-{
     setPos(x, y);
+
     // set middlepoint according to spriteSize
-    _setMiddlePointOffset({static_cast<float>(getAnimFile()->getSpriteSizeX()) / 2,
-                           static_cast<float>(getAnimFile()->getSpriteSizeY()) / 2});
+    _setMiddlePointOffset({
+        static_cast<float>(getAnimFile()->getSpriteSizeX()) / 2.f,
+        static_cast<float>(getAnimFile()->getSpriteSizeY()) / 2.f
+    });
+
     orginalPos = pos; // save the original position for reseting the object
 }
+
 
 BaseGameObject::~BaseGameObject()
 {

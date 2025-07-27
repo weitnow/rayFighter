@@ -19,7 +19,6 @@ using CollisionMap = unordered_map<std::string, vector<CollisionBox2D>>;
 class BaseGameObject
 {
 public:
-    BaseGameObject(AsepriteManager* asepriteManager);
     BaseGameObject(AsepriteManager* asepriteManager, float x, float y);
     virtual ~BaseGameObject();
 
