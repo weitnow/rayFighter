@@ -5,7 +5,6 @@ Gui::Gui(Game* game)
     : game(game), timer(99), winningPoint1(0), winningPoint2(0), power1(0), power2(0), state(nullptr), initDone(false)
 {
 
-
     //Load the bgUpperGui animation
     bgUpperGui = game->asepriteManager->createNewAnimFilePtr("bgUpperGui-Idle");
 
@@ -21,7 +20,6 @@ Gui::Gui(Game* game)
 Gui::~Gui()
 {
     // Clean up resources if necessary
-
     if (initDone)
     {
         delete lifebar1;
