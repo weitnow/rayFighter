@@ -24,7 +24,6 @@ void Fighter1::init()
 
     getStatemachine().init(customStateMap);
 
-    setCurrentFrameTag("gbFighter-Idle"); // using gbFighter-Graphics
     setObjName("Andy Hug");
 
     // [0, 1, 2...] = frameNumber, -1 = valid for all frames of gbFigher (ex. gbFighter-*), -2 = valid for all frames of gbFighter-Action (ex. gbFighter-Idle)

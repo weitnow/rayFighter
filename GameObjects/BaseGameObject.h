@@ -19,7 +19,7 @@ using CollisionMap = unordered_map<std::string, vector<CollisionBox2D>>;
 class BaseGameObject
 {
 public:
-    BaseGameObject(AsepriteManager* asepriteManager, float x, float y, const std::string& initialFrameTag = "debug32");
+    BaseGameObject(AsepriteManager* asepriteManager, float x, float y, const std::string& initialFrameTag);
     virtual ~BaseGameObject();
 
     virtual void init();

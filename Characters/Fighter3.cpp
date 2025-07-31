@@ -22,7 +22,7 @@ void Fighter3::init()
 
     getStatemachine().init(customStateMap);
 
-    setCurrentFrameTag("gbFighter-Idle"); // using nesFighter-Graphics
+
     setObjName("Shang Tsung");
 
 

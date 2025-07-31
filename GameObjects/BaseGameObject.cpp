@@ -20,8 +20,7 @@ BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager, float x, float 
     this->asepriteManagerPtr = asepriteManager;
     this->animfilePtr = this->asepriteManagerPtr->createNewAnimFilePtr(initialFrameTag);
 
-    this->currentFrameTag = "";
-    // this->animfilePtr->setFrameTag(this->currentFrameTag); // todo: refactor this
+    this->currentFrameTag = initialFrameTag;
 
     setPos(x, y);
 

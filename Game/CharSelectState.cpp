@@ -46,7 +46,7 @@ void CharSelectState::Enter()
     //screen2DManager->slideEffect(7.0f, 0);
 
     // Init of Charactersprites as GameObjects
-    p1 = std::make_unique<BaseGameObject>(asepriteManager, p1posX, 68);
+    p1 = std::make_unique<BaseGameObject>(asepriteManager, p1posX, 68, getFrameTagStrOf(1, "Idle"));
     p1->setIsFlippedX(false);
     p1->setCurrentFrameTag(getFrameTagStrOf(1, "Idle")); // playernumber and action
     p1->setDrawShadow(true);
@@ -57,7 +57,7 @@ void CharSelectState::Enter()
     p1status = {true, false, false, false}; // onOrgPos, outsideScreen, movingIn, movingOut
 
 
-    p2 = std::make_unique<BaseGameObject>(asepriteManager, 170, 68);
+    p2 = std::make_unique<BaseGameObject>(asepriteManager, 170, 68, getFrameTagStrOf(2, "Idle"));
     p2->setIsFlippedX(true);
     p2->setCurrentFrameTag(getFrameTagStrOf(2, "Idle")); // playernumber and action
     p2->setDrawShadow(true);

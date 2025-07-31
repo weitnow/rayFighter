@@ -1,6 +1,6 @@
 #include "Barrel.h"
 
-Barrel::Barrel(AsepriteManager* asepriteManager, float x, float y) : BaseGameObject(asepriteManager, x, y)
+Barrel::Barrel(AsepriteManager* asepriteManager, float x, float y) : BaseGameObject(asepriteManager, x, y, "barrel-Idle")
 {
 }
 

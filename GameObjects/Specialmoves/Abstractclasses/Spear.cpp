@@ -6,10 +6,9 @@
 
 
 Spear::Spear(AsepriteManager* asepriteManagerPtr, float x, float y, bool isFlippedX)
-    : BaseGameObject(asepriteManagerPtr, x, y)
+    : BaseGameObject(asepriteManagerPtr, x, y, "gbSpear-Head")
 {
     this->setObjName("Spear");
-    this->setCurrentFrameTag("gbSpear-Head");
     this->destroyIfHasLeftScreen = true;
     this->canDealDamage = true;
     this->setMoveSpeed(80);

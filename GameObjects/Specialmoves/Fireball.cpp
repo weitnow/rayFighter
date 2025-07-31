@@ -5,10 +5,9 @@
 
 
 Fireball::Fireball(AsepriteManager* asepriteManagerPtr, float x, float y, bool isFlippedX)
-    : BaseGameObject(asepriteManagerPtr, x, y)
+    : BaseGameObject(asepriteManagerPtr, x, y, "gbFighter-Shot")
 {
     this->setObjName("Shot");
-    this->setCurrentFrameTag("gbFighter-Shot");
     this->setIsFlippedX(isFlippedX);
     this->setMaxLife(1); // Fireball is destroyed after one hit
     this->setAffectedByGravity(false);
