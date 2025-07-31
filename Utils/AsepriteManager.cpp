@@ -543,25 +543,21 @@ AsepriteAnimationFile* AsepriteManager::createNewAnimFilePtr(const std::string& 
     const FrameTag* frameTagPtr = nullptr;
     std::string textureName;
 
-    // Step 1: Check if frameTag exists
+    // Check if frameTag exists
     auto frameTagIt = this->frameTags.find(initialFrameTag);
     if (frameTagIt != this->frameTags.end()) {
         frameTagPtr = &frameTagIt->second;
         textureName = frameTagPtr->texturename;
-    } else {
-        // Step 2: If no frameTag, check if texture with that name exists
-        if (this->textures.find(initialFrameTag) != this->textures.end()) {
-            textureName = initialFrameTag;
-        } else {
-            // Step 3: Neither frameTag nor texture found
-            throw std::runtime_error("Neither FrameTag nor Texture found for: " + initialFrameTag);
-        }
+    } else
+    {
+        //throw std::runtime_error("No FrameTag found with Name: " + initialFrameTag);
     }
 
-    // Step 4: Create animation file
+
+    //Create animation file
     auto* newAnimFile = new AsepriteAnimationFile(textureName, this->textures[textureName], (*this));
 
-    // Optional: only set frameTag name if an actual FrameTag was found
+    // only set frameTag name if an actual FrameTag was found
     if (frameTagPtr != nullptr) {
         newAnimFile->setFrameTag(initialFrameTag);
     }

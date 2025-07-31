@@ -14,7 +14,7 @@ class Statemachine;
 class BaseCharacter : public BaseGameObject
 {
 public:
-    BaseCharacter(AsepriteManager* asepriteManager, float x, float y);
+    BaseCharacter(AsepriteManager* asepriteManager, float x, float y, const std::string& initialFrameTag);
     virtual ~BaseCharacter();
     virtual void init() override;
     virtual void update(float deltaTime) override;

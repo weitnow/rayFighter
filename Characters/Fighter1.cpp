@@ -3,7 +3,7 @@
 #include "Statemachine/Statemachine.h"
 
 
-Fighter1::Fighter1(AsepriteManager* asepriteManager, float x, float y) : BaseCharacter(asepriteManager, x, y)
+Fighter1::Fighter1(AsepriteManager* asepriteManager, float x, float y) : BaseCharacter(asepriteManager, x, y, "gbFighter-Idle")
 {
 }
 

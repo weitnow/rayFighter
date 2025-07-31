@@ -3,8 +3,8 @@
 #include "../Utils/Input/CharacterController.h"
 #include "Statemachine/Statemachine.h"
 
-BaseCharacter::BaseCharacter(AsepriteManager* asepriteManager, float x, float y)
-    : BaseGameObject(asepriteManager, x, y), isOnGround(false), animFileName("gbFighter"), isLeft(true),
+BaseCharacter::BaseCharacter(AsepriteManager* asepriteManager, float x, float y, const std::string& initialFrameTag)
+    : BaseGameObject(asepriteManager, x, y, initialFrameTag), isOnGround(false), animFileName("gbFighter"), isLeft(true),
       playerNumber(-1), statemachine(nullptr), currentState("Idle"), controller(nullptr), powerLevel(0),
       maxPowerLevel(0)
 {

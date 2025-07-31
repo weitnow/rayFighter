@@ -3,7 +3,7 @@
 #include "../Game/GameState.h"
 #include <assert.h>
 
-BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager, float x, float y)
+BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager, float x, float y, const std::string& initialFrameTag)
     : ObjName(""), pushVector({0, 0}), scale(1.f), pos{0.f, 0.f}, color(WHITE), isFlippedX(false), isFlippedY(false),
       isActive(true), isAlive(true), shouldDestroy(false), isInvincible(false), maxLife(1), currentLife(maxLife),
       _invincibleCounter(0.f), invincibleTime(Constants::INVINCIBLE_TIME), affectedByGravity(false), moveVector({0, 0}),
@@ -18,10 +18,10 @@ BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager, float x, float 
     }
 
     this->asepriteManagerPtr = asepriteManager;
-    this->animfilePtr = this->asepriteManagerPtr->createNewAnimFilePtr("nesFighter-Idle");
+    this->animfilePtr = this->asepriteManagerPtr->createNewAnimFilePtr(initialFrameTag);
 
-    this->currentFrameTag = "nesFighter-Idle";
-    this->animfilePtr->setFrameTag(this->currentFrameTag);
+    this->currentFrameTag = "";
+    // this->animfilePtr->setFrameTag(this->currentFrameTag); // todo: refactor this
 
     setPos(x, y);
 

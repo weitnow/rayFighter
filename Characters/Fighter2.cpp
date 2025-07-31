@@ -3,7 +3,7 @@
 #include "Statemachine/Statemachine.h"
 
 
-Fighter2::Fighter2(AsepriteManager* asepriteManager, float x, float y) : BaseCharacter(asepriteManager, x, y)
+Fighter2::Fighter2(AsepriteManager* asepriteManager, float x, float y) : BaseCharacter(asepriteManager, x, y, "nesFighter-Idle")
 {
 }
 
