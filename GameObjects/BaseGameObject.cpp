@@ -7,7 +7,7 @@ BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager, float x, float 
     : ObjName(""), pushVector({0, 0}), scale(1.f), pos{0.f, 0.f}, color(WHITE), isFlippedX(false), isFlippedY(false),
       isActive(true), isAlive(true), shouldDestroy(false), isInvincible(false), maxLife(1), currentLife(maxLife),
       _invincibleCounter(0.f), invincibleTime(Constants::INVINCIBLE_TIME), affectedByGravity(false), moveVector({0, 0}),
-      getDurationCurrentFrame(0), currentFrame(0), minFrame(0), maxFrame(0), hasAnimFinished(false),
+      getDurationCurrentFrame(0), currentFrame(0), minFrame(0), maxFrame(0), hasAnimFinished(false), animFileName(""),
       currentFrameTag(""), currentFrameAbsolut(0), drawShadow(false), gameState(nullptr), canDealDamage(false),
       canInteract(true)
 {
@@ -21,6 +21,11 @@ BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager, float x, float 
     this->animfilePtr = this->asepriteManagerPtr->createNewAnimFilePtr(initialFrameTag);
 
     this->currentFrameTag = initialFrameTag;
+
+    // set animFilename to the first part of the tag for example "gbFighter-Idle" -> "gbFighter"
+    // this is needed to set the correct animation when changing states by calling changeState() in BaseCharacter()
+    this->animFileName = initialFrameTag.substr(0, initialFrameTag.find("-"));
+
 
     setPos(x, y);
 
@@ -328,6 +333,11 @@ bool BaseGameObject::setCurrentFrameTag(std::string tag)
     // if the tag doesnt exist a runtime-error will be thrown
     bool animAlreadyPlaying = animfilePtr->setFrameTag(tag);
     currentFrameTag = tag;
+
+    // set animFilename to the first part of the tag for example "gbFighter-Idle" -> "gbFighter"
+    animFileName = tag.substr(0, tag.find("-"));
+    // this is needed to set the correct animation when changing states by calling changeState()
+
     // setMiddlePoint according to spriteSize
     _setMiddlePointOffset(
         {static_cast<float>(animfilePtr->getSpriteSizeX()) / 2, static_cast<float>(animfilePtr->getSpriteSizeY()) / 2});

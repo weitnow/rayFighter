@@ -4,7 +4,7 @@
 #include "Statemachine/Statemachine.h"
 
 BaseCharacter::BaseCharacter(AsepriteManager* asepriteManager, float x, float y, const std::string& initialFrameTag)
-    : BaseGameObject(asepriteManager, x, y, initialFrameTag), isOnGround(false), animFileName("gbFighter"), isLeft(true),
+    : BaseGameObject(asepriteManager, x, y, initialFrameTag), isOnGround(false), isLeft(true),
       playerNumber(-1), statemachine(nullptr), currentState("Idle"), controller(nullptr), powerLevel(0),
       maxPowerLevel(0)
 {
@@ -157,18 +157,6 @@ CharacterController* BaseCharacter::getController()
 
     return controller;
 }
-
-
-bool BaseCharacter::setCurrentFrameTag(std::string tag)
-{
-    // set animFilename to the first part of the tag for example "gbFighter-Idle" -> "gbFighter"
-    animFileName = tag.substr(0, tag.find("-"));
-    // this is needed to set the correct animation when changing states by calling changeState()
-
-    // if the animation is already playing, return false, otherwise return true
-    return BaseGameObject::setCurrentFrameTag(tag);
-}
-
 
 std::string BaseCharacter::getCurrentState()
 {

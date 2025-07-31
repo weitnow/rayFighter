@@ -155,6 +155,7 @@ protected:
     bool isFlippedY;
     std::string currentFrameTag; // for example "gbFighter-Idle"
     std::string ObjName;         // for example "Andy"
+    std::string animFileName;    // needed for changeState() of BaseCharacter, it contains the first part of the tag (or example "gbFighter-Idle" -> "gbFighter")
     bool isActive;               // if isActive is false, object is NOT updated or drawn
     bool isAlive;                // if life is < 0 takeDamage will set isAlive = false
     bool shouldDestroy;          // if shouldDestroy is true, objects gets removed from the game (except p1 or p2)

@@ -18,7 +18,6 @@ public:
     virtual ~BaseCharacter();
     virtual void init() override;
     virtual void update(float deltaTime) override;
-
     void draw();
     //void moveLeft();  // implemented in BaseGameObject
     //void moveRight(); // implemented in BaseGameObject
@@ -39,8 +38,6 @@ public:
 
     void addController(CharacterController* controller);
     CharacterController* getController();
-
-    bool setCurrentFrameTag(std::string tag) override; //returns false if the animation is already playing
 
     // states
     std::string getCurrentState();
@@ -72,7 +69,6 @@ protected:
     float jumpForce = 300.f;
     // BaseGameObject::moveSpeed = 60.f
     unique<Statemachine> statemachine;
-    std::string animFileName;
     bool isLeft;      // true if the character is left of the other character, only valid for player1 or player2
     int playerNumber; // 1 or 2
     std::string currentState;
