@@ -359,6 +359,8 @@ void AsepriteManager::init()
 
     loadAnimFile("gbFighter");
 
+    loadAnimFile("debugFighter"); //Todo: get rid of this
+
 
     getFrameTag("gbFighter-Death").loop = false; // set loop to false for the death animation
 
