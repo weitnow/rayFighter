@@ -22,7 +22,6 @@ void Fighter2::init()
 
     getStatemachine().init(customStateMap);
 
-    setCurrentFrameTag("nesFighter-Idle");
     setObjName("Ken Masters");
 
     // [0, 1, 2...] = frameNumber, -1 = valid for all frames of gbFigher (ex. gbFighter-*), -2 = valid for all frames of gbFighter-Action (ex. gbFighter-Idle)

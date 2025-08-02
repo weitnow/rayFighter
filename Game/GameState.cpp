@@ -355,6 +355,15 @@ void GameState::_checkPushCollisionsBetweenPlayers()
 {
     // Check if player1 and player2 are colliding
     // TODO: get rid of hardcoded [0]
+    const std::vector<CollisionBox2D>& pushBoxes1 = player1->getPushBoxes();
+    const std::vector<CollisionBox2D>& pushBoxes2 = player2->getPushBoxes();
+    if (pushBoxes1.empty() || pushBoxes2.empty())
+    {
+        return; // if one or both pushBoxes are absent, do nothing
+    }
+
+    // if both pushBoxes are present, seperate them
+
     CollisionBox2D player1PushBox = player1->getPushBoxes()[0];
     CollisionBox2D player2PushBox = player2->getPushBoxes()[0];
 
