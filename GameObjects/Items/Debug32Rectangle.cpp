@@ -5,7 +5,7 @@
 #include "Debug32Rectangle.h"
 Debug32Rectangle::Debug32Rectangle(AsepriteManager* asepriteManagerPtr, float x, float y) : BaseGameObject(asepriteManagerPtr, x, y, "debug32")
 {
-    //setCurrentFrameTag("nesFighter-Idle");
+
 }
 Debug32Rectangle::~Debug32Rectangle()
 {
