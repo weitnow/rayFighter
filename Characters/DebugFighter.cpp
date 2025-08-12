@@ -3,7 +3,7 @@
 #include "Statemachine/Statemachine.h"
 
 
-DebugFighter::DebugFighter(AsepriteManager* asepriteManager, float x, float y) : BaseCharacter(asepriteManager, x, y, "gbFighter-Idle")
+DebugFighter::DebugFighter(AsepriteManager* asepriteManager, float x, float y) : BaseCharacter(asepriteManager, x, y, "debugFighter-Idle")
 {
 }
 
