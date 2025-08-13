@@ -11,9 +11,9 @@ BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager, float x, float 
       currentFrameTag(""), currentFrameAbsolut(0), drawShadow(false), gameState(nullptr), canDealDamage(false),
       canInteract(true)
 {
-    if (!asepriteManager)
+    if (asepriteManager == nullptr)
     {
-        std::cerr << "Error: BaseGameObject received null AsepriteManager!" << std::endl;
+        std::cerr << "Error: BaseGameObject received null AsepriteManager!" << '\n';
         return;
     }
 
@@ -24,16 +24,14 @@ BaseGameObject::BaseGameObject(AsepriteManager* asepriteManager, float x, float 
 
     // set animFilename to the first part of the tag for example "gbFighter-Idle" -> "gbFighter"
     // this is needed to set the correct animation when changing states by calling changeState() in BaseCharacter()
-    this->animFileName = initialFrameTag.substr(0, initialFrameTag.find("-"));
+    this->animFileName = initialFrameTag.substr(0, initialFrameTag.find('-'));
 
 
     setPos(x, y);
 
     // set middlepoint according to spriteSize
-    _setMiddlePointOffset({
-        static_cast<float>(getAnimFile()->getSpriteSizeX()) / 2.f,
-        static_cast<float>(getAnimFile()->getSpriteSizeY()) / 2.f
-    });
+    _setMiddlePointOffset({static_cast<float>(getAnimFile()->getSpriteSizeX()) / 2.f,
+                           static_cast<float>(getAnimFile()->getSpriteSizeY()) / 2.f});
 
     orginalPos = pos; // save the original position for reseting the object
 }
@@ -53,10 +51,14 @@ void BaseGameObject::init()
 void BaseGameObject::update(float deltaTime)
 {
     if (!isActive)
+    {
         return;
+    }
 
-    if (destroyIfHasLeftScreen)    // if set to true
+    if (destroyIfHasLeftScreen)
+    {                              // if set to true
         _destroyIfHasLeftScreen(); // check if it has left the screen and destroy it
+    }
 
     gotHitByProximityBox = false; // reset gotHitByProximityBox, is set in onOtherProximityBoxHitYou()
 
